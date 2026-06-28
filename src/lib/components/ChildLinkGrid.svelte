@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { asset } from '$app/paths';
+
 	type ChildPageLink = { title: string; href: string; description: string; };
 	type Props = { links: ChildPageLink[]; imagesInFolder: string | null; };
 
@@ -24,7 +26,7 @@
 	{#each props.links as link} <!-- Access via props.links -->
 		<a 
 			href={link.href} 
-			style="background-image: url({buildLinkToImage(link.title)});"
+			style="background-image: url({asset(buildLinkToImage(link.title))});"
 		>
 			<span>{link.title}</span>
 			<p>{link.description}</p>

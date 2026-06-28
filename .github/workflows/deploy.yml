@@ -17,34 +17,39 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'npm' # or 'pnpm' if using pnpm
-      
+          cache: npm
+
       - name: Install dependencies
-        run: npm install # or pnpm install
-      
+        run: npm ci
+
       - name: Build
-        run: npm run build # or pnpm build
-      
+        env:
+          BASE_PATH: "/${{ github.event.repository.name }}"
+        run: npm run build
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: 'build/'
+          path: build/
 
   deploy:
     needs: build
     runs-on: ubuntu-latest
+
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
+
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4   
+        uses: actions/deploy-pages@v4
