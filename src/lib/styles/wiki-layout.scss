@@ -1,0 +1,50 @@
+.wiki-shell {
+	&__grid {
+		display: grid;
+		grid-template-columns: 17.5rem minmax(0, 1fr);
+		max-width: 92rem;
+		margin: 0 auto;
+	}
+
+	&__main {
+		width: 100%;
+		min-height: calc(100vh - 4.75rem);
+		padding: clamp(3.25rem, 6vw, 5.5rem) clamp(1.25rem, 5vw, 4.5rem) 3rem;
+	}
+
+	&__footer {
+		margin-top: 3.5rem;
+		padding-top: 1.5rem;
+		border-top: 1px solid var(--border);
+		color: var(--text-muted);
+		font-size: 0.82rem;
+		line-height: 1.6;
+	}
+
+	&__backdrop {
+		display: none;
+	}
+}
+
+@media (max-width: 820px) {
+	.wiki-shell {
+		&__grid {
+			display: block;
+		}
+
+		&__main {
+			min-height: calc(100vh - 4.25rem);
+			margin: 0 auto;
+		}
+
+		&__backdrop {
+			position: fixed;
+			inset: 4.25rem 0 0;
+			z-index: 15;
+			display: block;
+			border: 0;
+			background: rgb(0 0 0 / 60%);
+			backdrop-filter: blur(2px);
+		}
+	}
+}

@@ -1,0 +1,65 @@
+.child-links {
+	display: grid;
+	  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+	gap: 0.8rem;
+
+	a {
+		position: relative;
+		display: block;
+		overflow: hidden;
+
+		min-height: 15rem;
+		padding: 1.1rem 2.8rem 1.1rem 1.15rem;
+		border: 1px solid var(--border);
+		border-radius: var(--radius-lg);
+		background: var(--surface);
+		background-size: cover;
+		background-position: top;
+		text-decoration: none;
+		transition: border-color 150ms ease, background 150ms ease;
+
+		&::before {
+			content: "";
+			position: absolute;
+			inset: 0;
+			background: rgba(0, 0, 0, 0.3);
+			z-index: 0;
+		}
+
+		&:hover {
+			border-color: var(--border-strong);
+		}
+
+		span,
+		p,
+		svg {
+			position: relative;
+			z-index: 1;
+		}
+
+		span {
+			color: var(--text-heading);
+			font-weight: 680;
+		}
+
+		p {
+			width: 50%;
+			margin: 0.4rem 0 0;
+			color: var(--text);
+			font-size: 0.86rem;
+			line-height: 1.5;
+		}
+
+		svg {
+			position: absolute;
+			top: 1.15rem;
+			right: 1rem;
+			width: 1rem;
+			fill: none;
+			stroke: var(--accent-muted);
+			stroke-linecap: round;
+			stroke-linejoin: round;
+			stroke-width: 1.8;
+		}
+	}
+}

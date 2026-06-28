@@ -1,0 +1,116 @@
+.nav-tree {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+
+	&__row {
+		display: grid;
+		grid-template-columns: 1.8rem minmax(0, 1fr);
+		align-items: center;
+		border-radius: var(--radius-sm);
+
+		&--branch-active {
+			background: rgb(123 255 83 / 3.5%);
+
+			a:not(.active) {
+				color: var(--text-primary);
+			}
+		}
+	}
+
+	&__toggle,
+	&__toggle-spacer {
+		width: 1.7rem;
+		height: 1.9rem;
+	}
+
+	&__toggle {
+		display: grid;
+		place-items: center;
+		padding: 0;
+		border: 0;
+		border-radius: 0.3rem;
+		background: transparent;
+		color: var(--text-muted);
+		cursor: pointer;
+
+		&:hover {
+			background: var(--surface-hover);
+			color: var(--text-primary);
+		}
+
+		svg {
+			width: 0.85rem;
+			fill: none;
+			stroke: currentColor;
+			stroke-linecap: round;
+			stroke-linejoin: round;
+			stroke-width: 1.8;
+			transition: transform 150ms ease;
+		}
+
+		&.expanded svg {
+			transform: rotate(90deg);
+		}
+	}
+
+	a {
+		display: grid;
+		grid-template-columns: 0.55rem minmax(0, 1fr);
+		align-items: center;
+		gap: 0.42rem;
+		min-height: 2.45rem;
+		padding: 0.45rem 0.65rem 0.45rem 0.15rem;
+		border-radius: var(--radius-sm);
+		color: var(--text-secondary);
+		font-size: 0.89rem;
+		font-weight: 530;
+		line-height: 1.25;
+		text-decoration: none;
+
+		&:hover {
+			background: var(--surface-raised);
+			color: var(--text-primary);
+		}
+
+		&.active {
+			background: var(--accent-soft);
+			color: var(--text-heading);
+			font-weight: 650;
+
+			.nav-tree__marker {
+				background: var(--accent);
+				box-shadow: 0 0 0 3px var(--accent-soft);
+			}
+		}
+	}
+
+	&__marker {
+		width: 0.35rem;
+		height: 0.35rem;
+		border-radius: 50%;
+		background: var(--border-strong);
+	}
+
+	&--nested {
+		margin: 0.05rem 0 0.28rem 0.9rem;
+		padding-left: 0.4rem;
+		border-left: 1px solid var(--border);
+
+		a {
+			min-height: 2.15rem;
+			font-size: 0.83rem;
+		}
+
+		.nav-tree__marker {
+			width: 0.28rem;
+			height: 0.28rem;
+		}
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.nav-tree__toggle svg {
+		transition: none;
+	}
+}

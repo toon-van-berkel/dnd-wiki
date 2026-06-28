@@ -1,0 +1,13 @@
+.tag {
+	display: inline-flex;
+	align-items: center;
+	min-height: 1.65rem;
+	padding: 0.15rem 0.55rem;
+	border: 1px solid var(--border-strong);
+	border-radius: 999px;
+	background: var(--surface-raised);
+	color: var(--text-secondary);
+	font-size: 0.78rem;
+	font-weight: 650;
+	letter-spacing: 0.01em;
+}
