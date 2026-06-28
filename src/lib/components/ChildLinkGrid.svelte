@@ -1,32 +1,28 @@
 <script lang="ts">
-	import { asset } from '$app/paths';
+	import { resolveAppPath, resolveAssetPath } from '$lib/utils/paths';
 
 	type ChildPageLink = { title: string; href: string; description: string; };
-	type Props = { links: ChildPageLink[]; imagesInFolder: string | null; };
+	type Props = { links: ChildPageLink[]; imagesInFolder?: string | null; };
 
-	let props = $props<Props>();
+	let { links, imagesInFolder = null }: Props = $props();
 
 	function cleanTitle(title: string) {
 		return title.toLocaleLowerCase().replaceAll(' ', '-');
 	}
 
-	function maleOrFemale() {
-		return Math.random() < 0.5 ? "male" : "female";
-	}
-
 	function buildLinkToImage(title: string) {
-		const folder = props.imagesInFolder || 'default-folder'; 
-		const gender = maleOrFemale();
-		console.log(`/${folder}/${cleanTitle(title)}/card-${gender}.webp`);
-		return `/${folder}/${cleanTitle(title)}/card-${gender}.webp`;
+		if (!imagesInFolder) return null;
+
+		return `/${imagesInFolder}/${cleanTitle(title)}/card-female.webp`;
 	}
 </script>
 
 <nav class="child-links" aria-label="Related pages">
-	{#each props.links as link} <!-- Access via props.links -->
+	{#each links as link}
+		{@const imagePath = buildLinkToImage(link.title)}
 		<a 
-			href={link.href} 
-			style="background-image: url({asset(buildLinkToImage(link.title))});"
+			href={resolveAppPath(link.href)}
+			style={imagePath ? `background-image: url("${resolveAssetPath(imagePath)}");` : undefined}
 		>
 			<span>{link.title}</span>
 			<p>{link.description}</p>
@@ -37,4 +33,4 @@
 
 <style lang="scss">
   @use './ChildLinkGrid.scss';
-</style>   
+</style>

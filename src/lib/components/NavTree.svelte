@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { NavigationItem } from '$lib/wiki/navigation';
+	import { resolveAppPath } from '$lib/utils/paths';
 	import NavTree from './NavTree.svelte';
 
 	type Props = {
@@ -71,7 +72,7 @@
 
 				<a
 					class:active={isActive(item.href)}
-					href={item.href}
+					href={resolveAppPath(item.href)}
 					onclick={onNavigate}
 					aria-current={isActive(item.href) ? 'page' : undefined}
 				>

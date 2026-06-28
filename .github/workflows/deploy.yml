@@ -25,7 +25,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 24
           cache: npm
 
       - name: Install dependencies
@@ -36,14 +36,13 @@ jobs:
           BASE_PATH: "/${{ github.event.repository.name }}"
         run: npm run build
 
-      - name: Show build output
+      - name: Verify build output
         run: |
-          echo "Root files:"
-          ls -la
-          echo "Build folder:"
-          ls -la build || true
-          echo "Find html files:"
-          find . -name "*.html" -maxdepth 4
+          test -d build
+          test -f build/.nojekyll
+          echo "Generated HTML files:"
+          find build -type f -name "*.html" -print
+          test -n "$(find build -type f -name "*.html" -print -quit)"
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

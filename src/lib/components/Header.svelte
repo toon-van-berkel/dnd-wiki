@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { searchIndex } from '$lib/wiki/search-index';
+	import { resolveAppPath, resolveAssetPath } from '$lib/utils/paths';
 
 	type Props = {
 		menuOpen: boolean;
@@ -35,8 +36,8 @@
 </script>
 
 <header class="header">
-	<a class="header__brand" href="/" aria-label="D&D Portal wiki home">
-		<img src="/dndportal_wiki-74x32.svg" alt="D&D Portal" width="74" height="32" />
+	<a class="header__brand" href={resolveAppPath('/')} aria-label="D&D Portal wiki home">
+		<img src={resolveAssetPath('/dndportal_wiki-74x32.svg')} alt="D&D Portal" width="74" height="32" />
 		<span class="header__divider" aria-hidden="true"></span>
 		<span class="header__name">Rules Wiki</span>
 	</a>
@@ -57,7 +58,7 @@
 			{#if normalizedQuery}
 				<div class="search__results" aria-label="Search results" aria-live="polite">
 					{#each results as result}
-						<a href={result.href} onclick={handleResultNavigation}>
+						<a href={resolveAppPath(result.href)} onclick={handleResultNavigation}>
 							<span class="search__result-copy">
 								<strong>{result.title}</strong>
 								<small>{result.category} · {result.description}</small>

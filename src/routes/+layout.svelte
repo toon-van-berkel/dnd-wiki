@@ -12,7 +12,6 @@
 </script>
 
 <svelte:head>
-	<link rel="icon" href="/dndportal_wiki-74x32.svg" />
 	<meta name="theme-color" content="#0b0d0c" />
 </svelte:head>
 
