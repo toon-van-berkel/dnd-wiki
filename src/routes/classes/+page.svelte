@@ -4,10 +4,11 @@
 	import PageSection from '$lib/components/PageSection.svelte';
 	import { getNavigationChildren } from '$lib/wiki/navigation';
 
-	const classPages = getNavigationChildren('/classes').map(({ title, href, description }) => ({
+	const classPages = getNavigationChildren('/classes').map(({ title, href, description, tags }) => ({
 		title,
 		href,
-		description: description ?? ''
+		description: description ?? '',
+		tags: tags ?? []
 	}));
 </script>
 

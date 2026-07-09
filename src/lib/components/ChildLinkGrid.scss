@@ -5,7 +5,8 @@
 
 	a {
 		position: relative;
-		display: block;
+		display: flex;
+		flex-direction: column;
 		overflow: hidden;
 
 		min-height: 15rem;
@@ -28,6 +29,9 @@
 
 		&:hover {
 			border-color: var(--border-strong);
+			transform: scale(1.1);
+			z-index: 10;
+			transition: transform 300ms ease;
 		}
 
 		span,
@@ -44,10 +48,26 @@
 
 		p {
 			width: 50%;
-			margin: 0.4rem 0 0;
+			margin: 0.4rem 0 20px;
 			color: var(--text);
 			font-size: 0.86rem;
 			line-height: 1.5;
+		}
+
+		ul {
+			padding: 0;
+			width: 100%;
+			display: flex;
+			margin-top: auto; 
+			gap: 5px;
+			flex-wrap: wrap;
+			list-style: none;
+
+			li {
+				padding: 5px 10px;
+				border-radius: 50px;
+				background-color: color-mix(in srgb, var(--background), transparent 60%);
+			}
 		}
 
 		svg {
