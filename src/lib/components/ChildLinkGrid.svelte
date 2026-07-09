@@ -59,18 +59,26 @@
 <nav class="child-links" aria-label="Related pages">
 	{#each links as link}
 		{@const imagePath = buildLinkToImage(link.title)}
-			<a
-				href={resolveAppPath(link.href)}
-				style={`background-image: url('${resolveAssetPath(buildLinkToImage(link.title) ?? '')}')`}
-			>
+		{@const imageUrl = resolveAssetPath(imagePath)}
+
+		<a
+			href={resolveAppPath(link.href)}
+			style={imageUrl ? `background-image: url('${imageUrl}')` : undefined}
+		>
 			<span>{link.title}</span>
 			<p>{link.description}</p>
-			<ul>	
-				{#each link.tags as tag}
-					<li>{tag}</li>
-				{/each}
-			</ul>
-			<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6" /></svg>
+
+			{#if link.tags?.length}
+				<ul>
+					{#each link.tags as tag}
+						<li>{tag}</li>
+					{/each}
+				</ul>
+			{/if}
+
+			<svg viewBox="0 0 24 24" aria-hidden="true">
+				<path d="m9 18 6-6-6-6" />
+			</svg>
 		</a>
 	{/each}
 </nav>
