@@ -1,15 +1,35 @@
 .wiki-shell {
 	&__grid {
+		--sidebar-width: 17.5rem;
+		--sidebar-toggle-width: 2.1rem;
+		--shell-offset: max((100vw - 92rem) / 2, 0px);
+
+		position: relative;
 		display: grid;
-		grid-template-columns: 17.5rem minmax(0, 1fr);
+		grid-template-columns: var(--sidebar-width) minmax(0, 1fr);
 		max-width: 92rem;
 		margin: 0 auto;
+		transition: grid-template-columns 200ms ease;
+	}
+
+	&__grid--sidebar-collapsed {
+		grid-template-columns: 0 minmax(0, 1fr);
+	}
+
+	&__sidebar-slot {
+		position: relative;
+		z-index: 10;
+		min-width: 0;
+		width: 100%;
+		overflow: visible;
 	}
 
 	&__main {
 		width: 100%;
+		min-width: 0;
 		min-height: calc(100vh - 4.75rem);
 		padding: clamp(3.25rem, 6vw, 5.5rem) clamp(1.25rem, 5vw, 4.5rem) 3rem;
+		transition: padding 200ms ease;
 	}
 
 	&__footer {
@@ -26,15 +46,78 @@
 	}
 }
 
-@media (max-width: 820px) {
+.sidebar-toggle {
+	position: fixed;
+	top: 5.5rem;
+	left: calc(max((100vw - 92rem) / 2, 0px) + 17.5rem + 0.35rem);
+	z-index: 25;
+	display: grid;
+	place-items: center;
+	width: var(--sidebar-toggle-width, 2.1rem);
+	height: 3.2rem;
+	padding: 0;
+	border: 1px solid var(--border-strong);
+	border-radius: var(--radius-sm);
+	background: var(--surface);
+	color: var(--text-secondary);
+	box-shadow: 0 12px 28px rgb(0 0 0 / 24%);
+	cursor: pointer;
+	transition:
+		left 200ms ease,
+		background 150ms ease,
+		border-color 150ms ease,
+		color 150ms ease;
+
+	&:hover,
+	&:focus-visible {
+		border-color: color-mix(in srgb, var(--accent) 48%, var(--border-strong));
+		background: var(--surface-raised);
+		color: var(--text-heading);
+	}
+
+	svg {
+		width: 1rem;
+		fill: none;
+		stroke: currentColor;
+		stroke-linecap: round;
+		stroke-linejoin: round;
+		stroke-width: 2;
+		transform: rotate(180deg);
+		transition: transform 200ms ease;
+	}
+
+	&--collapsed {
+		left: max((100vw - 92rem) / 2, 0px);
+
+		svg {
+			transform: rotate(0deg);
+		}
+	}
+}
+
+@media (min-width: 900px) {
+	.wiki-shell__grid--sidebar-collapsed {
+		.wiki-shell__sidebar-slot {
+			pointer-events: none;
+		}
+	}
+}
+
+@media (max-width: 899px) {
 	.wiki-shell {
 		&__grid {
 			display: block;
+			transition: none;
+		}
+
+		&__sidebar-slot {
+			width: auto;
 		}
 
 		&__main {
 			min-height: calc(100vh - 4.25rem);
 			margin: 0 auto;
+			transition: none;
 		}
 
 		&__backdrop {
@@ -46,5 +129,23 @@
 			background: rgb(0 0 0 / 60%);
 			backdrop-filter: blur(2px);
 		}
+	}
+
+	.sidebar-toggle {
+		display: none;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.wiki-shell {
+		&__grid,
+		&__main {
+			transition: none;
+		}
+	}
+
+	.sidebar-toggle,
+	.sidebar-toggle svg {
+		transition: none;
 	}
 }

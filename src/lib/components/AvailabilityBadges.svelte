@@ -1,24 +1,73 @@
 <script lang="ts">
+	import { page } from '$app/state';
+	import {
+		availability,
+		type PageAvailability
+	} from '$lib/data/availability';
+
+	type AvailabilityValues = string[];
+
 	type Props = {
-		allowed?: string[];
-		limited?: string[];
-		banned?: string[];
-		approval?: string[];
+		allowed?: AvailabilityValues;
+		limited?: AvailabilityValues;
+		banned?: AvailabilityValues;
+		approval?: AvailabilityValues;
 	};
 
 	let {
-		allowed = [],
-		limited = [],
-		banned = [],
-		approval = []
+		allowed,
+		limited,
+		banned,
+		approval
 	}: Props = $props();
 
-	let groups = $derived([
-		{ label: 'Allowed', values: allowed, tone: 'allowed' },
-		{ label: 'Limited', values: limited, tone: 'limited' },
-		{ label: 'Banned', values: banned, tone: 'banned' },
-		{ label: 'Needs approval', values: approval, tone: 'approval' }
-	].filter((group) => group.values.length));
+	function getAvailabilityFromPath(pathname: string): PageAvailability {
+		const cleanPath = pathname
+			.split('?')[0]
+			.split('#')[0]
+			.replace(/^\/+|\/+$/g, '');
+
+		const [category, pageName] = cleanPath.split('/');
+
+		if (!category || !pageName) {
+			return {};
+		}
+
+		return availability[category]?.[pageName] ?? {};
+	}
+
+	let pageAvailability = $derived({
+		...getAvailabilityFromPath(page.url.pathname),
+		allowed,
+		limited,
+		banned,
+		approval
+	});
+
+	let groups = $derived(
+		[
+			{
+				label: 'Allowed',
+				values: pageAvailability.allowed ?? [],
+				tone: 'allowed'
+			},
+			{
+				label: 'Limited',
+				values: pageAvailability.limited ?? [],
+				tone: 'limited'
+			},
+			{
+				label: 'Banned',
+				values: pageAvailability.banned ?? [],
+				tone: 'banned'
+			},
+			{
+				label: 'Needs approval',
+				values: pageAvailability.approval ?? [],
+				tone: 'approval'
+			}
+		].filter((group) => group.values.length)
+	);
 </script>
 
 {#if groups.length}

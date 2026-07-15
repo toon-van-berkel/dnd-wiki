@@ -2,7 +2,7 @@
 	import type { Snippet } from 'svelte';
 	import '$lib/styles/global.scss';
 	import '$lib/styles/wiki-layout.scss';
-	import WikiLayout from '$lib/components/WikiLayout.svelte';
+	import WikiLayout from '$lib/components/layout/WikiLayout.svelte';
 
 	type Props = {
 		children: Snippet;

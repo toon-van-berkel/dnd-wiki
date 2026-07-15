@@ -6,6 +6,7 @@ export type NavigationItem = {
 	href: string;
 	description?: string;
 	tags?: string[];
+	icon?: string[];
 	children?: NavigationItem[];
 };
 

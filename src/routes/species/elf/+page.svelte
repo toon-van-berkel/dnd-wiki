@@ -16,7 +16,7 @@
 
 <PageHeader title="Elf" description="Long-lived people whose communities preserve distinct traditions and relationships with magic." eyebrow="Species" tags={['Species', 'Lineages']} />
 
-<AvailabilityBadges allowed={['Party 1', 'Party 2']} limited={['Party 3']} approval={['Party 4']} />
+<AvailabilityBadges />
 
 <PageSection title="Elves in the setting">
 	<p>Elven cultures are not interchangeable. Choose a homeland or lineage page, then use it to ground your character’s outlook and relationships.</p>

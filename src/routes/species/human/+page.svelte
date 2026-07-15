@@ -9,7 +9,7 @@
 
 <PageHeader title="Human" description="Adaptable and widespread, humans build communities in nearly every settled region." eyebrow="Species" tags={['Species', 'Versatile']} />
 
-<AvailabilityBadges allowed={['Party 1', 'Party 2', 'Party 3', 'Party 4', 'Party 5', 'Party 6']} />
+<AvailabilityBadges />
 
 <PageSection title="At our table">
 	<p>Human characters can come from any established culture in the setting. Start with a home, a personal tie, and one reason to travel with the party.</p>

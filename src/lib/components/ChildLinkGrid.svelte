@@ -9,6 +9,8 @@
 		href: string;
 		description: string;
 		tags?: string[];
+		image?: string;
+		imagePosition?: string;
 	};
 
 	type Props = {
@@ -49,21 +51,46 @@
 		localStorage.setItem(storageKey, getOppositeGender(selectedGender));
 	});
 
-	function buildLinkToImage(title: string) {
-		if (!imagesInFolder) return null;
+	function buildLinkToImage(link: ChildPageLink) {
+		if (link.image) {
+			return link.image;
+		}
 
-		return `/${imagesInFolder}/${cleanTitle(title)}/card-${imageGender}.webp`;
+		if (!imagesInFolder) {
+			return null;
+		}
+
+		return `/${imagesInFolder}/${cleanTitle(link.title)}/card-${imageGender}-m.webp`;
+	}
+
+	function buildBackgroundStyle(link: ChildPageLink) {
+		const imagePath = buildLinkToImage(link);
+
+		if (!imagePath) {
+			return undefined;
+		}
+
+		const imageUrl = resolveAssetPath(imagePath);
+
+		if (!imageUrl) {
+			return undefined;
+		}
+
+		const styles = [`background-image: url('${imageUrl}')`];
+
+		if (link.imagePosition) {
+			styles.push(`background-position: ${link.imagePosition}`);
+		}
+
+		return styles.join('; ');
 	}
 </script>
 
 <nav class="child-links" aria-label="Related pages">
 	{#each links as link}
-		{@const imagePath = buildLinkToImage(link.title)}
-		{@const imageUrl = resolveAssetPath(imagePath)}
-
 		<a
 			href={resolveAppPath(link.href)}
-			style={imageUrl ? `background-image: url('${imageUrl}')` : undefined}
+			style={buildBackgroundStyle(link)}
 		>
 			<span>{link.title}</span>
 			<p>{link.description}</p>
@@ -84,5 +111,5 @@
 </nav>
 
 <style lang="scss">
-  @use './ChildLinkGrid.scss';
+	@use './ChildLinkGrid.scss';
 </style>

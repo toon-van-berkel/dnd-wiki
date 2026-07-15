@@ -14,7 +14,12 @@
 
 <svelte:head><title>Classes — D&D Portal</title></svelte:head>
 
-<PageHeader title="Classes" description="Character roles, subclass options, and campaign-specific guidance for building a party member." eyebrow="Character options" tags={['Character Creation']} />
+<PageHeader 
+	title="Classes" 
+	description="Character roles, subclass options, and campaign-specific guidance for building a party member." 
+	eyebrow="Character options" 
+	tags={['Character Creation']} 
+/>
 
 <PageSection title="Choosing a class">
 	<p>Choose a class whose core play style you will enjoy for more than one session. Your mechanics and character story should support each other, but they do not need to match a stereotype.</p>

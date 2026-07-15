@@ -2,7 +2,8 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: ["main"]
+    branches:
+      - main
   workflow_dispatch:
 
 permissions:
@@ -11,43 +12,48 @@ permissions:
   id-token: write
 
 concurrency:
-  group: "pages"
+  group: pages
   cancel-in-progress: false
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
+    env:
+      BASE_PATH: /${{ github.event.repository.name }}
+
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: 24
           cache: npm
 
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v6
+
       - name: Install dependencies
         run: npm ci
 
+      - name: Check
+        run: npm run check --if-present
+
+      - name: Lint
+        run: npm run lint --if-present
+
       - name: Build
-        env:
-          BASE_PATH: "/${{ github.event.repository.name }}"
         run: npm run build
 
-      - name: Verify build output
-        run: |
-          test -d build
-          test -f build/.nojekyll
-          echo "Generated HTML files:"
-          find build -type f -name "*.html" -print
-          test -n "$(find build -type f -name "*.html" -print -quit)"
+      - name: Verify GitHub Pages build
+        run: npm run verify:pages
 
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+      - name: Upload GitHub Pages artifact
+        uses: actions/upload-pages-artifact@v5
         with:
-          path: build/
+          path: build
 
   deploy:
     needs: build
@@ -60,4 +66,4 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
