@@ -1,9 +1,12 @@
 .child-links {
 	display: grid;
-	  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+	grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 	gap: 0.8rem;
 
 	a {
+		--card-background-layer: 0;
+		--card-content-layer: 1;
+
 		position: relative;
 		display: flex;
 		flex-direction: column;
@@ -24,21 +27,19 @@
 			position: absolute;
 			inset: 0;
 			background: rgba(0, 0, 0, 0.3);
-			z-index: 0;
+			z-index: var(--card-background-layer);
 		}
 
 		&:hover {
 			border-color: var(--border-strong);
-			transform: scale(1.1);
-			z-index: 10;
-			transition: transform 300ms ease;
+			background-color: var(--surface-hover);
 		}
 
 		span,
 		p,
 		svg {
 			position: relative;
-			z-index: 1;
+			z-index: var(--card-content-layer);
 		}
 
 		span {

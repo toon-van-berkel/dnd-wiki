@@ -3,8 +3,18 @@
 	import PageHeader from '$lib/components/PageHeader.svelte';
 	import PageSection from '$lib/components/PageSection.svelte';
 	import WikiTable from '$lib/components/WikiTable.svelte';
+	import { dungeonMasterById, parties, type PartyId } from '$lib/config/campaigns';
+	import { getWikiPage } from '$lib/wiki/registry';
+
+	const pageMeta = getWikiPage('home');
 
 	const quickLinks = [
+		{
+			title: 'Search the Wiki',
+			href: '/search',
+			description: 'Search rules, classes, species, spells, equipment, locations, and other Wiki content.',
+			imagePosition: 'center'
+		},
 		{
 			title: 'Species',
 			href: '/species',
@@ -51,16 +61,23 @@
 
 	const partyColumns = ['DM', 'Party ID', 'Party name', 'Members'];
 
-	const partyRows = [
-		['Toon', 'Party 1', '...', 				'Tijs, Andy, Stan, Roel & Bryce'],
-		['Toon', 'Party 2', 'LuckyClover', 		'Tijs, Ben, Thomas, Vince & Stijn'],
-		['Toon', 'Party 3', 'FCGoonUnited', 	'Stan, Roel & Bryce'],
-		['Toon', 'Party 4', '...',				'Stan & Roel'],
-		['Toon', 'Party 5', 'FemboyAss', 		'Jaydon, Arch & Rafeal'],
-		['Toon', 'Party 6', 'Crops', 			'Jaydon, Rafeal, Mo & Tyler'],
-		['Tijs', 'Main', 	'750',				'Thomas, Ben, Tiago & Toon'],
-		['Tijs', 'Scouting','MotelyCrew',		'Melvin, Lucas, Toon & Thomas']
-	];
+	const partyMembers = {
+		i1: 'Tijs, Andy, Stan, Roel & Bryce',
+		i2: 'Tijs, Ben, Thomas, Vince & Stijn',
+		i3: 'Stan, Roel & Bryce',
+		i4: 'Stan & Roel',
+		i5: 'Jaydon, Arch & Rafeal',
+		i6: 'Jaydon, Rafeal, Mo & Tyler',
+		i7: 'Thomas, Ben, Tiago & Toon',
+		i8: 'Melvin, Lucas, Toon & Thomas'
+	} satisfies Record<PartyId, string>;
+
+	const partyRows = parties.map((party) => [
+		dungeonMasterById.get(party.dmId)?.shortName ?? party.dmId,
+		party.name.split(' - ')[0],
+		party.name.split(' - ')[1] ?? '...',
+		partyMembers[party.id]
+	]);
 </script>
 
 <svelte:head>
@@ -72,9 +89,9 @@
 </svelte:head>
 
 <PageHeader
-	title="Rules for our table"
-	description="A practical campaign wiki for our players. Use it as the source of truth for table rulings, character options, and campaign-specific exceptions."
-	eyebrow="D&D Portal wiki"
+	title={pageMeta?.title}
+	description={pageMeta?.description}
+	eyebrow={pageMeta?.eyebrow}
 />
 
 <PageSection title="How to use this wiki">

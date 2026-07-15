@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { page } from '$app/state';
+	import { parties } from '$lib/config/campaigns';
 	import { navigation } from '$lib/wiki/navigation';
 	import { resolveAppPath } from '$lib/utils/paths';
 	import NavTree from './helpers/NavTree.svelte';
-    import { parties } from '$lib/data/parties';
 
 	type Props = {
 		open: boolean;
@@ -41,6 +41,20 @@
 
 		<a
 			class="sidebar__home"
+			class:active={page.route.id === '/search'}
+			href={resolveAppPath('/search')}
+			onclick={onNavigate}
+			aria-current={page.route.id === '/search' ? 'page' : undefined}
+		>
+			<svg viewBox="0 0 24 24" aria-hidden="true">
+				<path d="m21 21-4.35-4.35m2.35-5.65a8 8 0 1 1-16 0 8 8 0 0 1 16 0Z" />
+			</svg>
+
+			<span>Search</span>
+		</a>
+
+		<a
+			class="sidebar__home"
 			class:active={page.route.id === '/preferences'}
 			href={resolveAppPath('/preferences')}
 			onclick={onNavigate}
@@ -69,11 +83,10 @@
 	<div class="sidebar__campaigns">
 		<p class="sidebar__label">Campaign accents</p>
 
-		{#each Object.entries(parties) as [code, party]}
+		{#each parties as party}
 			<div>
 				<span
-					class={code}
-					style={`--party-color: var(${party.color})`}
+					style={`--party-color: var(${party.colorToken})`}
 				></span>
 
 				{party.name}

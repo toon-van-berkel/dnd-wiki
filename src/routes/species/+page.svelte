@@ -3,6 +3,9 @@
 	import PageHeader from '$lib/components/PageHeader.svelte';
 	import PageSection from '$lib/components/PageSection.svelte';
 	import { getNavigationChildren } from '$lib/wiki/navigation';
+	import { getWikiPage } from '$lib/wiki/registry';
+
+	const pageMeta = getWikiPage('species');
 
 	const speciesPages = getNavigationChildren('/species').map(({ title, href, description }) => ({
 		title,
@@ -13,7 +16,12 @@
 
 <svelte:head><title>Species — D&D Portal</title></svelte:head>
 
-<PageHeader title="Species" description="Playable peoples and lineages, including their place in the setting and availability for each party." eyebrow="Character options" tags={['Character Creation']} />
+<PageHeader
+	title={pageMeta?.title}
+	description={pageMeta?.description}
+	eyebrow={pageMeta?.eyebrow}
+	tags={pageMeta?.tags}
+/>
 
 <PageSection title="Choosing a species">
 	<p>Choose an option that fits the campaign premise and gives your character a useful connection to the world. Availability labels override general assumptions.</p>

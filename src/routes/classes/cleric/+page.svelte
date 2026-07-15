@@ -1,7 +1,6 @@
 <script lang="ts">
 	import AvailabilityBadges from '$lib/components/AvailabilityBadges.svelte';
 	import ChildLinkGrid from '$lib/components/ChildLinkGrid.svelte';
-	import PageHeader from '$lib/components/PageHeader.svelte';
 	import PageSection from '$lib/components/PageSection.svelte';
 	import { getNavigationChildren } from '$lib/wiki/navigation';
 
@@ -13,8 +12,6 @@
 </script>
 
 <svelte:head><title>Cleric — D&D Portal</title></svelte:head>
-
-<PageHeader title="Cleric" description="Divine adventurers whose abilities are shaped by faith, duty, or service to a greater cause." eyebrow="Class" tags={['Class', 'Divine Magic']} />
 
 <AvailabilityBadges allowed={['Party 1', 'Party 2', 'Party 3']} approval={['Party 4']} />
 

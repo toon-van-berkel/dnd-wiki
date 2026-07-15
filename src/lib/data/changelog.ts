@@ -39,6 +39,64 @@ export const changeTypeLabels: Record<ChangeType, string> = {
 
 export const changelog: ChangelogRelease[] = [
 	{
+		id: 'v0-8-0',
+		version: '0.8.0',
+		date: '2026-07-15',
+		title: 'Dedicated Wiki search',
+		summary:
+			'Added a dedicated search page with clearer result metadata, filters, preferences, and shareable URL state.',
+		items: [
+			{
+				type: 'added',
+				title: 'Search the Wiki page',
+				description:
+					'Added a dedicated search page for individual Wiki items with relevance-based text search, content-type filters, tag filters, and 30-result pagination.',
+				links: [
+					{
+						label: 'Search the Wiki',
+						href: '/search'
+					}
+				]
+			},
+			{
+				type: 'fixed',
+				title: 'Collection pages excluded from item results',
+				description:
+					'Separated navigation collections from actual searchable content items so section roots such as Species and Classes no longer count as normal results.'
+			},
+			{
+				type: 'changed',
+				title: 'Party and Dungeon Master preferences',
+				description:
+					'Moved party and Dungeon Master selections into browser-local Wiki preferences instead of treating them as global content filters.'
+			},
+			{
+				type: 'added',
+				title: 'Shareable search URLs',
+				description:
+					'Search query, temporary filters, and result page are represented in the URL so filtered views can be copied and shared.'
+			},
+			{
+				type: 'fixed',
+				title: 'Preferences page rendering',
+				description:
+					'Fixed the Preferences page so browser storage is loaded safely and the page can render during server-side rendering and prerendering.'
+			},
+			{
+				type: 'changed',
+				title: 'Grouped search filters',
+				description:
+					'Grouped search tags into meaningful categories and hid irrelevant filters while keeping active filters removable.'
+			},
+			{
+				type: 'changed',
+				title: 'Header search submission',
+				description:
+					'Changed the global header search to use a semantic search form so the search button and Enter key open the dedicated Search page.'
+			}
+		]
+	},
+	{
 		id: 'v0-7-0',
 		version: '0.7.0',
 		date: '2026-07-15',

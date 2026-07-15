@@ -1,93 +1,23 @@
-import { classes } from "./classes/classes";
-import { species } from "./species/species";
+import { getWikiChildren, wikiPages, type WikiPageEntry, type WikiPageKind } from './registry.js';
+
+export type SearchEntryKind = WikiPageKind;
 
 export type NavigationItem = {
 	title: string;
 	href: string;
 	description?: string;
+	kind?: SearchEntryKind;
+	searchable?: boolean;
 	tags?: string[];
+	keywords?: string[];
+	aliases?: string[];
 	icon?: string[];
 	children?: NavigationItem[];
 };
 
-// This file controls sidebar order and nesting only. Article content lives in src/routes.
-export const navigation: NavigationItem[] = [
-	species,
-	classes,
-	{
-		title: 'Rules',
-		href: '/rules',
-		description: 'House rules and table rulings.',
-		children: [
-			{
-				title: 'Combat',
-				href: '/',
-				description: '',
-				children: [
-					{
-						title: 'Bonus Actions',
-						href: '/',
-						description: '',
-						children: [
-							{
-								title: 'Bonus Actions Overview',
-								href: '/',
-								description: '',
-							},
-							{
-								title: 'Bonus Action Features',
-								href: '/',
-								description: '',
-								children: [
-									{
-										title: 'Cunning Action',
-										href: '/',
-										description: ''
-									},
-									{
-										title: 'Step of the Wind',
-										href: '/',
-										description: ''
-									},
-									{
-										title: 'Nimble Escape',
-										href: '/',
-										description: ''
-									},
-									{
-										title: 'Expeditious Retreat',
-										href: '/',
-										description: ''
-									}
-								]
-							}
-						]
-					}
-				]
-			},
-			{
-				title: 'Movement',
-				href: '/rules/movement',
-				description: 'Positioning, difficult terrain, and travel rulings.'
-			},
-			{
-				title: 'Fighting',
-				href: '/rules/fighting',
-				description: 'Combat rulings, critical hits, and flanking.'
-			}
-		]
-	},
-	{
-		title: 'Monsters',
-		href: '/monsters',
-		description: 'Creatures discovered during the campaigns.'
-	},
-	{
-		title: 'Locations',
-		href: '/locations',
-		description: 'Places, settlements, and regions.'
-	}
-];
+export const navigation: NavigationItem[] = wikiPages
+	.filter((entry) => entry.navigation === true && !entry.parentId)
+	.map(toNavigationItem);
 
 export function findNavigationItem(
 	href: string,
@@ -107,4 +37,19 @@ export function findNavigationItem(
 
 export function getNavigationChildren(href: string): NavigationItem[] {
 	return findNavigationItem(href)?.children ?? [];
+}
+
+function toNavigationItem(entry: WikiPageEntry): NavigationItem {
+	return {
+		title: entry.title,
+		href: entry.href,
+		description: entry.description,
+		kind: entry.kind,
+		searchable: entry.searchable,
+		tags: entry.tags,
+		keywords: entry.keywords,
+		aliases: entry.aliases,
+		icon: entry.icon,
+		children: getWikiChildren(entry.id).map(toNavigationItem)
+	};
 }

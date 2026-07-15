@@ -1,11 +1,11 @@
 .header {
 	position: sticky;
 	top: 0;
-	z-index: 30;
+	z-index: var(--layer-header);
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	height: 4.75rem;
+	height: var(--header-height);
 	padding: 0 clamp(1rem, 3vw, 2.5rem);
 	border-bottom: 1px solid var(--border);
 	background: rgb(11 13 12 / 91%);
@@ -105,6 +105,24 @@
 		}
 	}
 
+	&__submit {
+		display: grid;
+		flex: none;
+		place-items: center;
+		width: 1.5rem;
+		height: 1.5rem;
+		padding: 0;
+		border: 0;
+		background: transparent;
+		color: var(--text-muted);
+		cursor: pointer;
+
+		&:hover,
+		&:focus-visible {
+			color: var(--accent-muted);
+		}
+	}
+
 	&__clear {
 		padding: 0 0.2rem;
 		border: 0;
@@ -185,6 +203,7 @@
 @media (max-width: 899px) {
 	.header {
 		height: 4.25rem;
+		height: var(--mobile-header-height);
 
 		&__name,
 		&__divider {

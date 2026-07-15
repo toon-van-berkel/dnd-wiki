@@ -1,6 +1,5 @@
 	<script lang="ts">
 		import AvailabilityBadges from '$lib/components/AvailabilityBadges.svelte';
-		import PageHeader from '$lib/components/PageHeader.svelte';
 		import PageSection from '$lib/components/PageSection.svelte';
 		import WikiTable from '$lib/components/WikiTable.svelte';
 		import ChildLinkGrid from '$lib/components/ChildLinkGrid.svelte';

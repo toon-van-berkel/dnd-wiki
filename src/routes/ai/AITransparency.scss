@@ -41,13 +41,11 @@
 	box-shadow: var(--shadow-card);
 	transition:
 		border-color 150ms ease,
-		background 150ms ease,
-		transform 150ms ease;
+		background 150ms ease;
 
 	&:hover {
 		border-color: var(--border-strong);
 		background: var(--surface-raised);
-		transform: translateY(-2px);
 	}
 }
 
@@ -65,11 +63,6 @@
 	height: 100%;
 	object-fit: cover;
 	object-position: top;
-	transition: transform 220ms ease;
-
-	.ai-card:hover & {
-		transform: scale(1.015);
-	}
 }
 
 .ai-card__content {
@@ -203,11 +196,4 @@
 		transition: none;
 	}
 
-	.ai-card:hover {
-		transform: none;
-	}
-
-	.ai-card:hover .ai-card__image {
-		transform: none;
-	}
 }

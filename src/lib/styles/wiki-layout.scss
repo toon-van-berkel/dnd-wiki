@@ -1,6 +1,5 @@
 .wiki-shell {
 	&__grid {
-		--sidebar-width: 17.5rem;
 		--sidebar-toggle-width: 2.1rem;
 		--shell-offset: max((100vw - 92rem) / 2, 0px);
 
@@ -18,18 +17,24 @@
 
 	&__sidebar-slot {
 		position: relative;
-		z-index: 10;
+		z-index: var(--layer-sidebar);
 		min-width: 0;
 		width: 100%;
 		overflow: visible;
 	}
 
 	&__main {
+		display: grid;
+		justify-content: center;
 		width: 100%;
 		min-width: 0;
-		min-height: calc(100vh - 4.75rem);
+		min-height: calc(100vh - var(--header-height));
 		padding: clamp(3.25rem, 6vw, 5.5rem) clamp(1.25rem, 5vw, 4.5rem) 3rem;
 		transition: padding 200ms ease;
+
+		> * {
+			width: min(100%, var(--content-width));
+		}
 	}
 
 	&__footer {
@@ -48,9 +53,9 @@
 
 .sidebar-toggle {
 	position: fixed;
-	top: 5.5rem;
-	left: calc(max((100vw - 92rem) / 2, 0px) + 17.5rem + 0.35rem);
-	z-index: 25;
+	top: calc(var(--header-height) + 0.75rem);
+	left: calc(max((100vw - 92rem) / 2, 0px) + var(--sidebar-width) + 0.35rem);
+	z-index: var(--layer-sidebar);
 	display: grid;
 	place-items: center;
 	width: var(--sidebar-toggle-width, 2.1rem);
@@ -116,14 +121,15 @@
 
 		&__main {
 			min-height: calc(100vh - 4.25rem);
+			min-height: calc(100vh - var(--mobile-header-height));
 			margin: 0 auto;
 			transition: none;
 		}
 
 		&__backdrop {
 			position: fixed;
-			inset: 4.25rem 0 0;
-			z-index: 15;
+			inset: var(--mobile-header-height) 0 0;
+			z-index: var(--layer-backdrop);
 			display: block;
 			border: 0;
 			background: rgb(0 0 0 / 60%);
