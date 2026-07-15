@@ -1,6 +1,5 @@
 <script lang="ts">
 	import AvailabilityBadges from '$lib/components/AvailabilityBadges.svelte';
-	import PageHeader from '$lib/components/PageHeader.svelte';
 	import PageSection from '$lib/components/PageSection.svelte';
 	import WikiTable from '$lib/components/WikiTable.svelte';
 	import ChildLinkGrid from '$lib/components/ChildLinkGrid.svelte';
@@ -165,14 +164,6 @@
 		content="Artificer class rules, progression, spellcasting, infusions, equipment, and specialist options for our campaigns."
 	/>
 </svelte:head>
-
-<PageHeader
-	title="Artificer"
-	description="Artificers combine magical theory, craftsmanship, and specialized tools to create enchanted equipment and unusual inventions. They are versatile half-casters who can support allies, improve equipment, solve technical problems, and adapt their abilities to the situation."
-	eyebrow="Class"
-	tags={['Class', 'Intelligence', 'Crafting', 'Half-caster']}
-/>
-
 
 <PageSection title="Multiclassing">
 	<p>

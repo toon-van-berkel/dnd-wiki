@@ -1,13 +1,10 @@
 <script lang="ts">
 	import AvailabilityBadges from '$lib/components/AvailabilityBadges.svelte';
 	import CampaignNote from '$lib/components/CampaignNote.svelte';
-	import PageHeader from '$lib/components/PageHeader.svelte';
 	import PageSection from '$lib/components/PageSection.svelte';
 </script>
 
 <svelte:head><title>Life Domain — D&D Portal</title></svelte:head>
-
-<PageHeader title="Life Domain" description="A cleric tradition devoted to preserving life, supporting allies, and protecting communities." eyebrow="Cleric domain" tags={['Subclass', 'Cleric', 'Support']} />
 
 <AvailabilityBadges allowed={['Party 1', 'Party 2']} limited={['Party 3']} banned={['Party 4']} />
 

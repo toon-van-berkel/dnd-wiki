@@ -1,0 +1,21 @@
+@use 'mixins';
+
+@mixin field-control {
+	@include mixins.focus-ring;
+
+	width: 100%;
+	min-height: 3rem;
+	padding-block: 0.7rem;
+	padding-inline: 0.9rem;
+	border: 1px solid var(--border);
+	border-radius: var(--radius-sm);
+	background: var(--surface-raised);
+	color: var(--text-primary);
+	font: inherit;
+}
+
+@mixin select-control {
+	@include field-control;
+
+	padding-inline-end: 2.75rem;
+}

@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { resolveAppPath } from '$lib/utils/paths';
+	import { WIKI_PREFERENCES_STORAGE_KEY } from '$lib/utils/wiki-preferences';
 	import PageHeader from '$lib/components/PageHeader.svelte';
 	import PageSection from '$lib/components/PageSection.svelte';
 
@@ -39,19 +40,39 @@
 			'No separate consent is currently requested because this entry is used only as a local interface preference.'
 	};
 
+	const wikiPreference: StorageTechnology = {
+		name: 'Wiki preference',
+		key: WIKI_PREFERENCES_STORAGE_KEY,
+		type: 'Local storage',
+		provider: 'D&D Portal Wiki',
+		purpose:
+			'Remembers the preferred party and Dungeon Master used for availability context.',
+		data: 'Stable party and Dungeon Master IDs, such as i1 or toon.',
+		duration:
+			'Stored until preferences are cleared, removed by the website, or deleted through the browser.',
+		shared: 'No. The value remains inside the visitorâ€™s browser.',
+		consent:
+			'No separate consent is currently requested because this entry is used only as a local interface preference.'
+	};
+
 	const localStorageEntries: StorageTechnology[] = [
-		classCardPreference
+		classCardPreference,
+		wikiPreference
 	];
 
-	let preferenceRemoved = $state(false);
+	let removedPreferenceKeys = $state<string[]>([]);
 
-	function removeClassCardPreference() {
+	function removeLocalStoragePreference(key: string) {
 		if (typeof window === 'undefined') {
 			return;
 		}
 
-		window.localStorage.removeItem(classCardPreference.key);
-		preferenceRemoved = true;
+		window.localStorage.removeItem(key);
+		removedPreferenceKeys = [...new Set([...removedPreferenceKeys, key])];
+	}
+
+	function isPreferenceRemoved(key: string) {
+		return removedPreferenceKeys.includes(key);
 	}
 </script>
 
@@ -78,7 +99,7 @@
 
 	<div>
 		<strong>{localStorageEntries.length}</strong>
-		<span>Local browser preference</span>
+		<span>Local browser preferences</span>
 	</div>
 
 	<div>
@@ -115,8 +136,8 @@
 	</p>
 
 	<p>
-		The Wiki does use a small amount of local browser storage to remember an
-		interface preference. Local storage is not technically an HTTP cookie,
+		The Wiki does use a small amount of local browser storage to remember
+		interface preferences. Local storage is not technically an HTTP cookie,
 		but it is documented on this page because it is a related browser-storage
 		technology.
 	</p>
@@ -193,7 +214,7 @@
 	</dl>
 
 	<p>
-		D&D Portal currently uses local storage for a display preference. It does
+		D&D Portal currently uses local storage for display preferences. It does
 		not intentionally use tracking pixels, browser fingerprinting, or
 		cross-site device identifiers.
 	</p>
@@ -323,37 +344,51 @@
 	</div>
 </PageSection>
 
-<PageSection title="Removing the saved class-card preference">
+<PageSection title="Search URLs">
 	<p>
-		You can remove the saved class-card image preference directly from this
-		page.
+		Temporary Wiki search state is stored in the page URL. Search URLs may
+		include the search term, selected content-type filters, selected tag
+		filters, and the current result page.
 	</p>
 
-	<div class="cookie-storage-action">
-		<div>
-			<strong>Saved preference</strong>
-			<code>{classCardPreference.key}</code>
+	<p>
+		This makes search results shareable, but URL parameters can appear in
+		browser history, copied links, and hosting request logs. Search URL state
+		is separate from saved local browser preferences.
+	</p>
+</PageSection>
 
-			<p>
-				Removing this entry resets the saved female or male class-card
-				image selection.
-			</p>
+<PageSection title="Removing saved preferences">
+	<p>
+		You can remove saved Wiki preferences directly from this page.
+	</p>
+
+	{#each localStorageEntries as entry}
+		<div class="cookie-storage-action">
+			<div>
+				<strong>{entry.name}</strong>
+				<code>{entry.key}</code>
+
+				<p>
+					Removing this entry resets the saved preference for this browser.
+				</p>
+			</div>
+
+			<button
+				type="button"
+				onclick={() => removeLocalStoragePreference(entry.key)}
+				disabled={isPreferenceRemoved(entry.key)}
+			>
+				{isPreferenceRemoved(entry.key)
+					? 'Preference removed'
+					: 'Remove saved preference'}
+			</button>
 		</div>
-
-		<button
-			type="button"
-			onclick={removeClassCardPreference}
-			disabled={preferenceRemoved}
-		>
-			{preferenceRemoved
-				? 'Preference removed'
-				: 'Remove saved preference'}
-		</button>
-	</div>
+	{/each}
 
 	<p class="cookie-action-result" aria-live="polite">
-		{#if preferenceRemoved}
-			The saved class-card preference has been removed from this browser.
+		{#if removedPreferenceKeys.length}
+			The selected preference has been removed from this browser.
 		{/if}
 	</p>
 

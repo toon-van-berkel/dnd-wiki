@@ -1,24 +1,139 @@
+import { getAvailabilityMetadataForHref } from '../utils/availability-metadata.js';
+import { wikiPages, type WikiPageEntry, type WikiPageKind } from './registry.js';
+import { searchTagById, searchTagGroupLabels, searchTags } from './search-tags.js';
+
+export type SearchEntryKind = WikiPageKind;
+
 export type SearchEntry = {
+	id: string;
 	title: string;
 	href: string;
-	category: string;
 	description: string;
-	tags?: string[];
+	kind: SearchEntryKind;
+	tags: string[];
+	keywords: string[];
+	aliases: string[];
+	parentTitle?: string;
+	searchable: boolean;
+	partyIds?: string[];
+	dmIds?: string[];
 };
 
-// Search metadata only. Keep article content in its route file.
-export const searchIndex: SearchEntry[] = [
-	{ title: 'Species', href: '/species', category: 'Species', description: 'Playable species and campaign availability.', tags: ['characters'] },
-	{ title: 'Human', href: '/species/human', category: 'Species', description: 'Adaptable people found throughout the setting.', tags: ['allowed'] },
-	{ title: 'Elf', href: '/species/elf', category: 'Species', description: 'Long-lived people with several distinct cultures.', tags: ['limited'] },
-	{ title: 'Astral Elf', href: '/species/elf/astral-elf', category: 'Species', description: 'Elves shaped by life beyond the ordinary world.', tags: ['approval'] },
-	{ title: 'Classes', href: '/classes', category: 'Classes', description: 'Available classes and character roles.', tags: ['characters'] },
-	{ title: 'Cleric', href: '/classes/cleric', category: 'Classes', description: 'A divine class driven by conviction and service.', tags: ['divine'] },
-	{ title: 'Life Domain', href: '/classes/cleric/life-domain', category: 'Classes', description: 'A cleric domain focused on protection and recovery.', tags: ['subclass'] },
-	{ title: 'Rogue', href: '/classes/rogue', category: 'Classes', description: 'A skill-focused class built around precision, stealth, and mobility.', tags: ['dexterity', 'skills', 'stealth'] },
-	{ title: 'Rules', href: '/rules', category: 'Rules', description: 'House rules and table rulings.', tags: ['global'] },
-	{ title: 'Movement', href: '/rules/movement', category: 'Rules', description: 'Table rulings for positioning, terrain, and travel.', tags: ['combat', 'travel'] },
-	{ title: 'Fighting', href: '/rules/fighting', category: 'Rules', description: 'Combat rulings including flanking and critical hits.', tags: ['combat'] },
-	{ title: 'Monsters', href: '/monsters', category: 'Bestiary', description: 'Creatures encountered in the campaigns.', tags: ['bestiary'] },
-	{ title: 'Locations', href: '/locations', category: 'World', description: 'Places discovered in the campaign world.', tags: ['setting'] }
-];
+export const contentTypeLabels: Record<SearchEntryKind, string> = {
+	collection: 'Collection',
+	class: 'Class',
+	subclass: 'Subclass',
+	species: 'Species',
+	background: 'Background',
+	feat: 'Feat',
+	spell: 'Spell',
+	weapon: 'Weapon',
+	armour: 'Armour',
+	equipment: 'Equipment',
+	'magic-item': 'Magic Item',
+	monster: 'Monster',
+	location: 'Location',
+	rule: 'Rule',
+	homebrew: 'Homebrew',
+	information: 'Information',
+	legal: 'Legal',
+	settings: 'Settings',
+	other: 'Other'
+};
+
+export const searchIndex = buildSearchIndex(wikiPages);
+export const searchableEntries = searchIndex.filter((entry) => entry.searchable);
+export const collectionEntries = searchIndex.filter((entry) => entry.kind === 'collection');
+
+validateSearchTags();
+validateSearchIndex(searchIndex);
+
+function buildSearchIndex(items: WikiPageEntry[]): SearchEntry[] {
+	return items.map(toSearchEntry).filter((entry): entry is SearchEntry => Boolean(entry));
+}
+
+function toSearchEntry(item: WikiPageEntry): SearchEntry | undefined {
+	if (!item.href || item.href === '/') {
+		return undefined;
+	}
+
+	const kind = item.kind ?? 'other';
+	const searchable = item.searchable ?? kind !== 'collection';
+	const parentTitle = item.parentId
+		? wikiPages.find((page) => page.id === item.parentId)?.title
+		: undefined;
+
+	return {
+		id: item.id,
+		title: item.title,
+		href: item.href,
+		description: item.description ?? '',
+		kind,
+		tags: item.tags ?? [],
+		keywords: item.keywords ?? [],
+		aliases: item.aliases ?? [],
+		parentTitle,
+		searchable,
+		...getAvailabilityMetadataForHref(item.href)
+	};
+}
+
+function validateSearchIndex(entries: SearchEntry[]) {
+	const ids = new Set<string>();
+	const hrefs = new Set<string>();
+	const allowedKinds = new Set(Object.keys(contentTypeLabels));
+
+	for (const entry of entries) {
+		if (!entry.id || !entry.title || !entry.href) {
+			throw new Error(`Invalid search entry metadata for ${entry.href || entry.title || 'unknown'}.`);
+		}
+
+		if (ids.has(entry.id)) {
+			throw new Error(`Duplicate search entry id: ${entry.id}.`);
+		}
+
+		if (hrefs.has(entry.href)) {
+			throw new Error(`Duplicate search entry href: ${entry.href}.`);
+		}
+
+		if (!allowedKinds.has(entry.kind)) {
+			throw new Error(`Unknown search entry kind for ${entry.href}: ${entry.kind}.`);
+		}
+
+		if (entry.kind === 'collection' && entry.searchable) {
+			throw new Error(`Collection entry cannot be a normal search result: ${entry.href}.`);
+		}
+
+		for (const tag of entry.tags) {
+			if (!searchTagById.has(tag)) {
+				throw new Error(`Unknown search tag "${tag}" on ${entry.href}.`);
+			}
+		}
+
+		ids.add(entry.id);
+		hrefs.add(entry.href);
+	}
+}
+
+function validateSearchTags() {
+	const ids = new Set<string>();
+	const labels = new Set<string>();
+	const allowedGroups = new Set(Object.keys(searchTagGroupLabels));
+
+	for (const tag of searchTags) {
+		if (ids.has(tag.id)) {
+			throw new Error(`Duplicate search tag id: ${tag.id}.`);
+		}
+
+		if (labels.has(tag.label)) {
+			throw new Error(`Duplicate search tag label: ${tag.label}.`);
+		}
+
+		if (!allowedGroups.has(tag.group)) {
+			throw new Error(`Invalid search tag group for ${tag.id}: ${tag.group}.`);
+		}
+
+		ids.add(tag.id);
+		labels.add(tag.label);
+	}
+}

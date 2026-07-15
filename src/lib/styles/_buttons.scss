@@ -1,0 +1,24 @@
+@use 'mixins';
+
+@mixin button-base {
+	@include mixins.focus-ring;
+	@include mixins.interactive-surface;
+
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 2.4rem;
+	padding: 0.4rem 0.75rem;
+	border: 1px solid var(--border);
+	border-radius: var(--radius-sm);
+	font: inherit;
+	font-weight: 800;
+	text-decoration: none;
+	cursor: pointer;
+
+	&:disabled,
+	&[aria-disabled='true'] {
+		cursor: default;
+		opacity: 0.55;
+	}
+}

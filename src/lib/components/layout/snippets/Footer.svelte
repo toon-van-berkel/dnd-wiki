@@ -1,10 +1,12 @@
 <script lang="ts">
 	import WikiImage from '$lib/components/WikiImage.svelte';
+	import { siteConfig } from '$lib/config/site';
 	import { resolveAppPath } from '$lib/utils/paths';
 
 	const currentYear = new Date().getFullYear();
 
 	const browseLinks = [
+		{ label: 'Search the Wiki', href: '/search' },
 		{ label: 'Classes', href: '/classes' },
 		{ label: 'Species', href: '/species' },
 		{ label: 'Rules', href: '/rules' },
@@ -47,7 +49,7 @@
 		},
 		{
 			label: 'Contact by Email',
-			href: 'mailto:toonvanberkel.public@gmail.com'
+			href: `mailto:${siteConfig.contactEmail}`
 		}
 	];
 
@@ -92,7 +94,7 @@
 				</span>
 
 				<span class="site-footer__brand-text">
-					<strong id="site-footer-title">D&D Portal</strong>
+					<strong id="site-footer-title">{siteConfig.name}</strong>
 					<span>Campaign rules and reference wiki</span>
 				</span>
 			</a>
@@ -109,7 +111,7 @@
 					target="_blank"
 					rel="noopener noreferrer"
 				>
-					Toon van Berkel
+					{siteConfig.ownerName}
 				</a>.
 			</p>
 
@@ -138,7 +140,7 @@
 					LinkedIn
 				</a>
 
-				<a href="mailto:toonvanberkel.public@gmail.com">
+				<a href={`mailto:${siteConfig.contactEmail}`}>
 					Email
 				</a>
 			</div>
@@ -261,7 +263,7 @@
 					target="_blank"
 					rel="noopener noreferrer"
 				>
-					Toon van Berkel
+					{siteConfig.ownerName}
 				</a>.
 				Original website content is protected unless otherwise stated.
 			</p>

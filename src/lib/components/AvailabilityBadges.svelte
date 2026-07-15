@@ -4,6 +4,7 @@
 		availability,
 		type PageAvailability
 	} from '$lib/data/availability';
+	import { getAvailabilityLabel } from '$lib/utils/availability-metadata';
 
 	type AvailabilityValues = string[];
 
@@ -49,21 +50,25 @@
 			{
 				label: 'Allowed',
 				values: pageAvailability.allowed ?? [],
+				partyLabel: getAvailabilityLabel(pageAvailability.allowed ?? []),
 				tone: 'allowed'
 			},
 			{
 				label: 'Limited',
 				values: pageAvailability.limited ?? [],
+				partyLabel: getAvailabilityLabel(pageAvailability.limited ?? []),
 				tone: 'limited'
 			},
 			{
 				label: 'Banned',
 				values: pageAvailability.banned ?? [],
+				partyLabel: getAvailabilityLabel(pageAvailability.banned ?? []),
 				tone: 'banned'
 			},
 			{
 				label: 'Needs approval',
 				values: pageAvailability.approval ?? [],
+				partyLabel: getAvailabilityLabel(pageAvailability.approval ?? []),
 				tone: 'approval'
 			}
 		].filter((group) => group.values.length)
@@ -75,7 +80,7 @@
 		{#each groups as group}
 			<div class="availability__group availability__group--{group.tone}">
 				<strong>{group.label} in</strong>
-				<span>{group.values.join(', ')}</span>
+				<span>{group.partyLabel}</span>
 			</div>
 		{/each}
 	</div>

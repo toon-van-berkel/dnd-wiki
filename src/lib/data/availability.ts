@@ -1,10 +1,10 @@
-import { selectParties, type Party } from './parties';
+import { selectParties, type PartyCode } from './parties.js';
 
 export type PageAvailability = {
-	allowed?: Party[];
-	limited?: Party[];
-	banned?: Party[];
-	approval?: Party[];
+	allowed?: PartyCode[];
+	limited?: PartyCode[];
+	banned?: PartyCode[];
+	approval?: PartyCode[];
 };
 
 export type AvailabilityConfig = Record<string, Record<string, PageAvailability>>;

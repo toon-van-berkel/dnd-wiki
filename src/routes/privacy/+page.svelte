@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { resolveAppPath } from '$lib/utils/paths';
+	import { WIKI_PREFERENCES_STORAGE_KEY } from '$lib/utils/wiki-preferences';
 	import PageHeader from '$lib/components/PageHeader.svelte';
 	import PageSection from '$lib/components/PageSection.svelte';
 
@@ -165,7 +166,7 @@
 	</div>
 
 	<p>
-		The following browser-storage entry is currently used:
+		The following browser-storage entries are currently used:
 	</p>
 
 	<div class="privacy-storage">
@@ -198,10 +199,46 @@
 		</div>
 	</div>
 
+	<div class="privacy-storage">
+		<code>{WIKI_PREFERENCES_STORAGE_KEY}</code>
+
+		<div>
+			<strong>Purpose</strong>
+			<p>
+				Remembers the preferred party and Dungeon Master used for availability context.
+			</p>
+		</div>
+
+		<div>
+			<strong>Storage location</strong>
+			<p>Your own browser using <code>localStorage</code>.</p>
+		</div>
+
+		<div>
+			<strong>Sent to the website owner</strong>
+			<p>No. The preference is read locally by the website interface.</p>
+		</div>
+
+		<div>
+			<strong>Expiration</strong>
+			<p>
+				The preference remains until preferences are cleared, removed by the
+				website, or deleted through your browser settings.
+			</p>
+		</div>
+	</div>
+
 	<p>
 		Additional functional preferences may be added in the future, such as a
 		theme or language preference. This notice will be updated when the use
 		of browser storage changes materially.
+	</p>
+
+	<p>
+		Temporary search state is stored in the search page URL rather than in
+		local storage. Search URLs can include query text, content-type filters,
+		tag filters, and a page number. Those URL parameters can be visible in
+		browser history, copied links, and hosting request logs.
 	</p>
 </PageSection>
 
