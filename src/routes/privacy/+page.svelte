@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { resolveAppPath } from '$lib/utils/paths';
 	import { WIKI_PREFERENCES_STORAGE_KEY } from '$lib/utils/wiki-preferences';
-	import PageHeader from '$lib/components/PageHeader.svelte';
 	import PageSection from '$lib/components/PageSection.svelte';
 
 	const siteName = 'D&D Portal Wiki';
@@ -18,21 +17,6 @@
 	// TODO(configuration): Add the separate Player Portal privacy notice when available.
 	const playerPortalPrivacyUrl = '';
 </script>
-
-<svelte:head>
-	<title>Privacy Notice | D&D Portal</title>
-
-	<meta
-		name="description"
-		content="Information about personal data, local browser preferences, external services, privacy rights, and contact details for the D&D Portal Wiki."
-	/>
-</svelte:head>
-
-<PageHeader
-	title="Privacy Notice"
-	description="Information about what data the D&D Portal Wiki does and does not process, how browser preferences work, and how visitors can exercise their privacy rights."
-	eyebrow="Privacy and personal data"
-/>
 
 <div class="privacy-summary">
 	<div>

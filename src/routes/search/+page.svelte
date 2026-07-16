@@ -5,10 +5,8 @@
 	import { onMount, tick } from 'svelte';
 	import EmptyState from '$lib/components/feedback/EmptyState.svelte';
 	import ActionButton from '$lib/components/forms/ActionButton.svelte';
-	import PageHeader from '$lib/components/PageHeader.svelte';
 	import SearchFilterGroup from '$lib/components/search/SearchFilterGroup.svelte';
 	import { resolveAppPath } from '$lib/utils/paths';
-	import { getWikiPage } from '$lib/wiki/registry';
 	import {
 		createEmptySearchState,
 		getCollectionSuggestions,
@@ -24,8 +22,6 @@
 		type WikiSearchState
 	} from '$lib/utils/wiki-search';
 	import { contentTypeLabels, type SearchEntryKind } from '$lib/wiki/search-index';
-
-	const pageMeta = getWikiPage('search');
 
 	let query = $state('');
 	let queryInput = $state('');
@@ -214,20 +210,6 @@
 		return checked ? [...new Set([...ids, id])] : ids.filter((selectedId) => selectedId !== id);
 	}
 </script>
-
-<svelte:head>
-	<title>{pageMeta?.title ?? 'Search the Wiki'} | D&D Portal</title>
-	<meta
-		name="description"
-		content={pageMeta?.description ?? 'Search individual D&D Portal Wiki rules, character options, species, locations, and other content.'}
-	/>
-</svelte:head>
-
-<PageHeader
-	title={pageMeta?.title}
-	description={pageMeta?.description}
-	eyebrow={pageMeta?.eyebrow}
-/>
 
 <div class="search-page">
 	<div class="search-page__mobile-actions">

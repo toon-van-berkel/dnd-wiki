@@ -1,7 +1,5 @@
 <script lang="ts">
-	import AvailabilityBadges from '$lib/components/AvailabilityBadges.svelte';
 	import ChildLinkGrid from '$lib/components/ChildLinkGrid.svelte';
-	import PageHeader from '$lib/components/PageHeader.svelte';
 	import PageSection from '$lib/components/PageSection.svelte';
 	import { getNavigationChildren } from '$lib/wiki/navigation';
 
@@ -11,12 +9,6 @@
 		description: description ?? ''
 	}));
 </script>
-
-<svelte:head><title>Elf — D&D Portal</title></svelte:head>
-
-<PageHeader title="Elf" description="Long-lived people whose communities preserve distinct traditions and relationships with magic." eyebrow="Species" tags={['Species', 'Lineages']} />
-
-<AvailabilityBadges />
 
 <PageSection title="Elves in the setting">
 	<p>Elven cultures are not interchangeable. Choose a homeland or lineage page, then use it to ground your character’s outlook and relationships.</p>

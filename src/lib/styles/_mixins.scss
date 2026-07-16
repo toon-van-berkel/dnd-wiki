@@ -1,7 +1,7 @@
-@mixin focus-ring {
+@mixin focus-ring($color: var(--accent-muted), $offset: 2px) {
 	&:focus-visible {
-		outline: 2px solid var(--accent-muted);
-		outline-offset: 2px;
+		outline: 2px solid $color;
+		outline-offset: $offset;
 	}
 }
 
@@ -11,7 +11,13 @@
 		border-color 150ms ease,
 		color 150ms ease;
 
-	@media (prefers-reduced-motion: reduce) {
+	@include reduced-motion {
 		transition: none;
+	}
+}
+
+@mixin reduced-motion {
+	@media (prefers-reduced-motion: reduce) {
+		@content;
 	}
 }

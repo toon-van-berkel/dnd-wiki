@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { resolveAppPath } from '$lib/utils/paths';
-	import PageHeader from '$lib/components/PageHeader.svelte';
 	import PageSection from '$lib/components/PageSection.svelte';
 
 	import {
@@ -95,21 +94,6 @@
 		selectedFilter = 'all';
 	}
 </script>
-
-<svelte:head>
-	<title>Changelog | D&D Portal</title>
-
-	<meta
-		name="description"
-		content="A chronological overview of new features, content updates, fixes, and other changes made to the D&D Portal Wiki."
-	/>
-</svelte:head>
-
-<PageHeader
-	title="Changelog"
-	description="A chronological overview of new features, content additions, improvements, fixes, and other changes made to the D&D Portal Wiki."
-	eyebrow="Project development"
-/>
 
 <div class="changelog-summary">
 	<div>

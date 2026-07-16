@@ -1,3 +1,5 @@
+import type { WikiDomainPage } from '../domain.js';
+
 export const subClasses_Clerics = [
 	{
 		title: 'Life Domain',
@@ -15,4 +17,4 @@ export const subClasses_Clerics = [
 		keywords: ['cleric', 'subclass', 'domain'],
 		tags: ['dark-magic', 'divine', 'undead', 'necrotic', 'burst-damage']
 	}
-]
+] satisfies WikiDomainPage[];

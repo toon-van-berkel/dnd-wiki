@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { resolveAppPath } from '$lib/utils/paths';
-	import PageHeader from '$lib/components/PageHeader.svelte';
 	import PageSection from '$lib/components/PageSection.svelte';
 
 	const contactEmail = 'toonvanberkel.public@gmail.com';
@@ -8,21 +7,6 @@
 	const githubAccessibilityIssueUrl =
 		'https://github.com/USERNAME/REPOSITORY/issues/new';
 </script>
-
-<svelte:head>
-	<title>Accessibility | D&D Portal</title>
-
-	<meta
-		name="description"
-		content="Accessibility information, supported features, known limitations, and reporting instructions for D&D Portal."
-	/>
-</svelte:head>
-
-<PageHeader
-	title="Accessibility"
-	description="Information about the accessibility goals, supported features, known limitations, and improvement process of D&D Portal."
-	eyebrow="Accessibility statement"
-/>
 
 <div class="accessibility-summary">
 	<div>

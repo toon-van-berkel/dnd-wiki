@@ -1,11 +1,14 @@
-import { subClasses_Clerics } from "./sub_classes-cleric.js";
-import { subClasses_Rogues } from "./sub_classes-rogues.js";
+import { subClasses_Clerics } from './sub_classes-cleric.js';
+import { subClasses_Rogues } from './sub_classes-rogues.js';
+
+import type { WikiDomainPage } from '../domain.js';
 
 export const classes = {
 		title: 'Classes',
 		href: '/classes',
 		description: 'Class options, subclass guidance, and campaign availability.',
 		kind: 'collection',
+		icon: 'rules',
 		searchable: false,
 		children: [
 			{
@@ -197,4 +200,4 @@ export const classes = {
 				tags: ['melee', 'dark-magic', 'cursed', 'control', 'chains', 'grief']
 			}
 		]
-	}
+} satisfies WikiDomainPage;

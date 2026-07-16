@@ -1,10 +1,12 @@
+@use '$lib/styles/breakpoints';
+@use '$lib/styles/mixins';
+@use '$lib/styles/panels';
+
 .wiki-table {
+	@include panels.panel(0);
+
 	width: 100%;
 	margin: 1rem 0;
-	border: 1px solid var(--border);
-	border-radius: var(--radius-lg);
-	background: var(--surface);
-	box-shadow: var(--shadow-card);
 	overflow-x: auto;
 	overscroll-behavior-inline: contain;
 	scrollbar-color: var(--border-strong) var(--surface);
@@ -75,7 +77,7 @@
 	}
 }
 
-@media (max-width: 640px) {
+@media (max-width: breakpoints.$table-mobile) {
 	.wiki-table {
 		margin-inline: 0;
 
@@ -90,7 +92,7 @@
 	}
 }
 
-@media (prefers-reduced-motion: reduce) {
+@include mixins.reduced-motion {
 	.wiki-table tbody tr {
 		transition: none;
 	}

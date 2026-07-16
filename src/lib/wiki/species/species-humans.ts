@@ -1,3 +1,5 @@
+import type { WikiDomainPage } from '../domain.js';
+
 export const humans = {
 	title: 'Human',
 	href: '/species/human',
@@ -5,4 +7,4 @@ export const humans = {
 	kind: 'species',
 	aliases: ['humans'],
 	keywords: ['lineage', 'race']
-}
+} satisfies WikiDomainPage;

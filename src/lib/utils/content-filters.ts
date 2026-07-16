@@ -1,13 +1,20 @@
+import {
+	isDungeonMasterId,
+	isPartyId,
+	type DungeonMasterId,
+	type PartyId
+} from '../config/campaigns.js';
+
 export const FILTER_ALL_ID = 'all';
 
 export type FilterableMetadata = {
-	partyIds?: readonly string[];
-	dmIds?: readonly string[];
+	partyIds?: readonly (PartyId | typeof FILTER_ALL_ID)[];
+	dmIds?: readonly (DungeonMasterId | typeof FILTER_ALL_ID)[];
 };
 
 export type ContentFilterSelection = {
-	partyIds: readonly string[];
-	dmIds: readonly string[];
+	partyIds: readonly PartyId[];
+	dmIds: readonly DungeonMasterId[];
 };
 
 function matchesSelectedIds(
@@ -47,9 +54,7 @@ export function matchesContentFilters(
 }
 
 export function sanitizeStoredFilters(
-	value: unknown,
-	validPartyIds: ReadonlySet<string>,
-	validDmIds: ReadonlySet<string>
+	value: unknown
 ): ContentFilterSelection {
 	if (typeof value !== 'object' || value === null || Array.isArray(value)) {
 		return { partyIds: [], dmIds: [] };
@@ -57,10 +62,10 @@ export function sanitizeStoredFilters(
 
 	const filters = value as { partyIds?: unknown; dmIds?: unknown };
 	const partyIds = Array.isArray(filters.partyIds)
-		? filters.partyIds.filter((id): id is string => typeof id === 'string' && validPartyIds.has(id))
+		? filters.partyIds.filter(isPartyId)
 		: [];
 	const dmIds = Array.isArray(filters.dmIds)
-		? filters.dmIds.filter((id): id is string => typeof id === 'string' && validDmIds.has(id))
+		? filters.dmIds.filter(isDungeonMasterId)
 		: [];
 
 	return { partyIds, dmIds };

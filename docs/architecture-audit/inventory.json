@@ -1,0 +1,4625 @@
+{
+	"phase": "Phase 7 current inventory",
+	"generatedFor": "Architecture audit after completed Phases 0-6",
+	"excludedDirectories": [
+		"node_modules",
+		"build",
+		"dist",
+		"coverage",
+		".git",
+		".codex-tmp"
+	],
+	"counts": {
+		"files": 169,
+		"routes": 64,
+		"components": 20,
+		"styles": 30,
+		"types": 122,
+		"functions": 195,
+		"dataExports": 22
+	},
+	"migrationHistory": {
+		"removedFiles": [
+			"src/lib/data/classes.ts",
+			"src/lib/data/parties.ts",
+			"src/lib/data/dungeon-masters.ts"
+		]
+	},
+	"files": [
+		{
+			"path": ".agents/CODEX-Instructions.md",
+			"category": "project-config",
+			"responsibility": "project-config source file.",
+			"imports": [],
+			"exports": [],
+			"consumers": [],
+			"types": [],
+			"functions": [
+				"names"
+			],
+			"dataExports": [],
+			"styles": [],
+			"risk": "medium",
+			"notes": []
+		},
+		{
+			"path": ".github/pull_request_template.md",
+			"category": "project-config",
+			"responsibility": "project-config source file.",
+			"imports": [],
+			"exports": [],
+			"consumers": [],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [],
+			"risk": "medium",
+			"notes": []
+		},
+		{
+			"path": ".vscode/extensions.json",
+			"category": "project-config",
+			"responsibility": "project-config source file.",
+			"imports": [],
+			"exports": [],
+			"consumers": [],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [],
+			"risk": "medium",
+			"notes": []
+		},
+		{
+			"path": "AGENTS.md",
+			"category": "operations",
+			"responsibility": "operations source file.",
+			"imports": [],
+			"exports": [],
+			"consumers": [],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [],
+			"risk": "medium",
+			"notes": [
+				"Touches PageHeader ownership."
+			]
+		},
+		{
+			"path": "docs/architecture-audit/components.md",
+			"category": "documentation",
+			"responsibility": "documentation source file.",
+			"imports": [],
+			"exports": [],
+			"consumers": [],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [],
+			"risk": "medium",
+			"notes": [
+				"Touches PageHeader ownership.",
+				"Touches availability rendering.",
+				"Architecture audit documentation; distinguish current state from history."
+			]
+		},
+		{
+			"path": "docs/architecture-audit/data-and-config.md",
+			"category": "documentation",
+			"responsibility": "documentation source file.",
+			"imports": [],
+			"exports": [],
+			"consumers": [],
+			"types": [
+				"ownership"
+			],
+			"functions": [],
+			"dataExports": [],
+			"styles": [],
+			"risk": "low",
+			"notes": [
+				"Touches PageHeader ownership.",
+				"Touches availability rendering.",
+				"Touches campaign identity ownership.",
+				"Architecture audit documentation; distinguish current state from history."
+			]
+		},
+		{
+			"path": "docs/architecture-audit/dependency-map.md",
+			"category": "documentation",
+			"responsibility": "documentation source file.",
+			"imports": [],
+			"exports": [],
+			"consumers": [],
+			"types": [
+				"from"
+			],
+			"functions": [],
+			"dataExports": [],
+			"styles": [],
+			"risk": "low",
+			"notes": [
+				"Touches PageHeader ownership.",
+				"Touches availability rendering.",
+				"Touches campaign identity ownership.",
+				"Architecture audit documentation; distinguish current state from history."
+			]
+		},
+		{
+			"path": "docs/architecture-audit/duplication.md",
+			"category": "documentation",
+			"responsibility": "documentation source file.",
+			"imports": [],
+			"exports": [],
+			"consumers": [],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [],
+			"risk": "low",
+			"notes": [
+				"Touches PageHeader ownership.",
+				"Touches availability rendering.",
+				"Architecture audit documentation; distinguish current state from history."
+			]
+		},
+		{
+			"path": "docs/architecture-audit/functions-and-utilities.md",
+			"category": "documentation",
+			"responsibility": "documentation source file.",
+			"imports": [],
+			"exports": [],
+			"consumers": [],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [],
+			"risk": "low",
+			"notes": [
+				"Touches availability rendering.",
+				"Architecture audit documentation; distinguish current state from history."
+			]
+		},
+		{
+			"path": "docs/architecture-audit/migration-plan.md",
+			"category": "documentation",
+			"responsibility": "documentation source file.",
+			"imports": [],
+			"exports": [],
+			"consumers": [],
+			"types": [
+				"aliases",
+				"system"
+			],
+			"functions": [],
+			"dataExports": [],
+			"styles": [],
+			"risk": "low",
+			"notes": [
+				"Touches PageHeader ownership.",
+				"Touches availability rendering.",
+				"Architecture audit documentation; distinguish current state from history."
+			]
+		},
+		{
+			"path": "docs/architecture-audit/project-structure.md",
+			"category": "documentation",
+			"responsibility": "documentation source file.",
+			"imports": [],
+			"exports": [],
+			"consumers": [],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [],
+			"risk": "low",
+			"notes": [
+				"Touches PageHeader ownership.",
+				"Touches availability rendering.",
+				"Architecture audit documentation; distinguish current state from history."
+			]
+		},
+		{
+			"path": "docs/architecture-audit/README.md",
+			"category": "documentation",
+			"responsibility": "documentation source file.",
+			"imports": [],
+			"exports": [],
+			"consumers": [],
+			"types": [
+				"declarations"
+			],
+			"functions": [],
+			"dataExports": [],
+			"styles": [],
+			"risk": "low",
+			"notes": [
+				"Touches PageHeader ownership.",
+				"Touches availability rendering.",
+				"Touches campaign identity ownership.",
+				"Architecture audit documentation; distinguish current state from history."
+			]
+		},
+		{
+			"path": "docs/architecture-audit/routes-and-pages.md",
+			"category": "documentation",
+			"responsibility": "documentation source file.",
+			"imports": [],
+			"exports": [],
+			"consumers": [],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [],
+			"risk": "medium",
+			"notes": [
+				"Touches PageHeader ownership.",
+				"Touches availability rendering.",
+				"Architecture audit documentation; distinguish current state from history."
+			]
+		},
+		{
+			"path": "docs/architecture-audit/sources-of-truth.md",
+			"category": "documentation",
+			"responsibility": "documentation source file.",
+			"imports": [],
+			"exports": [],
+			"consumers": [],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [],
+			"risk": "low",
+			"notes": [
+				"Touches PageHeader ownership.",
+				"Touches availability rendering.",
+				"Touches campaign identity ownership.",
+				"Architecture audit documentation; distinguish current state from history."
+			]
+		},
+		{
+			"path": "docs/architecture-audit/styling.md",
+			"category": "documentation",
+			"responsibility": "documentation source file.",
+			"imports": [],
+			"exports": [],
+			"consumers": [],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [],
+			"risk": "low",
+			"notes": [
+				"Touches PageHeader ownership.",
+				"Touches availability rendering.",
+				"Architecture audit documentation; distinguish current state from history."
+			]
+		},
+		{
+			"path": "docs/architecture-audit/target-structure.md",
+			"category": "documentation",
+			"responsibility": "documentation source file.",
+			"imports": [],
+			"exports": [],
+			"consumers": [],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [],
+			"risk": "low",
+			"notes": [
+				"Touches PageHeader ownership.",
+				"Architecture audit documentation; distinguish current state from history."
+			]
+		},
+		{
+			"path": "docs/architecture-audit/types.md",
+			"category": "documentation",
+			"responsibility": "documentation source file.",
+			"imports": [],
+			"exports": [],
+			"consumers": [],
+			"types": [
+				"surfaces"
+			],
+			"functions": [],
+			"dataExports": [],
+			"styles": [],
+			"risk": "low",
+			"notes": [
+				"Touches PageHeader ownership.",
+				"Touches availability rendering.",
+				"Touches campaign identity ownership.",
+				"Architecture audit documentation; distinguish current state from history."
+			]
+		},
+		{
+			"path": "package.json",
+			"category": "project-config",
+			"responsibility": "project-config source file.",
+			"imports": [],
+			"exports": [],
+			"consumers": [],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [],
+			"risk": "medium",
+			"notes": []
+		},
+		{
+			"path": "README.md",
+			"category": "project-config",
+			"responsibility": "project-config source file.",
+			"imports": [],
+			"exports": [],
+			"consumers": [],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [],
+			"risk": "medium",
+			"notes": []
+		},
+		{
+			"path": "scripts/test-wiki-search.mjs",
+			"category": "validation",
+			"responsibility": "validation source file.",
+			"imports": [
+				"../.svelte-kit/wiki-search-tests/src/lib/config/campaigns.js",
+				"../.svelte-kit/wiki-search-tests/src/lib/data/ai-images.js",
+				"../.svelte-kit/wiki-search-tests/src/lib/data/availability.js",
+				"../.svelte-kit/wiki-search-tests/src/lib/utils/availability-metadata.js",
+				"../.svelte-kit/wiki-search-tests/src/lib/utils/content-filters.js",
+				"../.svelte-kit/wiki-search-tests/src/lib/utils/wiki-preferences.js",
+				"../.svelte-kit/wiki-search-tests/src/lib/utils/wiki-search.js",
+				"../.svelte-kit/wiki-search-tests/src/lib/wiki/classes/classes.js",
+				"../.svelte-kit/wiki-search-tests/src/lib/wiki/icon-ids.js",
+				"../.svelte-kit/wiki-search-tests/src/lib/wiki/navigation.js",
+				"../.svelte-kit/wiki-search-tests/src/lib/wiki/registry.js",
+				"../.svelte-kit/wiki-search-tests/src/lib/wiki/search-index.js",
+				"../.svelte-kit/wiki-search-tests/src/lib/wiki/species/species.js",
+				"../.svelte-kit/wiki-search-tests/src/lib/wiki/static-pages.js",
+				"\\$lib\\/config\\/campaigns",
+				"\\$lib\\/styles\\/(?:panels|buttons|mixins)",
+				"\\$lib\\/styles\\/breakpoints",
+				"\\$lib\\/styles\\/mixins",
+				"\\.\\/icon-ids\\.js",
+				"node:assert/strict",
+				"node:fs",
+				"node:path",
+				"node:test"
+			],
+			"exports": [
+				"DungeonMasterId",
+				"NavigationItem",
+				"PartyId",
+				"SearchEntry",
+				"WikiPageEntry",
+				"findNavigationItem",
+				"resolveSrcset",
+				"wikiIconIds",
+				"wikiPageBy"
+			],
+			"consumers": [],
+			"types": [
+				"DungeonMasterId",
+				"NavigationItem",
+				"PartyId",
+				"SearchEntry",
+				"WikiPageEntry",
+				"and",
+				"contracts",
+				"facets",
+				"or",
+				"selections"
+			],
+			"functions": [
+				"assertDomainPageHasSingleRegistryEntry",
+				"assertLayoutOwnsAvailabilityBadges",
+				"assertLayoutOwnsPageHeaders",
+				"assertNoRuntimeImportCycles",
+				"assertUniqueHrefs",
+				"countMatches",
+				"createMemoryStorage",
+				"cssCustomPropertyDefinitions",
+				"cssCustomPropertyReferences",
+				"currentInventorySourceFiles",
+				"documentationFiles",
+				"domainRecordsByKind",
+				"escapeRegExp",
+				"findNavigationItem",
+				"flattenAvailability",
+				"flattenAvailabilityNode",
+				"flattenDomainPages",
+				"flattenNavigation",
+				"hrefForRouteSource",
+				"isCompatibilityFacade",
+				"isGeneratedPath",
+				"isInventorySourceFile",
+				"registryEntryForDomainPage",
+				"resolveSassImport",
+				"resolveSourceImport",
+				"resolveSrcset",
+				"routePageFiles",
+				"routeSourceExistsForHref",
+				"routeSourcePathForHref",
+				"runtimeCoreImports",
+				"scriptFiles",
+				"sourceConsumers",
+				"sourceFiles",
+				"splitSuffix",
+				"styleFiles",
+				"titlesFor",
+				"visit"
+			],
+			"dataExports": [],
+			"styles": [],
+			"risk": "high",
+			"notes": [
+				"Touches PageHeader ownership.",
+				"Touches availability rendering.",
+				"Touches campaign identity ownership."
+			]
+		},
+		{
+			"path": "scripts/verify-pages-build.mjs",
+			"category": "validation",
+			"responsibility": "validation source file.",
+			"imports": [
+				"node:fs",
+				"node:path",
+				"node:url"
+			],
+			"exports": [],
+			"consumers": [],
+			"types": [],
+			"functions": [
+				"candidateFilesForPublicPath",
+				"inspectCss",
+				"inspectHtml",
+				"isIgnoredUrl",
+				"publicPathForFile",
+				"relativeFile",
+				"report",
+				"resolvePublicPath",
+				"splitSrcset",
+				"stripSuffix",
+				"value",
+				"verifyLocalUrl",
+				"walk"
+			],
+			"dataExports": [],
+			"styles": [],
+			"risk": "medium",
+			"notes": []
+		},
+		{
+			"path": "src/app.d.ts",
+			"category": "project-config",
+			"responsibility": "project-config source file.",
+			"imports": [],
+			"exports": [],
+			"consumers": [],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [],
+			"risk": "medium",
+			"notes": []
+		},
+		{
+			"path": "src/app.html",
+			"category": "project-config",
+			"responsibility": "project-config source file.",
+			"imports": [],
+			"exports": [],
+			"consumers": [],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [],
+			"risk": "medium",
+			"notes": []
+		},
+		{
+			"path": "src/lib/components/AvailabilityBadges.scss",
+			"category": "component",
+			"responsibility": "Stylesheet or shared Sass primitive.",
+			"imports": [
+				"$lib/styles/breakpoints",
+				"$lib/styles/panels"
+			],
+			"exports": [],
+			"consumers": [
+				"src/lib/components/AvailabilityBadges.svelte"
+			],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [
+				"availability",
+				"status-color",
+				"status-soft",
+				"surface"
+			],
+			"risk": "medium",
+			"notes": []
+		},
+		{
+			"path": "src/lib/components/AvailabilityBadges.svelte",
+			"category": "component",
+			"responsibility": "component source file.",
+			"imports": [
+				"$lib/data/availability",
+				"$lib/utils/availability-metadata",
+				"./AvailabilityBadges.scss"
+			],
+			"exports": [],
+			"consumers": [
+				"src/routes/classes/+layout.svelte",
+				"src/routes/species/+layout.svelte"
+			],
+			"types": [
+				"Props"
+			],
+			"functions": [],
+			"dataExports": [],
+			"styles": [
+				"allowed",
+				"approval",
+				"banned",
+				"filter",
+				"group",
+				"label",
+				"length",
+				"limited",
+				"map",
+				"partyLabel",
+				"scss",
+				"tone",
+				"values"
+			],
+			"risk": "medium",
+			"notes": [
+				"Touches availability rendering."
+			]
+		},
+		{
+			"path": "src/lib/components/CampaignNote.scss",
+			"category": "component",
+			"responsibility": "Stylesheet or shared Sass primitive.",
+			"imports": [],
+			"exports": [],
+			"consumers": [
+				"src/lib/components/CampaignNote.svelte"
+			],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [
+				"campaign",
+				"campaign-note",
+				"campaign-soft"
+			],
+			"risk": "medium",
+			"notes": []
+		},
+		{
+			"path": "src/lib/components/CampaignNote.svelte",
+			"category": "component",
+			"responsibility": "component source file.",
+			"imports": [
+				"$lib/config/campaigns",
+				"./CampaignNote.scss",
+				"svelte"
+			],
+			"exports": [],
+			"consumers": [
+				"src/routes/locations/+page.svelte",
+				"src/routes/rules/fighting/+page.svelte",
+				"src/routes/rules/movement/+page.svelte",
+				"src/routes/species/elf/astral-elf/+page.svelte",
+				"src/routes/species/human/+page.svelte"
+			],
+			"types": [
+				"PartyId",
+				"Props"
+			],
+			"functions": [],
+			"dataExports": [],
+			"styles": [
+				"campaign",
+				"campaign-soft",
+				"colorToken",
+				"name",
+				"scss",
+				"softColorToken"
+			],
+			"risk": "medium",
+			"notes": []
+		},
+		{
+			"path": "src/lib/components/ChildLinkGrid.scss",
+			"category": "component",
+			"responsibility": "Stylesheet or shared Sass primitive.",
+			"imports": [
+				"$lib/styles/mixins",
+				"$lib/styles/panels"
+			],
+			"exports": [],
+			"consumers": [
+				"src/lib/components/ChildLinkGrid.svelte"
+			],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [
+				"card-background-layer",
+				"card-content-layer",
+				"child-links",
+				"interactive-surface",
+				"surface"
+			],
+			"risk": "medium",
+			"notes": []
+		},
+		{
+			"path": "src/lib/components/ChildLinkGrid.svelte",
+			"category": "component",
+			"responsibility": "component source file.",
+			"imports": [
+				"$lib/utils/paths",
+				"./ChildLinkGrid.scss",
+				"svelte"
+			],
+			"exports": [],
+			"consumers": [
+				"src/routes/+page.svelte",
+				"src/routes/classes/+page.svelte",
+				"src/routes/classes/artificer/+page.svelte",
+				"src/routes/classes/cleric/+page.svelte",
+				"src/routes/classes/rogue/+page.svelte",
+				"src/routes/rules/+page.svelte",
+				"src/routes/species/+page.svelte",
+				"src/routes/species/elf/+page.svelte"
+			],
+			"types": [
+				"ChildPageLink",
+				"Gender",
+				"Props"
+			],
+			"functions": [
+				"buildBackgroundStyle",
+				"buildLinkToImage",
+				"cleanTitle",
+				"getOppositeGender",
+				"getRandomGender"
+			],
+			"dataExports": [],
+			"styles": [
+				"description",
+				"getItem",
+				"href",
+				"image",
+				"imagePosition",
+				"join",
+				"length",
+				"push",
+				"random",
+				"replaceAll",
+				"scss",
+				"setItem",
+				"tags",
+				"title",
+				"toLocaleLowerCase",
+				"webp"
+			],
+			"risk": "medium",
+			"notes": []
+		},
+		{
+			"path": "src/lib/components/feedback/EmptyState.svelte",
+			"category": "component",
+			"responsibility": "component source file.",
+			"imports": [
+				"$lib/styles/panels",
+				"svelte"
+			],
+			"exports": [],
+			"consumers": [
+				"src/routes/search/+page.svelte"
+			],
+			"types": [
+				"Props"
+			],
+			"functions": [],
+			"dataExports": [],
+			"styles": [
+				"empty-state",
+				"empty-state__actions",
+				"panel"
+			],
+			"risk": "medium",
+			"notes": []
+		},
+		{
+			"path": "src/lib/components/forms/ActionButton.svelte",
+			"category": "component",
+			"responsibility": "component source file.",
+			"imports": [
+				"$lib/styles/buttons",
+				"svelte"
+			],
+			"exports": [],
+			"consumers": [
+				"src/lib/components/WikiPreferences.svelte",
+				"src/routes/search/+page.svelte"
+			],
+			"types": [
+				"Props"
+			],
+			"functions": [],
+			"dataExports": [],
+			"styles": [
+				"action-button",
+				"button-base"
+			],
+			"risk": "medium",
+			"notes": []
+		},
+		{
+			"path": "src/lib/components/forms/SelectField.svelte",
+			"category": "component",
+			"responsibility": "component source file.",
+			"imports": [
+				"$lib/styles/forms"
+			],
+			"exports": [],
+			"consumers": [
+				"src/lib/components/WikiPreferences.svelte"
+			],
+			"types": [
+				"Props",
+				"SelectOption"
+			],
+			"functions": [],
+			"dataExports": [],
+			"styles": [
+				"currentTarget",
+				"form-control",
+				"label",
+				"select-control",
+				"select-field",
+				"value"
+			],
+			"risk": "medium",
+			"notes": []
+		},
+		{
+			"path": "src/lib/components/layout/Panel.svelte",
+			"category": "component",
+			"responsibility": "component source file.",
+			"imports": [
+				"$lib/styles/breakpoints",
+				"$lib/styles/panels",
+				"svelte"
+			],
+			"exports": [],
+			"consumers": [
+				"src/lib/components/WikiPreferences.svelte"
+			],
+			"types": [
+				"Props"
+			],
+			"functions": [],
+			"dataExports": [],
+			"styles": [
+				"panel",
+				"panel__actions",
+				"panel__body",
+				"panel__header"
+			],
+			"risk": "medium",
+			"notes": []
+		},
+		{
+			"path": "src/lib/components/layout/snippets/Footer.scss",
+			"category": "component",
+			"responsibility": "Stylesheet or shared Sass primitive.",
+			"imports": [],
+			"exports": [],
+			"consumers": [
+				"src/lib/components/layout/snippets/Footer.svelte"
+			],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [
+				"site-footer",
+				"site-footer__brand",
+				"site-footer__brand-mark",
+				"site-footer__brand-text",
+				"site-footer__column",
+				"site-footer__creator-links",
+				"site-footer__external-icon",
+				"site-footer__inner",
+				"site-footer__introduction",
+				"site-footer__legal",
+				"site-footer__legal-inner",
+				"site-footer__navigation"
+			],
+			"risk": "medium",
+			"notes": []
+		},
+		{
+			"path": "src/lib/components/layout/snippets/Footer.svelte",
+			"category": "component",
+			"responsibility": "component source file.",
+			"imports": [
+				"$lib/components/WikiImage.svelte",
+				"$lib/config/site",
+				"$lib/utils/paths",
+				"$lib/wiki/registry",
+				"./Footer.scss"
+			],
+			"exports": [],
+			"consumers": [
+				"src/lib/components/layout/WikiLayout.svelte"
+			],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [
+				"com",
+				"contactEmail",
+				"dndbeyond",
+				"external",
+				"getFullYear",
+				"href",
+				"label",
+				"linkedin",
+				"name",
+				"ownerName",
+				"scss",
+				"svelte",
+				"svg",
+				"svgrepo",
+				"title",
+				"toonvb",
+				"wizards"
+			],
+			"risk": "medium",
+			"notes": []
+		},
+		{
+			"path": "src/lib/components/layout/snippets/Header.scss",
+			"category": "component",
+			"responsibility": "Stylesheet or shared Sass primitive.",
+			"imports": [
+				"$lib/styles/breakpoints"
+			],
+			"exports": [],
+			"consumers": [
+				"src/lib/components/layout/snippets/Header.svelte"
+			],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [
+				"header",
+				"search",
+				"search__result-copy",
+				"sr-only"
+			],
+			"risk": "medium",
+			"notes": []
+		},
+		{
+			"path": "src/lib/components/layout/snippets/Header.svelte",
+			"category": "component",
+			"responsibility": "component source file.",
+			"imports": [
+				"$app/navigation",
+				"$app/state",
+				"$lib/utils/paths",
+				"$lib/utils/wiki-search",
+				"$lib/wiki/search-index",
+				"./Header.scss"
+			],
+			"exports": [],
+			"consumers": [
+				"src/lib/components/layout/WikiLayout.svelte"
+			],
+			"types": [
+				"Props"
+			],
+			"functions": [
+				"clearSearch",
+				"handleResultNavigation",
+				"submitSearch"
+			],
+			"dataExports": [],
+			"styles": [
+				"description",
+				"get",
+				"href",
+				"id",
+				"kind",
+				"length",
+				"preventDefault",
+				"route",
+				"scss",
+				"searchParams",
+				"svg",
+				"title",
+				"toLowerCase",
+				"trim",
+				"url"
+			],
+			"risk": "medium",
+			"notes": []
+		},
+		{
+			"path": "src/lib/components/layout/snippets/helpers/NavTree.scss",
+			"category": "component",
+			"responsibility": "Stylesheet or shared Sass primitive.",
+			"imports": [
+				"$lib/styles/mixins"
+			],
+			"exports": [],
+			"consumers": [
+				"src/lib/components/layout/snippets/helpers/NavTree.svelte"
+			],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [
+				"active",
+				"expanded",
+				"focus-ring",
+				"interactive-surface",
+				"nav-tree",
+				"nav-tree__link",
+				"nav-tree__marker",
+				"nav-tree__row",
+				"nav-tree__toggle",
+				"navigation-item__icon",
+				"reduced-motion"
+			],
+			"risk": "medium",
+			"notes": []
+		},
+		{
+			"path": "src/lib/components/layout/snippets/helpers/NavTree.svelte",
+			"category": "component",
+			"responsibility": "component source file.",
+			"imports": [
+				"$lib/utils/paths",
+				"$lib/wiki/icons",
+				"$lib/wiki/navigation",
+				"./NavTree.scss",
+				"./NavTree.svelte"
+			],
+			"exports": [],
+			"consumers": [
+				"src/lib/components/layout/snippets/helpers/NavTree.svelte",
+				"src/lib/components/layout/snippets/Sidebar.svelte"
+			],
+			"types": [
+				"Props"
+			],
+			"functions": [
+				"childListId",
+				"isActive",
+				"isActiveBranch",
+				"isExpanded",
+				"resetExpansionForPath",
+				"toggleExpanded"
+			],
+			"dataExports": [],
+			"styles": [
+				"children",
+				"href",
+				"icon",
+				"length",
+				"navigation-icon",
+				"replace",
+				"replaceAll",
+				"scss",
+				"startsWith",
+				"svelte",
+				"title"
+			],
+			"risk": "medium",
+			"notes": []
+		},
+		{
+			"path": "src/lib/components/layout/snippets/Sidebar.scss",
+			"category": "component",
+			"responsibility": "Stylesheet or shared Sass primitive.",
+			"imports": [
+				"$lib/styles/breakpoints",
+				"$lib/styles/mixins"
+			],
+			"exports": [],
+			"consumers": [
+				"src/lib/components/layout/snippets/Sidebar.svelte"
+			],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [
+				"active",
+				"reduced-motion",
+				"sidebar"
+			],
+			"risk": "medium",
+			"notes": []
+		},
+		{
+			"path": "src/lib/components/layout/snippets/Sidebar.svelte",
+			"category": "component",
+			"responsibility": "component source file.",
+			"imports": [
+				"$app/state",
+				"$lib/config/campaigns",
+				"$lib/utils/paths",
+				"$lib/wiki/navigation",
+				"./Sidebar.scss",
+				"./helpers/NavTree.svelte"
+			],
+			"exports": [],
+			"consumers": [
+				"src/lib/components/layout/WikiLayout.svelte"
+			],
+			"types": [
+				"Props"
+			],
+			"functions": [],
+			"dataExports": [],
+			"styles": [
+				"colorToken",
+				"id",
+				"name",
+				"party-color",
+				"route",
+				"scss",
+				"svelte"
+			],
+			"risk": "medium",
+			"notes": []
+		},
+		{
+			"path": "src/lib/components/layout/WikiLayout.svelte",
+			"category": "component",
+			"responsibility": "component source file.",
+			"imports": [
+				"./snippets/Footer.svelte",
+				"./snippets/Header.svelte",
+				"./snippets/Sidebar.svelte",
+				"svelte"
+			],
+			"exports": [],
+			"consumers": [
+				"src/routes/+layout.svelte"
+			],
+			"types": [
+				"Props"
+			],
+			"functions": [
+				"closeMenu",
+				"handleKeydown",
+				"toggleSidebar"
+			],
+			"dataExports": [],
+			"styles": [
+				"getItem",
+				"key",
+				"setItem",
+				"svelte"
+			],
+			"risk": "medium",
+			"notes": []
+		},
+		{
+			"path": "src/lib/components/PageDocumentMetadata.svelte",
+			"category": "component",
+			"responsibility": "component source file.",
+			"imports": [
+				"$lib/config/site",
+				"$lib/wiki/registry"
+			],
+			"exports": [],
+			"consumers": [
+				"src/routes/+layout.svelte",
+				"src/routes/classes/+layout.svelte",
+				"src/routes/species/+layout.svelte"
+			],
+			"types": [
+				"Props"
+			],
+			"functions": [],
+			"dataExports": [],
+			"styles": [
+				"description",
+				"name",
+				"title"
+			],
+			"risk": "medium",
+			"notes": []
+		},
+		{
+			"path": "src/lib/components/PageHeader.scss",
+			"category": "component",
+			"responsibility": "Stylesheet or shared Sass primitive.",
+			"imports": [],
+			"exports": [],
+			"consumers": [
+				"src/lib/components/PageHeader.svelte"
+			],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [
+				"page-header"
+			],
+			"risk": "medium",
+			"notes": []
+		},
+		{
+			"path": "src/lib/components/PageHeader.svelte",
+			"category": "component",
+			"responsibility": "component source file.",
+			"imports": [
+				"./PageHeader.scss",
+				"./RuleTag.svelte"
+			],
+			"exports": [],
+			"consumers": [
+				"src/routes/+layout.svelte",
+				"src/routes/classes/+layout.svelte",
+				"src/routes/species/+layout.svelte"
+			],
+			"types": [
+				"Props"
+			],
+			"functions": [],
+			"dataExports": [],
+			"styles": [
+				"length",
+				"scss",
+				"svelte"
+			],
+			"risk": "medium",
+			"notes": [
+				"Touches PageHeader ownership."
+			]
+		},
+		{
+			"path": "src/lib/components/PageSection.scss",
+			"category": "component",
+			"responsibility": "Stylesheet or shared Sass primitive.",
+			"imports": [
+				"$lib/styles/panels"
+			],
+			"exports": [],
+			"consumers": [
+				"src/lib/components/PageSection.svelte"
+			],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [
+				"page-section",
+				"panel"
+			],
+			"risk": "medium",
+			"notes": []
+		},
+		{
+			"path": "src/lib/components/PageSection.svelte",
+			"category": "component",
+			"responsibility": "component source file.",
+			"imports": [
+				"./PageSection.scss",
+				"svelte"
+			],
+			"exports": [],
+			"consumers": [
+				"src/routes/+page.svelte",
+				"src/routes/about/+page.svelte",
+				"src/routes/accessibility/+page.svelte",
+				"src/routes/ai/+page.svelte",
+				"src/routes/changelog/+page.svelte",
+				"src/routes/classes/+page.svelte",
+				"src/routes/classes/artificer/+page.svelte",
+				"src/routes/classes/cleric/+page.svelte",
+				"src/routes/classes/rogue/+page.svelte",
+				"src/routes/content-removal/+page.svelte",
+				"src/routes/contribution-terms/+page.svelte",
+				"src/routes/cookies/+page.svelte",
+				"src/routes/credits/+page.svelte",
+				"src/routes/legal/+page.svelte",
+				"src/routes/locations/+page.svelte",
+				"src/routes/monsters/+page.svelte",
+				"src/routes/preferences/+page.svelte",
+				"src/routes/privacy/+page.svelte",
+				"src/routes/rules/+page.svelte",
+				"src/routes/rules/fighting/+page.svelte",
+				"src/routes/rules/movement/+page.svelte",
+				"src/routes/sources/+page.svelte",
+				"src/routes/species/+page.svelte",
+				"src/routes/species/elf/+page.svelte",
+				"src/routes/species/elf/astral-elf/+page.svelte",
+				"src/routes/species/human/+page.svelte"
+			],
+			"types": [
+				"Props"
+			],
+			"functions": [],
+			"dataExports": [],
+			"styles": [
+				"scss"
+			],
+			"risk": "medium",
+			"notes": []
+		},
+		{
+			"path": "src/lib/components/RuleTag.scss",
+			"category": "component",
+			"responsibility": "Stylesheet or shared Sass primitive.",
+			"imports": [],
+			"exports": [],
+			"consumers": [
+				"src/lib/components/RuleTag.svelte"
+			],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [
+				"tag"
+			],
+			"risk": "medium",
+			"notes": []
+		},
+		{
+			"path": "src/lib/components/RuleTag.svelte",
+			"category": "component",
+			"responsibility": "component source file.",
+			"imports": [
+				"./RuleTag.scss"
+			],
+			"exports": [],
+			"consumers": [
+				"src/lib/components/PageHeader.svelte"
+			],
+			"types": [
+				"Props"
+			],
+			"functions": [],
+			"dataExports": [],
+			"styles": [
+				"scss"
+			],
+			"risk": "medium",
+			"notes": []
+		},
+		{
+			"path": "src/lib/components/search/SearchFilterGroup.svelte",
+			"category": "component",
+			"responsibility": "component source file.",
+			"imports": [
+				"$lib/styles/mixins",
+				"$lib/styles/panels",
+				"svelte"
+			],
+			"exports": [
+				"SearchFilterOption"
+			],
+			"consumers": [
+				"src/routes/search/+page.svelte"
+			],
+			"types": [
+				"Props",
+				"SearchFilterOption"
+			],
+			"functions": [],
+			"dataExports": [],
+			"styles": [
+				"checked",
+				"count",
+				"currentTarget",
+				"filter",
+				"focus-ring",
+				"id",
+				"includes",
+				"interactive-surface",
+				"label",
+				"length",
+				"panel",
+				"replace",
+				"search-filter-group",
+				"search-filter-group__header",
+				"search-filter-group__options",
+				"search-filter-option",
+				"toLowerCase"
+			],
+			"risk": "medium",
+			"notes": []
+		},
+		{
+			"path": "src/lib/components/WikiImage.svelte",
+			"category": "component",
+			"responsibility": "component source file.",
+			"imports": [
+				"$lib/utils/paths",
+				"svelte/elements"
+			],
+			"exports": [],
+			"consumers": [
+				"src/lib/components/layout/snippets/Footer.svelte"
+			],
+			"types": [
+				"Props"
+			],
+			"functions": [],
+			"dataExports": [],
+			"styles": [
+				"rest"
+			],
+			"risk": "medium",
+			"notes": []
+		},
+		{
+			"path": "src/lib/components/WikiPreferences.scss",
+			"category": "component",
+			"responsibility": "Stylesheet or shared Sass primitive.",
+			"imports": [
+				"$lib/styles/breakpoints"
+			],
+			"exports": [],
+			"consumers": [
+				"src/lib/components/WikiPreferences.svelte"
+			],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [
+				"wiki-preferences__fields",
+				"wiki-preferences__footer"
+			],
+			"risk": "medium",
+			"notes": []
+		},
+		{
+			"path": "src/lib/components/WikiPreferences.svelte",
+			"category": "component",
+			"responsibility": "component source file.",
+			"imports": [
+				"$lib/components/forms/ActionButton.svelte",
+				"$lib/components/forms/SelectField.svelte",
+				"$lib/components/layout/Panel.svelte",
+				"$lib/config/campaigns",
+				"$lib/utils/wiki-preferences",
+				"./WikiPreferences.scss",
+				"svelte"
+			],
+			"exports": [],
+			"consumers": [
+				"src/routes/preferences/+page.svelte"
+			],
+			"types": [
+				"WikiPreferences"
+			],
+			"functions": [
+				"clearPreferences",
+				"updateDungeonMasterPreference",
+				"updatePartyPreference",
+				"updatePreference"
+			],
+			"dataExports": [],
+			"styles": [
+				"dmId",
+				"dungeonMasters",
+				"id",
+				"map",
+				"name",
+				"parties",
+				"partyId",
+				"preferences",
+				"scss",
+				"svelte"
+			],
+			"risk": "medium",
+			"notes": []
+		},
+		{
+			"path": "src/lib/components/WikiTable.scss",
+			"category": "component",
+			"responsibility": "Stylesheet or shared Sass primitive.",
+			"imports": [
+				"$lib/styles/breakpoints",
+				"$lib/styles/mixins",
+				"$lib/styles/panels"
+			],
+			"exports": [],
+			"consumers": [
+				"src/lib/components/WikiTable.svelte"
+			],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [
+				"panel",
+				"reduced-motion",
+				"wiki-table"
+			],
+			"risk": "medium",
+			"notes": []
+		},
+		{
+			"path": "src/lib/components/WikiTable.svelte",
+			"category": "component",
+			"responsibility": "component source file.",
+			"imports": [
+				"./WikiTable.scss"
+			],
+			"exports": [],
+			"consumers": [
+				"src/routes/+page.svelte",
+				"src/routes/classes/artificer/+page.svelte",
+				"src/routes/classes/rogue/+page.svelte"
+			],
+			"types": [
+				"Props"
+			],
+			"functions": [],
+			"dataExports": [],
+			"styles": [
+				"scss"
+			],
+			"risk": "medium",
+			"notes": []
+		},
+		{
+			"path": "src/lib/config/campaigns.ts",
+			"category": "config",
+			"responsibility": "Owns campaign, Party, and Dungeon Master identity configuration.",
+			"imports": [],
+			"exports": [
+				"DungeonMaster",
+				"DungeonMasterId",
+				"Party",
+				"PartyId",
+				"allPartyIds",
+				"campaignConfig",
+				"dungeonMasterIds",
+				"dungeonMasters",
+				"getDungeonMaster",
+				"getDungeonMasterForParty",
+				"getPartiesForDungeonMaster",
+				"getParty",
+				"isDungeonMasterId",
+				"isPartyId",
+				"parties",
+				"partyIds",
+				"selectAllParties",
+				"selectParties",
+				"validateCampaignConfig"
+			],
+			"consumers": [
+				"src/lib/components/CampaignNote.svelte",
+				"src/lib/components/layout/snippets/Sidebar.svelte",
+				"src/lib/components/WikiPreferences.svelte",
+				"src/lib/data/availability.ts",
+				"src/lib/utils/availability-metadata.ts",
+				"src/lib/utils/content-filters.ts",
+				"src/lib/utils/wiki-preferences.ts",
+				"src/lib/wiki/search-index.ts",
+				"src/routes/+page.svelte"
+			],
+			"types": [
+				"DungeonMaster",
+				"DungeonMasterId",
+				"Party",
+				"PartyId"
+			],
+			"functions": [
+				"configKeys",
+				"getDungeonMaster",
+				"getDungeonMasterForParty",
+				"getPartiesForDungeonMaster",
+				"getParty",
+				"isDungeonMasterId",
+				"isPartyId",
+				"selectAllParties",
+				"selectParties",
+				"validateCampaignConfig"
+			],
+			"dataExports": [
+				"allPartyIds",
+				"campaignConfig",
+				"dungeonMasterIds",
+				"dungeonMasters",
+				"parties",
+				"partyIds"
+			],
+			"styles": [],
+			"risk": "high",
+			"notes": [
+				"Touches campaign identity ownership."
+			]
+		},
+		{
+			"path": "src/lib/config/site.ts",
+			"category": "config",
+			"responsibility": "config source file.",
+			"imports": [],
+			"exports": [
+				"siteConfig"
+			],
+			"consumers": [
+				"src/lib/components/layout/snippets/Footer.svelte",
+				"src/lib/components/PageDocumentMetadata.svelte",
+				"src/routes/legal/+page.svelte"
+			],
+			"types": [],
+			"functions": [],
+			"dataExports": [
+				"siteConfig"
+			],
+			"styles": [],
+			"risk": "medium",
+			"notes": []
+		},
+		{
+			"path": "src/lib/data/ai-images.ts",
+			"category": "data",
+			"responsibility": "data source file.",
+			"imports": [
+				"../wiki/registry.js"
+			],
+			"exports": [
+				"AiImageEntry",
+				"AiImageType",
+				"aiEditedImages",
+				"aiGeneratedImages",
+				"aiImages"
+			],
+			"consumers": [
+				"src/routes/ai/+page.svelte"
+			],
+			"types": [
+				"AiImageEntry",
+				"AiImageType",
+				"ClassCardSet"
+			],
+			"functions": [
+				"createClassCardEntries"
+			],
+			"dataExports": [],
+			"styles": [],
+			"risk": "medium",
+			"notes": []
+		},
+		{
+			"path": "src/lib/data/availability.ts",
+			"category": "data",
+			"responsibility": "Owns page availability decisions by canonical href.",
+			"imports": [
+				"../config/campaigns.js",
+				"../wiki/registry.js"
+			],
+			"exports": [
+				"AvailabilityBranch",
+				"AvailabilityConfig",
+				"AvailabilityInventoryEntry",
+				"AvailabilityNode",
+				"AvailabilityStatus",
+				"PageAvailability",
+				"availability",
+				"getAvailabilityByHref",
+				"getAvailabilityInventory",
+				"normalizeAvailabilityHref",
+				"validateAvailabilityConfig"
+			],
+			"consumers": [
+				"src/lib/components/AvailabilityBadges.svelte",
+				"src/lib/utils/availability-metadata.ts"
+			],
+			"types": [
+				"AvailabilityBranch",
+				"AvailabilityConfig",
+				"AvailabilityInventoryEntry",
+				"AvailabilityNode",
+				"AvailabilityStatus",
+				"PageAvailability",
+				"PartyId"
+			],
+			"functions": [
+				"collectAvailabilityEntries",
+				"createPageAvailability",
+				"getAvailabilityByHref",
+				"getAvailabilityInventory",
+				"getAvailabilityNode",
+				"getPageAvailabilityFromNode",
+				"normalizeAvailabilityHref",
+				"selectMainCampaignParties",
+				"validateAvailabilityConfig",
+				"validateStatusArrays"
+			],
+			"dataExports": [],
+			"styles": [],
+			"risk": "high",
+			"notes": []
+		},
+		{
+			"path": "src/lib/data/changelog.ts",
+			"category": "data",
+			"responsibility": "data source file.",
+			"imports": [],
+			"exports": [
+				"ChangeItem",
+				"ChangeLink",
+				"ChangeType",
+				"ChangelogRelease",
+				"changeTypeLabels",
+				"changelog"
+			],
+			"consumers": [
+				"src/routes/changelog/+page.svelte"
+			],
+			"types": [
+				"ChangeItem",
+				"ChangeLink",
+				"ChangeType",
+				"ChangelogRelease",
+				"filters"
+			],
+			"functions": [],
+			"dataExports": [],
+			"styles": [],
+			"risk": "medium",
+			"notes": []
+		},
+		{
+			"path": "src/lib/data/sources.ts",
+			"category": "data",
+			"responsibility": "data source file.",
+			"imports": [],
+			"exports": [
+				"SourceAccess",
+				"SourceEntry",
+				"SourceKind",
+				"SourceLink",
+				"SourceStatus",
+				"sourceAccessLabels",
+				"sourceKindLabels",
+				"sourceStatusLabels",
+				"sources"
+			],
+			"consumers": [
+				"src/routes/sources/+page.svelte"
+			],
+			"types": [
+				"SourceAccess",
+				"SourceEntry",
+				"SourceKind",
+				"SourceLink",
+				"SourceStatus"
+			],
+			"functions": [],
+			"dataExports": [],
+			"styles": [],
+			"risk": "medium",
+			"notes": []
+		},
+		{
+			"path": "src/lib/index.ts",
+			"category": "project-config",
+			"responsibility": "project-config source file.",
+			"imports": [],
+			"exports": [],
+			"consumers": [],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [],
+			"risk": "medium",
+			"notes": []
+		},
+		{
+			"path": "src/lib/styles/_breakpoints.scss",
+			"category": "style",
+			"responsibility": "Stylesheet or shared Sass primitive.",
+			"imports": [],
+			"exports": [],
+			"consumers": [
+				"src/lib/components/AvailabilityBadges.scss",
+				"src/lib/components/layout/Panel.svelte",
+				"src/lib/components/layout/snippets/Header.scss",
+				"src/lib/components/layout/snippets/Sidebar.scss",
+				"src/lib/components/WikiPreferences.scss",
+				"src/lib/components/WikiTable.scss",
+				"src/lib/styles/wiki-layout.scss",
+				"src/routes/about/About.scss",
+				"src/routes/search/Search.scss"
+			],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [
+				"availability-mobile",
+				"desktop-shell",
+				"mobile-content",
+				"mobile-shell",
+				"narrow-content",
+				"search-stack",
+				"table-mobile"
+			],
+			"risk": "medium",
+			"notes": []
+		},
+		{
+			"path": "src/lib/styles/_buttons.scss",
+			"category": "style",
+			"responsibility": "Stylesheet or shared Sass primitive.",
+			"imports": [
+				"mixins"
+			],
+			"exports": [],
+			"consumers": [
+				"src/lib/components/forms/ActionButton.svelte",
+				"src/routes/about/About.scss",
+				"src/routes/search/Search.scss"
+			],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [
+				"accent-action",
+				"button-base",
+				"focus-ring",
+				"interactive-surface",
+				"min-height",
+				"padding",
+				"secondary-action"
+			],
+			"risk": "medium",
+			"notes": []
+		},
+		{
+			"path": "src/lib/styles/_forms.scss",
+			"category": "style",
+			"responsibility": "Stylesheet or shared Sass primitive.",
+			"imports": [
+				"mixins"
+			],
+			"exports": [],
+			"consumers": [
+				"src/lib/components/forms/SelectField.svelte",
+				"src/routes/search/Search.scss"
+			],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [
+				"field-control",
+				"focus-ring",
+				"select-control"
+			],
+			"risk": "medium",
+			"notes": []
+		},
+		{
+			"path": "src/lib/styles/_mixins.scss",
+			"category": "style",
+			"responsibility": "Stylesheet or shared Sass primitive.",
+			"imports": [],
+			"exports": [],
+			"consumers": [
+				"src/lib/components/ChildLinkGrid.scss",
+				"src/lib/components/layout/snippets/helpers/NavTree.scss",
+				"src/lib/components/layout/snippets/Sidebar.scss",
+				"src/lib/components/search/SearchFilterGroup.svelte",
+				"src/lib/components/WikiTable.scss",
+				"src/lib/styles/wiki-layout.scss",
+				"src/routes/about/About.scss",
+				"src/routes/search/Search.scss"
+			],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [
+				"color",
+				"focus-ring",
+				"interactive-surface",
+				"offset",
+				"reduced-motion"
+			],
+			"risk": "medium",
+			"notes": []
+		},
+		{
+			"path": "src/lib/styles/_panels.scss",
+			"category": "style",
+			"responsibility": "Stylesheet or shared Sass primitive.",
+			"imports": [
+				"mixins"
+			],
+			"exports": [],
+			"consumers": [
+				"src/lib/components/AvailabilityBadges.scss",
+				"src/lib/components/ChildLinkGrid.scss",
+				"src/lib/components/feedback/EmptyState.svelte",
+				"src/lib/components/layout/Panel.svelte",
+				"src/lib/components/PageSection.scss",
+				"src/lib/components/search/SearchFilterGroup.svelte",
+				"src/lib/components/WikiTable.scss",
+				"src/routes/about/About.scss",
+				"src/routes/search/Search.scss"
+			],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [
+				"interactive-card",
+				"interactive-surface",
+				"padding",
+				"panel",
+				"shadow",
+				"surface"
+			],
+			"risk": "medium",
+			"notes": []
+		},
+		{
+			"path": "src/lib/styles/global.scss",
+			"category": "style",
+			"responsibility": "Stylesheet or shared Sass primitive.",
+			"imports": [
+				"tokens"
+			],
+			"exports": [],
+			"consumers": [],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [
+				"sr-only"
+			],
+			"risk": "medium",
+			"notes": []
+		},
+		{
+			"path": "src/lib/styles/tokens.scss",
+			"category": "style",
+			"responsibility": "Stylesheet or shared Sass primitive.",
+			"imports": [],
+			"exports": [],
+			"consumers": [],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [
+				"accent",
+				"accent-muted",
+				"accent-soft",
+				"allowed",
+				"allowed-soft",
+				"approval",
+				"approval-soft",
+				"background",
+				"banned",
+				"banned-soft",
+				"border",
+				"border-strong",
+				"content-gap",
+				"content-width",
+				"guest",
+				"guest-soft",
+				"header-height",
+				"layer-backdrop",
+				"layer-content",
+				"layer-header",
+				"layer-overlay",
+				"layer-sidebar",
+				"limited",
+				"limited-soft",
+				"mobile-header-height",
+				"party-i1",
+				"party-i1-soft",
+				"party-i2",
+				"party-i2-soft",
+				"party-i3",
+				"party-i3-soft",
+				"party-i4",
+				"party-i4-soft",
+				"party-i5",
+				"party-i5-soft",
+				"party-i6",
+				"party-i6-soft",
+				"party-i7",
+				"party-i7-soft",
+				"party-i8",
+				"party-i8-soft",
+				"radius-lg",
+				"radius-sm",
+				"shadow-card",
+				"sidebar-width",
+				"surface",
+				"surface-hover",
+				"surface-raised",
+				"text-heading",
+				"text-muted",
+				"text-primary",
+				"text-secondary"
+			],
+			"risk": "medium",
+			"notes": []
+		},
+		{
+			"path": "src/lib/styles/wiki-layout.scss",
+			"category": "style",
+			"responsibility": "Stylesheet or shared Sass primitive.",
+			"imports": [
+				"$lib/styles/breakpoints",
+				"$lib/styles/mixins"
+			],
+			"exports": [],
+			"consumers": [],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [
+				"reduced-motion",
+				"shell-offset",
+				"sidebar-toggle",
+				"sidebar-toggle-width",
+				"wiki-shell",
+				"wiki-shell__grid--sidebar-collapsed",
+				"wiki-shell__sidebar-slot"
+			],
+			"risk": "medium",
+			"notes": []
+		},
+		{
+			"path": "src/lib/utils/availability-metadata.ts",
+			"category": "utility",
+			"responsibility": "utility source file.",
+			"imports": [
+				"../config/campaigns.js",
+				"../data/availability.js"
+			],
+			"exports": [
+				"AvailabilityMetadata",
+				"getAvailabilityLabel",
+				"getAvailabilityMetadataForHref",
+				"getAvailabilityParties",
+				"getAvailabilityPartyIds",
+				"getDungeonMasterIdsForPartyIds"
+			],
+			"consumers": [
+				"src/lib/components/AvailabilityBadges.svelte",
+				"src/lib/wiki/search-index.ts"
+			],
+			"types": [
+				"AvailabilityMetadata",
+				"DungeonMasterId",
+				"PageAvailability",
+				"Party",
+				"PartyId"
+			],
+			"functions": [
+				"getAvailabilityLabel",
+				"getAvailabilityMetadataForHref",
+				"getAvailabilityParties",
+				"getAvailabilityPartyIds",
+				"getDungeonMasterIdsForPartyIds",
+				"unique"
+			],
+			"dataExports": [],
+			"styles": [],
+			"risk": "high",
+			"notes": []
+		},
+		{
+			"path": "src/lib/utils/content-filters.ts",
+			"category": "utility",
+			"responsibility": "utility source file.",
+			"imports": [
+				"../config/campaigns.js"
+			],
+			"exports": [
+				"ContentFilterSelection",
+				"FILTER_ALL_ID",
+				"FilterableMetadata",
+				"matchesContentFilters",
+				"matchesDungeonMasterFilter",
+				"matchesPartyFilter",
+				"sanitizeStoredFilters"
+			],
+			"consumers": [],
+			"types": [
+				"ContentFilterSelection",
+				"DungeonMasterId",
+				"FilterableMetadata",
+				"PartyId"
+			],
+			"functions": [
+				"matchesContentFilters",
+				"matchesDungeonMasterFilter",
+				"matchesPartyFilter",
+				"matchesSelectedIds",
+				"sanitizeStoredFilters"
+			],
+			"dataExports": [],
+			"styles": [],
+			"risk": "medium",
+			"notes": []
+		},
+		{
+			"path": "src/lib/utils/paths.ts",
+			"category": "utility",
+			"responsibility": "utility source file.",
+			"imports": [
+				"$app/paths"
+			],
+			"exports": [
+				"resolveAppPath",
+				"resolveAssetPath",
+				"resolveSrcset"
+			],
+			"consumers": [
+				"src/lib/components/ChildLinkGrid.svelte",
+				"src/lib/components/layout/snippets/Footer.svelte",
+				"src/lib/components/layout/snippets/Header.svelte",
+				"src/lib/components/layout/snippets/helpers/NavTree.svelte",
+				"src/lib/components/layout/snippets/Sidebar.svelte",
+				"src/lib/components/WikiImage.svelte",
+				"src/routes/about/+page.svelte",
+				"src/routes/accessibility/+page.svelte",
+				"src/routes/ai/+page.svelte",
+				"src/routes/changelog/+page.svelte",
+				"src/routes/content-removal/+page.svelte",
+				"src/routes/contribution-terms/+page.svelte",
+				"src/routes/cookies/+page.svelte",
+				"src/routes/credits/+page.svelte",
+				"src/routes/preferences/+page.svelte",
+				"src/routes/privacy/+page.svelte",
+				"src/routes/search/+page.svelte",
+				"src/routes/sources/+page.svelte"
+			],
+			"types": [],
+			"functions": [
+				"isAlreadyBasePrefixed",
+				"normalizeInput",
+				"resolveAppPath",
+				"resolveAssetPath",
+				"resolveSrcset",
+				"splitSuffix"
+			],
+			"dataExports": [],
+			"styles": [],
+			"risk": "medium",
+			"notes": []
+		},
+		{
+			"path": "src/lib/utils/wiki-preferences.ts",
+			"category": "utility",
+			"responsibility": "utility source file.",
+			"imports": [
+				"../config/campaigns.js"
+			],
+			"exports": [
+				"WIKI_PREFERENCES_STORAGE_KEY",
+				"WikiPreferences",
+				"clearWikiPreferences",
+				"createEmptyWikiPreferences",
+				"loadWikiPreferences",
+				"parseWikiPreferences",
+				"sanitizeWikiPreferences",
+				"saveWikiPreferences"
+			],
+			"consumers": [
+				"src/lib/components/WikiPreferences.svelte",
+				"src/routes/cookies/+page.svelte",
+				"src/routes/privacy/+page.svelte"
+			],
+			"types": [
+				"DungeonMasterId",
+				"PartyId",
+				"WikiPreferences"
+			],
+			"functions": [
+				"clearWikiPreferences",
+				"createEmptyWikiPreferences",
+				"isRecord",
+				"loadWikiPreferences",
+				"parseWikiPreferences",
+				"sanitizeWikiPreferences",
+				"saveWikiPreferences"
+			],
+			"dataExports": [],
+			"styles": [],
+			"risk": "medium",
+			"notes": []
+		},
+		{
+			"path": "src/lib/utils/wiki-search.ts",
+			"category": "utility",
+			"responsibility": "utility source file.",
+			"imports": [
+				"../wiki/search-index.js",
+				"../wiki/search-tags.js"
+			],
+			"exports": [
+				"RESULTS_PER_PAGE",
+				"SEARCH_QUERY_KEYS",
+				"ScoredSearchEntry",
+				"SearchTagFacet",
+				"SearchTagFacetGroup",
+				"SearchTypeFacet",
+				"WikiSearchFilters",
+				"WikiSearchState",
+				"buildHeaderSearchHref",
+				"createEmptySearchState",
+				"getAvailableTagFilters",
+				"getAvailableTypeFilters",
+				"getCollectionSuggestions",
+				"getSearchSuggestions",
+				"getSearchTagLabel",
+				"getTagFacets",
+				"getTypeFacets",
+				"groupTagFacets",
+				"matchesSearchFilters",
+				"normaliseSearchQuery",
+				"normalizeSearchText",
+				"paginateResults",
+				"readSearchStateFromParams",
+				"resetPageForSearchChange",
+				"searchWiki",
+				"tokeniseSearchQuery",
+				"writeSearchStateToParams"
+			],
+			"consumers": [
+				"src/lib/components/layout/snippets/Header.svelte",
+				"src/routes/search/+page.svelte"
+			],
+			"types": [
+				"ScoredSearchEntry",
+				"SearchEntry",
+				"SearchEntryKind",
+				"SearchTagFacet",
+				"SearchTagFacetGroup",
+				"SearchTagGroupId",
+				"SearchTypeFacet",
+				"WikiSearchFilters",
+				"WikiSearchState"
+			],
+			"functions": [
+				"buildHeaderSearchHref",
+				"clampPage",
+				"compareScoredEntries",
+				"countTokenMatches",
+				"createEmptySearchState",
+				"getAvailableTagFilters",
+				"getAvailableTypeFilters",
+				"getBlankTitleRank",
+				"getCollectionSuggestions",
+				"getSearchSuggestions",
+				"getSearchTagLabel",
+				"getSearchableFields",
+				"getTagFacets",
+				"getTypeFacets",
+				"groupTagFacets",
+				"matchesQuery",
+				"matchesSearchFilters",
+				"matchesTagSelection",
+				"matchesTypeSelection",
+				"normaliseSearchQuery",
+				"normalizeWhitespace",
+				"paginateResults",
+				"parseListParam",
+				"parsePage",
+				"readSearchStateFromParams",
+				"resetPageForSearchChange",
+				"sanitizeTagIds",
+				"sanitizeTypeIds",
+				"scoreSearchEntry",
+				"searchWiki",
+				"singularize",
+				"startIndex",
+				"tokenAppears",
+				"tokeniseSearchQuery",
+				"writeParam",
+				"writeSearchStateToParams"
+			],
+			"dataExports": [
+				"SEARCH_QUERY_KEYS"
+			],
+			"styles": [],
+			"risk": "high",
+			"notes": []
+		},
+		{
+			"path": "src/lib/wiki/classes/classes.ts",
+			"category": "wiki-domain",
+			"responsibility": "wiki-domain source file.",
+			"imports": [
+				"../domain.js",
+				"./sub_classes-cleric.js",
+				"./sub_classes-rogues.js"
+			],
+			"exports": [
+				"classes"
+			],
+			"consumers": [
+				"src/lib/wiki/registry.ts"
+			],
+			"types": [],
+			"functions": [],
+			"dataExports": [
+				"classes"
+			],
+			"styles": [],
+			"risk": "medium",
+			"notes": []
+		},
+		{
+			"path": "src/lib/wiki/classes/sub_classes-cleric.ts",
+			"category": "wiki-domain",
+			"responsibility": "wiki-domain source file.",
+			"imports": [
+				"../domain.js"
+			],
+			"exports": [
+				"subClasses_Clerics"
+			],
+			"consumers": [
+				"src/lib/wiki/classes/classes.ts"
+			],
+			"types": [],
+			"functions": [],
+			"dataExports": [
+				"subClasses_Clerics"
+			],
+			"styles": [],
+			"risk": "medium",
+			"notes": []
+		},
+		{
+			"path": "src/lib/wiki/classes/sub_classes-rogues.ts",
+			"category": "wiki-domain",
+			"responsibility": "wiki-domain source file.",
+			"imports": [
+				"../domain.js"
+			],
+			"exports": [
+				"subClasses_Rogues"
+			],
+			"consumers": [
+				"src/lib/wiki/classes/classes.ts"
+			],
+			"types": [],
+			"functions": [],
+			"dataExports": [
+				"subClasses_Rogues"
+			],
+			"styles": [],
+			"risk": "medium",
+			"notes": []
+		},
+		{
+			"path": "src/lib/wiki/domain.ts",
+			"category": "wiki-domain",
+			"responsibility": "Owns the shared authoring contract for domain page trees.",
+			"imports": [
+				"./icon-ids.js",
+				"./registry.js"
+			],
+			"exports": [
+				"WikiDomainPage"
+			],
+			"consumers": [
+				"src/lib/wiki/classes/classes.ts",
+				"src/lib/wiki/classes/sub_classes-cleric.ts",
+				"src/lib/wiki/classes/sub_classes-rogues.ts",
+				"src/lib/wiki/registry.ts",
+				"src/lib/wiki/species/species-elfs.ts",
+				"src/lib/wiki/species/species-humans.ts",
+				"src/lib/wiki/species/species.ts"
+			],
+			"types": [
+				"WikiDomainPage"
+			],
+			"functions": [],
+			"dataExports": [],
+			"styles": [],
+			"risk": "medium",
+			"notes": []
+		},
+		{
+			"path": "src/lib/wiki/icon-ids.ts",
+			"category": "wiki-domain",
+			"responsibility": "wiki-domain source file.",
+			"imports": [],
+			"exports": [
+				"WikiIconId",
+				"isWikiIconId",
+				"wikiIconIds"
+			],
+			"consumers": [
+				"src/lib/wiki/domain.ts",
+				"src/lib/wiki/icons.ts",
+				"src/lib/wiki/navigation.ts",
+				"src/lib/wiki/registry.ts"
+			],
+			"types": [
+				"WikiIconId"
+			],
+			"functions": [
+				"isWikiIconId"
+			],
+			"dataExports": [
+				"wikiIconIds"
+			],
+			"styles": [],
+			"risk": "medium",
+			"notes": []
+		},
+		{
+			"path": "src/lib/wiki/icons.ts",
+			"category": "wiki-domain",
+			"responsibility": "wiki-domain source file.",
+			"imports": [
+				"$lib/assets/icons/entity/pet.svg",
+				"$lib/assets/icons/game/source-book.svg",
+				"$lib/assets/icons/monster/fiend.svg",
+				"./icon-ids.js"
+			],
+			"exports": [
+				"getWikiIcon",
+				"wikiIcons"
+			],
+			"consumers": [
+				"src/lib/components/layout/snippets/helpers/NavTree.svelte"
+			],
+			"types": [],
+			"functions": [
+				"getWikiIcon"
+			],
+			"dataExports": [
+				"wikiIcons"
+			],
+			"styles": [],
+			"risk": "medium",
+			"notes": []
+		},
+		{
+			"path": "src/lib/wiki/navigation.ts",
+			"category": "wiki-domain",
+			"responsibility": "Projects registry pages into navigation items.",
+			"imports": [
+				"./icon-ids.js",
+				"./registry.js"
+			],
+			"exports": [
+				"NavigationItem",
+				"getNavigationChildren",
+				"navigation"
+			],
+			"consumers": [
+				"src/lib/components/layout/snippets/helpers/NavTree.svelte",
+				"src/lib/components/layout/snippets/Sidebar.svelte",
+				"src/routes/classes/+page.svelte",
+				"src/routes/classes/artificer/+page.svelte",
+				"src/routes/classes/cleric/+page.svelte",
+				"src/routes/classes/rogue/+page.svelte",
+				"src/routes/rules/+page.svelte",
+				"src/routes/species/+page.svelte",
+				"src/routes/species/elf/+page.svelte"
+			],
+			"types": [
+				"NavigationItem",
+				"WikiPageEntry"
+			],
+			"functions": [
+				"findNavigationItem",
+				"getNavigationChildren",
+				"toNavigationItem"
+			],
+			"dataExports": [],
+			"styles": [],
+			"risk": "medium",
+			"notes": []
+		},
+		{
+			"path": "src/lib/wiki/registry.ts",
+			"category": "wiki-domain",
+			"responsibility": "Combines static and domain metadata into the central Wiki page registry.",
+			"imports": [
+				"./classes/classes.js",
+				"./domain.js",
+				"./icon-ids.js",
+				"./species/species.js",
+				"./static-pages.js"
+			],
+			"exports": [
+				"FooterPageGroup",
+				"WikiPageEntry",
+				"WikiPageKind",
+				"footerPageIds",
+				"getFooterPageGroups",
+				"getFooterPages",
+				"getWikiChildren",
+				"getWikiPage",
+				"getWikiPageByHref",
+				"validateWikiRegistry",
+				"wikiPages"
+			],
+			"consumers": [
+				"src/lib/components/layout/snippets/Footer.svelte",
+				"src/lib/components/PageDocumentMetadata.svelte",
+				"src/lib/data/ai-images.ts",
+				"src/lib/data/availability.ts",
+				"src/lib/wiki/domain.ts",
+				"src/lib/wiki/navigation.ts",
+				"src/lib/wiki/search-index.ts",
+				"src/lib/wiki/static-pages.ts",
+				"src/routes/+layout.svelte",
+				"src/routes/+page.svelte",
+				"src/routes/classes/+layout.svelte",
+				"src/routes/species/+layout.svelte"
+			],
+			"types": [
+				"FooterPageGroup",
+				"WikiPageEntry",
+				"WikiPageKind"
+			],
+			"functions": [
+				"createPageId",
+				"detectParentCycles",
+				"domainEyebrow",
+				"flattenDomainPage",
+				"getFooterPageGroups",
+				"getFooterPages",
+				"getWikiChildren",
+				"getWikiPage",
+				"getWikiPageByHref",
+				"normalizeHref",
+				"validateWikiRegistry"
+			],
+			"dataExports": [
+				"footerPageIds"
+			],
+			"styles": [],
+			"risk": "high",
+			"notes": []
+		},
+		{
+			"path": "src/lib/wiki/search-index.ts",
+			"category": "wiki-domain",
+			"responsibility": "Projects registry pages into search entries.",
+			"imports": [
+				"../config/campaigns.js",
+				"../utils/availability-metadata.js",
+				"./registry.js",
+				"./search-tags.js"
+			],
+			"exports": [
+				"SearchEntry",
+				"SearchEntryKind",
+				"collectionEntries",
+				"contentTypeLabels",
+				"searchIndex",
+				"searchableEntries"
+			],
+			"consumers": [
+				"src/lib/components/layout/snippets/Header.svelte",
+				"src/lib/utils/wiki-search.ts",
+				"src/routes/search/+page.svelte"
+			],
+			"types": [
+				"SearchEntry",
+				"SearchEntryKind",
+				"WikiPageEntry",
+				"WikiPageKind"
+			],
+			"functions": [
+				"buildSearchIndex",
+				"toSearchEntry",
+				"validateSearchIndex",
+				"validateSearchTags"
+			],
+			"dataExports": [
+				"collectionEntries",
+				"searchIndex",
+				"searchableEntries"
+			],
+			"styles": [],
+			"risk": "high",
+			"notes": []
+		},
+		{
+			"path": "src/lib/wiki/search-tags.ts",
+			"category": "wiki-domain",
+			"responsibility": "wiki-domain source file.",
+			"imports": [],
+			"exports": [
+				"SearchTag",
+				"SearchTagGroupId",
+				"searchTagById",
+				"searchTagGroupLabels",
+				"searchTagGroupOrder",
+				"searchTags"
+			],
+			"consumers": [
+				"src/lib/utils/wiki-search.ts",
+				"src/lib/wiki/search-index.ts"
+			],
+			"types": [
+				"SearchTag",
+				"SearchTagGroupId"
+			],
+			"functions": [],
+			"dataExports": [
+				"searchTags"
+			],
+			"styles": [],
+			"risk": "medium",
+			"notes": []
+		},
+		{
+			"path": "src/lib/wiki/species/species-elfs.ts",
+			"category": "wiki-domain",
+			"responsibility": "wiki-domain source file.",
+			"imports": [
+				"../domain.js"
+			],
+			"exports": [
+				"elfs"
+			],
+			"consumers": [
+				"src/lib/wiki/species/species.ts"
+			],
+			"types": [],
+			"functions": [],
+			"dataExports": [
+				"elfs"
+			],
+			"styles": [],
+			"risk": "medium",
+			"notes": []
+		},
+		{
+			"path": "src/lib/wiki/species/species-humans.ts",
+			"category": "wiki-domain",
+			"responsibility": "wiki-domain source file.",
+			"imports": [
+				"../domain.js"
+			],
+			"exports": [
+				"humans"
+			],
+			"consumers": [
+				"src/lib/wiki/species/species.ts"
+			],
+			"types": [],
+			"functions": [],
+			"dataExports": [
+				"humans"
+			],
+			"styles": [],
+			"risk": "medium",
+			"notes": []
+		},
+		{
+			"path": "src/lib/wiki/species/species.ts",
+			"category": "wiki-domain",
+			"responsibility": "wiki-domain source file.",
+			"imports": [
+				"../domain.js",
+				"./species-elfs.js",
+				"./species-humans.js"
+			],
+			"exports": [
+				"species"
+			],
+			"consumers": [
+				"src/lib/wiki/registry.ts"
+			],
+			"types": [],
+			"functions": [],
+			"dataExports": [
+				"species"
+			],
+			"styles": [],
+			"risk": "medium",
+			"notes": []
+		},
+		{
+			"path": "src/lib/wiki/static-pages.ts",
+			"category": "wiki-domain",
+			"responsibility": "Owns static and information page metadata.",
+			"imports": [
+				"./registry.js"
+			],
+			"exports": [
+				"staticPages"
+			],
+			"consumers": [
+				"src/lib/wiki/registry.ts"
+			],
+			"types": [],
+			"functions": [],
+			"dataExports": [
+				"staticPages"
+			],
+			"styles": [],
+			"risk": "medium",
+			"notes": []
+		},
+		{
+			"path": "src/routes/+layout.svelte",
+			"category": "route",
+			"responsibility": "Route layout and metadata/header ownership.",
+			"imports": [
+				"$app/paths",
+				"$app/state",
+				"$lib/components/PageDocumentMetadata.svelte",
+				"$lib/components/PageHeader.svelte",
+				"$lib/components/layout/WikiLayout.svelte",
+				"$lib/wiki/registry",
+				"svelte"
+			],
+			"exports": [],
+			"consumers": [],
+			"types": [
+				"Props"
+			],
+			"functions": [
+				"getRoutePageMeta",
+				"normalizeRoutePathname"
+			],
+			"dataExports": [],
+			"styles": [
+				"description",
+				"endsWith",
+				"eyebrow",
+				"href",
+				"length",
+				"pathname",
+				"scss",
+				"slice",
+				"startsWith",
+				"svelte",
+				"tags",
+				"test",
+				"title",
+				"url"
+			],
+			"risk": "medium",
+			"notes": [
+				"Touches PageHeader ownership.",
+				"Route files should remain body/layout owners, not metadata registries."
+			]
+		},
+		{
+			"path": "src/routes/+layout.ts",
+			"category": "route",
+			"responsibility": "route source file.",
+			"imports": [],
+			"exports": [
+				"prerender",
+				"trailingSlash"
+			],
+			"consumers": [],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [],
+			"risk": "medium",
+			"notes": [
+				"Route files should remain body/layout owners, not metadata registries."
+			]
+		},
+		{
+			"path": "src/routes/+page.svelte",
+			"category": "route",
+			"responsibility": "Route body content for a registered page.",
+			"imports": [
+				"$lib/components/ChildLinkGrid.svelte",
+				"$lib/components/PageSection.svelte",
+				"$lib/components/WikiTable.svelte",
+				"$lib/config/campaigns",
+				"$lib/wiki/registry"
+			],
+			"exports": [],
+			"consumers": [],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [
+				"description",
+				"dmId",
+				"home-links",
+				"href",
+				"id",
+				"map",
+				"members",
+				"name",
+				"png",
+				"quickLinkAssets",
+				"shortName",
+				"svelte",
+				"title"
+			],
+			"risk": "medium",
+			"notes": [
+				"Route files should remain body/layout owners, not metadata registries."
+			]
+		},
+		{
+			"path": "src/routes/about/+page.svelte",
+			"category": "route",
+			"responsibility": "Route body content for a registered page.",
+			"imports": [
+				"$lib/components/PageSection.svelte",
+				"$lib/utils/paths",
+				"./About.scss"
+			],
+			"exports": [],
+			"consumers": [],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [
+				"com",
+				"linkedin",
+				"public",
+				"scss",
+				"svelte",
+				"toonvb"
+			],
+			"risk": "medium",
+			"notes": [
+				"Route files should remain body/layout owners, not metadata registries."
+			]
+		},
+		{
+			"path": "src/routes/about/About.scss",
+			"category": "route",
+			"responsibility": "Stylesheet or shared Sass primitive.",
+			"imports": [
+				"$lib/styles/breakpoints",
+				"$lib/styles/buttons",
+				"$lib/styles/mixins",
+				"$lib/styles/panels"
+			],
+			"exports": [],
+			"consumers": [
+				"src/routes/about/+page.svelte"
+			],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [
+				"about-action",
+				"about-comparison",
+				"about-comparison__card",
+				"about-comparison__eyebrow",
+				"about-feature",
+				"about-feature__marker",
+				"about-links",
+				"reduced-motion",
+				"secondary-action",
+				"surface"
+			],
+			"risk": "medium",
+			"notes": [
+				"Route files should remain body/layout owners, not metadata registries."
+			]
+		},
+		{
+			"path": "src/routes/accessibility/+page.svelte",
+			"category": "route",
+			"responsibility": "Route body content for a registered page.",
+			"imports": [
+				"$lib/components/PageSection.svelte",
+				"$lib/utils/paths",
+				"./Accessibility.scss"
+			],
+			"exports": [],
+			"consumers": [],
+			"types": [
+				"elements",
+				"fonts",
+				"prioritises"
+			],
+			"functions": [],
+			"dataExports": [],
+			"styles": [
+				"animated-element",
+				"com",
+				"public",
+				"scss",
+				"sr-only",
+				"svelte",
+				"svg",
+				"webp"
+			],
+			"risk": "medium",
+			"notes": [
+				"Route files should remain body/layout owners, not metadata registries."
+			]
+		},
+		{
+			"path": "src/routes/accessibility/Accessibility.scss",
+			"category": "route",
+			"responsibility": "Stylesheet or shared Sass primitive.",
+			"imports": [],
+			"exports": [],
+			"consumers": [
+				"src/routes/accessibility/+page.svelte"
+			],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [
+				"accessibility-actions",
+				"accessibility-code",
+				"accessibility-comparison",
+				"accessibility-comparison__label",
+				"accessibility-feature",
+				"accessibility-feature__icon",
+				"accessibility-report",
+				"accessibility-report__icon",
+				"accessibility-status",
+				"accessibility-status--allowed",
+				"accessibility-status--approval",
+				"accessibility-status--banned",
+				"accessibility-status--limited",
+				"accessibility-statuses",
+				"accessibility-summary"
+			],
+			"risk": "medium",
+			"notes": [
+				"Route files should remain body/layout owners, not metadata registries."
+			]
+		},
+		{
+			"path": "src/routes/ai/+page.svelte",
+			"category": "route",
+			"responsibility": "Route body content for a registered page.",
+			"imports": [
+				"$lib/components/PageSection.svelte",
+				"$lib/data/ai-images",
+				"$lib/utils/paths",
+				"./AITransparency.scss"
+			],
+			"exports": [],
+			"consumers": [],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [
+				"com",
+				"description",
+				"image",
+				"length",
+				"notes",
+				"page",
+				"pageLabel",
+				"public",
+				"reference",
+				"scss",
+				"svelte",
+				"title",
+				"tool",
+				"type"
+			],
+			"risk": "medium",
+			"notes": [
+				"Route files should remain body/layout owners, not metadata registries."
+			]
+		},
+		{
+			"path": "src/routes/ai/AITransparency.scss",
+			"category": "route",
+			"responsibility": "Stylesheet or shared Sass primitive.",
+			"imports": [],
+			"exports": [],
+			"consumers": [
+				"src/routes/ai/+page.svelte"
+			],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [
+				"ai-card",
+				"ai-card__content",
+				"ai-card__details",
+				"ai-card__heading",
+				"ai-card__image",
+				"ai-card__image-link",
+				"ai-card__links",
+				"ai-card__type",
+				"ai-definitions",
+				"ai-gallery"
+			],
+			"risk": "medium",
+			"notes": [
+				"Route files should remain body/layout owners, not metadata registries."
+			]
+		},
+		{
+			"path": "src/routes/changelog/+page.svelte",
+			"category": "route",
+			"responsibility": "Route body content for a registered page.",
+			"imports": [
+				"$lib/components/PageSection.svelte",
+				"$lib/data/changelog",
+				"$lib/utils/paths",
+				"./Changelog.scss"
+			],
+			"exports": [],
+			"consumers": [],
+			"types": [
+				"ChangeFilter",
+				"ChangeType"
+			],
+			"functions": [
+				"clearFilters",
+				"formatDate"
+			],
+			"dataExports": [],
+			"styles": [
+				"DateTimeFormat",
+				"com",
+				"date",
+				"description",
+				"external",
+				"filter",
+				"format",
+				"href",
+				"id",
+				"includes",
+				"items",
+				"join",
+				"label",
+				"length",
+				"links",
+				"map",
+				"public",
+				"reduce",
+				"release",
+				"scss",
+				"summary",
+				"svelte",
+				"title",
+				"toLocaleLowerCase",
+				"trim",
+				"type",
+				"value",
+				"version"
+			],
+			"risk": "medium",
+			"notes": [
+				"Route files should remain body/layout owners, not metadata registries."
+			]
+		},
+		{
+			"path": "src/routes/changelog/Changelog.scss",
+			"category": "route",
+			"responsibility": "Stylesheet or shared Sass primitive.",
+			"imports": [],
+			"exports": [],
+			"consumers": [
+				"src/routes/changelog/+page.svelte"
+			],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [
+				"changelog-actions",
+				"changelog-categories",
+				"changelog-category",
+				"changelog-category--added",
+				"changelog-category--changed",
+				"changelog-category--content",
+				"changelog-category--fixed",
+				"changelog-category--removed",
+				"changelog-category--security",
+				"changelog-controls",
+				"changelog-empty",
+				"changelog-filter--active",
+				"changelog-filters",
+				"changelog-item",
+				"changelog-item__content",
+				"changelog-item__links",
+				"changelog-item__type",
+				"changelog-item__type--added",
+				"changelog-item__type--changed",
+				"changelog-item__type--content",
+				"changelog-item__type--fixed",
+				"changelog-item__type--removed",
+				"changelog-item__type--security",
+				"changelog-items",
+				"changelog-release",
+				"changelog-release__anchor",
+				"changelog-release__header",
+				"changelog-release__marker",
+				"changelog-release__meta",
+				"changelog-release__version",
+				"changelog-result-count",
+				"changelog-search",
+				"changelog-summary",
+				"changelog-timeline",
+				"changelog-versioning"
+			],
+			"risk": "medium",
+			"notes": [
+				"Route files should remain body/layout owners, not metadata registries."
+			]
+		},
+		{
+			"path": "src/routes/classes/+layout.svelte",
+			"category": "route",
+			"responsibility": "Route layout and metadata/header ownership.",
+			"imports": [
+				"$app/state",
+				"$lib/components/AvailabilityBadges.svelte",
+				"$lib/components/PageDocumentMetadata.svelte",
+				"$lib/components/PageHeader.svelte",
+				"$lib/wiki/registry",
+				"svelte"
+			],
+			"exports": [],
+			"consumers": [],
+			"types": [
+				"Props"
+			],
+			"functions": [],
+			"dataExports": [],
+			"styles": [
+				"description",
+				"eyebrow",
+				"href",
+				"pathname",
+				"svelte",
+				"tags",
+				"title",
+				"url"
+			],
+			"risk": "medium",
+			"notes": [
+				"Touches PageHeader ownership.",
+				"Touches availability rendering.",
+				"Route files should remain body/layout owners, not metadata registries."
+			]
+		},
+		{
+			"path": "src/routes/classes/+page.svelte",
+			"category": "route",
+			"responsibility": "Route body content for a registered page.",
+			"imports": [
+				"$lib/components/ChildLinkGrid.svelte",
+				"$lib/components/PageSection.svelte",
+				"$lib/wiki/navigation"
+			],
+			"exports": [],
+			"consumers": [],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [
+				"map",
+				"page-links",
+				"svelte"
+			],
+			"risk": "medium",
+			"notes": [
+				"Route files should remain body/layout owners, not metadata registries."
+			]
+		},
+		{
+			"path": "src/routes/classes/artificer/+page.svelte",
+			"category": "route",
+			"responsibility": "Route body content for a registered page.",
+			"imports": [
+				"$lib/components/ChildLinkGrid.svelte",
+				"$lib/components/PageSection.svelte",
+				"$lib/components/WikiTable.svelte",
+				"$lib/wiki/navigation"
+			],
+			"exports": [],
+			"consumers": [],
+			"types": [
+				"of"
+			],
+			"functions": [
+				"as"
+			],
+			"dataExports": [],
+			"styles": [
+				"map",
+				"optional-label",
+				"svelte"
+			],
+			"risk": "medium",
+			"notes": [
+				"Route files should remain body/layout owners, not metadata registries."
+			]
+		},
+		{
+			"path": "src/routes/classes/barbarian/+page.svelte",
+			"category": "route",
+			"responsibility": "Route body content for a registered page.",
+			"imports": [],
+			"exports": [],
+			"consumers": [],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [],
+			"risk": "medium",
+			"notes": [
+				"Route files should remain body/layout owners, not metadata registries."
+			]
+		},
+		{
+			"path": "src/routes/classes/bard/+page.svelte",
+			"category": "route",
+			"responsibility": "Route body content for a registered page.",
+			"imports": [],
+			"exports": [],
+			"consumers": [],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [],
+			"risk": "medium",
+			"notes": [
+				"Route files should remain body/layout owners, not metadata registries."
+			]
+		},
+		{
+			"path": "src/routes/classes/blood-hunter/+page.svelte",
+			"category": "route",
+			"responsibility": "Route body content for a registered page.",
+			"imports": [],
+			"exports": [],
+			"consumers": [],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [],
+			"risk": "medium",
+			"notes": [
+				"Route files should remain body/layout owners, not metadata registries."
+			]
+		},
+		{
+			"path": "src/routes/classes/captain/+page.svelte",
+			"category": "route",
+			"responsibility": "Route body content for a registered page.",
+			"imports": [],
+			"exports": [],
+			"consumers": [],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [],
+			"risk": "medium",
+			"notes": [
+				"Route files should remain body/layout owners, not metadata registries."
+			]
+		},
+		{
+			"path": "src/routes/classes/champion/+page.svelte",
+			"category": "route",
+			"responsibility": "Route body content for a registered page.",
+			"imports": [],
+			"exports": [],
+			"consumers": [],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [],
+			"risk": "medium",
+			"notes": [
+				"Route files should remain body/layout owners, not metadata registries."
+			]
+		},
+		{
+			"path": "src/routes/classes/cleric/+page.svelte",
+			"category": "route",
+			"responsibility": "Route body content for a registered page.",
+			"imports": [
+				"$lib/components/ChildLinkGrid.svelte",
+				"$lib/components/PageSection.svelte",
+				"$lib/wiki/navigation"
+			],
+			"exports": [],
+			"consumers": [],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [
+				"domain-links",
+				"map",
+				"svelte"
+			],
+			"risk": "medium",
+			"notes": [
+				"Route files should remain body/layout owners, not metadata registries."
+			]
+		},
+		{
+			"path": "src/routes/classes/cleric/death-domain/+page.svelte",
+			"category": "route",
+			"responsibility": "Route body content for a registered page.",
+			"imports": [],
+			"exports": [],
+			"consumers": [],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [],
+			"risk": "medium",
+			"notes": [
+				"Route files should remain body/layout owners, not metadata registries."
+			]
+		},
+		{
+			"path": "src/routes/classes/cleric/life-domain/+page.svelte",
+			"category": "route",
+			"responsibility": "Route body content for a registered page.",
+			"imports": [],
+			"exports": [],
+			"consumers": [],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [],
+			"risk": "medium",
+			"notes": [
+				"Route files should remain body/layout owners, not metadata registries."
+			]
+		},
+		{
+			"path": "src/routes/classes/druid/+page.svelte",
+			"category": "route",
+			"responsibility": "Route body content for a registered page.",
+			"imports": [],
+			"exports": [],
+			"consumers": [],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [],
+			"risk": "medium",
+			"notes": [
+				"Route files should remain body/layout owners, not metadata registries."
+			]
+		},
+		{
+			"path": "src/routes/classes/fighter/+page.svelte",
+			"category": "route",
+			"responsibility": "Route body content for a registered page.",
+			"imports": [],
+			"exports": [],
+			"consumers": [],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [],
+			"risk": "medium",
+			"notes": [
+				"Route files should remain body/layout owners, not metadata registries."
+			]
+		},
+		{
+			"path": "src/routes/classes/gunslinger/+page.svelte",
+			"category": "route",
+			"responsibility": "Route body content for a registered page.",
+			"imports": [],
+			"exports": [],
+			"consumers": [],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [],
+			"risk": "medium",
+			"notes": [
+				"Route files should remain body/layout owners, not metadata registries."
+			]
+		},
+		{
+			"path": "src/routes/classes/illrigger/+page.svelte",
+			"category": "route",
+			"responsibility": "Route body content for a registered page.",
+			"imports": [],
+			"exports": [],
+			"consumers": [],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [],
+			"risk": "medium",
+			"notes": [
+				"Route files should remain body/layout owners, not metadata registries."
+			]
+		},
+		{
+			"path": "src/routes/classes/messenger/+page.svelte",
+			"category": "route",
+			"responsibility": "Route body content for a registered page.",
+			"imports": [],
+			"exports": [],
+			"consumers": [],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [],
+			"risk": "medium",
+			"notes": [
+				"Route files should remain body/layout owners, not metadata registries."
+			]
+		},
+		{
+			"path": "src/routes/classes/monk/+page.svelte",
+			"category": "route",
+			"responsibility": "Route body content for a registered page.",
+			"imports": [],
+			"exports": [],
+			"consumers": [],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [],
+			"risk": "medium",
+			"notes": [
+				"Route files should remain body/layout owners, not metadata registries."
+			]
+		},
+		{
+			"path": "src/routes/classes/monster-hunter/+page.svelte",
+			"category": "route",
+			"responsibility": "Route body content for a registered page.",
+			"imports": [],
+			"exports": [],
+			"consumers": [],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [],
+			"risk": "medium",
+			"notes": [
+				"Route files should remain body/layout owners, not metadata registries."
+			]
+		},
+		{
+			"path": "src/routes/classes/mournbound/+page.svelte",
+			"category": "route",
+			"responsibility": "Route body content for a registered page.",
+			"imports": [],
+			"exports": [],
+			"consumers": [],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [],
+			"risk": "medium",
+			"notes": [
+				"Route files should remain body/layout owners, not metadata registries."
+			]
+		},
+		{
+			"path": "src/routes/classes/paladin/+page.svelte",
+			"category": "route",
+			"responsibility": "Route body content for a registered page.",
+			"imports": [],
+			"exports": [],
+			"consumers": [],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [],
+			"risk": "medium",
+			"notes": [
+				"Route files should remain body/layout owners, not metadata registries."
+			]
+		},
+		{
+			"path": "src/routes/classes/pugilist/+page.svelte",
+			"category": "route",
+			"responsibility": "Route body content for a registered page.",
+			"imports": [],
+			"exports": [],
+			"consumers": [],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [],
+			"risk": "medium",
+			"notes": [
+				"Route files should remain body/layout owners, not metadata registries."
+			]
+		},
+		{
+			"path": "src/routes/classes/ranger/+page.svelte",
+			"category": "route",
+			"responsibility": "Route body content for a registered page.",
+			"imports": [],
+			"exports": [],
+			"consumers": [],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [],
+			"risk": "medium",
+			"notes": [
+				"Route files should remain body/layout owners, not metadata registries."
+			]
+		},
+		{
+			"path": "src/routes/classes/rogue/+page.svelte",
+			"category": "route",
+			"responsibility": "Route body content for a registered page.",
+			"imports": [
+				"$lib/components/ChildLinkGrid.svelte",
+				"$lib/components/PageSection.svelte",
+				"$lib/components/WikiTable.svelte",
+				"$lib/wiki/navigation"
+			],
+			"exports": [],
+			"consumers": [],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [
+				"map",
+				"optional-label",
+				"svelte"
+			],
+			"risk": "medium",
+			"notes": [
+				"Route files should remain body/layout owners, not metadata registries."
+			]
+		},
+		{
+			"path": "src/routes/classes/rogue/arcane-trickster/+page.svelte",
+			"category": "route",
+			"responsibility": "Route body content for a registered page.",
+			"imports": [],
+			"exports": [],
+			"consumers": [],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [],
+			"risk": "medium",
+			"notes": [
+				"Route files should remain body/layout owners, not metadata registries."
+			]
+		},
+		{
+			"path": "src/routes/classes/rogue/assassin/+page.svelte",
+			"category": "route",
+			"responsibility": "Route body content for a registered page.",
+			"imports": [],
+			"exports": [],
+			"consumers": [],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [],
+			"risk": "medium",
+			"notes": [
+				"Route files should remain body/layout owners, not metadata registries."
+			]
+		},
+		{
+			"path": "src/routes/classes/rogue/inquisitive/+page.svelte",
+			"category": "route",
+			"responsibility": "Route body content for a registered page.",
+			"imports": [],
+			"exports": [],
+			"consumers": [],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [],
+			"risk": "medium",
+			"notes": [
+				"Route files should remain body/layout owners, not metadata registries."
+			]
+		},
+		{
+			"path": "src/routes/classes/rogue/mastermind/+page.svelte",
+			"category": "route",
+			"responsibility": "Route body content for a registered page.",
+			"imports": [],
+			"exports": [],
+			"consumers": [],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [],
+			"risk": "medium",
+			"notes": [
+				"Route files should remain body/layout owners, not metadata registries."
+			]
+		},
+		{
+			"path": "src/routes/classes/rogue/phantom/+page.svelte",
+			"category": "route",
+			"responsibility": "Route body content for a registered page.",
+			"imports": [],
+			"exports": [],
+			"consumers": [],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [],
+			"risk": "medium",
+			"notes": [
+				"Route files should remain body/layout owners, not metadata registries."
+			]
+		},
+		{
+			"path": "src/routes/classes/rogue/scout/+page.svelte",
+			"category": "route",
+			"responsibility": "Route body content for a registered page.",
+			"imports": [],
+			"exports": [],
+			"consumers": [],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [],
+			"risk": "medium",
+			"notes": [
+				"Route files should remain body/layout owners, not metadata registries."
+			]
+		},
+		{
+			"path": "src/routes/classes/rogue/soulknife/+page.svelte",
+			"category": "route",
+			"responsibility": "Route body content for a registered page.",
+			"imports": [],
+			"exports": [],
+			"consumers": [],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [],
+			"risk": "medium",
+			"notes": [
+				"Route files should remain body/layout owners, not metadata registries."
+			]
+		},
+		{
+			"path": "src/routes/classes/rogue/swashbuckler/+page.svelte",
+			"category": "route",
+			"responsibility": "Route body content for a registered page.",
+			"imports": [],
+			"exports": [],
+			"consumers": [],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [],
+			"risk": "medium",
+			"notes": [
+				"Route files should remain body/layout owners, not metadata registries."
+			]
+		},
+		{
+			"path": "src/routes/classes/rogue/thief/+page.svelte",
+			"category": "route",
+			"responsibility": "Route body content for a registered page.",
+			"imports": [],
+			"exports": [],
+			"consumers": [],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [],
+			"risk": "medium",
+			"notes": [
+				"Route files should remain body/layout owners, not metadata registries."
+			]
+		},
+		{
+			"path": "src/routes/classes/scholar/+page.svelte",
+			"category": "route",
+			"responsibility": "Route body content for a registered page.",
+			"imports": [],
+			"exports": [],
+			"consumers": [],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [],
+			"risk": "medium",
+			"notes": [
+				"Route files should remain body/layout owners, not metadata registries."
+			]
+		},
+		{
+			"path": "src/routes/classes/sorcerer/+page.svelte",
+			"category": "route",
+			"responsibility": "Route body content for a registered page.",
+			"imports": [],
+			"exports": [],
+			"consumers": [],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [],
+			"risk": "medium",
+			"notes": [
+				"Route files should remain body/layout owners, not metadata registries."
+			]
+		},
+		{
+			"path": "src/routes/classes/treasure-hunter/+page.svelte",
+			"category": "route",
+			"responsibility": "Route body content for a registered page.",
+			"imports": [],
+			"exports": [],
+			"consumers": [],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [],
+			"risk": "medium",
+			"notes": [
+				"Route files should remain body/layout owners, not metadata registries."
+			]
+		},
+		{
+			"path": "src/routes/classes/vampyr/+page.svelte",
+			"category": "route",
+			"responsibility": "Route body content for a registered page.",
+			"imports": [],
+			"exports": [],
+			"consumers": [],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [],
+			"risk": "medium",
+			"notes": [
+				"Route files should remain body/layout owners, not metadata registries."
+			]
+		},
+		{
+			"path": "src/routes/classes/warden/+page.svelte",
+			"category": "route",
+			"responsibility": "Route body content for a registered page.",
+			"imports": [],
+			"exports": [],
+			"consumers": [],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [],
+			"risk": "medium",
+			"notes": [
+				"Route files should remain body/layout owners, not metadata registries."
+			]
+		},
+		{
+			"path": "src/routes/classes/warlock/+page.svelte",
+			"category": "route",
+			"responsibility": "Route body content for a registered page.",
+			"imports": [],
+			"exports": [],
+			"consumers": [],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [],
+			"risk": "medium",
+			"notes": [
+				"Route files should remain body/layout owners, not metadata registries."
+			]
+		},
+		{
+			"path": "src/routes/classes/wizard/+page.svelte",
+			"category": "route",
+			"responsibility": "Route body content for a registered page.",
+			"imports": [],
+			"exports": [],
+			"consumers": [],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [],
+			"risk": "medium",
+			"notes": [
+				"Route files should remain body/layout owners, not metadata registries."
+			]
+		},
+		{
+			"path": "src/routes/content-removal/+page.svelte",
+			"category": "route",
+			"responsibility": "Route body content for a registered page.",
+			"imports": [
+				"$lib/components/PageSection.svelte",
+				"$lib/utils/paths",
+				"./ContentRemoval.scss"
+			],
+			"exports": [],
+			"consumers": [],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [
+				"autoriteitpersoonsgegevens",
+				"com",
+				"nl",
+				"public",
+				"scss",
+				"svelte"
+			],
+			"risk": "medium",
+			"notes": [
+				"Route files should remain body/layout owners, not metadata registries."
+			]
+		},
+		{
+			"path": "src/routes/content-removal/ContentRemoval.scss",
+			"category": "route",
+			"responsibility": "Stylesheet or shared Sass primitive.",
+			"imports": [],
+			"exports": [],
+			"consumers": [
+				"src/routes/content-removal/+page.svelte"
+			],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [
+				"removal-action",
+				"removal-categories",
+				"removal-categories__label",
+				"removal-contact",
+				"removal-details",
+				"removal-links",
+				"removal-notice",
+				"removal-notice__icon",
+				"removal-outcomes",
+				"removal-process",
+				"removal-summary"
+			],
+			"risk": "medium",
+			"notes": [
+				"Route files should remain body/layout owners, not metadata registries."
+			]
+		},
+		{
+			"path": "src/routes/contribution-terms/+page.svelte",
+			"category": "route",
+			"responsibility": "Route body content for a registered page.",
+			"imports": [
+				"$lib/components/PageSection.svelte",
+				"$lib/utils/paths",
+				"./ContributionTerms.scss"
+			],
+			"exports": [],
+			"consumers": [],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [
+				"com",
+				"github",
+				"public",
+				"scss",
+				"svelte",
+				"wizards"
+			],
+			"risk": "medium",
+			"notes": [
+				"Route files should remain body/layout owners, not metadata registries."
+			]
+		},
+		{
+			"path": "src/routes/contribution-terms/ContributionTerms.scss",
+			"category": "route",
+			"responsibility": "Stylesheet or shared Sass primitive.",
+			"imports": [],
+			"exports": [],
+			"consumers": [
+				"src/routes/contribution-terms/+page.svelte"
+			],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [
+				"contribution-action",
+				"contribution-details",
+				"contribution-feature",
+				"contribution-feature__icon",
+				"contribution-fields",
+				"contribution-licence",
+				"contribution-links",
+				"contribution-notice",
+				"contribution-notice__icon",
+				"contribution-summary"
+			],
+			"risk": "medium",
+			"notes": [
+				"Route files should remain body/layout owners, not metadata registries."
+			]
+		},
+		{
+			"path": "src/routes/cookies/+page.svelte",
+			"category": "route",
+			"responsibility": "Route body content for a registered page.",
+			"imports": [
+				"$lib/components/PageSection.svelte",
+				"$lib/utils/paths",
+				"$lib/utils/wiki-preferences",
+				"./CookieNotice.scss"
+			],
+			"exports": [],
+			"consumers": [],
+			"types": [
+				"StorageTechnology",
+				"choices",
+				"filters",
+				"preference",
+				"preferences"
+			],
+			"functions": [
+				"isPreferenceRemoved",
+				"removeLocalStoragePreference"
+			],
+			"dataExports": [],
+			"styles": [
+				"com",
+				"consent",
+				"data",
+				"duration",
+				"includes",
+				"key",
+				"length",
+				"localStorage",
+				"name",
+				"new",
+				"provider",
+				"public",
+				"purpose",
+				"removeItem",
+				"removedPreferenceKeys",
+				"scss",
+				"shared",
+				"svelte",
+				"type"
+			],
+			"risk": "medium",
+			"notes": [
+				"Route files should remain body/layout owners, not metadata registries."
+			]
+		},
+		{
+			"path": "src/routes/cookies/CookieNotice.scss",
+			"category": "route",
+			"responsibility": "Stylesheet or shared Sass primitive.",
+			"imports": [],
+			"exports": [],
+			"consumers": [
+				"src/routes/cookies/+page.svelte"
+			],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [
+				"cookie-action-result",
+				"cookie-card",
+				"cookie-categories",
+				"cookie-category-heading",
+				"cookie-category-status",
+				"cookie-category-status--local",
+				"cookie-category-status--unused",
+				"cookie-contact",
+				"cookie-definitions",
+				"cookie-empty",
+				"cookie-empty__icon",
+				"cookie-list",
+				"cookie-provider",
+				"cookie-status",
+				"cookie-status__icon",
+				"cookie-storage-action",
+				"cookie-summary"
+			],
+			"risk": "medium",
+			"notes": [
+				"Route files should remain body/layout owners, not metadata registries."
+			]
+		},
+		{
+			"path": "src/routes/credits/+page.svelte",
+			"category": "route",
+			"responsibility": "Route body content for a registered page.",
+			"imports": [
+				"$lib/components/PageSection.svelte",
+				"$lib/utils/paths"
+			],
+			"exports": [],
+			"consumers": [],
+			"types": [
+				"assets",
+				"elements"
+			],
+			"functions": [],
+			"dataExports": [],
+			"styles": [
+				"com",
+				"linkedin",
+				"public",
+				"svelte",
+				"svgrepo",
+				"toonvb",
+				"wizards"
+			],
+			"risk": "medium",
+			"notes": [
+				"Route files should remain body/layout owners, not metadata registries."
+			]
+		},
+		{
+			"path": "src/routes/legal/+page.svelte",
+			"category": "route",
+			"responsibility": "Route body content for a registered page.",
+			"imports": [
+				"$lib/components/PageSection.svelte",
+				"$lib/config/site"
+			],
+			"exports": [],
+			"consumers": [],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [
+				"com",
+				"contactEmail",
+				"name",
+				"ownerName",
+				"svelte",
+				"wizards"
+			],
+			"risk": "medium",
+			"notes": [
+				"Route files should remain body/layout owners, not metadata registries."
+			]
+		},
+		{
+			"path": "src/routes/locations/+page.svelte",
+			"category": "route",
+			"responsibility": "Route body content for a registered page.",
+			"imports": [
+				"$lib/components/CampaignNote.svelte",
+				"$lib/components/PageSection.svelte"
+			],
+			"exports": [],
+			"consumers": [],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [
+				"svelte"
+			],
+			"risk": "medium",
+			"notes": [
+				"Route files should remain body/layout owners, not metadata registries."
+			]
+		},
+		{
+			"path": "src/routes/monsters/+page.svelte",
+			"category": "route",
+			"responsibility": "Route body content for a registered page.",
+			"imports": [
+				"$lib/components/PageSection.svelte"
+			],
+			"exports": [],
+			"consumers": [],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [
+				"svelte"
+			],
+			"risk": "medium",
+			"notes": [
+				"Route files should remain body/layout owners, not metadata registries."
+			]
+		},
+		{
+			"path": "src/routes/preferences/+page.svelte",
+			"category": "route",
+			"responsibility": "Route body content for a registered page.",
+			"imports": [
+				"$lib/components/PageSection.svelte",
+				"$lib/components/WikiPreferences.svelte",
+				"$lib/utils/paths"
+			],
+			"exports": [],
+			"consumers": [],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [
+				"svelte"
+			],
+			"risk": "medium",
+			"notes": [
+				"Route files should remain body/layout owners, not metadata registries."
+			]
+		},
+		{
+			"path": "src/routes/privacy/+page.svelte",
+			"category": "route",
+			"responsibility": "Route body content for a registered page.",
+			"imports": [
+				"$lib/components/PageSection.svelte",
+				"$lib/utils/paths",
+				"$lib/utils/wiki-preferences",
+				"./PrivacyNotice.scss"
+			],
+			"exports": [],
+			"consumers": [],
+			"types": [
+				"filters",
+				"of",
+				"where"
+			],
+			"functions": [],
+			"dataExports": [],
+			"styles": [
+				"autoriteitpersoonsgegevens",
+				"com",
+				"nl",
+				"public",
+				"scss",
+				"svelte"
+			],
+			"risk": "medium",
+			"notes": [
+				"Route files should remain body/layout owners, not metadata registries."
+			]
+		},
+		{
+			"path": "src/routes/privacy/PrivacyNotice.scss",
+			"category": "route",
+			"responsibility": "Stylesheet or shared Sass primitive.",
+			"imports": [],
+			"exports": [],
+			"consumers": [
+				"src/routes/privacy/+page.svelte"
+			],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [
+				"privacy-action",
+				"privacy-contact",
+				"privacy-details",
+				"privacy-notice",
+				"privacy-notice__icon",
+				"privacy-provider",
+				"privacy-purpose-list",
+				"privacy-retention",
+				"privacy-storage",
+				"privacy-summary"
+			],
+			"risk": "medium",
+			"notes": [
+				"Route files should remain body/layout owners, not metadata registries."
+			]
+		},
+		{
+			"path": "src/routes/rules/+page.svelte",
+			"category": "route",
+			"responsibility": "Route body content for a registered page.",
+			"imports": [
+				"$lib/components/ChildLinkGrid.svelte",
+				"$lib/components/PageSection.svelte",
+				"$lib/wiki/navigation"
+			],
+			"exports": [],
+			"consumers": [],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [
+				"map",
+				"rule-links",
+				"svelte"
+			],
+			"risk": "medium",
+			"notes": [
+				"Route files should remain body/layout owners, not metadata registries."
+			]
+		},
+		{
+			"path": "src/routes/rules/fighting/+page.svelte",
+			"category": "route",
+			"responsibility": "Route body content for a registered page.",
+			"imports": [
+				"$lib/components/CampaignNote.svelte",
+				"$lib/components/PageSection.svelte"
+			],
+			"exports": [],
+			"consumers": [],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [
+				"svelte"
+			],
+			"risk": "medium",
+			"notes": [
+				"Route files should remain body/layout owners, not metadata registries."
+			]
+		},
+		{
+			"path": "src/routes/rules/movement/+page.svelte",
+			"category": "route",
+			"responsibility": "Route body content for a registered page.",
+			"imports": [
+				"$lib/components/CampaignNote.svelte",
+				"$lib/components/PageSection.svelte"
+			],
+			"exports": [],
+			"consumers": [],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [
+				"svelte"
+			],
+			"risk": "medium",
+			"notes": [
+				"Route files should remain body/layout owners, not metadata registries."
+			]
+		},
+		{
+			"path": "src/routes/search/+page.svelte",
+			"category": "route",
+			"responsibility": "Route body content for a registered page.",
+			"imports": [
+				"$app/environment",
+				"$app/navigation",
+				"$app/state",
+				"$lib/components/feedback/EmptyState.svelte",
+				"$lib/components/forms/ActionButton.svelte",
+				"$lib/components/search/SearchFilterGroup.svelte",
+				"$lib/utils/paths",
+				"$lib/utils/wiki-search",
+				"$lib/wiki/search-index",
+				"./Search.scss",
+				"svelte"
+			],
+			"exports": [],
+			"consumers": [],
+			"types": [
+				"SearchEntryKind",
+				"WikiSearchState",
+				"and"
+			],
+			"functions": [
+				"applyStateFromUrl",
+				"chooseSuggestion",
+				"clearFilters",
+				"closeFiltersOnMobile",
+				"goToResultsPage",
+				"handleSuggestionKeydown",
+				"removeTag",
+				"removeType",
+				"resetSearch",
+				"setQueryInput",
+				"submitSearch",
+				"syncUrlState",
+				"toggleId",
+				"toggleTag",
+				"toggleType"
+			],
+			"dataExports": [],
+			"styles": [
+				"currentTarget",
+				"description",
+				"end",
+				"facets",
+				"filter",
+				"find",
+				"focus",
+				"href",
+				"id",
+				"ids",
+				"items",
+				"key",
+				"kind",
+				"label",
+				"length",
+				"matchMedia",
+				"matches",
+				"new",
+				"page",
+				"parentTitle",
+				"preventDefault",
+				"query",
+				"replace",
+				"scss",
+				"search",
+				"searchParams",
+				"selectedCount",
+				"slice",
+				"start",
+				"svelte",
+				"tagIds",
+				"tags",
+				"title",
+				"toString",
+				"total",
+				"totalPages",
+				"trim",
+				"typeIds",
+				"url",
+				"value"
+			],
+			"risk": "medium",
+			"notes": [
+				"Route files should remain body/layout owners, not metadata registries."
+			]
+		},
+		{
+			"path": "src/routes/search/Search.scss",
+			"category": "route",
+			"responsibility": "Stylesheet or shared Sass primitive.",
+			"imports": [
+				"$lib/styles/breakpoints",
+				"$lib/styles/buttons",
+				"$lib/styles/forms",
+				"$lib/styles/mixins",
+				"$lib/styles/panels"
+			],
+			"exports": [],
+			"consumers": [
+				"src/routes/search/+page.svelte"
+			],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [
+				"accent-action",
+				"active-search-filters",
+				"browse-sections",
+				"field-control",
+				"focus-ring",
+				"form-control",
+				"interactive-card",
+				"panel",
+				"reduced-motion",
+				"result-list",
+				"search-page",
+				"search-page__mobile-actions",
+				"search-pagination",
+				"search-panel",
+				"search-panel__actions",
+				"search-panel__empty",
+				"search-panel__field",
+				"search-panel__form",
+				"search-results",
+				"search-results__summary",
+				"search-suggestions",
+				"search-tag-groups",
+				"secondary-action"
+			],
+			"risk": "medium",
+			"notes": [
+				"Route files should remain body/layout owners, not metadata registries."
+			]
+		},
+		{
+			"path": "src/routes/sources/+page.svelte",
+			"category": "route",
+			"responsibility": "Route body content for a registered page.",
+			"imports": [
+				"$lib/components/PageSection.svelte",
+				"$lib/data/sources",
+				"$lib/utils/paths",
+				"./Sources.scss"
+			],
+			"exports": [],
+			"consumers": [],
+			"types": [
+				"SourceFilter",
+				"SourceKind"
+			],
+			"functions": [],
+			"dataExports": [],
+			"styles": [
+				"access",
+				"additionalLinks",
+				"authors",
+				"com",
+				"description",
+				"edition",
+				"filter",
+				"href",
+				"includes",
+				"join",
+				"kind",
+				"label",
+				"length",
+				"notes",
+				"public",
+				"publicationYear",
+				"publisher",
+				"scss",
+				"status",
+				"svelte",
+				"title",
+				"toLocaleLowerCase",
+				"trim",
+				"url",
+				"usage",
+				"value"
+			],
+			"risk": "medium",
+			"notes": [
+				"Route files should remain body/layout owners, not metadata registries."
+			]
+		},
+		{
+			"path": "src/routes/sources/Sources.scss",
+			"category": "route",
+			"responsibility": "Stylesheet or shared Sass primitive.",
+			"imports": [],
+			"exports": [],
+			"consumers": [
+				"src/routes/sources/+page.svelte"
+			],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [
+				"source-card",
+				"source-card__description",
+				"source-card__details",
+				"source-card__header",
+				"source-card__kind",
+				"source-card__links",
+				"source-card__status",
+				"source-card__status--active",
+				"source-card__status--planned",
+				"source-card__status--reference",
+				"source-contact-links",
+				"source-controls",
+				"source-definitions",
+				"source-empty",
+				"source-filter--active",
+				"source-filters",
+				"source-list",
+				"source-result-count",
+				"source-search",
+				"source-summary"
+			],
+			"risk": "medium",
+			"notes": [
+				"Route files should remain body/layout owners, not metadata registries."
+			]
+		},
+		{
+			"path": "src/routes/species/+layout.svelte",
+			"category": "route",
+			"responsibility": "Route layout and metadata/header ownership.",
+			"imports": [
+				"$app/state",
+				"$lib/components/AvailabilityBadges.svelte",
+				"$lib/components/PageDocumentMetadata.svelte",
+				"$lib/components/PageHeader.svelte",
+				"$lib/wiki/registry",
+				"svelte"
+			],
+			"exports": [],
+			"consumers": [],
+			"types": [
+				"Props"
+			],
+			"functions": [],
+			"dataExports": [],
+			"styles": [
+				"description",
+				"eyebrow",
+				"href",
+				"pathname",
+				"svelte",
+				"tags",
+				"title",
+				"url"
+			],
+			"risk": "medium",
+			"notes": [
+				"Touches PageHeader ownership.",
+				"Touches availability rendering.",
+				"Route files should remain body/layout owners, not metadata registries."
+			]
+		},
+		{
+			"path": "src/routes/species/+page.svelte",
+			"category": "route",
+			"responsibility": "Route body content for a registered page.",
+			"imports": [
+				"$lib/components/ChildLinkGrid.svelte",
+				"$lib/components/PageSection.svelte",
+				"$lib/wiki/navigation"
+			],
+			"exports": [],
+			"consumers": [],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [
+				"map",
+				"page-links",
+				"svelte"
+			],
+			"risk": "medium",
+			"notes": [
+				"Route files should remain body/layout owners, not metadata registries."
+			]
+		},
+		{
+			"path": "src/routes/species/elf/+page.svelte",
+			"category": "route",
+			"responsibility": "Route body content for a registered page.",
+			"imports": [
+				"$lib/components/ChildLinkGrid.svelte",
+				"$lib/components/PageSection.svelte",
+				"$lib/wiki/navigation"
+			],
+			"exports": [],
+			"consumers": [],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [
+				"lineage-links",
+				"map",
+				"svelte"
+			],
+			"risk": "medium",
+			"notes": [
+				"Route files should remain body/layout owners, not metadata registries."
+			]
+		},
+		{
+			"path": "src/routes/species/elf/astral-elf/+page.svelte",
+			"category": "route",
+			"responsibility": "Route body content for a registered page.",
+			"imports": [
+				"$lib/components/CampaignNote.svelte",
+				"$lib/components/PageSection.svelte"
+			],
+			"exports": [],
+			"consumers": [],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [
+				"svelte"
+			],
+			"risk": "medium",
+			"notes": [
+				"Route files should remain body/layout owners, not metadata registries."
+			]
+		},
+		{
+			"path": "src/routes/species/human/+page.svelte",
+			"category": "route",
+			"responsibility": "Route body content for a registered page.",
+			"imports": [
+				"$lib/components/CampaignNote.svelte",
+				"$lib/components/PageSection.svelte"
+			],
+			"exports": [],
+			"consumers": [],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [
+				"svelte"
+			],
+			"risk": "medium",
+			"notes": [
+				"Route files should remain body/layout owners, not metadata registries."
+			]
+		},
+		{
+			"path": "src/svg.d.ts",
+			"category": "project-config",
+			"responsibility": "project-config source file.",
+			"imports": [],
+			"exports": [],
+			"consumers": [],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [],
+			"risk": "medium",
+			"notes": []
+		},
+		{
+			"path": "svelte.config.js",
+			"category": "project-config",
+			"responsibility": "project-config source file.",
+			"imports": [
+				"@sveltejs/adapter-static",
+				"@sveltejs/vite-plugin-svelte"
+			],
+			"exports": [],
+			"consumers": [],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [],
+			"risk": "medium",
+			"notes": []
+		},
+		{
+			"path": "tsconfig.json",
+			"category": "project-config",
+			"responsibility": "project-config source file.",
+			"imports": [],
+			"exports": [],
+			"consumers": [],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [],
+			"risk": "medium",
+			"notes": []
+		},
+		{
+			"path": "tsconfig.test.json",
+			"category": "project-config",
+			"responsibility": "project-config source file.",
+			"imports": [],
+			"exports": [],
+			"consumers": [],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [],
+			"risk": "medium",
+			"notes": []
+		},
+		{
+			"path": "vite.config.ts",
+			"category": "project-config",
+			"responsibility": "project-config source file.",
+			"imports": [
+				"@sveltejs/kit/vite",
+				"vite"
+			],
+			"exports": [],
+			"consumers": [],
+			"types": [],
+			"functions": [],
+			"dataExports": [],
+			"styles": [],
+			"risk": "medium",
+			"notes": []
+		}
+	]
+}

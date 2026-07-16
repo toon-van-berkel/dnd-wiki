@@ -1,20 +1,8 @@
 <script lang="ts">
-	import PageHeader from '$lib/components/PageHeader.svelte';
 	import PageSection from '$lib/components/PageSection.svelte';
 	import WikiPreferences from '$lib/components/WikiPreferences.svelte';
-	import { getWikiPage } from '$lib/wiki/registry';
 	import { resolveAppPath } from '$lib/utils/paths';
-
-	const pageMeta = getWikiPage('preferences');
 </script>
-
-<svelte:head><title>{pageMeta?.title ?? 'Preferences'} | D&D Portal</title></svelte:head>
-
-<PageHeader
-	title={pageMeta?.title}
-	description={pageMeta?.description}
-	eyebrow={pageMeta?.eyebrow}
-/>
 
 <WikiPreferences />
 

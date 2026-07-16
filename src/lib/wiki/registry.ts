@@ -1,5 +1,10 @@
 import { classes } from './classes/classes.js';
 import { species } from './species/species.js';
+import { isWikiIconId } from './icon-ids.js';
+import { staticPages } from './static-pages.js';
+
+import type { WikiDomainPage } from './domain.js';
+import type { WikiIconId } from './icon-ids.js';
 
 export type WikiPageKind =
 	| 'collection'
@@ -30,175 +35,42 @@ export type WikiPageEntry = {
 	eyebrow?: string;
 	kind: WikiPageKind;
 	parentId?: string;
-	tags?: string[];
-	keywords?: string[];
-	aliases?: string[];
+	tags?: readonly string[];
+	keywords?: readonly string[];
+	aliases?: readonly string[];
 	searchable?: boolean;
 	navigation?: boolean;
-	footer?: boolean;
-	icon?: string[];
+	icon?: WikiIconId;
 };
 
-type DomainPage = {
-	title: string;
-	href: string;
-	description?: string;
-	eyebrow?: string;
-	kind?: WikiPageKind;
-	searchable?: boolean;
-	tags?: string[];
-	keywords?: string[];
-	aliases?: string[];
-	children?: DomainPage[];
-};
+export type FooterPageGroup = 'browse' | 'project' | 'legal';
 
-const staticPages = [
-	{
-		id: 'home',
-		title: 'Rules for our table',
-		href: '/',
-		description:
-			'A practical campaign wiki for our players. Use it as the source of truth for table rulings, character options, and campaign-specific exceptions.',
-		eyebrow: 'D&D Portal wiki',
-		kind: 'information',
-		searchable: false
-	},
-	{
-		id: 'rules',
-		title: 'Rules',
-		href: '/rules',
-		description:
-			'Custom rulings used at our table. These pages summarize how we resolve common situations without reproducing book text.',
-		eyebrow: 'House rules',
-		kind: 'collection',
-		searchable: false,
+const footerPageIdsByGroup = {
+	browse: ['search', 'classes', 'species', 'rules', 'locations', 'monsters'],
+	project: ['about', 'credits', 'sources', 'ai', 'accessibility', 'changelog'],
+	legal: ['legal', 'privacy', 'cookies', 'contribution-terms', 'content-removal']
+} as const satisfies Record<FooterPageGroup, readonly string[]>;
+
+const domainPages = [classes, species] satisfies readonly WikiDomainPage[];
+
+const wikiPageEntries = [
+	...staticPages,
+	...domainPages.flatMap((page) => flattenDomainPage(page, {
+		eyebrow: 'Character options',
 		navigation: true
-	},
-	{
-		id: 'rules--movement',
-		title: 'Movement',
-		href: '/rules/movement',
-		description: 'Table rulings for tactical positioning, hazardous terrain, and travel.',
-		eyebrow: 'Rule page',
-		kind: 'rule',
-		parentId: 'rules',
-		tags: ['combat', 'travel', 'movement'],
-		keywords: ['speed', 'terrain', 'positioning', 'exploration'],
-		navigation: true
-	},
-	{
-		id: 'rules--fighting',
-		title: 'Fighting',
-		href: '/rules/fighting',
-		description: 'Combat rulings intended to keep encounters tactical, quick, and easy to understand.',
-		eyebrow: 'Rule page',
-		kind: 'rule',
-		parentId: 'rules',
-		tags: ['combat', 'melee', 'ranged'],
-		keywords: ['critical hits', 'flanking', 'attacks'],
-		navigation: true
-	},
-	{
-		id: 'monsters',
-		title: 'Monsters',
-		href: '/monsters',
-		description: 'A player-safe bestiary of creatures encountered during our campaigns.',
-		eyebrow: 'Bestiary',
-		kind: 'collection',
-		searchable: false,
-		navigation: true
-	},
-	{
-		id: 'locations',
-		title: 'Locations',
-		href: '/locations',
-		description:
-			'Settlements, regions, landmarks, and other places discovered in the campaign world.',
-		eyebrow: 'World guide',
-		kind: 'collection',
-		searchable: false,
-		navigation: true
-	},
-	{
-		id: 'search',
-		title: 'Search the Wiki',
-		href: '/search',
-		description:
-			'Search individual rules, character options, spells, equipment, creatures, locations, and other Wiki content.',
-		eyebrow: 'Wiki search',
-		kind: 'information',
-		searchable: false
-	},
-	{
-		id: 'preferences',
-		title: 'Preferences',
-		href: '/preferences',
-		description: 'Set browser-local Wiki preferences for campaign availability context.',
-		eyebrow: 'Settings',
-		kind: 'settings',
-		searchable: false
-	},
-	{
-		id: 'about',
-		title: 'About D&D Portal',
-		href: '/about',
-		description:
-			'D&D Portal consists of a public rules wiki and a separate player portal for campaigns, parties, and session planning.',
-		eyebrow: 'About the project',
-		kind: 'information',
-		footer: true
-	},
-	{
-		id: 'privacy',
-		title: 'Privacy Notice',
-		href: '/privacy',
-		description:
-			'Information about what data the D&D Portal Wiki does and does not process, how browser preferences work, and how visitors can exercise their privacy rights.',
-		eyebrow: 'Privacy and personal data',
-		kind: 'legal',
-		footer: true
-	},
-	{
-		id: 'cookies',
-		title: 'Cookie Notice',
-		href: '/cookies',
-		description:
-			'Information about cookies and similar browser technologies used by the D&D Portal Wiki.',
-		eyebrow: 'Cookies and browser storage',
-		kind: 'legal',
-		footer: true
-	},
-	{
-		id: 'legal',
-		title: 'Legal Notice',
-		href: '/legal',
-		description:
-			'Important information about ownership, permitted use, third-party material, liability, and the unofficial nature of this website.',
-		eyebrow: 'Legal information',
-		kind: 'legal',
-		footer: true
-	}
+	}))
 ] satisfies WikiPageEntry[];
 
-export const wikiPages: WikiPageEntry[] = [
-	...staticPages,
-	...flattenDomainPage(classes as DomainPage, {
-		eyebrow: 'Character options',
-		navigation: true
-	}),
-	...flattenDomainPage(species as DomainPage, {
-		eyebrow: 'Character options',
-		navigation: true
-	})
-];
+export const wikiPages: readonly WikiPageEntry[] = Object.freeze(wikiPageEntries);
 
-export const wikiPageById: ReadonlyMap<string, WikiPageEntry> = new Map(
+const wikiPageById: ReadonlyMap<string, WikiPageEntry> = new Map(
 	wikiPages.map((entry) => [entry.id, entry])
 );
-export const wikiPageByHref: ReadonlyMap<string, WikiPageEntry> = new Map(
+const wikiPageByHref: ReadonlyMap<string, WikiPageEntry> = new Map(
 	wikiPages.map((entry) => [entry.href, entry])
 );
-export const footerPageIds = wikiPages.filter((entry) => entry.footer).map((entry) => entry.id);
+export const footerPageIds = Object.freeze(Object.values(footerPageIdsByGroup).flat());
+const footerPageIdSet = new Set<string>(footerPageIds);
 
 export function getWikiPage(id: string): WikiPageEntry | undefined {
 	return wikiPageById.get(id);
@@ -219,6 +91,26 @@ export function getWikiPageByHref(href: string): WikiPageEntry | undefined {
 
 export function getWikiChildren(parentId: string): WikiPageEntry[] {
 	return wikiPages.filter((entry) => entry.parentId === parentId && entry.navigation !== false);
+}
+
+export function getFooterPages(group: FooterPageGroup): WikiPageEntry[] {
+	return footerPageIdsByGroup[group].map((pageId) => {
+		const page = getWikiPage(pageId);
+
+		if (!page) {
+			throw new Error(`Footer references unknown Wiki page ${pageId}.`);
+		}
+
+		return page;
+	});
+}
+
+export function getFooterPageGroups(): Record<FooterPageGroup, WikiPageEntry[]> {
+	return {
+		browse: getFooterPages('browse'),
+		project: getFooterPages('project'),
+		legal: getFooterPages('legal')
+	};
 }
 
 export function validateWikiRegistry() {
@@ -250,6 +142,10 @@ export function validateWikiRegistry() {
 		if (entry.navigation !== false && !entry.title) {
 			throw new Error(`Navigation entry is missing a title: ${entry.id}.`);
 		}
+
+		if (entry.icon && !isWikiIconId(entry.icon)) {
+			throw new Error(`Wiki page ${entry.id} references unknown icon ${entry.icon}.`);
+		}
 	}
 
 	for (const footerPageId of footerPageIds) {
@@ -262,11 +158,16 @@ export function validateWikiRegistry() {
 }
 
 function flattenDomainPage(
-	page: DomainPage,
-	options: { parentId?: string; eyebrow?: string; navigation?: boolean } = {}
+	page: WikiDomainPage,
+	options: {
+		parentId?: string;
+		eyebrow?: string;
+		navigation?: boolean;
+	} = {}
 ): WikiPageEntry[] {
 	const id = createPageId(page.href);
 	const kind = page.kind ?? 'other';
+
 	const entry: WikiPageEntry = {
 		id,
 		title: page.title,
@@ -279,7 +180,8 @@ function flattenDomainPage(
 		keywords: page.keywords,
 		aliases: page.aliases,
 		searchable: page.searchable,
-		navigation: options.navigation ?? true
+		navigation: options.navigation ?? true,
+		icon: page.icon
 	};
 
 	return [

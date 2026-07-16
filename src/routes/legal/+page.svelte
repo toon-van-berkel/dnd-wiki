@@ -1,10 +1,10 @@
 <script lang="ts">
-	import PageHeader from '$lib/components/PageHeader.svelte';
 	import PageSection from '$lib/components/PageSection.svelte';
+	import { siteConfig } from '$lib/config/site';
 
-	const websiteName = 'D&D Portal';
-	const websiteOwner = 'Toon van Berkel';
-	const contactEmail = 'toonvanberkel.public@gmail.com';
+	const websiteName = siteConfig.name;
+	const websiteOwner = siteConfig.ownerName;
+	const contactEmail = siteConfig.contactEmail;
 
 	const wizardsFanContentPolicy =
 		'https://company.wizards.com/en/legal/fancontentpolicy';
@@ -12,21 +12,6 @@
 	const wizardsTerms =
 		'https://company.wizards.com/en/legal/terms';
 </script>
-
-<svelte:head>
-	<title>Legal Notice | {websiteName}</title>
-
-	<meta
-		name="description"
-		content="Legal notice, intellectual property information, usage conditions, disclaimers, and takedown procedures for D&D Portal."
-	/>
-</svelte:head>
-
-<PageHeader
-	title="Legal Notice"
-	description="Important information about ownership, permitted use, third-party material, liability, and the unofficial nature of this website."
-	eyebrow="Legal information"
-/>
 
 <PageSection title="Important notice">
 	<p>

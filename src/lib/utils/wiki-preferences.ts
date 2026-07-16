@@ -1,14 +1,16 @@
-import { dungeonMasters, parties } from '../config/campaigns.js';
+import {
+	isDungeonMasterId,
+	isPartyId,
+	type DungeonMasterId,
+	type PartyId
+} from '../config/campaigns.js';
 
 export const WIKI_PREFERENCES_STORAGE_KEY = 'dnd-wiki-preferences';
 
 export type WikiPreferences = {
-	partyId?: string;
-	dmId?: string;
+	partyId?: PartyId;
+	dmId?: DungeonMasterId;
 };
-
-const validPartyIds: string[] = parties.map((party) => party.id);
-const validDungeonMasterIds: string[] = dungeonMasters.map((dungeonMaster) => dungeonMaster.id);
 
 export function createEmptyWikiPreferences(): WikiPreferences {
 	return {};
@@ -19,13 +21,8 @@ export function sanitizeWikiPreferences(value: unknown): WikiPreferences {
 		return {};
 	}
 
-	const partyId = typeof value.partyId === 'string' && validPartyIds.includes(value.partyId)
-		? value.partyId
-		: undefined;
-	const dmId =
-		typeof value.dmId === 'string' && validDungeonMasterIds.includes(value.dmId)
-			? value.dmId
-			: undefined;
+	const partyId = isPartyId(value.partyId) ? value.partyId : undefined;
+	const dmId = isDungeonMasterId(value.dmId) ? value.dmId : undefined;
 
 	return {
 		...(partyId ? { partyId } : {}),

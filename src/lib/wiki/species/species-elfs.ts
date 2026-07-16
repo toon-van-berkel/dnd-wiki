@@ -1,3 +1,5 @@
+import type { WikiDomainPage } from '../domain.js';
+
 export const elfs = {
 	title: 'Elf',
 	href: '/species/elf',
@@ -15,4 +17,4 @@ export const elfs = {
 			keywords: ['lineage', 'race', 'elf']
 		}
 	]
-}
+} satisfies WikiDomainPage;

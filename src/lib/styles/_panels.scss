@@ -1,7 +1,24 @@
-@mixin panel($padding: 1rem) {
+@use 'mixins';
+
+@mixin panel($padding: 1rem, $shadow: true) {
 	padding: $padding;
 	border: 1px solid var(--border);
 	border-radius: var(--radius-lg);
 	background: var(--surface);
-	box-shadow: var(--shadow-card);
+
+	@if $shadow {
+		box-shadow: var(--shadow-card);
+	}
+}
+
+@mixin surface($padding: 1rem) {
+	@include panel($padding, false);
+}
+
+@mixin interactive-card($padding: 1rem, $shadow: true) {
+	@include panel($padding, $shadow);
+	@include mixins.interactive-surface;
+
+	color: var(--text-primary);
+	text-decoration: none;
 }

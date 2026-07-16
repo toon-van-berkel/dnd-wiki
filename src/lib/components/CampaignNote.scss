@@ -1,22 +1,12 @@
 .campaign-note {
-	--campaign: var(--party-1);
-	--campaign-soft: var(--party-1-soft);
+	--campaign: var(--accent);
+	--campaign-soft: var(--accent-soft);
 	margin-top: 1.1rem;
 	padding: 0.9rem 1rem;
 	border: 1px solid color-mix(in srgb, var(--campaign) 44%, transparent);
 	border-left: 3px solid var(--campaign);
 	border-radius: var(--radius-sm);
 	background: var(--campaign-soft);
-
-	&--party-2 {
-		--campaign: var(--party-2);
-		--campaign-soft: var(--party-2-soft);
-	}
-
-	&--party-3 {
-		--campaign: var(--party-3);
-		--campaign-soft: var(--party-3-soft);
-	}
 
 	&__heading {
 		display: flex;

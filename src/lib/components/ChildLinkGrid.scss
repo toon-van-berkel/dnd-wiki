@@ -1,9 +1,15 @@
+@use '$lib/styles/mixins';
+@use '$lib/styles/panels';
+
 .child-links {
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 	gap: 0.8rem;
 
 	a {
+		@include panels.surface(1.1rem 2.8rem 1.1rem 1.15rem);
+		@include mixins.interactive-surface;
+
 		--card-background-layer: 0;
 		--card-content-layer: 1;
 
@@ -13,14 +19,9 @@
 		overflow: hidden;
 
 		min-height: 15rem;
-		padding: 1.1rem 2.8rem 1.1rem 1.15rem;
-		border: 1px solid var(--border);
-		border-radius: var(--radius-lg);
-		background: var(--surface);
 		background-size: cover;
 		background-position: top;
 		text-decoration: none;
-		transition: border-color 150ms ease, background 150ms ease;
 
 		&::before {
 			content: "";
@@ -50,7 +51,7 @@
 		p {
 			width: 50%;
 			margin: 0.4rem 0 20px;
-			color: var(--text);
+			color: var(--text-secondary);
 			font-size: 0.86rem;
 			line-height: 1.5;
 		}
@@ -59,7 +60,7 @@
 			padding: 0;
 			width: 100%;
 			display: flex;
-			margin-top: auto; 
+			margin-top: auto;
 			gap: 5px;
 			flex-wrap: wrap;
 			list-style: none;

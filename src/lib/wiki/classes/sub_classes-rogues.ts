@@ -1,3 +1,5 @@
+import type { WikiDomainPage } from '../domain.js';
+
 export const subClasses_Rogues = [
 	{
 	    title: 'Arcane Trickster',
@@ -71,4 +73,4 @@ export const subClasses_Rogues = [
         keywords: ['rogue', 'subclass'],
         tags: ['melee', 'mobility', 'face', 'duelist', 'burst-damage']
     }
-]
+] satisfies WikiDomainPage[];

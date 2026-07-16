@@ -1,5 +1,4 @@
 <script lang="ts">
-	import AvailabilityBadges from '$lib/components/AvailabilityBadges.svelte';
 	import ChildLinkGrid from '$lib/components/ChildLinkGrid.svelte';
 	import PageSection from '$lib/components/PageSection.svelte';
 	import { getNavigationChildren } from '$lib/wiki/navigation';
@@ -10,10 +9,6 @@
 		description: description ?? ''
 	}));
 </script>
-
-<svelte:head><title>Cleric — D&D Portal</title></svelte:head>
-
-<AvailabilityBadges allowed={['Party 1', 'Party 2', 'Party 3']} approval={['Party 4']} />
 
 <PageSection title="At our table">
 	<p>A cleric needs a source of conviction, but does not need to behave like a formal priest. Decide what principle, deity, or sacred duty drives the character.</p>

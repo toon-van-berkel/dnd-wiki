@@ -1,25 +1,19 @@
 <script lang="ts">
 	import CampaignNote from '$lib/components/CampaignNote.svelte';
-	import PageHeader from '$lib/components/PageHeader.svelte';
 	import PageSection from '$lib/components/PageSection.svelte';
 </script>
 
-<svelte:head><title>Fighting — D&D Portal</title></svelte:head>
-
-<PageHeader title="Fighting" description="Combat rulings intended to keep encounters tactical, quick, and easy to understand." eyebrow="Rule page" tags={['Global', 'Combat']} />
-
 <PageSection title="Flanking">
-	<p>When two allies threaten a creature from opposite sides, each gains a +2 bonus to melee attack rolls against it.</p>
-	<p>A creature cannot be flanked by an attacker it cannot meaningfully perceive or engage.</p>
-</PageSection>
-
-<PageSection title="Critical hits">
-	<p>Roll the attack’s damage dice twice, then add modifiers once. Resolve additional effects after the total damage is known.</p>
-	<CampaignNote campaign="Party 2">
-		<p>Party 2 uses brutal criticals: maximize one weapon damage die, then roll the remaining damage dice.</p>
+	<p>Flanking grants a +2 bonus to melee attack rolls instead of advantage. This keeps positioning useful without overwhelming class features that already grant advantage.</p>
+	<CampaignNote partyId="i2">
+		<p>Party 2 uses the same bonus for large tactical encounters, but the DM may waive it for theatre-of-the-mind scenes.</p>
 	</CampaignNote>
 </PageSection>
 
+<PageSection title="Critical hits">
+	<p>On a critical hit, roll the damage dice twice and add modifiers once. Extra dice from class features or spells are doubled when they are part of the attack damage.</p>
+</PageSection>
+
 <PageSection title="Creative actions">
-	<p>Describe the outcome you want before rolling. The DM sets a check, cost, or tradeoff based on the situation. A creative action should not replace another character’s defining ability.</p>
+	<p>Creative actions are encouraged. Describe the goal and the risk, then the DM chooses a check, save, or contest that fits the situation.</p>
 </PageSection>

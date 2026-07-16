@@ -1,5 +1,4 @@
 	<script lang="ts">
-		import AvailabilityBadges from '$lib/components/AvailabilityBadges.svelte';
 		import PageSection from '$lib/components/PageSection.svelte';
 		import WikiTable from '$lib/components/WikiTable.svelte';
 		import ChildLinkGrid from '$lib/components/ChildLinkGrid.svelte';
@@ -35,14 +34,6 @@
 		];
 
 	</script>
-
-	<svelte:head>
-		<title>Rogue — D&D Portal</title>
-		<meta
-			name="description"
-			content="Rogue class rules, progression, features, equipment, and archetype options for our campaigns."
-		/>
-	</svelte:head>
 
 	<PageSection title="Multiclassing">
 		<p>To multiclass into or out of Rogue, a character needs Dexterity 13 or higher.</p>

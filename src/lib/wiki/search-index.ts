@@ -1,4 +1,5 @@
 import { getAvailabilityMetadataForHref } from '../utils/availability-metadata.js';
+import type { DungeonMasterId, PartyId } from '../config/campaigns.js';
 import { wikiPages, type WikiPageEntry, type WikiPageKind } from './registry.js';
 import { searchTagById, searchTagGroupLabels, searchTags } from './search-tags.js';
 
@@ -10,13 +11,13 @@ export type SearchEntry = {
 	href: string;
 	description: string;
 	kind: SearchEntryKind;
-	tags: string[];
-	keywords: string[];
-	aliases: string[];
+	tags: readonly string[];
+	keywords: readonly string[];
+	aliases: readonly string[];
 	parentTitle?: string;
 	searchable: boolean;
-	partyIds?: string[];
-	dmIds?: string[];
+	partyIds?: readonly PartyId[];
+	dmIds?: readonly DungeonMasterId[];
 };
 
 export const contentTypeLabels: Record<SearchEntryKind, string> = {
@@ -41,14 +42,14 @@ export const contentTypeLabels: Record<SearchEntryKind, string> = {
 	other: 'Other'
 };
 
-export const searchIndex = buildSearchIndex(wikiPages);
-export const searchableEntries = searchIndex.filter((entry) => entry.searchable);
-export const collectionEntries = searchIndex.filter((entry) => entry.kind === 'collection');
+export const searchIndex = Object.freeze(buildSearchIndex(wikiPages));
+export const searchableEntries = Object.freeze(searchIndex.filter((entry) => entry.searchable));
+export const collectionEntries = Object.freeze(searchIndex.filter((entry) => entry.kind === 'collection'));
 
 validateSearchTags();
 validateSearchIndex(searchIndex);
 
-function buildSearchIndex(items: WikiPageEntry[]): SearchEntry[] {
+function buildSearchIndex(items: readonly WikiPageEntry[]): SearchEntry[] {
 	return items.map(toSearchEntry).filter((entry): entry is SearchEntry => Boolean(entry));
 }
 
@@ -78,7 +79,7 @@ function toSearchEntry(item: WikiPageEntry): SearchEntry | undefined {
 	};
 }
 
-function validateSearchIndex(entries: SearchEntry[]) {
+function validateSearchIndex(entries: readonly SearchEntry[]) {
 	const ids = new Set<string>();
 	const hrefs = new Set<string>();
 	const allowedKinds = new Set(Object.keys(contentTypeLabels));

@@ -2,34 +2,12 @@
 	import WikiImage from '$lib/components/WikiImage.svelte';
 	import { siteConfig } from '$lib/config/site';
 	import { resolveAppPath } from '$lib/utils/paths';
+	import { getFooterPages } from '$lib/wiki/registry';
 
 	const currentYear = new Date().getFullYear();
-
-	const browseLinks = [
-		{ label: 'Search the Wiki', href: '/search' },
-		{ label: 'Classes', href: '/classes' },
-		{ label: 'Species', href: '/species' },
-		{ label: 'Rules', href: '/rules' },
-		{ label: 'Locations', href: '/locations' },
-		{ label: 'Monsters', href: '/monsters' }
-	];
-
-	const projectLinks = [
-		{ label: 'About D&D Portal', href: '/about' },
-		{ label: 'Credits', href: '/credits' },
-		{ label: 'Sources', href: '/sources' },
-		{ label: 'AI Transparency', href: '/ai' },
-		{ label: 'Accessibility', href: '/accessibility' },
-		{ label: 'Changelog', href: '/changelog' }
-	];
-
-	const legalLinks = [
-		{ label: 'Legal Notice', href: '/legal' },
-		{ label: 'Privacy Notice', href: '/privacy' },
-		{ label: 'Cookie Notice', href: '/cookies' },
-		{ label: 'Contribution Terms', href: '/contribution-terms' },
-		{ label: 'Content Removal', href: '/content-removal' }
-	];
+	const browseLinks = getFooterPages('browse');
+	const projectLinks = getFooterPages('project');
+	const legalLinks = getFooterPages('legal');
 
 	const communityLinks = [
 		{
@@ -156,7 +134,7 @@
 				<ul>
 					{#each browseLinks as link}
 						<li>
-							<a href={resolveAppPath(link.href)}>{link.label}</a>
+							<a href={resolveAppPath(link.href)}>{link.title}</a>
 						</li>
 					{/each}
 				</ul>
@@ -171,7 +149,7 @@
 				<ul>
 					{#each projectLinks as link}
 						<li>
-							<a href={resolveAppPath(link.href)}>{link.label}</a>
+							<a href={resolveAppPath(link.href)}>{link.title}</a>
 						</li>
 					{/each}
 				</ul>
@@ -186,7 +164,7 @@
 				<ul>
 					{#each legalLinks as link}
 						<li>
-							<a href={resolveAppPath(link.href)}>{link.label}</a>
+							<a href={resolveAppPath(link.href)}>{link.title}</a>
 						</li>
 					{/each}
 				</ul>

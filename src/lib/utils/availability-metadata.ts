@@ -1,24 +1,20 @@
-import { availability, type PageAvailability } from '../data/availability.js';
+import { getAvailabilityByHref, type PageAvailability } from '../data/availability.js';
 import {
 	getDungeonMasterForParty,
 	getParty,
+	isPartyId,
 	type Party,
 	type DungeonMasterId,
 	type PartyId
 } from '../config/campaigns.js';
 
 export type AvailabilityMetadata = {
-	partyIds?: string[];
-	dmIds?: string[];
+	partyIds?: readonly PartyId[];
+	dmIds?: readonly DungeonMasterId[];
 };
 
 export function getAvailabilityMetadataForHref(href: string): AvailabilityMetadata {
-	const pageAvailability = getAvailabilityForHref(href);
-
-	if (!pageAvailability) {
-		return {};
-	}
-
+	const pageAvailability = getAvailabilityByHref(href);
 	const partyIds = getAvailabilityPartyIds(pageAvailability);
 
 	if (!partyIds.length) {
@@ -31,7 +27,7 @@ export function getAvailabilityMetadataForHref(href: string): AvailabilityMetada
 	};
 }
 
-export function getAvailabilityPartyIds(pageAvailability: PageAvailability): string[] {
+export function getAvailabilityPartyIds(pageAvailability: PageAvailability): PartyId[] {
 	// Banned availability is excluded because it does not represent usable content.
 	return unique([
 		...(pageAvailability.allowed ?? []),
@@ -40,16 +36,18 @@ export function getAvailabilityPartyIds(pageAvailability: PageAvailability): str
 	].filter((partyId): partyId is PartyId => Boolean(getParty(partyId))));
 }
 
-export function getDungeonMasterIdsForPartyIds(partyIds: string[]): string[] {
+export function getDungeonMasterIdsForPartyIds(partyIds: readonly string[]): DungeonMasterId[] {
 	return unique(
 		partyIds
-			.map((partyId) => getDungeonMasterForParty(partyId as PartyId)?.id)
+			.map((partyId) => (isPartyId(partyId) ? getDungeonMasterForParty(partyId)?.id : undefined))
 			.filter((dmId): dmId is DungeonMasterId => Boolean(dmId))
 	);
 }
 
-export function getAvailabilityParties(partyIds: readonly string[]) {
-	return partyIds.map((partyId) => getParty(partyId)).filter((party): party is Party => Boolean(party));
+export function getAvailabilityParties(partyIds: readonly string[]): Party[] {
+	return partyIds
+		.map((partyId) => getParty(partyId))
+		.filter((party): party is Party => Boolean(party));
 }
 
 export function getAvailabilityLabel(partyIds: readonly string[]) {
@@ -58,16 +56,6 @@ export function getAvailabilityLabel(partyIds: readonly string[]) {
 		.join(', ');
 }
 
-function getAvailabilityForHref(href: string): PageAvailability | undefined {
-	const [category, pageName] = href.replace(/^\/+|\/+$/g, '').split('/');
-
-	if (!category || !pageName) {
-		return undefined;
-	}
-
-	return availability[category]?.[pageName];
-}
-
-function unique<T>(values: T[]): T[] {
+function unique<T>(values: readonly T[]): T[] {
 	return [...new Set(values)];
 }

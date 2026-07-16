@@ -50,6 +50,7 @@
 </section>
 
 <style lang="scss">
+	@use '$lib/styles/breakpoints';
 	@use '$lib/styles/panels';
 
 	.panel {
@@ -95,7 +96,7 @@
 		min-width: 0;
 	}
 
-	@media (max-width: 42rem) {
+	@media (max-width: breakpoints.$narrow-content) {
 		.panel__header {
 			align-items: stretch;
 			flex-direction: column;

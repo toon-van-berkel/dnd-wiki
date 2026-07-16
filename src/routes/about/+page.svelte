@@ -1,27 +1,11 @@
 <script lang="ts">
 	import { resolveAppPath } from '$lib/utils/paths';
-	import PageHeader from '$lib/components/PageHeader.svelte';
 	import PageSection from '$lib/components/PageSection.svelte';
 
 	const playerPortalUrl = 'https://dnd.toonvb.com';
 	const contactEmail = 'toonvanberkel.public@gmail.com';
 	const githubRepositoryUrl = 'https://github.com/toon-van-berkel/dnd-wiki';
 </script>
-
-<svelte:head>
-	<title>About D&D Portal | D&D Portal</title>
-
-	<meta
-		name="description"
-		content="Learn more about the D&D Portal Wiki and the separate player portal used for campaign dates, parties, and player information."
-	/>
-</svelte:head>
-
-<PageHeader
-	title="About D&D Portal"
-	description="D&D Portal consists of a public rules wiki and a separate player portal for campaigns, parties, and session planning."
-	eyebrow="About the project"
-/>
 
 <PageSection title="What is D&D Portal?">
 	<p>

@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { resolveAppPath } from '$lib/utils/paths';
-	import PageHeader from '$lib/components/PageHeader.svelte';
 	import PageSection from '$lib/components/PageSection.svelte';
 
 	const projectName = 'D&D Portal Wiki';
@@ -38,21 +37,6 @@ Please do not include passwords, authentication tokens, identity documents, or o
 		`?subject=${encodeURIComponent(requestSubject)}` +
 		`&body=${encodeURIComponent(requestBody)}`;
 </script>
-
-<svelte:head>
-	<title>Content Removal | D&D Portal</title>
-
-	<meta
-		name="description"
-		content="Information about requesting the correction, restriction, or removal of content published on the D&D Portal Wiki."
-	/>
-</svelte:head>
-
-<PageHeader
-	title="Content Removal"
-	description="How to request the correction, restriction, or removal of content published on the D&D Portal Wiki."
-	eyebrow="Reporting and removal requests"
-/>
 
 <div class="removal-summary">
 	<div>

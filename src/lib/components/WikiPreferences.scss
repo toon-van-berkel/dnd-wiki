@@ -1,3 +1,5 @@
+@use '$lib/styles/breakpoints';
+
 .wiki-preferences__fields {
 	display: grid;
 	grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -18,7 +20,7 @@
 
 }
 
-@media (max-width: 42rem) {
+@media (max-width: breakpoints.$narrow-content) {
 	.wiki-preferences__fields {
 		grid-template-columns: 1fr;
 	}

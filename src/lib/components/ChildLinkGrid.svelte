@@ -8,13 +8,13 @@
 		title: string;
 		href: string;
 		description: string;
-		tags?: string[];
+		tags?: readonly string[];
 		image?: string;
 		imagePosition?: string;
 	};
 
 	type Props = {
-		links: ChildPageLink[];
+		links: readonly ChildPageLink[];
 		imagesInFolder?: string | null;
 	};
 

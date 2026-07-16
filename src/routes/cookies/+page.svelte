@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { resolveAppPath } from '$lib/utils/paths';
 	import { WIKI_PREFERENCES_STORAGE_KEY } from '$lib/utils/wiki-preferences';
-	import PageHeader from '$lib/components/PageHeader.svelte';
 	import PageSection from '$lib/components/PageSection.svelte';
 
 	type StorageTechnology = {
@@ -75,21 +74,6 @@
 		return removedPreferenceKeys.includes(key);
 	}
 </script>
-
-<svelte:head>
-	<title>Cookie Notice | D&D Portal</title>
-
-	<meta
-		name="description"
-		content="Information about cookies, local browser storage, tracking technologies, and saved preferences used by the D&D Portal Wiki."
-	/>
-</svelte:head>
-
-<PageHeader
-	title="Cookie Notice"
-	description="Information about cookies and similar browser technologies used by the D&D Portal Wiki."
-	eyebrow="Cookies and browser storage"
-/>
 
 <div class="cookie-summary">
 	<div>

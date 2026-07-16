@@ -3,7 +3,12 @@
 	import ActionButton from '$lib/components/forms/ActionButton.svelte';
 	import SelectField from '$lib/components/forms/SelectField.svelte';
 	import Panel from '$lib/components/layout/Panel.svelte';
-	import { dungeonMasters, parties } from '$lib/config/campaigns';
+	import {
+		dungeonMasters,
+		isDungeonMasterId,
+		isPartyId,
+		parties
+	} from '$lib/config/campaigns';
 	import {
 		clearWikiPreferences,
 		createEmptyWikiPreferences,
@@ -39,6 +44,20 @@
 		saved = true;
 	}
 
+	function updatePartyPreference(partyId: string) {
+		updatePreference({
+			...preferences,
+			partyId: isPartyId(partyId) ? partyId : undefined
+		});
+	}
+
+	function updateDungeonMasterPreference(dmId: string) {
+		updatePreference({
+			...preferences,
+			dmId: isDungeonMasterId(dmId) ? dmId : undefined
+		});
+	}
+
 	function clearPreferences() {
 		preferences = createEmptyWikiPreferences();
 		clearWikiPreferences();
@@ -56,11 +75,7 @@
 			label="Preferred party"
 			value={preferences.partyId ?? ''}
 			options={partyOptions}
-			onChange={(partyId) =>
-				updatePreference({
-					...preferences,
-					partyId: partyId || undefined
-				})}
+			onChange={updatePartyPreference}
 		/>
 
 		<SelectField
@@ -68,11 +83,7 @@
 			label="Preferred Dungeon Master"
 			value={preferences.dmId ?? ''}
 			options={dungeonMasterOptions}
-			onChange={(dmId) =>
-				updatePreference({
-					...preferences,
-					dmId: dmId || undefined
-				})}
+			onChange={updateDungeonMasterPreference}
 		/>
 	</div>
 

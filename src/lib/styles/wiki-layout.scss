@@ -1,3 +1,6 @@
+@use '$lib/styles/breakpoints';
+@use '$lib/styles/mixins';
+
 .wiki-shell {
 	&__grid {
 		--sidebar-toggle-width: 2.1rem;
@@ -100,7 +103,7 @@
 	}
 }
 
-@media (min-width: 900px) {
+@media (min-width: breakpoints.$desktop-shell) {
 	.wiki-shell__grid--sidebar-collapsed {
 		.wiki-shell__sidebar-slot {
 			pointer-events: none;
@@ -108,7 +111,7 @@
 	}
 }
 
-@media (max-width: 899px) {
+@media (max-width: breakpoints.$mobile-shell) {
 	.wiki-shell {
 		&__grid {
 			display: block;
@@ -142,7 +145,7 @@
 	}
 }
 
-@media (prefers-reduced-motion: reduce) {
+@include mixins.reduced-motion {
 	.wiki-shell {
 		&__grid,
 		&__main {

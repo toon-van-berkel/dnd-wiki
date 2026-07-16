@@ -157,6 +157,36 @@ Do not run project-initialisation commands such as:
 
 The project already exists.
 
+## Page header ownership
+
+Page metadata is stored in the central Wiki registry.
+
+The nearest applicable `+layout.svelte` resolves that metadata and renders `PageHeader`.
+
+Child `+page.svelte` files render body content only.
+
+Do not import or render `PageHeader` inside a child page when an active parent layout already renders it.
+
+Do not duplicate page titles, descriptions, eyebrows, tags, or hrefs in route components.
+
+Before adding PageHeader to a page, inspect the complete active layout chain.
+
+## Current architecture ownership
+
+Class, subclass, species, and child-species metadata is authored in `src/lib/wiki/classes` and `src/lib/wiki/species`.
+
+Static Wiki page metadata is authored in `src/lib/wiki/static-pages.ts`.
+
+The combined page registry lives in `src/lib/wiki/registry.ts`. Navigation, footer links, search metadata, child cards, `PageHeader`, and document metadata derive from that registry.
+
+Document metadata is rendered by the metadata-owning layout through `PageDocumentMetadata`; do not add route-local `<svelte:head>` blocks for registered pages.
+
+Party and Dungeon Master identities, Party order, Party-to-Dungeon-Master relationships, and Party colour token names are authored in `src/lib/config/campaigns.ts`.
+
+Availability decisions are authored in `src/lib/data/availability.ts` and consumed by canonical href through `getAvailabilityByHref()`. Do not pass inline availability props from route pages.
+
+Reusable styling primitives live in `src/lib/styles` partials. Use the shared breakpoint, focus, panel, button, and form mixins before adding repeated route-local styling.
+
 ## Completion checks
 
 Before finishing any task:

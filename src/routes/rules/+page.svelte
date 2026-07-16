@@ -1,17 +1,14 @@
 <script lang="ts">
 	import ChildLinkGrid from '$lib/components/ChildLinkGrid.svelte';
-	import PageHeader from '$lib/components/PageHeader.svelte';
 	import PageSection from '$lib/components/PageSection.svelte';
+	import { getNavigationChildren } from '$lib/wiki/navigation';
 
-	const rulePages = [
-		{ title: 'Movement', href: '/rules/movement', description: 'Positioning, difficult terrain, and travel rulings.' },
-		{ title: 'Fighting', href: '/rules/fighting', description: 'Combat rulings, critical hits, and flanking.' }
-	];
+	const rulePages = getNavigationChildren('/rules').map(({ title, href, description }) => ({
+		title,
+		href,
+		description: description ?? ''
+	}));
 </script>
-
-<svelte:head><title>Rules — D&D Portal</title></svelte:head>
-
-<PageHeader title="Rules" description="Custom rulings used at our table. These pages summarize how we resolve common situations without reproducing book text." eyebrow="House rules" tags={['Global Rules']} />
 
 <PageSection title="How rulings work">
 	<p>Use these pages when a table ruling differs from your usual expectations. If an edge case is not covered, the DM makes a temporary call so play can continue.</p>

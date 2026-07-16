@@ -1,34 +1,39 @@
-import { getWikiChildren, wikiPages, type WikiPageEntry, type WikiPageKind } from './registry.js';
+import {
+	getWikiChildren,
+	wikiPages,
+	type WikiPageEntry
+} from './registry.js';
 
-export type SearchEntryKind = WikiPageKind;
+import type { WikiIconId } from './icon-ids.js';
 
 export type NavigationItem = {
 	title: string;
 	href: string;
 	description?: string;
-	kind?: SearchEntryKind;
-	searchable?: boolean;
-	tags?: string[];
-	keywords?: string[];
-	aliases?: string[];
-	icon?: string[];
-	children?: NavigationItem[];
+	tags?: readonly string[];
+	icon?: WikiIconId;
+	children?: readonly NavigationItem[];
 };
 
-export const navigation: NavigationItem[] = wikiPages
+export const navigation: readonly NavigationItem[] = Object.freeze(wikiPages
 	.filter((entry) => entry.navigation === true && !entry.parentId)
-	.map(toNavigationItem);
+	.map(toNavigationItem));
 
-export function findNavigationItem(
+function findNavigationItem(
 	href: string,
-	items: NavigationItem[] = navigation
+	items: readonly NavigationItem[] = navigation
 ): NavigationItem | undefined {
 	for (const item of items) {
-		if (item.href === href) return item;
+		if (item.href === href) {
+			return item;
+		}
 
-		if (item.children) {
+		if (item.children?.length) {
 			const match = findNavigationItem(href, item.children);
-			if (match) return match;
+
+			if (match) {
+				return match;
+			}
 		}
 	}
 
@@ -36,7 +41,7 @@ export function findNavigationItem(
 }
 
 export function getNavigationChildren(href: string): NavigationItem[] {
-	return findNavigationItem(href)?.children ?? [];
+	return [...(findNavigationItem(href)?.children ?? [])];
 }
 
 function toNavigationItem(entry: WikiPageEntry): NavigationItem {
@@ -44,11 +49,7 @@ function toNavigationItem(entry: WikiPageEntry): NavigationItem {
 		title: entry.title,
 		href: entry.href,
 		description: entry.description,
-		kind: entry.kind,
-		searchable: entry.searchable,
 		tags: entry.tags,
-		keywords: entry.keywords,
-		aliases: entry.aliases,
 		icon: entry.icon,
 		children: getWikiChildren(entry.id).map(toNavigationItem)
 	};

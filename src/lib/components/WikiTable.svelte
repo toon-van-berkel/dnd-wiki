@@ -1,8 +1,8 @@
 <script lang="ts">
 	type Props = {
 		caption?: string;
-		columns: string[];
-		rows: string[][];
+		columns: readonly string[];
+		rows: readonly (readonly string[])[];
 	};
 
 	let { caption, columns, rows }: Props = $props();

@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { resolveAppPath } from '$lib/utils/paths';
-	import PageHeader from '$lib/components/PageHeader.svelte';
 	import PageSection from '$lib/components/PageSection.svelte';
 
 	const projectName = 'D&D Portal Wiki';
@@ -31,21 +30,6 @@
 	const wizardsFanContentPolicyUrl =
 		'https://company.wizards.com/en/legal/fancontentpolicy';
 </script>
-
-<svelte:head>
-	<title>Contribution Terms | D&D Portal</title>
-
-	<meta
-		name="description"
-		content="Terms applying to code, written content, images, corrections, and other contributions submitted to the D&D Portal Wiki."
-	/>
-</svelte:head>
-
-<PageHeader
-	title="Contribution Terms"
-	description="The conditions that apply when submitting code, written content, artwork, corrections, or other material to the D&D Portal Wiki."
-	eyebrow="Contributing to the project"
-/>
 
 <div class="contribution-summary">
 	<div>
