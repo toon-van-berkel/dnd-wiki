@@ -261,6 +261,44 @@ test('deleted data modules have no active imports or compiler inputs', () => {
 	}
 });
 
+test('cross-library source imports use documented stable paths', () => {
+	for (const file of sourceFiles('src')) {
+		const normalizedFile = file.replaceAll('\\', '/');
+
+		for (const specifier of extractImportSpecifiers(readFileSync(file, 'utf8'))) {
+			if (!specifier.startsWith('.')) {
+				continue;
+			}
+
+			const resolvedImport = resolveSourceImport(normalizedFile, specifier);
+
+			if (!resolvedImport?.startsWith('src/lib/')) {
+				continue;
+			}
+
+			const [fromArea] = normalizedFile.replace(/^src\/lib\//, '').split('/');
+			const [toArea] = resolvedImport.replace(/^src\/lib\//, '').split('/');
+
+			if (toArea === fromArea) {
+				continue;
+			}
+
+			assert.ok(normalizedFile.endsWith('.ts'), `${file} should use $lib for cross-library imports from Svelte files`);
+			assert.ok(specifier.endsWith('.js'), `${file} should use explicit .js suffixes for NodeNext test-emitted TS imports`);
+			assert.ok(
+				['config', 'data', 'utils', 'wiki'].includes(toArea),
+				`${file} imports an unexpected cross-library owner ${resolvedImport}`
+			);
+		}
+	}
+});
+
+test('legitimate local relative imports remain allowed', () => {
+	assert.match(readFileSync('src/lib/components/PageHeader.svelte', 'utf8'), /from '\.\/RuleTag\.svelte'/);
+	assert.match(readFileSync('src/lib/components/layout/snippets/helpers/NavTree.svelte', 'utf8'), /from '\.\/NavTree\.svelte'/);
+	assert.match(readFileSync('src/lib/wiki/classes/classes.ts', 'utf8'), /from '\.\/sub_classes-cleric\.js'/);
+});
+
 test('compatibility facades are either consumed pure re-exports or removed', () => {
 	const facades = sourceFiles('src').filter(isCompatibilityFacade);
 
@@ -776,6 +814,14 @@ test('no general-purpose global type or helper layer was introduced', () => {
 	for (const file of ['src/lib/types.ts', 'src/lib/helpers.ts', 'src/lib/utils/helpers.ts']) {
 		assert.equal(existsSync(file), false, `${file} should not exist`);
 	}
+
+	assert.equal(readFileSync('src/lib/index.ts', 'utf8').trim(), '', 'src/lib/index.ts should stay an empty scaffold file');
+
+	for (const file of sourceFiles('src')) {
+		const source = readFileSync(file, 'utf8');
+
+		assert.doesNotMatch(source, /from ['"]\$lib['"]/, `${file} imports from the root $lib barrel`);
+	}
 });
 
 test('every reusable Svelte component has a consumer', () => {
@@ -863,6 +909,22 @@ test('inventory describes the current source tree and excludes generated output'
 	}
 });
 
+test('inventory import data reflects current source imports', () => {
+	const inventory = JSON.parse(readFileSync('docs/architecture-audit/inventory.json', 'utf8'));
+
+	for (const entry of inventory.files) {
+		if (!/\.(?:svelte|ts|js|mjs|cjs)$/.test(entry.path)) {
+			continue;
+		}
+
+		assert.deepEqual(
+			entry.imports ?? [],
+			extractImportSpecifiers(readFileSync(entry.path, 'utf8')),
+			`${entry.path} inventory imports are stale`
+		);
+	}
+});
+
 test('architecture documentation current guidance does not point to deleted authoritative modules', () => {
 	const docs = documentationFiles('docs/architecture-audit');
 	const deletedAuthoritativePatterns = [
@@ -880,6 +942,44 @@ test('architecture documentation current guidance does not point to deleted auth
 		for (const pattern of deletedAuthoritativePatterns) {
 			assert.doesNotMatch(source, pattern, `${file} points current work at a deleted module`);
 		}
+	}
+});
+
+test('architecture documentation contains no machine-specific source links', () => {
+	const machineSpecificSourcePath = /C:\\Users\\toonv\\Development\\dnd-wiki\\site\\(?:src|docs|scripts|AGENTS\.md)/i;
+
+	for (const file of documentationFiles('docs/architecture-audit')) {
+		assert.doesNotMatch(readFileSync(file, 'utf8'), machineSpecificSourcePath, `${file} contains a local absolute source path`);
+	}
+});
+
+test('current editing guide names current authoritative files', () => {
+	const readme = readFileSync('docs/architecture-audit/README.md', 'utf8');
+
+	assert.match(readme, /## Where should I edit this now\?/);
+
+	for (const owner of [
+		'src/lib/wiki/classes/classes.ts',
+		'src/lib/wiki/species/*.ts',
+		'src/lib/wiki/static-pages.ts',
+		'src/lib/wiki/registry.ts',
+		'src/lib/wiki/navigation.ts',
+		'src/lib/wiki/search-index.ts',
+		'src/lib/wiki/icon-ids.ts',
+		'src/lib/wiki/icons.ts',
+		'src/lib/config/campaigns.ts',
+		'src/lib/data/availability.ts',
+		'src/lib/utils/wiki-preferences.ts',
+		'src/lib/components/PageDocumentMetadata.svelte',
+		'src/lib/styles/_buttons.scss',
+		'src/lib/styles/_forms.scss',
+		'src/lib/styles/_breakpoints.scss'
+	]) {
+		assert.ok(readme.includes(owner), `README editing guide should name ${owner}`);
+	}
+
+	for (const deletedModule of ['src/lib/data/classes.ts', 'src/lib/data/parties.ts', 'src/lib/data/dungeon-masters.ts']) {
+		assert.doesNotMatch(readme, new RegExp(`(?:Authoritative|authoritative|edit).*${escapeRegExp(deletedModule)}`));
 	}
 });
 
@@ -901,6 +1001,33 @@ test('architecture documentation Markdown links to repository files resolve', ()
 			assert.ok(existsSync(repositoryPath), `${file} links to missing repository file ${target}`);
 		}
 	}
+});
+
+test('AGENTS.md names current ownership and import rules', () => {
+	const source = readFileSync('AGENTS.md', 'utf8');
+
+	for (const phrase of [
+		'src/lib/wiki/static-pages.ts',
+		'src/lib/wiki/registry.ts',
+		'src/lib/config/campaigns.ts',
+		'src/lib/data/availability.ts',
+		'PageDocumentMetadata',
+		'Use `$lib/` imports for Svelte/app imports that cross library ownership boundaries',
+		'Plain TypeScript modules included in `tsconfig.test.json` may keep explicit relative `.js` imports',
+		'Use `import type` for type-only imports'
+	]) {
+		assert.ok(source.includes(phrase), `AGENTS.md should mention ${phrase}`);
+	}
+});
+
+test('target structure and migration plan contain the final Phase 8 decision', () => {
+	const targetStructure = readFileSync('docs/architecture-audit/target-structure.md', 'utf8');
+	const migrationPlan = readFileSync('docs/architecture-audit/migration-plan.md', 'utf8');
+
+	assert.match(targetStructure, /## Phase 8 Reassessment/);
+	assert.match(targetStructure, /mostly cosmetic/i);
+	assert.match(migrationPlan, /Final migration outcome:\s*\*\*A\. Stop after Phase 8\*\*/);
+	assert.match(migrationPlan, /Do not begin a folder migration/i);
 });
 
 test('core Wiki/config/data modules have no runtime import cycles', () => {
@@ -1455,6 +1582,15 @@ function isGeneratedPath(path) {
 	return /^(?:node_modules|\.svelte-kit|build|dist|coverage)(?:\/|$)/.test(path.replaceAll('\\', '/'));
 }
 
+function extractImportSpecifiers(source) {
+	return [
+		...source.matchAll(/import\s+(?:type\s+)?[\s\S]*?\s+from\s+['"]([^'"]+)['"]/g),
+		...source.matchAll(/import\s+['"]([^'"]+)['"]/g)
+	]
+		.map((match) => match[1])
+		.filter((specifier) => !specifier.endsWith('.scss'));
+}
+
 function cssCustomPropertyDefinitions() {
 	return new Set(
 		[...styleFiles('src'), ...sourceFiles('src')]
@@ -1664,16 +1800,33 @@ function runtimeCoreImports(file, coreFileSet) {
 }
 
 function resolveSourceImport(fromFile, specifier) {
+	if (specifier.startsWith('$lib/')) {
+		return findSourcePath(specifier.replace(/^\$lib\//, 'src/lib/'));
+	}
+
 	if (!specifier.startsWith('.')) {
 		return undefined;
 	}
 
 	const fromDirectory = fromFile.split(/[\\/]/).slice(0, -1).join('/');
-	const sourcePath = join(fromDirectory, specifier)
-		.replace(/\.js$/, '.ts')
-		.replaceAll('\\', '/');
 
-	return sourcePath;
+	return findSourcePath(join(fromDirectory, specifier).replaceAll('\\', '/'));
+}
+
+function findSourcePath(pathWithoutSourceExtension) {
+	const normalizedPath = pathWithoutSourceExtension
+		.replace(/\.js$/, '')
+		.replace(/\.svelte$/, '')
+		.replaceAll('\\', '/');
+	const candidates = [
+		`${normalizedPath}.ts`,
+		`${normalizedPath}.svelte`,
+		`${normalizedPath}.js`,
+		`${normalizedPath}.mjs`,
+		normalizedPath
+	];
+
+	return candidates.find((candidate) => existsSync(candidate));
 }
 
 function escapeRegExp(value) {

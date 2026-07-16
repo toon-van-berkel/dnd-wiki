@@ -66,7 +66,7 @@ The inventory table below is the original audit snapshot. Phase result sections 
 | Example | Name/slug/url | Description | Tags/keywords | Availability | Image/icon/page content | Flow |
 | --- | --- | --- | --- | --- | --- | --- |
 | Cleric | classes.ts title Cleric, href /classes/cleric | classes.ts; route prose | classes.ts tags | availability.ts classes.cleric | static/classes/cleric; route body | domain -> registry -> navigation/search -> class layout -> header/badges |
-| Life Domain | sub_classes-cleric.ts href /classes/cleric/life-domain | sub_classes-cleric.ts; route head title | keywords/tags in sub_classes-cleric.ts | availability.ts nested life-domain | static/classes/cleric/life-domain; route shell | subclass data -> registry -> nav/search -> class layout |
+| Life Domain | sub_classes-cleric.ts href /classes/cleric/life-domain | sub_classes-cleric.ts; route body prose | keywords/tags in sub_classes-cleric.ts | availability.ts nested life-domain | static/classes/cleric/life-domain; route body | subclass data -> registry -> nav/search -> class layout |
 | Rogue | classes.ts | classes.ts; route prose | classes.ts tags | availability.ts classes.rogue | static/classes/rogue; ai-images.ts; route table | domain -> registry -> nav/search -> layout -> route body |
 | Assassin | sub_classes-rogues.ts href /classes/rogue/assassin | sub_classes-rogues.ts | sub_classes-rogues.ts tags | no explicit central nested availability | static/classes/rogue/assassin; route shell; ai-images.ts | subclass data -> registry -> nav/search -> layout |
 | Elf | species-elfs.ts | species-elfs.ts; route prose | species keywords | availability.ts species.elf | static/species/elf; route body | species data -> registry -> nav/search -> species layout |

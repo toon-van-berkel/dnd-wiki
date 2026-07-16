@@ -329,3 +329,15 @@ flowchart TD
 Phase 6 did not add runtime TypeScript dependencies. The new dependency edges are Sass-only `@use` relationships from route/component styles to shared partials. Shared partials remain selector-free and are guarded by structural tests so they cannot accidentally emit global CSS.
 
 Styling validation now checks token references, Party/availability color ownership, no legacy Sass `@import`, no `!important`, shared breakpoint adoption at shell boundaries, NavTree row-hover ownership, and content-sized availability badges.
+
+## Phase 8 Import Boundary Result
+
+Svelte/app imports that cross ownership boundaries point at authoritative `$lib/...` module paths. Plain TypeScript modules compiled by `tsconfig.test.json` keep explicit relative `.js` imports where needed so the emitted JavaScript can run directly in Node. Local relative imports are still used intentionally for adjacent Svelte components, recursive NavTree rendering, same-folder class/species domain composition, and styles.
+
+The core dependency direction remains unchanged:
+
+- `src/lib/config/campaigns.ts` feeds campaign consumers.
+- `src/lib/data/availability.ts` feeds availability UI and metadata.
+- `src/lib/wiki/registry.ts` feeds layouts, navigation, footer links, search, and child cards.
+- `src/lib/wiki/navigation.ts` and `src/lib/wiki/search-index.ts` remain projections, not authoritative owners.
+- UI components and routes do not feed config/data/wiki ownership modules.

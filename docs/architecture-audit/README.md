@@ -1,6 +1,6 @@
 # Architecture Audit
 
-This architecture audit now contains both the original audit history and the current post-Phase-7 baseline. `inventory.json` is refreshed from the current repository and inventories 169 source/config/text files, 64 route Svelte files, 20 Svelte components, 121 type declarations, 195 functions, 22 data/config exports, and 30 style sources. Generated directories were excluded.
+This architecture audit now contains both the original audit history and the current post-Phase-8 baseline. `inventory.json` is refreshed from the current repository and inventories 169 source/config/text files, 64 route Svelte files, 20 Svelte components, 122 type declarations, 194 functions, 22 data/config exports, and 30 style sources. Generated directories were excluded.
 
 ## Current Architectural Model
 
@@ -18,7 +18,13 @@ Accidental hubs: `src/lib/wiki/registry.ts`, `src/lib/wiki/search-index.ts`, `sr
 
 Compatibility-only or suspicious: none currently remain for campaign or class metadata; `src/lib/data/classes.ts`, `src/lib/data/parties.ts`, and `src/lib/data/dungeon-masters.ts` have been removed after imports converged.
 
-## Phase 7 Current Baseline
+## Phase 8 Current Baseline
+
+Phase 8 normalized low-risk cross-library imports toward the authoritative `$lib/...` module paths, kept legitimate local relative imports for adjacent components and same-domain files, and documented that the current ownership model is the final editing guide. No source folders moved, no runtime behavior changed, and no new registry/configuration/domain layer was introduced.
+
+Final recommendation: stop after Phase 8 instead of performing the broad target folder migration. The remaining folder inconsistencies are mostly cosmetic now that metadata, campaign data, availability, registry, navigation, search, document metadata, and shared styling ownership are documented and guarded by structural tests.
+
+## Phase 7 Baseline
 
 Phase 7 removed only confirmed residue: deleted campaign/class data modules are no longer present in `tsconfig.test.json`, accidental internal lookup maps are no longer exported from campaign/registry modules, and `findNavigationItem` is local to navigation. No folder migration, behavioral redesign, route restructure, or styling redesign occurred.
 
@@ -41,6 +47,8 @@ The current dependency direction remains: config/data/domain modules do not impo
 - Put campaign identity data in `src/lib/config/campaigns.ts`.
 - Put availability centrally, not as inline `AvailabilityBadges` props.
 - Use shared form/button/panel mixins before adding route-local control styles.
+- Use `$lib/...` imports for Svelte/app imports that cross library ownership boundaries. Plain TypeScript modules compiled by `tsconfig.test.json` may keep explicit relative `.js` imports because the emitted test JavaScript runs directly in Node. Keep relative imports for adjacent components, recursive local components, route-adjacent styles, and same-domain files.
+- Use `import type` for imports that exist only for TypeScript types.
 
 ## Phase 0 Baseline Result
 
@@ -303,53 +311,47 @@ Use `breakpoints.$mobile-shell`, `$desktop-shell`, `$narrow-content`, `$mobile-c
 
 Remaining honest caveat: legal and information route SCSS still contains page-specific card/list compositions. Those should be migrated opportunistically to shared primitives when touched, without changing content, route ownership, or metadata flow.
 
-## Where Should I Edit This?
-
-| Task | Current file(s) | Why multiple files are required | Desired future single file |
-| --- | --- | --- | --- |
-| Add or rename a class | src/lib/wiki/classes/classes.ts; route under src/routes/classes; static/classes; maybe ai-images | Metadata, route body, assets, and AI image inventory are separate. | wiki class domain module |
-| Add or rename a subclass | src/lib/wiki/classes/sub_classes-*.ts; nested route; static asset folder; availability | Parent relation is domain data; content/assets/availability are separate. | wiki class/subclass domain module |
-| Add or rename a species | src/lib/wiki/species/*.ts; species route; static/species; availability | Metadata is domain-owned; body, assets, and availability are separate. | wiki species domain module |
-| Add child species/subrace | species domain file; child route; availability tree | Nested page and availability trees are separate. | species domain module with child records |
-| Change route title | src/lib/wiki/static-pages.ts or class/species domain data | Route folders may still need renaming when hrefs change. | registry/domain metadata |
-| Change page description | src/lib/wiki/static-pages.ts or class/species domain data | None for header/search/card metadata. | registry/domain metadata |
-| Add page tags | domain/static registry and sometimes route PageHeader labels | Search tags are ids; headers use labels. | registry/domain page tags |
-| Change availability | src/lib/data/availability.ts | UI/search derive from `getAvailabilityByHref`; route files do not own availability. | wiki availability domain |
-| Add a party | src/lib/config/campaigns.ts; tokens.scss when new colour values are needed | Identity/order/member summary/token names are config-owned; CSS values remain in tokens. | campaign config/domain |
-| Add a Dungeon Master | src/lib/config/campaigns.ts; prose/tests if referenced | Config owns identities; prose can repeat names. | campaign config/domain |
-| Change party colour | config token id; tokens.scss value | Token id and token value are intentionally split and validated. | campaign token registry |
-| Add navigation icon | src/lib/wiki/icons.ts; registry icon field; asset folder | Icons are imported manually. | wiki icon registry |
-| Change sidebar navigation | registry/domain navigation flags; navigation.ts; Sidebar/NavTree UI | Data is derived but UI behavior is component-local. | registry for data, navigation components for UI |
-| Change search behaviour | wiki-search.ts; search-index.ts; search route; Header | Index, scoring, URL state, and UI are split. | wiki search domain |
-| Add search tag | src/lib/wiki/search-tags.ts and page records | Definition and usage are separate. | search tag registry + page metadata |
-| Change shared input | _forms.scss, SelectField, route SCSS | Route styles reimplement controls. | shared forms/control component |
-| Change shared button | _buttons.scss, ActionButton, route action links | Route styles reimplement buttons. | ActionButton/shared button mixin |
-| Change panel styling | _panels.scss, PageSection, route cards | Panel/card styles are repeated. | shared panel/card mixins |
-| Change route-specific styling | route-adjacent SCSS or inline style | Route styles own page-only layout. | route stylesheet only |
-| Add a new Wiki page | static/domain page record plus route body; availability/assets when needed | File routing still requires a physical SvelteKit route. | domain/registry page record plus route body |
-
 ## Where should I edit this now?
 
 | Change | Authoritative edit | Derived consumers | Unavoidable second edit |
 | --- | --- | --- | --- |
-| Add or rename a class | `src/lib/wiki/classes/classes.ts` or nested class module | Registry, navigation, search, PageHeader, child cards | Matching route folder/body; assets if used |
-| Add or rename a subclass | Relevant `src/lib/wiki/classes/sub_classes-*.ts` child record | Registry parent, navigation, search, class layout | Matching nested route folder/body; availability if different |
-| Add or rename a species | `src/lib/wiki/species/*.ts` | Registry, navigation, search, PageHeader, child cards | Matching route folder/body; assets if used |
-| Add a child species | Parent species `children` record | Registry parent, navigation, search, species layout | Matching nested route folder/body; availability if different |
-| Add a static Wiki page | `src/lib/wiki/static-pages.ts` | Registry, document metadata, PageHeader, search/footer/nav when enabled | Matching route body |
-| Change page title/description/tags | Domain record or `static-pages.ts` | Header, document metadata, search, cards, footer labels | Route folder rename only when href changes |
-| Add a Party | `src/lib/config/campaigns.ts` | Preferences, sidebar, availability labels, search metadata | `tokens.scss` only for new colour values |
-| Add a Dungeon Master | `src/lib/config/campaigns.ts` | Preferences and Party relationship helpers | None |
+| Add a class | `src/lib/wiki/classes/classes.ts` | `src/lib/wiki/registry.ts`, `src/lib/wiki/navigation.ts`, `src/lib/wiki/search-index.ts`, PageHeader, document metadata, child cards | Add `src/routes/classes/<slug>/+page.svelte`; add assets or availability only when needed |
+| Add a subclass | Relevant `src/lib/wiki/classes/sub_classes-*.ts` child record | Registry parent, navigation, search, class layout, child cards | Add nested route body; add availability only when different or explicit |
+| Add a species | `src/lib/wiki/species/*.ts` | Registry, navigation, search, PageHeader, document metadata, child cards | Add `src/routes/species/<slug>/+page.svelte`; add assets or availability only when needed |
+| Add a child species | Parent species `children` record in `src/lib/wiki/species/*.ts` | Registry parent, navigation, search, species layout, child cards | Add nested route body; add availability only when different or explicit |
+| Add a static page | `src/lib/wiki/static-pages.ts` | Registry, root layout, `PageDocumentMetadata`, PageHeader, navigation/footer/search when flags allow | Add physical route body |
+| Add a route body | `src/routes/**/+page.svelte` | SvelteKit route body rendering only | Add matching metadata in domain/static page source first |
+| Rename a page | Domain record or `src/lib/wiki/static-pages.ts` title/href | Registry-derived title, href, nav, search, cards, footer, document metadata | Rename the SvelteKit route folder when the canonical href changes; rename assets keyed by href when used |
+| Change a title | Domain record or `src/lib/wiki/static-pages.ts` | Header, document title, navigation, footer, search, cards | None unless the canonical href also changes |
+| Change a description | Domain record or `src/lib/wiki/static-pages.ts` | Header description, meta description, search, cards | None |
+| Change tags | Domain record or `src/lib/wiki/static-pages.ts` | Search metadata and PageHeader tags | Add tag definitions in `src/lib/wiki/search-tags.ts` only for new tag ids |
+| Change an icon ID | Domain/static metadata record | Registry, navigation item, NavTree mask rendering | Add the id to `src/lib/wiki/icon-ids.ts` if new |
+| Map an icon asset | `src/lib/wiki/icons.ts` | NavTree CSS-mask rendering through `getWikiIcon()` | Add/import the asset file |
+| Add a Party | `src/lib/config/campaigns.ts` | Preferences, sidebar, availability labels, search metadata | Add CSS token values in `src/lib/styles/tokens.scss` only for new Party colours |
+| Add a Dungeon Master | `src/lib/config/campaigns.ts` | Preferences and Party relationship helpers | None unless prose intentionally mentions the name |
 | Assign a Party to a Dungeon Master | Party `dmId` in `src/lib/config/campaigns.ts` | DM relevance and Party grouping helpers | None |
+| Change Party ordering | Party `order` in `src/lib/config/campaigns.ts` | Derived Party arrays, preferences, sidebar accents | None |
+| Change Party colors | Party token names in `src/lib/config/campaigns.ts`; token values in `src/lib/styles/tokens.scss` | Sidebar accents, campaign notes, badges using tokens | Both files are required when the token name and actual colour value both change |
 | Change availability | `src/lib/data/availability.ts` | Badges, availability metadata, content filters | None |
+| Change search metadata | Domain/static page metadata and `src/lib/wiki/search-tags.ts` for tag definitions | `src/lib/wiki/search-index.ts` and `src/lib/utils/wiki-search.ts` derive results/facets | None unless changing search scoring or UI behavior |
+| Change navigation behavior | Registry navigation flags plus `src/lib/wiki/navigation.ts` for projection behavior | Sidebar, NavTree, child cards | Component edits only for interaction/rendering changes |
 | Add an icon ID | `src/lib/wiki/icon-ids.ts` | Type validation and registry metadata | Map the asset in `src/lib/wiki/icons.ts` |
-| Map an icon asset | `src/lib/wiki/icons.ts` | NavTree CSS-mask rendering | Add/import asset file |
 | Add a footer page | Footer ID group in `src/lib/wiki/registry.ts` | Footer label and href derive from registry | Static/domain page entry if new |
 | Add a home quick link | `homeQuickLinkIds` in `src/routes/+page.svelte` | Link title, href, and description derive from registry | Image choice if needed |
+| Change document metadata rendering | `src/lib/components/PageDocumentMetadata.svelte` | Root/classes/species layouts render document title and description | None |
 | Change navigation styling | `src/lib/components/layout/snippets/helpers/NavTree.scss` or shell styles | Sidebar/NavTree UI | None |
 | Change a shared panel | `src/lib/styles/_panels.scss` | PageSection, Panel, cards using panel mixins | Route-local composition only when page-specific |
 | Change a button | `src/lib/styles/_buttons.scss` or `ActionButton.svelte` | Shared button/action consumers | None |
 | Change a form control | `src/lib/styles/_forms.scss` or form components | Preferences/search form controls | None |
 | Change a breakpoint | `src/lib/styles/_breakpoints.scss` | Shell, panels, route styles using shared variables | None |
 | Change route-specific composition | Route-adjacent SCSS | Only that route | None |
-| Add a route body | `src/routes/**/+page.svelte` | SvelteKit route body rendering | Add registry/domain metadata separately |
+
+## Current data-flow summary
+
+| Flow | Current path |
+| --- | --- |
+| Wiki metadata | Domain metadata in `src/lib/wiki/classes/` and `src/lib/wiki/species/`, plus static metadata in `src/lib/wiki/static-pages.ts`, flows into `src/lib/wiki/registry.ts`; layouts use registry entries for `PageHeader` and `PageDocumentMetadata`; navigation, footer links, search entries, and child cards derive from registry helpers. |
+| Campaign data | `src/lib/config/campaigns.ts` derives Party and Dungeon Master arrays/helpers; availability, preferences, sidebar accents, and search metadata consume those helpers. |
+| Availability | `src/lib/data/availability.ts` owns decisions; `getAvailabilityByHref()` feeds `AvailabilityBadges`, `src/lib/utils/availability-metadata.ts`, search relevance, and filters. |
+| Icons | `src/lib/wiki/icon-ids.ts` defines valid ids; page metadata stores ids; registry/navigation preserve ids; `src/lib/wiki/icons.ts` maps ids to SVG assets for CSS-mask rendering. |
+| Styling | `src/lib/styles/tokens.scss` and shared Sass primitives feed component-owned SCSS and route-level composition styles. |

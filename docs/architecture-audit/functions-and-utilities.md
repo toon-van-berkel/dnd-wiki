@@ -12,6 +12,8 @@ Current public utility boundaries:
 - Search helpers in `src/lib/utils/wiki-search.ts`: query state, scoring, facets, suggestions, and URL parameter handling.
 - Path helpers in `src/lib/utils/paths.ts`: app path, asset path, and `srcset` base-path handling.
 
+Phase 8 import convention: Svelte/app code uses `$lib/...` imports when crossing those ownership boundaries. Plain TypeScript modules compiled by `tsconfig.test.json` may keep explicit relative `.js` imports because their emitted JavaScript is executed directly by Node. Relative imports remain appropriate for same-domain files, adjacent components, recursive components, and styles. Type-only dependencies should use `import type`.
+
 ## Historical Snapshot
 
 The inventory table below is the original audit snapshot. Phase result sections supersede rows for removed compatibility files or changed helper ownership.

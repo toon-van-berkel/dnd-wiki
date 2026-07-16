@@ -172,3 +172,14 @@ The old compatibility facades `src/lib/data/parties.ts` and `src/lib/data/dungeo
 | button primitives | Partial | `src/lib/styles/_buttons.scss` | Some page-specific action links remain local |
 | focus primitives | Good | `src/lib/styles/_mixins.scss` | None for shared focus foundation |
 | deleted compatibility modules | Dead | none retained | Removed files are documented only in migration history |
+
+## Phase 8 Final Import And Migration Decision
+
+| Concept | Status | Current owner | Remaining issue |
+| --- | --- | --- | --- |
+| authoritative import paths | Good | `$lib/...` for Svelte/app cross-boundary imports; explicit relative `.js` for Node-executed TS test modules | Local relative imports remain for same-domain/adjacent files |
+| type-only imports | Good | `import type` at consuming boundaries | TypeScript compilation verifies the convention |
+| inventory ownership | Good | `docs/architecture-audit/inventory.json` refreshed from current source | Must be refreshed when imports/files change |
+| architecture editing guide | Good | `docs/architecture-audit/README.md` | Route folders and assets still require physical edits |
+| final folder migration decision | Good | `docs/architecture-audit/migration-plan.md` | Outcome A: stop after Phase 8 |
+| broad target folder migration | Dead | none | Not recommended because current remaining folder inconsistency is mostly cosmetic |

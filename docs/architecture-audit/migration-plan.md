@@ -89,4 +89,18 @@ Conditions before starting the major folder migration:
 - Preserve the current validation suite and run it after each movement batch.
 
 ## Phase 8: Final Import Cleanup And Documentation
-Goal: normalize imports, remove obsolete files, update docs. Required checks: check, lint if present, test, build, verify pages.
+Goal: normalize imports, verify inventory and current docs, and make the final migration decision. Required checks: check, lint if present, test, build, verify pages.
+
+Status after Phase 8 normalization: complete. Svelte/app source imports use authoritative `$lib/...` paths where low-risk, while plain TypeScript modules that are emitted by `tsconfig.test.json` keep explicit relative `.js` imports so Node can execute the compiled tests. Legitimate local relative imports remain for same-folder domain files, adjacent components, recursive components, and styles. The audit README now contains the final editing guide and current data-flow summary. `target-structure.md` was reassessed against the current architecture instead of treated as an automatic next step.
+
+Final migration outcome: **A. Stop after Phase 8**.
+
+Evidence:
+
+- Ownership is clear: class/species metadata, static page metadata, campaign data, availability decisions, registry projection, navigation, search, icons, document metadata, and shared styling primitives each have documented owners.
+- Structural tests cover registry uniqueness, route existence, PageHeader/document metadata ownership, campaign and availability invariants, import boundaries, documentation links, inventory coverage, and runtime cycles.
+- No compatibility facades remain for class/campaign metadata, and deleted modules are documented only as migration history.
+- The remaining physical coupling is unavoidable in SvelteKit: href changes still require route-folder renames, and asset files still require explicit file changes.
+- Moving to `src/lib/domains/` would touch many imports and produce review churn without eliminating a current source-of-truth problem.
+
+Recommendation: do not begin a folder migration. Future work should be feature- or pain-driven: make small local moves only if a module becomes hard to discover in practice, and commit any such move independently with the existing validation suite.

@@ -74,12 +74,11 @@ The table below is the original audit snapshot and includes rows that are now st
 | /species/elf/astral-elf | src/routes/species/elf/astral-elf/+page.svelte | src/routes/+layout.svelte, src/routes/species/+layout.svelte | src/routes/species/+layout.svelte | species--elf--astral-elf | /species/elf/astral-elf | PageHeader, AvailabilityBadges, PageSection, CampaignNote | - | - | no | no | Duplicated under domain layout |
 | /species/human | src/routes/species/human/+page.svelte | src/routes/+layout.svelte, src/routes/species/+layout.svelte | src/routes/species/+layout.svelte | species--human | /species/human | PageHeader, AvailabilityBadges, PageSection, CampaignNote | - | - | no | no | Duplicated under domain layout |
 
-## Notes
+## Historical Notes From Original Audit
 
-- `/classes` routes are aligned with layout-owned PageHeader.
-- `/species` routes have a layout but child pages still duplicate PageHeader/AvailabilityBadges.
-- Top-level legal/information routes generally own their own PageHeader and repeated constants.
-- `src/routes/rules/+page.svelte` owns a local `rulePages` array instead of deriving children from navigation.
+- `/classes` routes were already close to layout-owned PageHeader.
+- `/species` routes, top-level legal/information routes, and rules child lists had route-local metadata duplication in the original audit snapshot.
+- Those items are no longer current editing guidance. Phase 4 moved static route metadata to the registry flow, and Phase 7 structural tests keep route pages body-only for registered pages.
 
 ## Phase 4 Route Metadata Result
 

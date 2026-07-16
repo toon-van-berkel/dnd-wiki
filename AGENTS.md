@@ -187,6 +187,18 @@ Availability decisions are authored in `src/lib/data/availability.ts` and consum
 
 Reusable styling primitives live in `src/lib/styles` partials. Use the shared breakpoint, focus, panel, button, and form mixins before adding repeated route-local styling.
 
+## Import conventions
+
+Use `$lib/` imports for Svelte/app imports that cross library ownership boundaries, for example `$lib/config/campaigns`, `$lib/data/availability`, `$lib/wiki/registry`, `$lib/wiki/navigation`, `$lib/wiki/search-index`, `$lib/wiki/icons`, `$lib/utils/wiki-preferences`, and `$lib/utils/availability-metadata`.
+
+Plain TypeScript modules included in `tsconfig.test.json` may keep explicit relative `.js` imports because the emitted test JavaScript is executed directly by Node.
+
+Use relative imports for adjacent components, recursive local components, route-adjacent styles, and same-domain files such as class subclass modules.
+
+Use `import type` for type-only imports.
+
+Do not add general barrel files, global `types.ts`, or global `helpers.ts` modules to hide ownership boundaries.
+
 ## Completion checks
 
 Before finishing any task:

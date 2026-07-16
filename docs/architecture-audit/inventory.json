@@ -15,7 +15,7 @@
 		"components": 20,
 		"styles": 30,
 		"types": 122,
-		"functions": 195,
+		"functions": 194,
 		"dataExports": 22
 	},
 	"migrationHistory": {
@@ -367,29 +367,27 @@
 			"category": "validation",
 			"responsibility": "validation source file.",
 			"imports": [
-				"../.svelte-kit/wiki-search-tests/src/lib/config/campaigns.js",
-				"../.svelte-kit/wiki-search-tests/src/lib/data/ai-images.js",
-				"../.svelte-kit/wiki-search-tests/src/lib/data/availability.js",
-				"../.svelte-kit/wiki-search-tests/src/lib/utils/availability-metadata.js",
-				"../.svelte-kit/wiki-search-tests/src/lib/utils/content-filters.js",
-				"../.svelte-kit/wiki-search-tests/src/lib/utils/wiki-preferences.js",
-				"../.svelte-kit/wiki-search-tests/src/lib/utils/wiki-search.js",
-				"../.svelte-kit/wiki-search-tests/src/lib/wiki/classes/classes.js",
-				"../.svelte-kit/wiki-search-tests/src/lib/wiki/icon-ids.js",
-				"../.svelte-kit/wiki-search-tests/src/lib/wiki/navigation.js",
-				"../.svelte-kit/wiki-search-tests/src/lib/wiki/registry.js",
-				"../.svelte-kit/wiki-search-tests/src/lib/wiki/search-index.js",
-				"../.svelte-kit/wiki-search-tests/src/lib/wiki/species/species.js",
-				"../.svelte-kit/wiki-search-tests/src/lib/wiki/static-pages.js",
-				"\\$lib\\/config\\/campaigns",
-				"\\$lib\\/styles\\/(?:panels|buttons|mixins)",
-				"\\$lib\\/styles\\/breakpoints",
-				"\\$lib\\/styles\\/mixins",
-				"\\.\\/icon-ids\\.js",
 				"node:assert/strict",
 				"node:fs",
 				"node:path",
-				"node:test"
+				"node:test",
+				"../.svelte-kit/wiki-search-tests/src/lib/config/campaigns.js",
+				"../.svelte-kit/wiki-search-tests/src/lib/data/availability.js",
+				"../.svelte-kit/wiki-search-tests/src/lib/data/ai-images.js",
+				"../.svelte-kit/wiki-search-tests/src/lib/wiki/classes/classes.js",
+				"../.svelte-kit/wiki-search-tests/src/lib/wiki/species/species.js",
+				"../.svelte-kit/wiki-search-tests/src/lib/utils/availability-metadata.js",
+				"../.svelte-kit/wiki-search-tests/src/lib/utils/content-filters.js",
+				"../.svelte-kit/wiki-search-tests/src/lib/wiki/registry.js",
+				"../.svelte-kit/wiki-search-tests/src/lib/wiki/static-pages.js",
+				"../.svelte-kit/wiki-search-tests/src/lib/wiki/icon-ids.js",
+				"../.svelte-kit/wiki-search-tests/src/lib/wiki/search-index.js",
+				"../.svelte-kit/wiki-search-tests/src/lib/utils/wiki-search.js",
+				"../.svelte-kit/wiki-search-tests/src/lib/utils/wiki-preferences.js",
+				"../.svelte-kit/wiki-search-tests/src/lib/wiki/navigation.js",
+				"\\$lib\\/config\\/campaigns",
+				"\\$lib\\/config\\/campaigns",
+				"\\.\\/icon-ids\\.js"
 			],
 			"exports": [
 				"DungeonMasterId",
@@ -429,7 +427,8 @@
 				"documentationFiles",
 				"domainRecordsByKind",
 				"escapeRegExp",
-				"findNavigationItem",
+				"extractImportSpecifiers",
+				"findSourcePath",
 				"flattenAvailability",
 				"flattenAvailabilityNode",
 				"flattenDomainPages",
@@ -441,7 +440,6 @@
 				"registryEntryForDomainPage",
 				"resolveSassImport",
 				"resolveSourceImport",
-				"resolveSrcset",
 				"routePageFiles",
 				"routeSourceExistsForHref",
 				"routeSourcePathForHref",
@@ -449,7 +447,6 @@
 				"scriptFiles",
 				"sourceConsumers",
 				"sourceFiles",
-				"splitSuffix",
 				"styleFiles",
 				"titlesFor",
 				"visit"
@@ -553,8 +550,7 @@
 			"responsibility": "component source file.",
 			"imports": [
 				"$lib/data/availability",
-				"$lib/utils/availability-metadata",
-				"./AvailabilityBadges.scss"
+				"$lib/utils/availability-metadata"
 			],
 			"exports": [],
 			"consumers": [
@@ -611,9 +607,8 @@
 			"category": "component",
 			"responsibility": "component source file.",
 			"imports": [
-				"$lib/config/campaigns",
-				"./CampaignNote.scss",
-				"svelte"
+				"svelte",
+				"$lib/config/campaigns"
 			],
 			"exports": [],
 			"consumers": [
@@ -670,9 +665,8 @@
 			"category": "component",
 			"responsibility": "component source file.",
 			"imports": [
-				"$lib/utils/paths",
-				"./ChildLinkGrid.scss",
-				"svelte"
+				"svelte",
+				"$lib/utils/paths"
 			],
 			"exports": [],
 			"consumers": [
@@ -724,7 +718,6 @@
 			"category": "component",
 			"responsibility": "component source file.",
 			"imports": [
-				"$lib/styles/panels",
 				"svelte"
 			],
 			"exports": [],
@@ -749,7 +742,6 @@
 			"category": "component",
 			"responsibility": "component source file.",
 			"imports": [
-				"$lib/styles/buttons",
 				"svelte"
 			],
 			"exports": [],
@@ -773,9 +765,7 @@
 			"path": "src/lib/components/forms/SelectField.svelte",
 			"category": "component",
 			"responsibility": "component source file.",
-			"imports": [
-				"$lib/styles/forms"
-			],
+			"imports": [],
 			"exports": [],
 			"consumers": [
 				"src/lib/components/WikiPreferences.svelte"
@@ -802,8 +792,6 @@
 			"category": "component",
 			"responsibility": "component source file.",
 			"imports": [
-				"$lib/styles/breakpoints",
-				"$lib/styles/panels",
 				"svelte"
 			],
 			"exports": [],
@@ -861,8 +849,7 @@
 				"$lib/components/WikiImage.svelte",
 				"$lib/config/site",
 				"$lib/utils/paths",
-				"$lib/wiki/registry",
-				"./Footer.scss"
+				"$lib/wiki/registry"
 			],
 			"exports": [],
 			"consumers": [
@@ -925,8 +912,7 @@
 				"$app/state",
 				"$lib/utils/paths",
 				"$lib/utils/wiki-search",
-				"$lib/wiki/search-index",
-				"./Header.scss"
+				"$lib/wiki/search-index"
 			],
 			"exports": [],
 			"consumers": [
@@ -996,10 +982,9 @@
 			"category": "component",
 			"responsibility": "component source file.",
 			"imports": [
-				"$lib/utils/paths",
-				"$lib/wiki/icons",
 				"$lib/wiki/navigation",
-				"./NavTree.scss",
+				"$lib/wiki/icons",
+				"$lib/utils/paths",
 				"./NavTree.svelte"
 			],
 			"exports": [],
@@ -1065,9 +1050,8 @@
 			"imports": [
 				"$app/state",
 				"$lib/config/campaigns",
-				"$lib/utils/paths",
 				"$lib/wiki/navigation",
-				"./Sidebar.scss",
+				"$lib/utils/paths",
 				"./helpers/NavTree.svelte"
 			],
 			"exports": [],
@@ -1096,10 +1080,11 @@
 			"category": "component",
 			"responsibility": "component source file.",
 			"imports": [
-				"./snippets/Footer.svelte",
+				"svelte",
+				"svelte",
 				"./snippets/Header.svelte",
 				"./snippets/Sidebar.svelte",
-				"svelte"
+				"./snippets/Footer.svelte"
 			],
 			"exports": [],
 			"consumers": [
@@ -1173,7 +1158,6 @@
 			"category": "component",
 			"responsibility": "component source file.",
 			"imports": [
-				"./PageHeader.scss",
 				"./RuleTag.svelte"
 			],
 			"exports": [],
@@ -1223,7 +1207,6 @@
 			"category": "component",
 			"responsibility": "component source file.",
 			"imports": [
-				"./PageSection.scss",
 				"svelte"
 			],
 			"exports": [],
@@ -1288,9 +1271,7 @@
 			"path": "src/lib/components/RuleTag.svelte",
 			"category": "component",
 			"responsibility": "component source file.",
-			"imports": [
-				"./RuleTag.scss"
-			],
+			"imports": [],
 			"exports": [],
 			"consumers": [
 				"src/lib/components/PageHeader.svelte"
@@ -1311,8 +1292,6 @@
 			"category": "component",
 			"responsibility": "component source file.",
 			"imports": [
-				"$lib/styles/mixins",
-				"$lib/styles/panels",
 				"svelte"
 			],
 			"exports": [
@@ -1354,8 +1333,8 @@
 			"category": "component",
 			"responsibility": "component source file.",
 			"imports": [
-				"$lib/utils/paths",
-				"svelte/elements"
+				"svelte/elements",
+				"$lib/utils/paths"
 			],
 			"exports": [],
 			"consumers": [
@@ -1398,13 +1377,12 @@
 			"category": "component",
 			"responsibility": "component source file.",
 			"imports": [
+				"svelte",
 				"$lib/components/forms/ActionButton.svelte",
 				"$lib/components/forms/SelectField.svelte",
 				"$lib/components/layout/Panel.svelte",
 				"$lib/config/campaigns",
-				"$lib/utils/wiki-preferences",
-				"./WikiPreferences.scss",
-				"svelte"
+				"$lib/utils/wiki-preferences"
 			],
 			"exports": [],
 			"consumers": [
@@ -1463,9 +1441,7 @@
 			"path": "src/lib/components/WikiTable.svelte",
 			"category": "component",
 			"responsibility": "component source file.",
-			"imports": [
-				"./WikiTable.scss"
-			],
+			"imports": [],
 			"exports": [],
 			"consumers": [
 				"src/routes/+page.svelte",
@@ -1990,8 +1966,8 @@
 			"category": "utility",
 			"responsibility": "utility source file.",
 			"imports": [
-				"../config/campaigns.js",
-				"../data/availability.js"
+				"../data/availability.js",
+				"../config/campaigns.js"
 			],
 			"exports": [
 				"AvailabilityMetadata",
@@ -2249,9 +2225,9 @@
 			"category": "wiki-domain",
 			"responsibility": "wiki-domain source file.",
 			"imports": [
-				"../domain.js",
 				"./sub_classes-cleric.js",
-				"./sub_classes-rogues.js"
+				"./sub_classes-rogues.js",
+				"../domain.js"
 			],
 			"exports": [
 				"classes"
@@ -2375,9 +2351,9 @@
 			"category": "wiki-domain",
 			"responsibility": "wiki-domain source file.",
 			"imports": [
-				"$lib/assets/icons/entity/pet.svg",
 				"$lib/assets/icons/game/source-book.svg",
 				"$lib/assets/icons/monster/fiend.svg",
+				"$lib/assets/icons/entity/pet.svg",
 				"./icon-ids.js"
 			],
 			"exports": [
@@ -2403,8 +2379,8 @@
 			"category": "wiki-domain",
 			"responsibility": "Projects registry pages into navigation items.",
 			"imports": [
-				"./icon-ids.js",
-				"./registry.js"
+				"./registry.js",
+				"./icon-ids.js"
 			],
 			"exports": [
 				"NavigationItem",
@@ -2442,10 +2418,11 @@
 			"responsibility": "Combines static and domain metadata into the central Wiki page registry.",
 			"imports": [
 				"./classes/classes.js",
-				"./domain.js",
-				"./icon-ids.js",
 				"./species/species.js",
-				"./static-pages.js"
+				"./icon-ids.js",
+				"./static-pages.js",
+				"./domain.js",
+				"./icon-ids.js"
 			],
 			"exports": [
 				"FooterPageGroup",
@@ -2504,8 +2481,8 @@
 			"category": "wiki-domain",
 			"responsibility": "Projects registry pages into search entries.",
 			"imports": [
-				"../config/campaigns.js",
 				"../utils/availability-metadata.js",
+				"../config/campaigns.js",
 				"./registry.js",
 				"./search-tags.js"
 			],
@@ -2621,9 +2598,9 @@
 			"category": "wiki-domain",
 			"responsibility": "wiki-domain source file.",
 			"imports": [
-				"../domain.js",
 				"./species-elfs.js",
-				"./species-humans.js"
+				"./species-humans.js",
+				"../domain.js"
 			],
 			"exports": [
 				"species"
@@ -2669,11 +2646,11 @@
 			"imports": [
 				"$app/paths",
 				"$app/state",
+				"svelte",
 				"$lib/components/PageDocumentMetadata.svelte",
 				"$lib/components/PageHeader.svelte",
 				"$lib/components/layout/WikiLayout.svelte",
-				"$lib/wiki/registry",
-				"svelte"
+				"$lib/wiki/registry"
 			],
 			"exports": [],
 			"consumers": [],
@@ -2767,9 +2744,8 @@
 			"category": "route",
 			"responsibility": "Route body content for a registered page.",
 			"imports": [
-				"$lib/components/PageSection.svelte",
 				"$lib/utils/paths",
-				"./About.scss"
+				"$lib/components/PageSection.svelte"
 			],
 			"exports": [],
 			"consumers": [],
@@ -2828,9 +2804,8 @@
 			"category": "route",
 			"responsibility": "Route body content for a registered page.",
 			"imports": [
-				"$lib/components/PageSection.svelte",
 				"$lib/utils/paths",
-				"./Accessibility.scss"
+				"$lib/components/PageSection.svelte"
 			],
 			"exports": [],
 			"consumers": [],
@@ -2895,10 +2870,9 @@
 			"category": "route",
 			"responsibility": "Route body content for a registered page.",
 			"imports": [
-				"$lib/components/PageSection.svelte",
-				"$lib/data/ai-images",
 				"$lib/utils/paths",
-				"./AITransparency.scss"
+				"$lib/components/PageSection.svelte",
+				"$lib/data/ai-images"
 			],
 			"exports": [],
 			"consumers": [],
@@ -2960,10 +2934,9 @@
 			"category": "route",
 			"responsibility": "Route body content for a registered page.",
 			"imports": [
-				"$lib/components/PageSection.svelte",
-				"$lib/data/changelog",
 				"$lib/utils/paths",
-				"./Changelog.scss"
+				"$lib/components/PageSection.svelte",
+				"$lib/data/changelog"
 			],
 			"exports": [],
 			"consumers": [],
@@ -3071,11 +3044,11 @@
 			"responsibility": "Route layout and metadata/header ownership.",
 			"imports": [
 				"$app/state",
+				"svelte",
 				"$lib/components/AvailabilityBadges.svelte",
 				"$lib/components/PageDocumentMetadata.svelte",
 				"$lib/components/PageHeader.svelte",
-				"$lib/wiki/registry",
-				"svelte"
+				"$lib/wiki/registry"
 			],
 			"exports": [],
 			"consumers": [],
@@ -3130,9 +3103,9 @@
 			"category": "route",
 			"responsibility": "Route body content for a registered page.",
 			"imports": [
-				"$lib/components/ChildLinkGrid.svelte",
 				"$lib/components/PageSection.svelte",
 				"$lib/components/WikiTable.svelte",
+				"$lib/components/ChildLinkGrid.svelte",
 				"$lib/wiki/navigation"
 			],
 			"exports": [],
@@ -3471,9 +3444,9 @@
 			"category": "route",
 			"responsibility": "Route body content for a registered page.",
 			"imports": [
-				"$lib/components/ChildLinkGrid.svelte",
 				"$lib/components/PageSection.svelte",
 				"$lib/components/WikiTable.svelte",
+				"$lib/components/ChildLinkGrid.svelte",
 				"$lib/wiki/navigation"
 			],
 			"exports": [],
@@ -3752,9 +3725,8 @@
 			"category": "route",
 			"responsibility": "Route body content for a registered page.",
 			"imports": [
-				"$lib/components/PageSection.svelte",
 				"$lib/utils/paths",
-				"./ContentRemoval.scss"
+				"$lib/components/PageSection.svelte"
 			],
 			"exports": [],
 			"consumers": [],
@@ -3809,9 +3781,8 @@
 			"category": "route",
 			"responsibility": "Route body content for a registered page.",
 			"imports": [
-				"$lib/components/PageSection.svelte",
 				"$lib/utils/paths",
-				"./ContributionTerms.scss"
+				"$lib/components/PageSection.svelte"
 			],
 			"exports": [],
 			"consumers": [],
@@ -3865,10 +3836,9 @@
 			"category": "route",
 			"responsibility": "Route body content for a registered page.",
 			"imports": [
-				"$lib/components/PageSection.svelte",
 				"$lib/utils/paths",
 				"$lib/utils/wiki-preferences",
-				"./CookieNotice.scss"
+				"$lib/components/PageSection.svelte"
 			],
 			"exports": [],
 			"consumers": [],
@@ -3951,8 +3921,8 @@
 			"category": "route",
 			"responsibility": "Route body content for a registered page.",
 			"imports": [
-				"$lib/components/PageSection.svelte",
-				"$lib/utils/paths"
+				"$lib/utils/paths",
+				"$lib/components/PageSection.svelte"
 			],
 			"exports": [],
 			"consumers": [],
@@ -4070,10 +4040,9 @@
 			"category": "route",
 			"responsibility": "Route body content for a registered page.",
 			"imports": [
-				"$lib/components/PageSection.svelte",
 				"$lib/utils/paths",
 				"$lib/utils/wiki-preferences",
-				"./PrivacyNotice.scss"
+				"$lib/components/PageSection.svelte"
 			],
 			"exports": [],
 			"consumers": [],
@@ -4200,14 +4169,13 @@
 				"$app/environment",
 				"$app/navigation",
 				"$app/state",
+				"svelte",
 				"$lib/components/feedback/EmptyState.svelte",
 				"$lib/components/forms/ActionButton.svelte",
 				"$lib/components/search/SearchFilterGroup.svelte",
 				"$lib/utils/paths",
 				"$lib/utils/wiki-search",
-				"$lib/wiki/search-index",
-				"./Search.scss",
-				"svelte"
+				"$lib/wiki/search-index"
 			],
 			"exports": [],
 			"consumers": [],
@@ -4334,10 +4302,9 @@
 			"category": "route",
 			"responsibility": "Route body content for a registered page.",
 			"imports": [
-				"$lib/components/PageSection.svelte",
-				"$lib/data/sources",
 				"$lib/utils/paths",
-				"./Sources.scss"
+				"$lib/components/PageSection.svelte",
+				"$lib/data/sources"
 			],
 			"exports": [],
 			"consumers": [],
@@ -4425,11 +4392,11 @@
 			"responsibility": "Route layout and metadata/header ownership.",
 			"imports": [
 				"$app/state",
+				"svelte",
 				"$lib/components/AvailabilityBadges.svelte",
 				"$lib/components/PageDocumentMetadata.svelte",
 				"$lib/components/PageHeader.svelte",
-				"$lib/wiki/registry",
-				"svelte"
+				"$lib/wiki/registry"
 			],
 			"exports": [],
 			"consumers": [],
