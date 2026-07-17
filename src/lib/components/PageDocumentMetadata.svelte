@@ -1,4 +1,4 @@
-<script lang="ts">
+<!-- <script lang="ts">
 	import { siteConfig } from '$lib/config/site';
 	import type { WikiPageEntry } from '$lib/wiki/registry';
 
@@ -19,4 +19,4 @@
 			<meta name="description" content={pageMeta.description} />
 		{/if}
 	{/if}
-</svelte:head>
+</svelte:head> -->

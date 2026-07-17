@@ -1,8 +1,12 @@
+<!-- site\src\routes\+page.svelte -->
 <script lang="ts">
+	import Metadata from '$lib/page/Metadata.svelte';
+	import { metadata } from './page.meta';
+    import PageHeader from '$lib/page/layout/navigation/PageHeader.svelte';
+	import { headerdata } from './page.header';
+
 	import ChildLinkGrid from '$lib/components/ChildLinkGrid.svelte';
 	import PageSection from '$lib/components/PageSection.svelte';
-	import WikiTable from '$lib/components/WikiTable.svelte';
-	import { getDungeonMasterForParty, parties } from '$lib/config/campaigns';
 	import { getWikiPage } from '$lib/wiki/registry';
 
 	const homeQuickLinkIds = [
@@ -41,13 +45,16 @@
 
 	const partyColumns = ['DM', 'Party', 'Short name', 'Members'];
 
-	const partyRows = parties.map((party) => [
-		getDungeonMasterForParty(party.id)?.shortName ?? party.dmId,
-		party.name,
-		party.shortName,
-		party.members
-	]);
+	// const partyRows = parties.map((party) => [
+	// 	getDungeonMasterForParty(party.id)?.shortName ?? party.dmId,
+	// 	party.name,
+	// 	party.shortName,
+	// 	party.members
+	// ]);
 </script>
+
+<Metadata {metadata}/>
+<PageHeader {headerdata} />
 
 <PageSection title="How to use this wiki">
 	<p>
@@ -64,11 +71,11 @@
 <PageSection title="Check your party">
 	<p>If you are unsure which party you are in, please check this list:</p>
 
-	<WikiTable
+	<!-- <WikiTable
 		caption="Campaign parties and their members"
 		columns={partyColumns}
 		rows={partyRows}
-	/>
+	/> -->
 
 	<h2>Dedicated guest players</h2>
 	<ol>

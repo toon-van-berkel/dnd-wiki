@@ -1,0 +1,24 @@
+// site\src\lib\page\layout\navigation\snippets\Tags.scss
+.tags {
+    &-title {
+        margin: 0 0 10px 0;
+        font-size: clamp(0.8rem, 2vw, 1rem);
+    }
+    &__list {
+        margin: 0;
+        padding: 0;
+
+        display: flex;
+        gap: 5px;
+
+        &-item {
+            padding: 5px 10px;
+
+            display: flex;
+
+            font-size: clamp(0.7rem, 2vw, 0.9rem);
+            border: 1px solid var(--border-strong);
+            border-radius: var(--radius-lg);
+        }
+    }
+}

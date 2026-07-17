@@ -1,4 +1,5 @@
-// C:\Users\toonv\Development\dnd-wiki\site\src\lib\config\_index.ts
+// site\src\lib\config\_index.ts
 export { config } from './config';
 export { dms } from './dms'
 export { parties } from './parties'
+export * as partiesHelper from './parties-helper'

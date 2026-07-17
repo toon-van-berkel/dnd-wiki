@@ -1,6 +1,11 @@
+<!-- site\src\routes\rules\+page.svelte -->
 <script lang="ts">
 	import ChildLinkGrid from '$lib/components/ChildLinkGrid.svelte';
 	import PageSection from '$lib/components/PageSection.svelte';
+	
+	import PageHeader from '$lib/page/layout/navigation/PageHeader.svelte';
+	import { headerdata } from './page.header';
+
 	import { getNavigationChildren } from '$lib/wiki/navigation';
 
 	const rulePages = getNavigationChildren('/rules').map(({ title, href, description }) => ({
@@ -9,6 +14,8 @@
 		description: description ?? ''
 	}));
 </script>
+
+<PageHeader {headerdata} />
 
 <PageSection title="How rulings work">
 	<p>Use these pages when a table ruling differs from your usual expectations. If an edge case is not covered, the DM makes a temporary call so play can continue.</p>

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/state';
-	import { parties } from '$lib/config/campaigns';
+	import { parties } from '$lib/config/parties';
 	import { navigation } from '$lib/wiki/navigation';
 	import { resolveAppPath } from '$lib/utils/paths';
 	import NavTree from './helpers/NavTree.svelte';
@@ -83,14 +83,14 @@
 	<div class="sidebar__campaigns">
 		<p class="sidebar__label">Campaign accents</p>
 
-		{#each parties as party}
-			<div>
-				<span
-					style={`--party-color: var(${party.colorToken})`}
-				></span>
-
-				{party.name}
-			</div>
+		{#each Object.entries(parties) as [key, party]}
+		<div>
+			<span
+			style={`--party-color: var(${party.colors.basic})`}
+			></span>
+			<!-- Accessing the friendly name -->
+			{party.names.friendly.basic}
+		</div>
 		{/each}
 	</div>
 </aside>

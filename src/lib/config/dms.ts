@@ -1,4 +1,4 @@
-// C:\Users\toonv\Development\dnd-wiki\site\src\lib\config\dms.ts
+// site\src\lib\config\dms.ts
 export const dms = {
     i1: {
         id: 'i1',

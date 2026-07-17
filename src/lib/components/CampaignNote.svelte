@@ -1,4 +1,4 @@
-<script lang="ts">
+<!-- <script lang="ts">
 	import type { Snippet } from 'svelte';
 	import { getParty, type PartyId } from '$lib/config/campaigns';
 
@@ -26,4 +26,4 @@
 
 <style lang="scss">
 	@use './CampaignNote.scss';
-</style>
+</style> -->

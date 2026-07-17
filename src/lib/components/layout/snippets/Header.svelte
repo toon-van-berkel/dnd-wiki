@@ -1,4 +1,4 @@
-<script lang="ts">
+<!-- <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { page } from '$app/state';
 	import { resolveAppPath, resolveAssetPath } from '$lib/utils/paths';
@@ -136,4 +136,4 @@
 
 <style lang="scss">
 	@use './Header.scss';
-</style>
+</style> -->

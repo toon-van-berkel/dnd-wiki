@@ -1,0 +1,54 @@
+// site\src\lib\page\layout\navigation\snippets\Allowedin.scss
+.allowedin {
+    margin-bottom: 20px;
+
+    &-title {
+        margin: 0;
+        color: var(--text-heading);
+        font-size: clamp(0.8rem, 2vw, 1rem);
+        letter-spacing: -0.015em;
+        line-height: 1.3;
+    }
+
+    &__allowed,
+    &__limited,
+    &__banned {
+        padding: 10px;
+        margin: 10px 0;
+
+        display: flex;
+        gap: 10px;
+
+        border-radius: var(--radius-lg);
+
+        &-title {
+            font-size: clamp(0.8rem, 2vw, 1rem);
+        }
+        &__list {
+            margin: 0;
+            padding: 0;
+
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 10px;
+
+            &-item {
+                display: block;
+            }
+        }
+    }
+
+    &__allowed {
+        background-color: var(--allowed-soft);
+        border: 1px solid var(--allowed);
+    }
+    &__limited {
+        background-color: var(--limited-soft);
+        border: 1px solid var(--limited);
+    }
+    &__banned {
+        background-color: var(--banned-soft);
+        border: 1px solid var(--banned);
+    }
+}

@@ -1,3 +1,9 @@
+@mixin reduced-motion {
+	@media (prefers-reduced-motion: reduce) {
+		@content;
+	}
+}
+
 @mixin focus-ring($color: var(--accent-muted), $offset: 2px) {
 	&:focus-visible {
 		outline: 2px solid $color;
@@ -16,8 +22,21 @@
 	}
 }
 
-@mixin reduced-motion {
-	@media (prefers-reduced-motion: reduce) {
-		@content;
-	}
+@mixin header {
+	max-width: 47rem;
+	margin: 0;
+	color: var(--text-heading);
+	font-size: clamp(2rem, 5vw, 3.35rem);
+	font-weight: 720;
+	letter-spacing: -0.045em;
+	line-height: 1.08;
+}
+
+@mixin eyebrow {
+	margin: 0 0 0.8rem;
+	color: var(--accent-muted);
+	font-size: 0.76rem;
+	font-weight: 750;
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
 }

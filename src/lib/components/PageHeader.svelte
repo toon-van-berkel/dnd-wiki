@@ -1,4 +1,4 @@
-<script lang="ts">
+<!-- <script lang="ts">
 	import RuleTag from './RuleTag.svelte';
 
 	type Props = {
@@ -35,4 +35,4 @@
 
 <style lang="scss">
 	@use './PageHeader.scss';
-</style>
+</style> -->

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import WikiImage from '$lib/components/WikiImage.svelte';
-	import { siteConfig } from '$lib/config/site';
+	import { config } from '$lib/config/config';
 	import { resolveAppPath } from '$lib/utils/paths';
 	import { getFooterPages } from '$lib/wiki/registry';
 
@@ -27,7 +27,7 @@
 		},
 		{
 			label: 'Contact by Email',
-			href: `mailto:${siteConfig.contactEmail}`
+			href: `mailto:${config.owner.email}`
 		}
 	];
 
@@ -72,7 +72,7 @@
 				</span>
 
 				<span class="site-footer__brand-text">
-					<strong id="site-footer-title">{siteConfig.name}</strong>
+					<strong id="site-footer-title">{config.website.domainNname.friendly.long}</strong>
 					<span>Campaign rules and reference wiki</span>
 				</span>
 			</a>
@@ -89,7 +89,7 @@
 					target="_blank"
 					rel="noopener noreferrer"
 				>
-					{siteConfig.ownerName}
+					{config.owner.name.friendly}
 				</a>.
 			</p>
 
@@ -118,7 +118,7 @@
 					LinkedIn
 				</a>
 
-				<a href={`mailto:${siteConfig.contactEmail}`}>
+				<a href={`mailto:${config.owner.email}`}>
 					Email
 				</a>
 			</div>
@@ -241,7 +241,7 @@
 					target="_blank"
 					rel="noopener noreferrer"
 				>
-					{siteConfig.ownerName}
+					{config.owner.email}
 				</a>.
 				Original website content is protected unless otherwise stated.
 			</p>

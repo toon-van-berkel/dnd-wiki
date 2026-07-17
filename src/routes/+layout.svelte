@@ -1,11 +1,11 @@
+<!-- site\src\routes\+layout.svelte -->
 <script lang="ts">
 	import { base } from '$app/paths';
 	import { page } from '$app/state';
 	import type { Snippet } from 'svelte';
 	import '$lib/styles/global.scss';
+	import '$lib/styles/reset.scss';
 	import '$lib/styles/wiki-layout.scss';
-	import PageDocumentMetadata from '$lib/components/PageDocumentMetadata.svelte';
-	import PageHeader from '$lib/components/PageHeader.svelte';
 	import WikiLayout from '$lib/components/layout/WikiLayout.svelte';
 	import { getWikiPageByHref } from '$lib/wiki/registry';
 
@@ -41,21 +41,10 @@
 	);
 </script>
 
-<PageDocumentMetadata {pageMeta} />
-
 <svelte:head>
 	<meta name="theme-color" content="#0b0d0c" />
 </svelte:head>
 
 <WikiLayout>
-	{#if pageMeta}
-		<PageHeader
-			title={pageMeta.title}
-			description={pageMeta.description}
-			eyebrow={pageMeta.eyebrow}
-			tags={pageMeta.tags}
-		/>
-	{/if}
-
 	{@render children()}
 </WikiLayout>

@@ -1,4 +1,4 @@
-<script lang="ts">
+<!-- <script lang="ts">
 	import { onMount } from 'svelte';
 	import ActionButton from '$lib/components/forms/ActionButton.svelte';
 	import SelectField from '$lib/components/forms/SelectField.svelte';
@@ -102,4 +102,4 @@
 
 <style lang="scss">
 	@use './WikiPreferences.scss';
-</style>
+</style> -->

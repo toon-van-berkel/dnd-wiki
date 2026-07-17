@@ -1,4 +1,4 @@
-// C:\Users\toonv\Development\dnd-wiki\site\src\lib\config\parties.ts
+// site\src\lib\config\parties.ts
 export const parties = {
 	i1: {
 		id: 'i1',

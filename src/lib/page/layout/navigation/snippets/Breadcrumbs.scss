@@ -1,0 +1,47 @@
+// site\src\lib\page\layout\navigation\snippets\Breadcrumbs.scss
+.breadcrumbs {
+	display: flex;
+	align-items: center;
+	gap: 20px;
+
+	&-button {
+		padding: 5px 10px;
+		background-color: transparent;
+		border: 1px solid var(--border-strong);
+		border-radius: var(--radius-lg);
+
+		&:hover {
+			background-color: var(--surface-raised);
+			border-color: var(--accent);
+			cursor: pointer;
+		}
+	}
+
+	&__list {
+		display: flex;
+		align-items: center;
+		margin: 0;
+		padding: 0;
+		list-style: none;
+
+		&-item_container {
+			display: flex;
+			align-items: center;
+
+			&:not(:first-child)::before {
+				content: '/';
+				margin-inline: 0.5rem;
+				color: var(--text-muted);
+			}
+		}
+
+		&-item {
+			color: var(--text-secondary);
+			text-decoration: none;
+
+			&:hover {
+				color: var(--accent);
+			}
+		}
+	}
+}
