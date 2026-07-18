@@ -31,8 +31,16 @@ test('static asset paths are base-path safe', () => {
 		'/dnd-wiki/icons/game/monster.svg'
 	);
 	assert.equal(
+		resolveAssetPathWithBase('/classes/rogue/assassin/card-female-m.webp', '/dnd-wiki'),
+		'/dnd-wiki/classes/rogue/assassin/card-female-m.webp'
+	);
+	assert.equal(
 		resolveAssetPathWithBase('/icons/game/monster.svg?v=1#mask', '/dnd-wiki'),
 		'/dnd-wiki/icons/game/monster.svg?v=1#mask'
+	);
+	assert.equal(
+		resolveAssetPathWithBase('icons//game///monster.svg?size=24#mask', '/dnd-wiki'),
+		'/dnd-wiki/icons/game/monster.svg?size=24#mask'
 	);
 	assert.equal(
 		resolveAssetPathWithBase('static/icons/game/monster.svg', '/dnd-wiki'),

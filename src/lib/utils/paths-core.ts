@@ -63,9 +63,7 @@ export function resolveAssetPathWithBase(path: string | null | undefined, basePa
 	const assetBasePath = normalizePublicBasePath(basePath);
 	const { pathname, suffix } = splitSuffix(value);
 	const withoutStaticPrefix = pathname.replace(/^\/?static\//, '');
-	const normalizedPathname = withoutStaticPrefix.startsWith('/')
-		? withoutStaticPrefix
-		: `/${withoutStaticPrefix}`;
+	const normalizedPathname = `/${withoutStaticPrefix.replace(/^\/+/, '').replace(/\/{2,}/g, '/')}`;
 
 	if (isAlreadyBasePrefixed(normalizedPathname, assetBasePath)) {
 		return `${normalizedPathname}${suffix}`;
