@@ -20,7 +20,7 @@
 
 <section class="domain-links" aria-labelledby="domains-heading">
 	<h2 id="domains-heading">Cleric domains</h2>
-	<ChildLinkGrid links={subclassPages} imagesInFolder="classes/cleric" />
+	<ChildLinkGrid links={subclassPages} />
 </section>
 
 <style lang="scss">

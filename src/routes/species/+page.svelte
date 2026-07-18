@@ -17,7 +17,7 @@
 
 <section class="page-links" aria-labelledby="species-pages-heading">
 	<h2 id="species-pages-heading">Species pages</h2>
-	<ChildLinkGrid imagesInFolder="species" links={speciesPages} />
+	<ChildLinkGrid links={speciesPages} />
 </section>
 
 <style lang="scss">

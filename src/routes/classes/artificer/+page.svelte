@@ -452,7 +452,7 @@
 
 <section>
 	<h2 id="specialists-heading">Artificer specialists</h2>
-	<ChildLinkGrid links={subclassPages} imagesInFolder="classes/artificer" />
+	<ChildLinkGrid links={subclassPages} />
 </section>
 
 <style lang="scss">

@@ -30,4 +30,12 @@ AGENTS.md
 AGENTS.md
 
 docs
-scripts
+scripts/*
+!scripts/
+!scripts/generate-icon-registry.mjs
+!scripts/generate-page-card-assets.mjs
+!scripts/test-paths.mjs
+!scripts/test-wiki-search.mjs
+!scripts/verify-assets.mjs
+!scripts/verify-pages-build.mjs
+

@@ -10,6 +10,8 @@
 		"src/lib/data/**/*.ts",
 		"src/lib/page/registry/**/*.ts",
 		"src/lib/preferences/**/*.ts",
-		"src/lib/search/**/*.ts"
+		"src/lib/search/**/*.ts",
+		"src/lib/components/Icon/**/*.ts",
+		"src/lib/utils/paths-core.ts"
 	]
 }
