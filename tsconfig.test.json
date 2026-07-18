@@ -1,30 +1,15 @@
 {
 	"extends": "./tsconfig.json",
 	"compilerOptions": {
-		"module": "NodeNext",
-		"moduleResolution": "NodeNext",
-		"rootDir": ".",
-		"outDir": ".svelte-kit/wiki-search-tests",
-		"noEmit": false
+		"noEmit": true
 	},
 	"include": [
-		"src/lib/config/campaigns.ts",
-		"src/lib/config/site.ts",
-		"src/lib/data/availability.ts",
-		"src/lib/data/dungeon-masters.ts",
-		"src/lib/data/parties.ts",
-		"src/lib/utils/availability-metadata.ts",
-		"src/lib/utils/wiki-preferences.ts",
-		"src/lib/utils/wiki-search.ts",
-		"src/lib/wiki/classes/classes.ts",
-		"src/lib/wiki/classes/sub_classes-cleric.ts",
-		"src/lib/wiki/classes/sub_classes-rogues.ts",
-		"src/lib/wiki/navigation.ts",
-		"src/lib/wiki/registry.ts",
-		"src/lib/wiki/search-index.ts",
-		"src/lib/wiki/search-tags.ts",
-		"src/lib/wiki/species/species.ts",
-		"src/lib/wiki/species/species-elfs.ts",
-		"src/lib/wiki/species/species-humans.ts"
+		"src/app.d.ts",
+		"src/svg.d.ts",
+		"src/lib/config/**/*.ts",
+		"src/lib/data/**/*.ts",
+		"src/lib/page/registry/**/*.ts",
+		"src/lib/preferences/**/*.ts",
+		"src/lib/search/**/*.ts"
 	]
 }

@@ -5,11 +5,10 @@
 	import { onMount, tick } from 'svelte';
 	import EmptyState from '$lib/components/feedback/EmptyState.svelte';
 	import ActionButton from '$lib/components/forms/ActionButton.svelte';
-	import PageHeader from '$lib/components/PageHeader.svelte';
-	import SearchFilterGroup from '$lib/components/search/SearchFilterGroup.svelte';
+	import SearchFilterGroup from '$lib/search/SearchFilterGroup.svelte';
 	import { resolveAppPath } from '$lib/utils/paths';
-	import { getWikiPage } from '$lib/wiki/registry';
 	import {
+		contentTypeLabels,
 		createEmptySearchState,
 		getCollectionSuggestions,
 		getSearchSuggestions,
@@ -21,11 +20,9 @@
 		readSearchStateFromParams,
 		searchWiki,
 		writeSearchStateToParams,
+		type SearchEntryKind,
 		type WikiSearchState
-	} from '$lib/utils/wiki-search';
-	import { contentTypeLabels, type SearchEntryKind } from '$lib/wiki/search-index';
-
-	const pageMeta = getWikiPage('search');
+	} from '$lib/search/search';
 
 	let query = $state('');
 	let queryInput = $state('');
@@ -130,14 +127,6 @@
 		}
 	}
 
-	function removeType(typeId: SearchEntryKind) {
-		toggleType(typeId, false);
-	}
-
-	function removeTag(tagId: string) {
-		toggleTag(tagId, false);
-	}
-
 	function chooseSuggestion(href: string) {
 		suggestionsOpen = false;
 		activeSuggestionIndex = -1;
@@ -145,9 +134,7 @@
 	}
 
 	function handleSuggestionKeydown(event: KeyboardEvent) {
-		if (!suggestions.length) {
-			return;
-		}
+		if (!suggestions.length) return;
 
 		if (event.key === 'ArrowDown') {
 			event.preventDefault();
@@ -181,11 +168,9 @@
 	}
 
 	async function syncUrlState(replaceState: boolean) {
-		if (!browser) {
-			return;
-		}
+		if (!browser) return;
 
-		const nextResults = searchWiki({ query, typeIds, tagIds, page: currentPage } as WikiSearchState);
+		const nextResults = searchWiki({ query, typeIds, tagIds, page: currentPage });
 		const nextPagination = paginateResults(nextResults, currentPage);
 
 		if (currentPage !== nextPagination.page) {
@@ -198,7 +183,7 @@
 			typeIds,
 			tagIds,
 			page: currentPage
-		} as WikiSearchState).toString();
+		}).toString();
 
 		if (nextUrl.href !== page.url.href) {
 			syncedUrlSearch = nextUrl.search;
@@ -214,20 +199,6 @@
 		return checked ? [...new Set([...ids, id])] : ids.filter((selectedId) => selectedId !== id);
 	}
 </script>
-
-<svelte:head>
-	<title>{pageMeta?.title ?? 'Search the Wiki'} | D&D Portal</title>
-	<meta
-		name="description"
-		content={pageMeta?.description ?? 'Search individual D&D Portal Wiki rules, character options, species, locations, and other content.'}
-	/>
-</svelte:head>
-
-<PageHeader
-	title={pageMeta?.title}
-	description={pageMeta?.description}
-	eyebrow={pageMeta?.eyebrow}
-/>
 
 <div class="search-page">
 	<div class="search-page__mobile-actions">
@@ -366,7 +337,7 @@
 					{#each typeIds as typeId}
 						<li>
 							<span>{contentTypeLabels[typeId]}</span>
-							<button type="button" onclick={() => removeType(typeId)}>Remove</button>
+							<button type="button" onclick={() => toggleType(typeId, false)}>Remove</button>
 						</li>
 					{/each}
 
@@ -374,7 +345,7 @@
 						{@const tag = tagFacets.find((filter) => filter.id === tagId)}
 						<li>
 							<span>{tag?.label ?? getSearchTagLabel(tagId)}</span>
-							<button type="button" onclick={() => removeTag(tagId)}>Remove</button>
+							<button type="button" onclick={() => toggleTag(tagId, false)}>Remove</button>
 						</li>
 					{/each}
 				</ul>
@@ -439,7 +410,7 @@
 					Next
 					<span aria-hidden="true">&rarr;</span>
 				</button>
-		</nav>
+			</nav>
 		{:else if hasSearchState}
 			<EmptyState
 				title="No matching Wiki content found"

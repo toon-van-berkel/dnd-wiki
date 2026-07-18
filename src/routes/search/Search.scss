@@ -1,4 +1,8 @@
+@use '$lib/styles/breakpoints';
+@use '$lib/styles/buttons';
 @use '$lib/styles/forms';
+@use '$lib/styles/base/mixins';
+@use '$lib/styles/panels';
 
 .search-page {
 	display: grid;
@@ -11,16 +15,9 @@
 	display: none;
 }
 
-.search-panel,
-.search-results__summary,
-.browse-sections {
-	border: 1px solid var(--border);
-	border-radius: var(--radius-lg);
-	background: var(--surface);
-	box-shadow: var(--shadow-card);
-}
-
 .search-panel {
+	@include panels.panel(1rem);
+
 	position: sticky;
 	top: calc(var(--header-height, 4.75rem) + 1rem);
 	display: grid;
@@ -28,7 +25,6 @@
 	max-height: calc(100vh - var(--header-height, 4.75rem) - 2rem);
 	overflow-y: auto;
 	overscroll-behavior: contain;
-	padding: 1rem;
 
 	h2 {
 		margin: 0;
@@ -44,14 +40,7 @@
 	align-items: end;
 
 	button {
-		min-height: 2.6rem;
-		padding: 0 0.75rem;
-		border: 1px solid color-mix(in srgb, var(--accent) 35%, var(--border));
-		border-radius: var(--radius-sm);
-		background: var(--accent-soft);
-		color: var(--accent-muted);
-		font-weight: 800;
-		cursor: pointer;
+		@include buttons.accent-action(2.6rem, 0 0.75rem);
 	}
 }
 
@@ -74,12 +63,10 @@
 	}
 }
 
-.search-panel__field input:focus-visible,
-.search-panel button:focus-visible,
-.search-results button:focus-visible,
-.search-results a:focus-visible {
-	outline: 2px solid var(--accent-muted);
-	outline-offset: 2px;
+.search-panel button,
+.search-results button,
+.search-results a {
+	@include mixins.focus-ring;
 }
 
 .search-tag-groups {
@@ -145,14 +132,9 @@
 	gap: 0.5rem;
 
 	button {
+		@include buttons.secondary-action(2.2rem, 0.4rem 0.75rem);
+
 		flex: 1;
-		min-height: 2.2rem;
-		border: 1px solid var(--border);
-		border-radius: var(--radius-sm);
-		background: var(--surface-raised);
-		color: var(--text-secondary);
-		font-weight: 800;
-		cursor: pointer;
 	}
 
 	button:disabled {
@@ -168,11 +150,12 @@
 }
 
 .search-results__summary {
+	@include panels.panel(1rem);
+
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
 	gap: 1rem;
-	padding: 1rem;
 
 	h2 {
 		margin: 0;
@@ -187,13 +170,7 @@
 	}
 
 	button {
-		min-height: 2.2rem;
-		border: 1px solid color-mix(in srgb, var(--accent) 35%, var(--border));
-		border-radius: var(--radius-sm);
-		background: var(--accent-soft);
-		color: var(--accent-muted);
-		font-weight: 800;
-		cursor: pointer;
+		@include buttons.accent-action(2.2rem, 0.4rem 0.75rem);
 	}
 }
 
@@ -235,7 +212,7 @@
 }
 
 .browse-sections {
-	padding: 1rem;
+	@include panels.panel(1rem);
 
 	h3 {
 		margin: 0;
@@ -251,15 +228,9 @@
 	margin-top: 0.75rem;
 
 	a {
-		display: inline-flex;
-		min-height: 2rem;
-		align-items: center;
-		padding: 0.25rem 0.55rem;
-		border: 1px solid var(--border);
-		border-radius: var(--radius-sm);
-		background: var(--surface-raised);
+		@include buttons.secondary-action(2rem, 0.25rem 0.55rem);
+
 		color: var(--text-primary);
-		text-decoration: none;
 	}
 }
 
@@ -269,15 +240,10 @@
 }
 
 .result-list > li > a {
+	@include panels.interactive-card(1rem);
+
 	display: grid;
 	gap: 0.35rem;
-	padding: 1rem;
-	border: 1px solid var(--border);
-	border-radius: var(--radius-lg);
-	background: var(--surface);
-	color: var(--text-primary);
-	text-decoration: none;
-	box-shadow: var(--shadow-card);
 
 	> span {
 		color: var(--accent-muted);
@@ -326,14 +292,9 @@
 	gap: 1rem;
 
 	button {
-		min-height: 2.4rem;
-		padding: 0.4rem 0.7rem;
-		border: 1px solid var(--border);
-		border-radius: var(--radius-sm);
-		background: var(--surface-raised);
+		@include buttons.secondary-action(2.4rem, 0.4rem 0.7rem);
+
 		color: var(--text-primary);
-		font-weight: 800;
-		cursor: pointer;
 	}
 
 	button:disabled {
@@ -348,7 +309,7 @@
 	}
 }
 
-@media (max-width: 64rem) {
+@media (max-width: breakpoints.$search-stack) {
 	.search-page {
 		grid-template-columns: 1fr;
 	}
@@ -365,16 +326,10 @@
 		display: block;
 
 		button {
-			display: inline-flex;
-			align-items: center;
+			@include buttons.secondary-action(2.5rem, 0.4rem 0.75rem);
+
 			gap: 0.45rem;
-			min-height: 2.5rem;
-			padding: 0.4rem 0.75rem;
-			border: 1px solid var(--border);
-			border-radius: var(--radius-sm);
-			background: var(--surface-raised);
 			color: var(--text-primary);
-			font-weight: 800;
 		}
 
 		span {
@@ -408,7 +363,7 @@
 	}
 }
 
-@media (prefers-reduced-motion: reduce) {
+@include mixins.reduced-motion {
 	.search-page * {
 		scroll-behavior: auto;
 	}

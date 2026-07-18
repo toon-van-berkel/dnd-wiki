@@ -1,0 +1,43 @@
+// site\src\lib\styles\base\_mixins.scss
+@mixin reduced-motion {
+	@media (prefers-reduced-motion: reduce) {
+		@content;
+	}
+}
+
+@mixin focus-ring($color: var(--accent-muted), $offset: 2px) {
+	&:focus-visible {
+		outline: 2px solid $color;
+		outline-offset: $offset;
+	}
+}
+
+@mixin interactive-surface {
+	transition:
+		background 150ms ease,
+		border-color 150ms ease,
+		color 150ms ease;
+
+	@include reduced-motion {
+		transition: none;
+	}
+}
+
+@mixin header {
+	max-width: 47rem;
+	margin: 0;
+	color: var(--text-heading);
+	font-size: clamp(5rem, 5vw, 5rem);
+	font-weight: 720;
+	letter-spacing: -0.045em;
+	line-height: 0.9;
+}
+
+@mixin eyebrow {
+	margin: 0 0 0.8rem;
+	color: var(--accent-muted);
+	font-size: 0.76rem;
+	font-weight: 750;
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+}

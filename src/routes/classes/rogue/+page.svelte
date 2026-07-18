@@ -1,11 +1,10 @@
 	<script lang="ts">
-		import AvailabilityBadges from '$lib/components/AvailabilityBadges.svelte';
-		import PageSection from '$lib/components/PageSection.svelte';
-		import WikiTable from '$lib/components/WikiTable.svelte';
-		import ChildLinkGrid from '$lib/components/ChildLinkGrid.svelte';
-		import { getNavigationChildren } from '$lib/wiki/navigation';
+		import PageSection from '$lib/pages/PageSection/PageSection.svelte';
+		import WikiTable from '$lib/components/WikiTable/WikiTable.svelte';
+		import ChildLinkGrid from '$lib/components/ChildLinkGrid/ChildLinkGrid.svelte';
+		import { getPageChildren } from '$lib/page/registry';
 
-		const subclassPages = getNavigationChildren('/classes/rogue').map(({ title, href, description }) => ({
+		const subclassPages = getPageChildren('classes--rogue').map(({ title, href, description }) => ({
 			title,
 			href,
 			description: description ?? ''
@@ -35,14 +34,6 @@
 		];
 
 	</script>
-
-	<svelte:head>
-		<title>Rogue — D&D Portal</title>
-		<meta
-			name="description"
-			content="Rogue class rules, progression, features, equipment, and archetype options for our campaigns."
-		/>
-	</svelte:head>
 
 	<PageSection title="Multiclassing">
 		<p>To multiclass into or out of Rogue, a character needs Dexterity 13 or higher.</p>

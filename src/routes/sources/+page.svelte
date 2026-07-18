@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { resolveAppPath } from '$lib/utils/paths';
-	import PageHeader from '$lib/components/PageHeader.svelte';
-	import PageSection from '$lib/components/PageSection.svelte';
+	import PageSection from '$lib/pages/PageSection/PageSection.svelte';
 
 	import {
 		sources,
@@ -63,21 +62,6 @@
 		sources.filter((source) => source.status === 'actively-used').length
 	);
 </script>
-
-<svelte:head>
-	<title>Sources | D&D Portal</title>
-
-	<meta
-		name="description"
-		content="Books, official websites, project material, and other sources referenced by the D&D Portal Wiki."
-	/>
-</svelte:head>
-
-<PageHeader
-	title="Sources"
-	description="Books, official websites, campaign documents, and other reference material used throughout the D&D Portal Wiki."
-	eyebrow="References and attribution"
-/>
 
 <div class="source-summary">
 	<div>

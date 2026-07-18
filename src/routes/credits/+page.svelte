@@ -1,28 +1,12 @@
 <script lang="ts">
 	import { resolveAppPath } from '$lib/utils/paths';
-	import PageHeader from '$lib/components/PageHeader.svelte';
-	import PageSection from '$lib/components/PageSection.svelte';
+	import PageSection from '$lib/pages/PageSection/PageSection.svelte';
 
 	const websiteUrl = 'https://www.toonvb.com';
 	const githubRepositoryUrl = 'https://github.com/toon-van-berkel/dnd-wiki';
 	const contactEmail = 'toonvanberkel.public@gmail.com';
 	const linkedInUrl = 'https://www.linkedin.com/in/toon-van-berkel-a9112628b';
 </script>
-
-<svelte:head>
-	<title>Credits | D&D Portal</title>
-
-	<meta
-		name="description"
-		content="Credits, acknowledgements, source information, contribution guidelines, AI transparency, and legal information for D&D Portal."
-	/>
-</svelte:head>
-
-<PageHeader
-	title="Credits"
-	description="Information about the people, tools, sources, artwork, and technologies that helped make D&D Portal possible."
-	eyebrow="About this website"
-/>
 
 <PageSection title="Website creation and maintenance">
 	<p>

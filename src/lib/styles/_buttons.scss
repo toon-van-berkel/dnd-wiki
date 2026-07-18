@@ -1,14 +1,14 @@
-@use 'mixins';
+@use './base/mixins';
 
-@mixin button-base {
+@mixin button-base($min-height: 2.4rem, $padding: 0.4rem 0.75rem) {
 	@include mixins.focus-ring;
 	@include mixins.interactive-surface;
 
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
-	min-height: 2.4rem;
-	padding: 0.4rem 0.75rem;
+	min-height: $min-height;
+	padding: $padding;
 	border: 1px solid var(--border);
 	border-radius: var(--radius-sm);
 	font: inherit;
@@ -16,9 +16,23 @@
 	text-decoration: none;
 	cursor: pointer;
 
-	&:disabled,
-	&[aria-disabled='true'] {
+	&:disabled {
 		cursor: default;
 		opacity: 0.55;
 	}
+}
+
+@mixin secondary-action($min-height: 2.4rem, $padding: 0.4rem 0.75rem) {
+	@include button-base($min-height, $padding);
+
+	background: var(--surface-raised);
+	color: var(--text-secondary);
+}
+
+@mixin accent-action($min-height: 2.4rem, $padding: 0.4rem 0.75rem) {
+	@include button-base($min-height, $padding);
+
+	border-color: color-mix(in srgb, var(--accent) 34%, var(--border));
+	background: var(--accent-soft);
+	color: var(--accent-muted);
 }

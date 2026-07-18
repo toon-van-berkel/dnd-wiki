@@ -1,27 +1,14 @@
 <script lang="ts">
-	import ChildLinkGrid from '$lib/components/ChildLinkGrid.svelte';
-	import PageHeader from '$lib/components/PageHeader.svelte';
-	import PageSection from '$lib/components/PageSection.svelte';
-	import { getNavigationChildren } from '$lib/wiki/navigation';
-	import { getWikiPage } from '$lib/wiki/registry';
+	import ChildLinkGrid from '$lib/components/ChildLinkGrid/ChildLinkGrid.svelte';
+	import PageSection from '$lib/pages/PageSection/PageSection.svelte';
+	import { getPageChildren } from '$lib/page/registry';
 
-	const pageMeta = getWikiPage('species');
-
-	const speciesPages = getNavigationChildren('/species').map(({ title, href, description }) => ({
+	const speciesPages = getPageChildren('species').map(({ title, href, description }) => ({
 		title,
 		href,
 		description: description ?? ''
 	}));
 </script>
-
-<svelte:head><title>Species — D&D Portal</title></svelte:head>
-
-<PageHeader
-	title={pageMeta?.title}
-	description={pageMeta?.description}
-	eyebrow={pageMeta?.eyebrow}
-	tags={pageMeta?.tags}
-/>
 
 <PageSection title="Choosing a species">
 	<p>Choose an option that fits the campaign premise and gives your character a useful connection to the world. Availability labels override general assumptions.</p>

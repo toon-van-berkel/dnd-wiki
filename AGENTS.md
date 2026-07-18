@@ -157,6 +157,52 @@ Do not run project-initialisation commands such as:
 
 The project already exists.
 
+## Page header ownership
+
+Page metadata is stored in the central Wiki registry.
+
+The nearest applicable `+layout.svelte` resolves that metadata and renders `PageHeader`.
+
+Child `+page.svelte` files render body content only.
+
+Do not import or render `PageHeader` inside a child page when an active parent layout already renders it.
+
+Do not duplicate page titles, descriptions, eyebrows, tags, or hrefs in route components.
+
+Before adding PageHeader to a page, inspect the complete active layout chain.
+
+## Current architecture ownership
+
+Page identity, page metadata, parent/child relationships, navigation eligibility, footer membership, tags, keywords, and icons are authored in `src/lib/page/registry`.
+
+The public page registry API is exported from `src/lib/page/registry/index.ts`. Navigation, footer links, search metadata, child cards, `PageHeader`, and document metadata derive from that registry.
+
+Document metadata is rendered by the root layout through `src/lib/page/Metadata/Metadata.svelte`; do not add route-local `<svelte:head>` blocks for registered pages.
+
+People are authored in `src/lib/config/people.ts`. Party order, labels, proper names, memberships, Dungeon Master references, guest players, and party colour token names are authored in `src/lib/config/parties.ts`.
+
+Availability decisions are authored in `src/lib/data/availability.ts` and keyed by stable page ID. Use `PartyId` arrays and registry page IDs; do not use friendly party names or page URLs as primary identifiers.
+
+Site identity is authored in `src/lib/config/site.ts`. Navigation ordering is authored in `src/lib/config/navigation.ts` as page IDs only.
+
+Search indexing, scoring, filter state, and search UI live in `src/lib/search`.
+
+Preference storage, validation, and preferences UI live in `src/lib/preferences`.
+
+Reusable styling primitives live in `src/lib/styles` partials. Use the shared breakpoint, focus, panel, button, and form mixins before adding repeated route-local styling.
+
+## Import conventions
+
+Use `$lib/` imports for Svelte/app imports that cross library ownership boundaries, for example `$lib/config/parties`, `$lib/config/people`, `$lib/config/site`, `$lib/config/navigation`, `$lib/data/availability`, `$lib/page/registry`, `$lib/search/search`, `$lib/preferences/preferences`, and `$lib/utils/paths`.
+
+Plain TypeScript modules included in `tsconfig.test.json` may keep explicit relative `.js` imports because the emitted test JavaScript is executed directly by Node.
+
+Use relative imports for adjacent components, recursive local components, route-adjacent styles, and same-domain files such as class subclass modules.
+
+Use `import type` for type-only imports.
+
+Do not add general barrel files, global `types.ts`, or global `helpers.ts` modules to hide ownership boundaries.
+
 ## Completion checks
 
 Before finishing any task:

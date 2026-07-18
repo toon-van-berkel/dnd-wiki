@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { resolveAppPath, resolveAssetPath } from '$lib/utils/paths';
-	import PageHeader from '$lib/components/PageHeader.svelte';
-	import PageSection from '$lib/components/PageSection.svelte';
+	import PageSection from '$lib/pages/PageSection/PageSection.svelte';
 
 	import {
 		aiGeneratedImages,
@@ -11,21 +10,6 @@
 	const generatedImages = aiGeneratedImages;
 	const editedImages = aiEditedImages;
 </script>
-
-<svelte:head>
-	<title>AI Transparency | D&D Portal</title>
-
-	<meta
-		name="description"
-		content="Information about the use of artificial intelligence on D&D Portal, including a list of AI-generated and AI-edited images."
-	/>
-</svelte:head>
-
-<PageHeader
-	title="AI Transparency"
-	description="Information about how artificial intelligence is used on D&D Portal and which images were generated or modified using AI."
-	eyebrow="Website transparency"
-/>
 
 <PageSection title="Use of artificial intelligence">
 	<p>

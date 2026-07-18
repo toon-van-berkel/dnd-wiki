@@ -1,3 +1,5 @@
+import { getPageEntryByHref } from '$lib/page/registry';
+
 export type AiImageType =
 	| 'Generated'
 	| 'AI-assisted edit'
@@ -20,171 +22,50 @@ export type AiImageEntry = {
 };
 
 type ClassCardSet = {
-	title: string;
-	folder: string;
-	page: string;
+	href: string;
 	genders?: Array<'female' | 'male'>;
 };
 
 const classCardSets: ClassCardSet[] = [
-	{
-		title: 'Artificer',
-		folder: 'artificer',
-		page: '/classes/artificer'
-	},
-	{
-		title: 'Barbarian',
-		folder: 'barbarian',
-		page: '/classes/barbarian'
-	},
-	{
-		title: 'Bard',
-		folder: 'bard',
-		page: '/classes/bard'
-	},
-	{
-		title: 'Blood Hunter',
-		folder: 'blood-hunter',
-		page: '/classes/blood-hunter'
-	},
-	{
-		title: 'Captain',
-		folder: 'captain',
-		page: '/classes/captain'
-	},
-	{
-		title: 'Champion',
-		folder: 'champion',
-		page: '/classes/champion'
-	},
-	{
-		title: 'Cleric',
-		folder: 'cleric',
-		page: '/classes/cleric'
-	},
-	{
-		title: 'Druid',
-		folder: 'druid',
-		page: '/classes/druid'
-	},
-	{
-		title: 'Fighter',
-		folder: 'fighter',
-		page: '/classes/fighter'
-	},
-	{
-		title: 'Gunslinger',
-		folder: 'gunslinger',
-		page: '/classes/gunslinger'
-	},
-	{
-		title: 'Illrigger',
-		folder: 'illrigger',
-		page: '/classes/illrigger'
-	},
-	{
-		title: 'Messenger',
-		folder: 'messenger',
-		page: '/classes/messenger'
-	},
-	{
-		title: 'Monk',
-		folder: 'monk',
-		page: '/classes/monk'
-	},
-	{
-		title: 'Monster Hunter',
-		folder: 'monster-hunter',
-		page: '/classes/monster-hunter'
-	},
-	{
-		title: 'Mournbound',
-		folder: 'mournbound',
-		page: '/classes/mournbound'
-	},
-	{
-		title: 'Paladin',
-		folder: 'paladin',
-		page: '/classes/paladin'
-	},
-	{
-		title: 'Pugilist',
-		folder: 'pugilist',
-		page: '/classes/pugilist'
-	},
-	{
-		title: 'Ranger',
-		folder: 'ranger',
-		page: '/classes/ranger'
-	},
-	{
-		title: 'Rogue',
-		folder: 'rogue',
-		page: '/classes/rogue'
-	},
-	{
-		title: 'Scholar',
-		folder: 'scholar',
-		page: '/classes/scholar'
-	},
-
-	{
-		title: 'Arcane Trickster',
-		folder: 'rogue/arcane-trickster',
-		page: '/classes/rogue/arcane-trickster',
-		genders: ['female']
-	},
-	{
-		title: 'Assassin',
-		folder: 'rogue/assassin',
-		page: '/classes/rogue/assassin',
-		genders: ['female']
-	},
-	{
-		title: 'Inquisitive',
-		folder: 'rogue/inquisitive',
-		page: '/classes/rogue/inquisitive',
-		genders: ['female']
-	},
-	{
-		title: 'Mastermind',
-		folder: 'rogue/mastermind',
-		page: '/classes/rogue/mastermind',
-		genders: ['female']
-	},
-	{
-		title: 'Phantom',
-		folder: 'rogue/phantom',
-		page: '/classes/rogue/phantom',
-		genders: ['female']
-	},
-	{
-		title: 'Scout',
-		folder: 'rogue/scout',
-		page: '/classes/rogue/scout',
-		genders: ['female']
-	},
-	{
-		title: 'Soulknife',
-		folder: 'rogue/soulknife',
-		page: '/classes/rogue/soulknife',
-		genders: ['female']
-	},
-	{
-		title: 'Swashbuckler',
-		folder: 'rogue/swashbuckler',
-		page: '/classes/rogue/swashbuckler',
-		genders: ['female']
-	},
-	{
-		title: 'Thief',
-		folder: 'rogue/thief',
-		page: '/classes/rogue/thief',
-		genders: ['female']
-	}
+	{ href: '/classes/artificer' },
+	{ href: '/classes/barbarian' },
+	{ href: '/classes/bard' },
+	{ href: '/classes/blood-hunter' },
+	{ href: '/classes/captain' },
+	{ href: '/classes/champion' },
+	{ href: '/classes/cleric' },
+	{ href: '/classes/druid' },
+	{ href: '/classes/fighter' },
+	{ href: '/classes/gunslinger' },
+	{ href: '/classes/illrigger' },
+	{ href: '/classes/messenger' },
+	{ href: '/classes/monk' },
+	{ href: '/classes/monster-hunter' },
+	{ href: '/classes/mournbound' },
+	{ href: '/classes/paladin' },
+	{ href: '/classes/pugilist' },
+	{ href: '/classes/ranger' },
+	{ href: '/classes/rogue' },
+	{ href: '/classes/scholar' },
+	{ href: '/classes/rogue/arcane-trickster', genders: ['female'] },
+	{ href: '/classes/rogue/assassin', genders: ['female'] },
+	{ href: '/classes/rogue/inquisitive', genders: ['female'] },
+	{ href: '/classes/rogue/mastermind', genders: ['female'] },
+	{ href: '/classes/rogue/phantom', genders: ['female'] },
+	{ href: '/classes/rogue/scout', genders: ['female'] },
+	{ href: '/classes/rogue/soulknife', genders: ['female'] },
+	{ href: '/classes/rogue/swashbuckler', genders: ['female'] },
+	{ href: '/classes/rogue/thief', genders: ['female'] }
 ];
 
 function createClassCardEntries(classCard: ClassCardSet): AiImageEntry[] {
+	const page = getPageEntryByHref(classCard.href);
+
+	if (!page) {
+		throw new Error(`AI image class card references unknown Wiki page ${classCard.href}.`);
+	}
+
+	const folder = classCard.href.replace(/^\/classes\/?/, '');
 	const genders = classCard.genders ?? ['female', 'male'];
 
 	return genders.map((gender) => {
@@ -192,21 +73,21 @@ function createClassCardEntries(classCard: ClassCardSet): AiImageEntry[] {
 			gender.charAt(0).toUpperCase() + gender.slice(1);
 
 		return {
-			id: `${classCard.folder.replaceAll('/', '-')}-${gender}`,
-			title: `${classCard.title} — ${capitalizedGender}`,
-			image: `/classes/${classCard.folder}/card-${gender}-s.webp`,
-			page: classCard.page,
-			pageLabel: classCard.title,
+			id: `${folder.replaceAll('/', '-')}-${gender}`,
+			title: `${page.title} - ${capitalizedGender}`,
+			image: `/classes/${folder}/card-${gender}-s.webp`,
+			page: page.href,
+			pageLabel: page.title,
 			type: 'Generated',
 			tool: 'OpenAI image generation',
 			description:
-				`An AI-generated ${gender} class-card illustration used as a visual reference for the ${classCard.title} page.`,
+				`An AI-generated ${gender} class-card illustration used as a visual reference for the ${page.title} page.`,
 			notes:
 				'This image is not official Dungeons & Dragons artwork and is not presented as manually created artwork.',
 			variants: [
-				`/classes/${classCard.folder}/card-${gender}-l.webp`,
-				`/classes/${classCard.folder}/card-${gender}-m.webp`,
-				`/classes/${classCard.folder}/card-${gender}-s.webp`
+				`/classes/${folder}/card-${gender}-l.webp`,
+				`/classes/${folder}/card-${gender}-m.webp`,
+				`/classes/${folder}/card-${gender}-s.webp`
 			]
 		} satisfies AiImageEntry;
 	});

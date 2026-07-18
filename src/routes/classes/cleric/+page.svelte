@@ -1,19 +1,14 @@
 <script lang="ts">
-	import AvailabilityBadges from '$lib/components/AvailabilityBadges.svelte';
-	import ChildLinkGrid from '$lib/components/ChildLinkGrid.svelte';
-	import PageSection from '$lib/components/PageSection.svelte';
-	import { getNavigationChildren } from '$lib/wiki/navigation';
+	import ChildLinkGrid from '$lib/components/ChildLinkGrid/ChildLinkGrid.svelte';
+	import PageSection from '$lib/pages/PageSection/PageSection.svelte';
+	import { getPageChildren } from '$lib/page/registry';
 
-	const subclassPages = getNavigationChildren('/classes/cleric').map(({ title, href, description }) => ({
+	const subclassPages = getPageChildren('classes--cleric').map(({ title, href, description }) => ({
 		title,
 		href,
 		description: description ?? ''
 	}));
 </script>
-
-<svelte:head><title>Cleric — D&D Portal</title></svelte:head>
-
-<AvailabilityBadges allowed={['Party 1', 'Party 2', 'Party 3']} approval={['Party 4']} />
 
 <PageSection title="At our table">
 	<p>A cleric needs a source of conviction, but does not need to behave like a formal priest. Decide what principle, deity, or sacred duty drives the character.</p>

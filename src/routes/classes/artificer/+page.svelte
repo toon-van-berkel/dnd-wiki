@@ -1,11 +1,10 @@
 <script lang="ts">
-	import AvailabilityBadges from '$lib/components/AvailabilityBadges.svelte';
-	import PageSection from '$lib/components/PageSection.svelte';
-	import WikiTable from '$lib/components/WikiTable.svelte';
-	import ChildLinkGrid from '$lib/components/ChildLinkGrid.svelte';
-	import { getNavigationChildren } from '$lib/wiki/navigation';
+	import PageSection from '$lib/pages/PageSection/PageSection.svelte';
+	import WikiTable from '$lib/components/WikiTable/WikiTable.svelte';
+	import ChildLinkGrid from '$lib/components/ChildLinkGrid/ChildLinkGrid.svelte';
+	import { getPageChildren } from '$lib/page/registry';
 
-	const subclassPages = getNavigationChildren('/classes/artificer').map(
+	const subclassPages = getPageChildren('classes--artificer').map(
 		({ title, href, description }) => ({
 			title,
 			href,
@@ -156,14 +155,6 @@
 		['20th', '+6', 'Soul of Artifice', '12', '6', '4', '4', '3', '3', '3', '2']
 	];
 </script>
-
-<svelte:head>
-	<title>Artificer — D&D Portal</title>
-	<meta
-		name="description"
-		content="Artificer class rules, progression, spellcasting, infusions, equipment, and specialist options for our campaigns."
-	/>
-</svelte:head>
 
 <PageSection title="Multiclassing">
 	<p>
