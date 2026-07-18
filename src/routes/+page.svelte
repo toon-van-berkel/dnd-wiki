@@ -2,7 +2,7 @@
 <script lang="ts">
 	import Metadata from '$lib/page/Metadata.svelte';
 	import PageHeader from '$lib/page/layout/navigation/PageHeader.svelte';
-	import PageSection from '$lib/components/PageSection.svelte';
+	import PageSection from '$lib/pages/PageSection/PageSection.svelte';
 
 	import AccentDetailsCard from '$lib/pages/AccentDetailsCard/AccentDetailsCard.svelte';
 	import CardGrid from '$lib/pages/CardGrid/CardGrid.svelte';
@@ -29,8 +29,7 @@
 
 <PageSection title="Quick links">
 	<p class="page-section-intro">
-		Open one of the primary wiki sections or search for a specific
-		rule, option, creature, or location.
+		Open one of the primary wiki sections or search for a specific rule, option, creature, or location.
 	</p>
 
 	<CardGrid minCardWidth="14rem">
@@ -43,9 +42,8 @@
 <PageSection title="How to use this wiki">
 	<div class="page-section-content">
 		<p class="page-section-intro">
-			The portal combines general D&amp;D reference material with
-			campaign-specific rulings. Check the page information before
-			using an option in a character or campaign.
+			The portal combines general D&amp;D reference material with campaign-specific rulings. Check the page 
+			information before using an option in a character or campaign.
 		</p>
 
 		<StepList items={wikiSteps} />
@@ -54,8 +52,7 @@
 
 <PageSection title="Campaign availability">
 	<p class="page-section-intro">
-		Species, classes, subclasses, equipment, and other options can
-		have a different status in each campaign.
+		Species, classes, subclasses, equipment, and other options can have a different status in each campaign.
 	</p>
 
 	<StatusLegend items={availabilityStatuses} />
@@ -85,22 +82,3 @@
 		</IconCallout>
 	</div>
 </PageSection>
-
-<style lang="scss">
-	.page-section-content {
-		padding: 0.35rem 0.75rem 0.75rem;
-	}
-
-	.page-section-intro {
-		max-width: 48rem;
-		margin: 0 0 1.25rem;
-
-		color: var(--text-secondary);
-
-		line-height: 1.6;
-	}
-
-	.guest-player-callout {
-		margin-top: var(--content-gap);
-	}
-</style>

@@ -20,28 +20,28 @@
 <ol class={classes} start={startAt}>
 	{#each items as item, index}
 		<li class="step-list__item">
-			<span class="step-list__number" aria-hidden="true">
-				{startAt + index}
-			</span>
+			<div class="step-list__header">
+				<span class="step-list__number" aria-hidden="true">
+					{startAt + index}
+				</span>
 
-			<span
-				class="step-list__icon"
-				class:step-list__icon--empty={!item.icon}
-			>
 				{#if item.icon}
 					<Icon
+						class="step-list__icon"
 						src={item.icon}
 						type="normal"
 						color="var(--accent-muted)"
 						size="1.5rem"
 					/>
 				{/if}
-			</span>
 
-			<h3>{item.title}</h3>
+				<h3>{item.title}</h3>
+			</div>
 
 			{#if item.description}
-				<p>{item.description}</p>
+				<p class="step-list__description">
+					{item.description}
+				</p>
 			{/if}
 		</li>
 	{/each}

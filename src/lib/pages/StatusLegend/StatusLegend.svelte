@@ -2,9 +2,7 @@
 <script lang="ts">
 	import Icon from '$lib/helpers/Icon.svelte';
 
-	import type {
-		StatusLegendProps as Props
-	} from './StatusLegend-Types';
+	import type { StatusLegendProps as Props } from './StatusLegend-Types';
 
 	let {
 		items,
@@ -25,18 +23,22 @@
 			style:--status-color={item.color}
 			style:--status-background={item.background ?? 'var(--surface)'}
 		>
-			<Icon
-				class="status-legend__icon"
-				src={item.icon}
-				type="normal"
-				color="var(--status-color)"
-				size="1.5rem"
-			/>
+			<div class="status-legend__header">
+				<Icon
+					class="status-legend__icon"
+					src={item.icon}
+					type="normal"
+					color="var(--status-color)"
+					size="1.5rem"
+				/>
 
-			<h3>{item.title}</h3>
+				<h3>{item.title}</h3>
+			</div>
 
 			{#if item.description}
-				<p>{item.description}</p>
+				<p class="status-legend__description">
+					{item.description}
+				</p>
 			{/if}
 		</article>
 	{/each}

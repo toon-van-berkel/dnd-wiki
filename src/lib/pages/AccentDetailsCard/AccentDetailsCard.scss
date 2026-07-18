@@ -1,88 +1,151 @@
 // site\src\lib\pages\AccentDetailsCard\AccentDetailsCard.scss
 .accent-details-card {
-	display: grid;
-	grid-template-rows: auto 1fr;
+	position: relative;
+	isolation: isolate;
+
+	display: flex;
+	flex-direction: column;
 
 	box-sizing: border-box;
 	width: 100%;
 	height: 100%;
-	padding: 1rem;
+	min-height: 10.5rem;
+	padding: 1.15rem 1.2rem 1.2rem;
 
+	overflow: hidden;
+
+	color: var(--text-primary);
 	background:
 		linear-gradient(
-			135deg,
+			145deg,
 			color-mix(
 				in srgb,
-				var(--details-accent) 8%,
+				var(--details-accent) 5%,
 				transparent
 			),
-			transparent 65%
+			transparent 52%
 		),
 		var(--surface);
 
-	border: 1px solid
-		color-mix(
+	border: 1px solid var(--border);
+	border-radius: var(--radius-lg);
+
+	box-shadow:
+		inset 3px 0 0 var(--details-accent),
+		0 8px 24px rgb(0 0 0 / 8%);
+
+	transition:
+		border-color 160ms ease,
+		background-color 160ms ease,
+		transform 160ms ease,
+		box-shadow 160ms ease;
+
+	&::after {
+		content: '';
+
+		position: absolute;
+		top: -3.5rem;
+		right: -3.5rem;
+		z-index: -1;
+
+		width: 8rem;
+		height: 8rem;
+
+		background-color: var(--details-accent);
+		border-radius: 50%;
+
+		opacity: 0.035;
+		pointer-events: none;
+	}
+
+	&:hover {
+		border-color: color-mix(
 			in srgb,
-			var(--details-accent) 34%,
+			var(--details-accent) 32%,
 			var(--border)
 		);
 
-	border-radius: var(--radius-lg);
+		box-shadow:
+			inset 3px 0 0 var(--details-accent),
+			0 12px 30px rgb(0 0 0 / 13%);
+
+		transform: translateY(-2px);
+	}
 }
 
 .accent-details-card__header {
-	display: grid;
-	grid-template-columns: auto minmax(0, 1fr);
+	display: flex;
 	align-items: center;
 	gap: 0.7rem;
 
 	min-height: 1.75rem;
+	padding-bottom: 0.9rem;
+
+	border-bottom: 1px solid
+		color-mix(
+			in srgb,
+			var(--details-accent) 13%,
+			var(--border)
+		);
 
 	h3 {
+		min-width: 0;
 		margin: 0;
+
+		overflow: hidden;
 
 		color: var(--text-heading);
 
-		font-size: 0.92rem;
+		font-size: 0.95rem;
 		font-weight: 700;
-		line-height: 1.35;
+		line-height: 1.3;
+
+		text-overflow: ellipsis;
+		white-space: nowrap;
 	}
 }
 
 .accent-details-card__dot {
-	width: 0.65rem;
-	height: 0.65rem;
+	flex: 0 0 auto;
+
+	width: 0.55rem;
+	height: 0.55rem;
 
 	background-color: var(--details-accent);
 	border-radius: 50%;
 
-	box-shadow: 0 0 0 0.25rem
+	box-shadow:
+		0 0 0 0.25rem
 		color-mix(
 			in srgb,
-			var(--details-accent) 14%,
+			var(--details-accent) 13%,
 			transparent
 		);
 }
 
 .accent-details-card__details {
 	display: grid;
-	align-content: start;
-	gap: 0.9rem;
+	grid-template-columns: minmax(7rem, 0.65fr) minmax(0, 1.35fr);
+	gap: 1rem;
 
-	margin: 1.1rem 0 0;
+	margin: 1rem 0 0;
 
 	div {
-		display: grid;
-		align-content: start;
-		gap: 0.25rem;
+		display: flex;
+		flex-direction: column;
+		gap: 0.3rem;
+
+		min-width: 0;
 	}
 
 	dt {
+		margin: 0;
+
 		color: var(--text-muted);
 
-		font-size: 0.67rem;
+		font-size: 0.66rem;
 		font-weight: 700;
-		letter-spacing: 0.06em;
+		letter-spacing: 0.07em;
 		line-height: 1.3;
 		text-transform: uppercase;
 	}
@@ -92,7 +155,24 @@
 
 		color: var(--text-primary);
 
-		font-size: 0.81rem;
+		font-size: 0.82rem;
 		line-height: 1.5;
+	}
+}
+
+@media (max-width: 34rem) {
+	.accent-details-card__details {
+		grid-template-columns: 1fr;
+		gap: 0.8rem;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.accent-details-card {
+		transition: none;
+
+		&:hover {
+			transform: none;
+		}
 	}
 }
