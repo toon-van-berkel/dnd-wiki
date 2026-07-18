@@ -1,5 +1,5 @@
 // site\src\lib\pages\StatusLegend\StatusLegend-Types.ts
-import type { IconReference } from '$lib/helpers/Icon-Types';
+import type { IconReference } from '$lib/components/Icon/Icon-Types';
 
 export type StatusLegendItem = {
 	title: string;

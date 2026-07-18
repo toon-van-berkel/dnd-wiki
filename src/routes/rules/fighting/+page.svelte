@@ -1,6 +1,6 @@
 <script lang="ts">
-	import CampaignNote from '$lib/components/CampaignNote.svelte';
-	import PageSection from '$lib/components/PageSection.svelte';
+	import CampaignNote from '$lib/components/feedback/CampaignNote.svelte';
+	import PageSection from '$lib/pages/PageSection/PageSection.svelte';
 </script>
 
 <PageSection title="Flanking">

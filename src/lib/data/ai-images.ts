@@ -1,4 +1,4 @@
-import { getWikiPageByHref } from '../wiki/registry.js';
+import { getPageEntryByHref } from '$lib/page/registry';
 
 export type AiImageType =
 	| 'Generated'
@@ -59,7 +59,7 @@ const classCardSets: ClassCardSet[] = [
 ];
 
 function createClassCardEntries(classCard: ClassCardSet): AiImageEntry[] {
-	const page = getWikiPageByHref(classCard.href);
+	const page = getPageEntryByHref(classCard.href);
 
 	if (!page) {
 		throw new Error(`AI image class card references unknown Wiki page ${classCard.href}.`);

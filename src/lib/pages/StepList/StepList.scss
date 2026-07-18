@@ -15,6 +15,12 @@
 }
 
 .step-list__item {
+	height: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+.step-list__card {
 	display: flex;
 	flex-direction: column;
 	gap: 0.85rem;
@@ -24,9 +30,47 @@
 	height: 100%;
 	padding: 1.15rem;
 
+	color: inherit;
 	background-color: var(--surface);
+
 	border: 1px solid var(--border);
 	border-radius: var(--radius-lg);
+
+	text-decoration: none;
+}
+
+.step-list__card--link {
+	cursor: pointer;
+
+	transition:
+		color 160ms ease,
+		background-color 160ms ease,
+		border-color 160ms ease,
+		box-shadow 160ms ease,
+		transform 160ms ease;
+
+	&:hover {
+		background-color: var(--surface-hover);
+
+		border-color: color-mix(
+			in srgb,
+			var(--accent) 30%,
+			var(--border)
+		);
+
+		box-shadow: var(--shadow-card);
+		transform: translateY(-2px);
+
+		.step-list__arrow {
+			color: var(--accent);
+			transform: translateX(0.2rem);
+		}
+	}
+
+	&:focus-visible {
+		outline: 2px solid var(--accent);
+		outline-offset: 3px;
+	}
 }
 
 .step-list__header {
@@ -37,6 +81,7 @@
 	min-height: 1.6rem;
 
 	h3 {
+		min-width: 0;
 		margin: 0;
 
 		color: var(--text-heading);
@@ -68,6 +113,22 @@
 	flex: 0 0 auto;
 }
 
+.step-list__arrow {
+	flex: 0 0 auto;
+
+	margin-left: auto;
+
+	color: var(--text-muted);
+
+	font-size: 1rem;
+	font-weight: 700;
+	line-height: 1;
+
+	transition:
+		color 160ms ease,
+		transform 160ms ease;
+}
+
 .step-list__description {
 	margin: 0;
 
@@ -75,4 +136,15 @@
 
 	font-size: 0.82rem;
 	line-height: 1.5;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.step-list__card--link,
+	.step-list__arrow {
+		transition: none;
+	}
+
+	.step-list__card--link:hover {
+		transform: none;
+	}
 }

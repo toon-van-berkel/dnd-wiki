@@ -1,7 +1,5 @@
 <!-- site\src\routes\+page.svelte -->
 <script lang="ts">
-	import Metadata from '$lib/page/Metadata.svelte';
-	import PageHeader from '$lib/page/layout/navigation/PageHeader.svelte';
 	import PageSection from '$lib/pages/PageSection/PageSection.svelte';
 
 	import AccentDetailsCard from '$lib/pages/AccentDetailsCard/AccentDetailsCard.svelte';
@@ -20,12 +18,7 @@
 		wikiSteps
 	} from './page.data';
 
-	import { metadata } from './page.meta';
-	import { headerdata } from './page.header';
 </script>
-
-<Metadata {metadata} />
-<PageHeader {headerdata} />
 
 <PageSection title="Quick links">
 	<p class="page-section-intro">

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { resolveAppPath } from '$lib/utils/paths';
-	import PageSection from '$lib/components/PageSection.svelte';
+	import PageSection from '$lib/pages/PageSection/PageSection.svelte';
 
 	const projectName = 'D&D Portal Wiki';
 	const projectOwner = 'Toon van Berkel';

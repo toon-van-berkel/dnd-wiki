@@ -1,6 +1,6 @@
 <script lang="ts">
-	import PageSection from '$lib/components/PageSection.svelte';
-	import WikiPreferences from '$lib/components/WikiPreferences.svelte';
+	import PageSection from '$lib/pages/PageSection/PageSection.svelte';
+	import WikiPreferences from '$lib/preferences/WikiPreferences.svelte';
 	import { resolveAppPath } from '$lib/utils/paths';
 </script>
 

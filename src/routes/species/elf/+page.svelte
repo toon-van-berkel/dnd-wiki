@@ -1,9 +1,9 @@
 <script lang="ts">
-	import ChildLinkGrid from '$lib/components/ChildLinkGrid.svelte';
-	import PageSection from '$lib/components/PageSection.svelte';
-	import { getNavigationChildren } from '$lib/wiki/navigation';
+	import ChildLinkGrid from '$lib/components/ChildLinkGrid/ChildLinkGrid.svelte';
+	import PageSection from '$lib/pages/PageSection/PageSection.svelte';
+	import { getPageChildren } from '$lib/page/registry';
 
-	const elfPages = getNavigationChildren('/species/elf').map(({ title, href, description }) => ({
+	const elfPages = getPageChildren('species--elf').map(({ title, href, description }) => ({
 		title,
 		href,
 		description: description ?? ''
@@ -11,7 +11,7 @@
 </script>
 
 <PageSection title="Elves in the setting">
-	<p>Elven cultures are not interchangeable. Choose a homeland or lineage page, then use it to ground your character’s outlook and relationships.</p>
+	<p>Elven cultures are not interchangeable. Choose a homeland or lineage page, then use it to ground your character's outlook and relationships.</p>
 	<p>A long lifespan does not mean your character already knows every secret of the world. Their experience should support the current starting level.</p>
 </PageSection>
 

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import PageSection from '$lib/components/PageSection.svelte';
+	import PageSection from '$lib/pages/PageSection/PageSection.svelte';
 </script>
 
 <PageSection title="Using the bestiary">

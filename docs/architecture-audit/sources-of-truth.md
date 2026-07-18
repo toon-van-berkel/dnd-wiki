@@ -1,185 +1,268 @@
 # Sources Of Truth
 
-| Concept | Current authoritative file | Other files containing same information | Status | Risk | Recommended authoritative source | Recommended derived consumers |
-| --- | --- | --- | --- | --- | --- | --- |
-| Site name | src/lib/config/site.ts | Footer imports config; route pages repeat D&D Portal/D&D Portal Wiki | Partial | Medium | src/lib/config/site.ts | Footer and legal/about pages |
-| Owner/contact email | src/lib/config/site.ts plus route constants | about/accessibility/legal/content-removal/contribution/cookies repeat literals | Duplicate | Medium | src/lib/config/site.ts or src/lib/config/legal.ts | Legal and footer pages |
-| Page title | src/lib/wiki/static-pages.ts and domain data | Physical route folders still mirror hrefs | Good | Low | Registry/domain page metadata | Layouts, head metadata, search |
-| Page description | src/lib/wiki/static-pages.ts and domain data | Route body prose can mention summaries | Good | Low | Registry/domain page metadata | PageHeader/search/cards |
-| Page href | Domain data/static registry | Route paths and child link arrays repeat hrefs | Partial | High | Domain page records | Registry/navigation/search |
-| Page tags | Domain/static page records | Route pages no longer own header tags | Good | Low | Domain page records using search tag ids | PageHeader/search facets |
-| Class title/description/tags | src/lib/wiki/classes/classes.ts and nested class submodules | Route prose can mention names; asset entries are keyed by href only | Good | Low | wiki class domain | Registry/navigation/search/layout/cards |
-| Class href | src/lib/wiki/classes/classes.ts and nested class submodules | Route folders and image asset href keys still need matching physical paths | Partial | Medium | wiki class domain | Registry/navigation/search/layout/cards |
-| Subclass parent | Nested subclass arrays in src/lib/wiki/classes | Route path and asset path still reflect the parent slug | Good | Low | Nested domain record | Registry/nav/search |
-| Species title/description/tags | src/lib/wiki/species/*.ts | Route prose can mention names | Good | Low | wiki species domain | Registry/layout/search/cards |
-| Species href | src/lib/wiki/species/*.ts | Route folders still need matching physical paths | Partial | Medium | wiki species domain | Registry/layout/search/cards |
-| Party identity/order/DM | src/lib/config/campaigns.ts | Route prose may mention names in sentences | Good | Low | campaign config/domain | Sidebar/preferences/availability |
-| Party colour | config token id + tokens.scss values | Actual colour values intentionally remain in tokens.scss | Partial | Medium | campaign config/token registry | Sidebar/badges/notes |
-| Availability | src/lib/data/availability.ts | Route prose can mention availability concepts but no structural route props remain | Good | Low | wiki availability domain | Badges/search metadata |
-| Search tags | src/lib/wiki/search-tags.ts | Page records store ids; headers use labels | Partial | Medium | search tag registry | Search facets/PageHeader |
-| Navigation visibility | registry navigation flags | Route tree implicitly creates pages | Good | Low | registry | Sidebar/NavTree |
-| Footer visibility | registry footer page ID groups | None for registered footer links | Good | Low | registry footer ID groups | Footer |
-| Icon | src/lib/wiki/icon-ids.ts plus domain/static page icon fields | SVG asset imports remain in src/lib/wiki/icons.ts | Good | Low | icon id contract and icon registry | Registry/NavTree |
-| Image | static folders and ai-images.ts | ChildLinkGrid infers paths from titles | Duplicate | Medium | asset manifest keyed by domain id | Cards/AI transparency |
+This is factual only and does not propose a replacement directory tree.
 
-## Phase 0 Baseline Notes
+| Concept | CurrentSources | Consumers | DuplicateDefinitions | IdentifierStability | RenameImpact | ReliableSingleSource | FutureCanonicalResponsibility |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| person | src/lib/config/dms.ts and route prose | see inventory consumers | names repeated in legal/about/credits/home data | unstable or mixed | see hardcoded occurrences and imports | No | to be designed after this factual audit |
+| Dungeon Master | src/lib/config/dms.ts plus party dmId strings | see inventory consumers | dmId values in parties.ts do not match dms keys | unstable or mixed | see hardcoded occurrences and imports | No | to be designed after this factual audit |
+| player | src/lib/config/parties.ts member strings | see inventory consumers | guest players in src/routes/page.data.ts | unstable or mixed | see hardcoded occurrences and imports | No | to be designed after this factual audit |
+| guest player | src/routes/page.data.ts | see inventory consumers | not present in config | unstable or mixed | see hardcoded occurrences and imports | No | to be designed after this factual audit |
+| party | src/lib/config/parties.ts | see inventory consumers | sidebar data and prose repeat party concepts | unstable or mixed | see hardcoded occurrences and imports | Partial | to be designed after this factual audit |
+| campaign membership | src/lib/config/parties.ts member string fields | see inventory consumers | not normalized as person ids | unstable or mixed | see hardcoded occurrences and imports | Partial | to be designed after this factual audit |
+| campaign colors | src/lib/config/parties.ts token names and src/lib/styles/tokens.scss token values | see inventory consumers | two-file coupling required | unstable or mixed | see hardcoded occurrences and imports | Partial | to be designed after this factual audit |
+| page identity | deleted $lib/wiki registry expected; current route-local files and sidebar data | see inventory consumers | registry missing | unstable or mixed | see hardcoded occurrences and imports | No | to be designed after this factual audit |
+| page URL | route filesystem, sidebar data, route data, deleted registry consumers | see inventory consumers | many hardcoded hrefs | unstable or mixed | see hardcoded occurrences and imports | No | to be designed after this factual audit |
+| page title | route prose/header/meta/sidebar/registry expected | see inventory consumers | many route-local strings | unstable or mixed | see hardcoded occurrences and imports | No | to be designed after this factual audit |
+| page description | route prose/header/meta/deleted registry expected | see inventory consumers | many route-local strings | unstable or mixed | see hardcoded occurrences and imports | No | to be designed after this factual audit |
+| page icon | src/lib/helpers/Icon-data.ts plus sidebar/home data references | see inventory consumers | new map and deleted wiki icons compete | unstable or mixed | see hardcoded occurrences and imports | Partial | to be designed after this factual audit |
+| page tags | src/lib/page/layout/navigation/snippets/Tags-data.ts and deleted search tags expected | see inventory consumers | competing systems | unstable or mixed | see hardcoded occurrences and imports | No | to be designed after this factual audit |
+| page availability | src/lib/page/layout/navigation/snippets/AllowedIn-data.ts and src/lib/data/availability.ts | see inventory consumers | legacy data commented; new local data | unstable or mixed | see hardcoded occurrences and imports | No | to be designed after this factual audit |
+| navigation ordering | src/lib/layout/snippets/Sidebar-Data.ts and deleted $lib/wiki/navigation expected | see inventory consumers | competing systems | unstable or mixed | see hardcoded occurrences and imports | No | to be designed after this factual audit |
+| footer grouping | deleted registry expected by old Footer | see inventory consumers | Footer not active in root layout | unstable or mixed | see hardcoded occurrences and imports | No | to be designed after this factual audit |
+| breadcrumbs | src/lib/page/layout/navigation/snippets/Breadcrumbs-helpers.ts | see inventory consumers | path-derived only | unstable or mixed | see hardcoded occurrences and imports | Partial | to be designed after this factual audit |
+| metadata | src/lib/page/Metadata.svelte plus route-local page.meta.ts and old PageDocumentMetadata | see inventory consumers | duplicated site identity/social data | unstable or mixed | see hardcoded occurrences and imports | No | to be designed after this factual audit |
+| site identity | src/lib/config/config.ts and route meta/prose | see inventory consumers | name/domain repeated | unstable or mixed | see hardcoded occurrences and imports | Partial | to be designed after this factual audit |
+| author | src/lib/config/config.ts and route meta/prose | see inventory consumers | Toon repeated | unstable or mixed | see hardcoded occurrences and imports | No | to be designed after this factual audit |
+| repository | src/lib/config/config.ts and route-local URLs | see inventory consumers | GitHub URL repeated | unstable or mixed | see hardcoded occurrences and imports | No | to be designed after this factual audit |
+| changelog | src/lib/data/changelog.ts | see inventory consumers | route renders from data | stable enough | see hardcoded occurrences and imports | Yes | to be designed after this factual audit |
+| sources | src/lib/data/sources.ts | see inventory consumers | route renders from data | stable enough | see hardcoded occurrences and imports | Yes | to be designed after this factual audit |
 
-Phase 0 confirmed the current intended ownership chain for class/species pages: registry/domain metadata feeds the nearest active route layout, the layout renders `PageHeader`, and child `+page.svelte` files render body content only. Confirmed duplicate species headers and inline availability badges were removed from species child pages.
+## Repeated Shared Values
 
-Availability now has one public lookup path for UI and search metadata: `getAvailabilityByHref(href)`. It normalizes paths, ignores query strings and hashes, supports recursive nested children, returns `{}` for unknown paths, and resolves explicit component props without overwriting configured values with `undefined`.
-
-SVG/icon ownership remains unchanged: the registry stores stable icon ids, navigation carries those ids, and `NavTree` resolves them through `getWikiIcon` for CSS-mask rendering. Phase 0 added SVG import typing and registry validation for unknown icon ids.
-
-Remaining source-of-truth work for Phase 1: route-local prose and section headings are fine, but duplicated page metadata should be moved toward registry/domain records. Compatibility modules and styling duplicates remain documented debt, not Phase 0 cleanup targets.
-
-## Phase 1 Metadata Source Matrix
-
-| Concept | Status | Current authoritative source | Remaining duplicate/edit point |
+| Value | File | Line | Context |
 | --- | --- | --- | --- |
-| class title | Good | `src/lib/wiki/classes/classes.ts` and class submodules | None for Wiki metadata |
-| class href | Partial | `src/lib/wiki/classes/classes.ts` and class submodules | SvelteKit route folders and AI image href keys must still match |
-| class description | Good | `src/lib/wiki/classes/classes.ts` and class submodules | None for Wiki metadata |
-| class tags | Good | `src/lib/wiki/classes/classes.ts` and class submodules | None for Wiki metadata |
-| subclass title | Good | nested records under `src/lib/wiki/classes/` | None for Wiki metadata |
-| subclass parent | Good | `children` nesting under the parent class record | Route and asset folder paths still physically mirror the relationship |
-| species title | Good | `src/lib/wiki/species/*.ts` | None for Wiki metadata |
-| species href | Partial | `src/lib/wiki/species/*.ts` | SvelteKit route folders must still match |
-| child species parent | Good | `children` nesting under the parent species record | Route folder paths still physically mirror the relationship |
-| navigation title | Good | derived from `wikiPages` | None for Wiki metadata |
-| search title | Good | derived from `wikiPages` | None for normal search entries |
-| page icon | Good | static/domain page `icon` using `WikiIconId` | SVG asset import list remains the icon URL registry |
-
-Phase 1 removed `src/lib/data/classes.ts`, removed class/species route-owned head metadata, removed registry boundary casts, and added structural tests against route-local metadata declarations. Static/information pages still keep their existing route-local headers unless a later phase expands the layout-derived metadata pattern beyond class/species routes.
-
-## Phase 2 Campaign Source Matrix
-
-| Concept | Status | Current authoritative source | Remaining duplicate/edit point |
-| --- | --- | --- | --- |
-| Party ID | Good | `src/lib/config/campaigns.ts` object keys and Party `id` fields | Availability entries reference stable ids as content decisions |
-| Party name | Good | `src/lib/config/campaigns.ts` | Human-readable route/legal prose may mention names |
-| Party short name | Good | `src/lib/config/campaigns.ts` | None for structural UI |
-| Party order | Good | `src/lib/config/campaigns.ts` | None |
-| Party colour token name | Good | `src/lib/config/campaigns.ts` | Token existence is validated against SCSS |
-| Party colour value | Good | `src/lib/styles/tokens.scss` | Token names are referenced from campaign config |
-| Dungeon Master ID | Good | `src/lib/config/campaigns.ts` object keys and Dungeon Master `id` fields | None |
-| Dungeon Master name | Good | `src/lib/config/campaigns.ts` | Legal/site-owner prose still repeats owner names where intentional |
-| Party-to-Dungeon-Master relationship | Good | Party `dmId` in `src/lib/config/campaigns.ts` | None |
-| all Party IDs | Good | Derived `allPartyIds` from sorted `parties` | None |
-| selectAllParties | Good | Derived helper in `src/lib/config/campaigns.ts` | None |
-| preference validation | Good | `isPartyId` and `isDungeonMasterId` from `src/lib/config/campaigns.ts` | None |
-| availability Party types | Good | `PartyId` from `src/lib/config/campaigns.ts` | Availability remains physically in `src/lib/data/availability.ts` |
-| sidebar Party rendering | Good | `parties` from `src/lib/config/campaigns.ts` | None |
-
-The old compatibility facades `src/lib/data/parties.ts` and `src/lib/data/dungeon-masters.ts` were removed in Phase 5 after scans confirmed no remaining consumers. Import campaign identity data and helpers from `src/lib/config/campaigns.ts`.
-
-## Phase 3 Availability Source Matrix
-
-| Concept | Status | Current authoritative source | Remaining duplicate/edit point |
-| --- | --- | --- | --- |
-| Page availability | Good | `src/lib/data/availability.ts` | None for structural availability decisions |
-| Allowed Parties | Good | `allowed` arrays in `src/lib/data/availability.ts` | Party identities derive from campaign config |
-| Limited Parties | Good | `limited` arrays in `src/lib/data/availability.ts` | None |
-| Banned Parties | Good | `banned` arrays in `src/lib/data/availability.ts` | None |
-| Approval Parties | Good | `approval` arrays in `src/lib/data/availability.ts` | None |
-| Availability href ownership | Good | Canonical Wiki hrefs from registry-matching availability tree | Physical route folders still need to match registry hrefs |
-| Availability path normalization | Good | `normalizeAvailabilityHref()` in `src/lib/data/availability.ts` backed by registry href resolution | Broader app asset path normalization remains separate |
-| Availability UI rendering | Good | `AvailabilityBadges href={pageMeta.href}` in class/species layouts | Static/information routes do not use availability badges |
-| Search availability metadata | Good | `getAvailabilityMetadataForHref()` via `getAvailabilityByHref()` | Search scoring itself remains separate |
-| Dungeon Master availability relevance | Good | Derived from Party ids through campaign configuration | None |
-| Availability inheritance | Good | Exact-entry only; no parent inheritance | Add explicit child entries when a child page should show availability |
-| Availability validation | Good | `validateAvailabilityConfig()` plus structural tests | Runtime validation runs at module load and in tests |
-
-## Phase 4 Page Metadata Source Matrix
-
-| Concept | Status | Current authoritative source | Remaining duplicate/edit point |
-| --- | --- | --- | --- |
-| static page title | Good | `src/lib/wiki/static-pages.ts` | None for rendered headers/document titles |
-| static page href | Partial | `src/lib/wiki/static-pages.ts` | SvelteKit route folders must still match |
-| static page description | Good | `src/lib/wiki/static-pages.ts` | Body prose may restate concepts |
-| page eyebrow | Good | static/domain metadata | None |
-| page tags | Good | static/domain metadata using search tag IDs | None for structural metadata |
-| page icon | Good | static/domain metadata plus `icon-ids.ts` | SVG asset imports remain in `icons.ts` |
-| navigation visibility | Good | registry/domain `navigation` flags | None |
-| footer visibility | Good | footer page ID groups in `src/lib/wiki/registry.ts` | Footer group headings remain component UI labels |
-| searchability | Good | static/domain `searchable` flags | Search scoring remains separate |
-| document title | Good | nearest metadata-owning layout via `PageDocumentMetadata` | None |
-| meta description | Good | nearest metadata-owning layout via `PageDocumentMetadata` | None |
-| child-page cards | Good | `getNavigationChildren()` and registry metadata | Presentation-only image choices remain separate |
-| home quick links | Good | curated registry page IDs in `src/routes/+page.svelte` | Presentation-only image choices remain separate |
-| footer links | Good | registry footer page IDs and `getFooterPages()` | External/community links remain manual |
-| rules parent relationships | Good | `parentId` in static page metadata | None |
-| route existence | Good | test validation maps registry hrefs to `src/routes/**/+page.svelte` | Filesystem renames are still manual |
-
-## Phase 5 Type And Utility Source Matrix
-
-| Concept | Status | Current authoritative source | Remaining duplicate/edit point |
-| --- | --- | --- | --- |
-| domain page type | Good | `src/lib/wiki/domain.ts` | None |
-| registry page type | Good | `src/lib/wiki/registry.ts` | None |
-| page kind | Good | `src/lib/wiki/registry.ts` | Used by domain/search as a shared registry-owned union |
-| navigation type | Good | `src/lib/wiki/navigation.ts` | None |
-| search entry type | Good | `src/lib/wiki/search-index.ts` | None |
-| Party ID type | Good | `src/lib/config/campaigns.ts` derived from `campaignConfig` | Availability entries reference IDs as content decisions |
-| Dungeon Master ID type | Good | `src/lib/config/campaigns.ts` derived from `campaignConfig` | None |
-| availability type | Good | `src/lib/data/availability.ts` | None |
-| icon ID type | Good | `src/lib/wiki/icon-ids.ts` | SVG asset mapping remains in `src/lib/wiki/icons.ts` |
-| preference type | Good | `src/lib/utils/wiki-preferences.ts` | None |
-| canonical href normalization | Good | registry and availability modules own route-href normalization for their specific lookup contracts | App/asset path resolution intentionally remains separate |
-| app path resolution | Good | `src/lib/utils/paths.ts` `resolveAppPath()` | None |
-| asset path resolution | Good | `src/lib/utils/paths.ts` `resolveAssetPath()`/`resolveSrcset()` | None |
-| compatibility exports | Dead | none retained for campaign/class metadata | Removed `data/classes.ts`, `data/parties.ts`, and `data/dungeon-masters.ts` |
-
-## Phase 6 Styling Source Matrix
-
-| Concept | Status | Current authoritative source | Remaining duplicate/edit point |
-| --- | --- | --- | --- |
-| design token names | Good | `src/lib/styles/tokens.scss` | Component/route styles reference tokens |
-| Party/availability color values | Good | `src/lib/styles/tokens.scss` | Campaign config owns Party token names |
-| shared breakpoints | Good | `src/lib/styles/_breakpoints.scss` | Some one-off legal route thresholds remain local |
-| focus ring | Good | `src/lib/styles/_mixins.scss` | Avoid route-local outline stacks |
-| reduced motion | Good | `src/lib/styles/_mixins.scss` | Some page-specific reduced-motion blocks may remain until touched |
-| panel/card foundation | Partial | `src/lib/styles/_panels.scss` | Legal/information route card compositions still local |
-| button/action foundation | Partial | `src/lib/styles/_buttons.scss` | Some page-specific action links still local |
-| form control foundation | Good | `src/lib/styles/_forms.scss` | Search and reusable form components use it |
-| shell breakpoints | Good | `_breakpoints.scss` used by shell/header/sidebar/panel/preferences | None for shared shell threshold |
-| NavTree hover surface | Good | `NavTree.scss` row state using shared mixins | Link/toggle hover intentionally remains transparent |
-| availability badge sizing | Good | `AvailabilityBadges.scss` using `panels.surface` | None |
-| route-local legal styling | Partial | route-adjacent SCSS | Composition remains local; shared primitives should be used when touched |
-
-## Phase 7 Final Source-Of-Truth Verification
-
-| Concept | Status | Current editable owner | Remaining issue |
-| --- | --- | --- | --- |
-| class metadata | Good | `src/lib/wiki/classes/` | Route folder/assets still mirror hrefs physically |
-| subclass metadata | Good | nested class domain records | Route folder/assets still mirror hrefs physically |
-| species metadata | Good | `src/lib/wiki/species/` | Route folder/assets still mirror hrefs physically |
-| child-species metadata | Good | nested species domain records | Route folder/assets still mirror hrefs physically |
-| static page metadata | Good | `src/lib/wiki/static-pages.ts` | Route folder must exist separately |
-| combined registry | Good | `src/lib/wiki/registry.ts` | None |
-| Party identities | Good | `src/lib/config/campaigns.ts` | Availability references stable IDs as decisions |
-| Dungeon Master identities | Good | `src/lib/config/campaigns.ts` | Intentional legal/prose mentions may remain |
-| Party-to-DM relationships | Good | Party `dmId` in `src/lib/config/campaigns.ts` | None |
-| availability decisions | Good | `src/lib/data/availability.ts` | Exact-entry only; no inherited child availability |
-| Wiki icon IDs | Good | `src/lib/wiki/icon-ids.ts` | None |
-| icon asset mappings | Good | `src/lib/wiki/icons.ts` | Asset files still live under `src/lib/assets/icons` |
-| document metadata rendering | Good | root/classes/species layouts through `PageDocumentMetadata` | None for registered pages |
-| navigation projection | Good | `src/lib/wiki/navigation.ts` derived from registry | None |
-| search projection | Good | `src/lib/wiki/search-index.ts` derived from registry plus search metadata | Search scoring remains separate |
-| Party colors | Good | token names in campaign config; values in `tokens.scss` | Intentional split validated by tests |
-| availability colors | Good | `src/lib/styles/tokens.scss` | None |
-| breakpoints | Good | `src/lib/styles/_breakpoints.scss` | Page-specific one-off thresholds may remain local |
-| panel primitives | Partial | `src/lib/styles/_panels.scss` | Some legal/information route compositions remain local |
-| button primitives | Partial | `src/lib/styles/_buttons.scss` | Some page-specific action links remain local |
-| focus primitives | Good | `src/lib/styles/_mixins.scss` | None for shared focus foundation |
-| deleted compatibility modules | Dead | none retained | Removed files are documented only in migration history |
-
-## Phase 8 Final Import And Migration Decision
-
-| Concept | Status | Current owner | Remaining issue |
-| --- | --- | --- | --- |
-| authoritative import paths | Good | `$lib/...` for Svelte/app cross-boundary imports; explicit relative `.js` for Node-executed TS test modules | Local relative imports remain for same-domain/adjacent files |
-| type-only imports | Good | `import type` at consuming boundaries | TypeScript compilation verifies the convention |
-| inventory ownership | Good | `docs/architecture-audit/inventory.json` refreshed from current source | Must be refreshed when imports/files change |
-| architecture editing guide | Good | `docs/architecture-audit/README.md` | Route folders and assets still require physical edits |
-| final folder migration decision | Good | `docs/architecture-audit/migration-plan.md` | Outcome A: stop after Phase 8 |
-| broad target folder migration | Dead | none | Not recommended because current remaining folder inconsistency is mostly cosmetic |
+| D&D Portal | .github/pull_request_template.md | 11 | - [ ] I have read and accept the D&D Portal Contribution Terms. |
+| LuckyClover | scripts/test-wiki-search.mjs | 361 | assert.doesNotMatch(sidebarSource, /Party [1-8]\|LuckyClover\|FCGoonUnited\|FemboyAss\|Crops/); |
+| FCGoonUnited | scripts/test-wiki-search.mjs | 361 | assert.doesNotMatch(sidebarSource, /Party [1-8]\|LuckyClover\|FCGoonUnited\|FemboyAss\|Crops/); |
+| FemboyAss | scripts/test-wiki-search.mjs | 361 | assert.doesNotMatch(sidebarSource, /Party [1-8]\|LuckyClover\|FCGoonUnited\|FemboyAss\|Crops/); |
+| Crops | scripts/test-wiki-search.mjs | 361 | assert.doesNotMatch(sidebarSource, /Party [1-8]\|LuckyClover\|FCGoonUnited\|FemboyAss\|Crops/); |
+| Toon | scripts/test-wiki-search.mjs | 363 | assert.doesNotMatch(preferencesSource, /Toon van Berkel\|Party [1-8]\|LuckyClover\|FCGoonUnited\|FemboyAss\|Crops/); |
+| Toon van Berkel | scripts/test-wiki-search.mjs | 363 | assert.doesNotMatch(preferencesSource, /Toon van Berkel\|Party [1-8]\|LuckyClover\|FCGoonUnited\|FemboyAss\|Crops/); |
+| LuckyClover | scripts/test-wiki-search.mjs | 363 | assert.doesNotMatch(preferencesSource, /Toon van Berkel\|Party [1-8]\|LuckyClover\|FCGoonUnited\|FemboyAss\|Crops/); |
+| FCGoonUnited | scripts/test-wiki-search.mjs | 363 | assert.doesNotMatch(preferencesSource, /Toon van Berkel\|Party [1-8]\|LuckyClover\|FCGoonUnited\|FemboyAss\|Crops/); |
+| FemboyAss | scripts/test-wiki-search.mjs | 363 | assert.doesNotMatch(preferencesSource, /Toon van Berkel\|Party [1-8]\|LuckyClover\|FCGoonUnited\|FemboyAss\|Crops/); |
+| Crops | scripts/test-wiki-search.mjs | 363 | assert.doesNotMatch(preferencesSource, /Toon van Berkel\|Party [1-8]\|LuckyClover\|FCGoonUnited\|FemboyAss\|Crops/); |
+| 750 | src/lib/components/PageHeader.scss | 8 | font-weight: 750; |
+| 750 | src/lib/components/WikiTable.scss | 53 | font-weight: 750; |
+| 750 | src/lib/components/layout/snippets/Footer.scss | 86 | font-weight: 750; |
+| https://github.com/toon-van-berkel/dnd-wiki | src/lib/components/layout/snippets/Footer.svelte | 15 | href: 'https://github.com/toon-van-berkel/dnd-wiki', |
+| https://github.com/toon-van-berkel/dnd-wiki | src/lib/components/layout/snippets/Footer.svelte | 20 | href: 'https://github.com/toon-van-berkel/dnd-wiki/issues/new', |
+| https://github.com/toon-van-berkel/dnd-wiki | src/lib/components/layout/snippets/Footer.svelte | 25 | href: 'https://github.com/toon-van-berkel/dnd-wiki/issues/new', |
+| D&D Portal | src/lib/components/layout/snippets/Footer.svelte | 250 | D&D Portal is unofficial fan content and is not affiliated with, |
+| D&D Portal | src/lib/components/layout/snippets/Header.svelte | 53 | <a class="header__brand" href={resolveAppPath('/')} aria-label="D&D Portal wiki home"> |
+| D&D Portal | src/lib/components/layout/snippets/Header.svelte | 54 | <img src={resolveAssetPath('/dndportal_wiki-74x32.svg')} alt="D&D Portal" width="74" height="32" /> |
+| Rules Wiki | src/lib/components/layout/snippets/Header.svelte | 56 | <span class="header__name">Rules Wiki</span> |
+| 750 | src/lib/components/layout/snippets/Sidebar.scss | 28 | font-weight: 750; |
+| 750 | src/lib/components/search/SearchFilterGroup.svelte | 98 | font-weight: 750; |
+| https://github.com/toon-van-berkel/dnd-wiki | src/lib/config/config.ts | 2 | const githubUrlBase = 'https://github.com/toon-van-berkel/dnd-wiki'; |
+| D&D Portal | src/lib/config/config.ts | 10 | short: 'D&D Portal', |
+| D&D Portal | src/lib/config/config.ts | 11 | long: 'D&D Portal Wiki' |
+| D&D Portal Wiki | src/lib/config/config.ts | 11 | long: 'D&D Portal Wiki' |
+| Toon | src/lib/config/config.ts | 18 | friendly: 'Toon van Berkel' |
+| Toon van Berkel | src/lib/config/config.ts | 18 | friendly: 'Toon van Berkel' |
+| Toon | src/lib/config/dms.ts | 13 | full: 'Toon van Berkel', |
+| Toon van Berkel | src/lib/config/dms.ts | 13 | full: 'Toon van Berkel', |
+| Toon | src/lib/config/dms.ts | 14 | short: 'Toon' |
+| Tijs | src/lib/config/dms.ts | 28 | full: 'Tijs van Klaveren', |
+| Tijs van Klaveren | src/lib/config/dms.ts | 28 | full: 'Tijs van Klaveren', |
+| Tijs | src/lib/config/dms.ts | 29 | short: 'Tijs' |
+| Party 1 | src/lib/config/parties.ts | 13 | basic: 'Party 1', |
+| Tijs | src/lib/config/parties.ts | 18 | members: 'Tijs, Andy, Stan, Roel & Bryce', |
+| Party 2 | src/lib/config/parties.ts | 37 | basic: 'Party 2', |
+| LuckyClover | src/lib/config/parties.ts | 38 | party: 'LuckyClover' |
+| Tijs | src/lib/config/parties.ts | 42 | members: 'Tijs, Ben, Thomas, Vince & Stijn', |
+| Party 3 | src/lib/config/parties.ts | 61 | basic: 'Party 3', |
+| FCGoonUnited | src/lib/config/parties.ts | 62 | party: 'FCGoonUnited' |
+| Party 4 | src/lib/config/parties.ts | 85 | basic: 'Party 4', |
+| Party 5 | src/lib/config/parties.ts | 109 | basic: 'Party 5', |
+| FemboyAss | src/lib/config/parties.ts | 110 | party: 'FemboyAss' |
+| Party 6 | src/lib/config/parties.ts | 133 | basic: 'Party 6', |
+| Crops | src/lib/config/parties.ts | 134 | party: 'Crops' |
+| 750 | src/lib/config/parties.ts | 154 | party: '750' |
+| Main | src/lib/config/parties.ts | 157 | basic: 'Main', |
+| 750 | src/lib/config/parties.ts | 158 | party: '750' |
+| Toon | src/lib/config/parties.ts | 162 | members: 'Thomas, Ben, Tiago & Toon', |
+| Scouting | src/lib/config/parties.ts | 181 | basic: 'Scouting', |
+| MotelyCrew | src/lib/config/parties.ts | 182 | party: 'MotelyCrew' |
+| Toon | src/lib/config/parties.ts | 186 | members: 'Melvin, Lucas, Toon & Thomas', |
+| Main | src/lib/data/availability.ts | 31 | // function selectMainCampaignParties(): PartyId[] { |
+| Main | src/lib/data/availability.ts | 93 | // 					allowed: selectMainCampaignParties() |
+| Main | src/lib/data/availability.ts | 140 | // 			banned: selectMainCampaignParties() |
+| Main | src/lib/data/availability.ts | 143 | // 			banned: selectMainCampaignParties() |
+| D&D Portal | src/lib/data/changelog.ts | 145 | title: 'About D&D Portal page', |
+| D&D Portal | src/lib/data/changelog.ts | 147 | 'Added an explanation of the difference between the public D&D Portal Wiki and the separate player portal for campaigns, parties, and playing dates.', |
+| D&D Portal Wiki | src/lib/data/changelog.ts | 147 | 'Added an explanation of the difference between the public D&D Portal Wiki and the separate player portal for campaigns, parties, and playing dates.', |
+| D&D Portal | src/lib/data/sources.ts | 391 | 'Used as a legal and publishing reference for the operation of D&D Portal.', |
+| D&D Portal | src/lib/data/sources.ts | 396 | title: 'D&D Portal campaign rules', |
+| D&D Portal | src/lib/data/sources.ts | 400 | publisher: 'D&D Portal', |
+| D&D Portal | src/lib/data/sources.ts | 402 | 'Original house rules, campaign decisions, availability restrictions, interpretations, and table agreements created for campaigns connected to D&D Portal.', |
+| D&D Portal | src/lib/data/sources.ts | 410 | title: 'D&D Portal homebrew material', |
+| D&D Portal | src/lib/data/sources.ts | 414 | publisher: 'D&D Portal and named contributors', |
+| D&D Portal | src/lib/data/sources.ts | 416 | 'Original classes, subclasses, species, monsters, items, spells, locations, and mechanics made for campaigns connected to D&D Portal.', |
+| D&D Portal | src/lib/data/sources.ts | 428 | publisher: 'D&D Portal community', |
+| Rules Wiki | src/lib/layout/Wiki.svelte | 16 | <span>Rules Wiki</span> |
+| Main | src/lib/layout/snippets/Sidebar-Types.ts | 4 | export type SidebarMainItem = { |
+| Main | src/lib/layout/snippets/Sidebar-Types.ts | 24 | main: SidebarMainItem[]; |
+| 750 | src/lib/styles/base/_mixins.scss | 40 | font-weight: 750; |
+| https://github.com/toon-van-berkel/dnd-wiki | src/routes/about/+page.svelte | 7 | const githubRepositoryUrl = 'https://github.com/toon-van-berkel/dnd-wiki'; |
+| D&D Portal | src/routes/about/+page.svelte | 10 | <PageSection title="What is D&D Portal?"> |
+| D&D Portal | src/routes/about/+page.svelte | 12 | D&D Portal is a collection of tools and reference pages created to support the |
+| Toon | src/routes/about/+page.svelte | 13 | Dungeons & Dragons campaigns organised and managed by Toon van Berkel. |
+| Toon van Berkel | src/routes/about/+page.svelte | 13 | Dungeons & Dragons campaigns organised and managed by Toon van Berkel. |
+| D&D Portal | src/routes/about/+page.svelte | 22 | <strong>The D&D Portal Wiki</strong>, which contains rules, character |
+| D&D Portal Wiki | src/routes/about/+page.svelte | 22 | <strong>The D&D Portal Wiki</strong>, which contains rules, character |
+| D&D Portal | src/routes/about/+page.svelte | 35 | D&D Portal project. |
+| D&D Portal | src/routes/about/+page.svelte | 39 | <PageSection title="The D&D Portal Wiki"> |
+| D&D Portal Wiki | src/routes/about/+page.svelte | 39 | <PageSection title="The D&D Portal Wiki"> |
+| D&D Portal | src/routes/about/+page.svelte | 52 | This website is the wiki section of D&D Portal. It is intended as a |
+| D&D Portal | src/routes/about/+page.svelte | 102 | In addition to this wiki, D&D Portal also has a separate player portal. |
+| D&D Portal | src/routes/about/+page.svelte | 153 | <p class="about-comparison__eyebrow">D&D Portal Wiki</p> |
+| D&D Portal Wiki | src/routes/about/+page.svelte | 153 | <p class="about-comparison__eyebrow">D&D Portal Wiki</p> |
+| D&D Portal | src/routes/about/+page.svelte | 234 | D&D Portal was created to bring this information together in a clearer and more |
+| D&D Portal | src/routes/about/+page.svelte | 256 | in campaigns managed through D&D Portal. |
+| D&D Portal | src/routes/about/+page.svelte | 282 | D&D Portal is an independent and unofficial fan-created project. |
+| D&D Portal | src/routes/about/+page.svelte | 312 | D&D Portal is designed, developed, and maintained by |
+| Toon | src/routes/about/+page.svelte | 318 | Toon van Berkel |
+| Toon van Berkel | src/routes/about/+page.svelte | 318 | Toon van Berkel |
+| D&D Portal | src/routes/accessibility/+page.svelte | 30 | D&D Portal aims to make its rules, campaign information, character options, |
+| D&D Portal | src/routes/accessibility/+page.svelte | 55 | The main accessibility goals of D&D Portal are: |
+| Main | src/routes/accessibility/+page.svelte | 62 | <li>Maintain sufficient contrast between text and backgrounds.</li> |
+| D&D Portal | src/routes/accessibility/+page.svelte | 96 | D&D Portal uses a font stack that prioritises legibility: |
+| D&D Portal | src/routes/accessibility/+page.svelte | 266 | D&D Portal uses a dark visual theme with light text and a bright green accent. |
+| D&D Portal | src/routes/accessibility/+page.svelte | 407 | D&D Portal aims to keep animation limited and functional. |
+| D&D Portal | src/routes/accessibility/+page.svelte | 464 | D&D Portal aims to provide useful information to screen-reader users through: |
+| D&D Portal | src/routes/accessibility/+page.svelte | 549 | D&D Portal is an actively developed project. Some parts of the website may still |
+| D&D Portal | src/routes/accessibility/+page.svelte | 574 | D&D Portal may link to or display content provided by third parties, including |
+| D&D Portal | src/routes/accessibility/+page.svelte | 581 | owners. D&D Portal cannot guarantee that an external website, document, embedded |
+| D&D Portal | src/routes/accessibility/+page.svelte | 668 | Response times may vary because D&D Portal is independently maintained and is not |
+| D&D Portal | src/routes/accessibility/+page.svelte | 701 | <li><a href={resolveAppPath('/about')}>About D&D Portal</a></li> |
+| D&D Portal | src/routes/ai/+page.svelte | 16 | D&D Portal uses artificial intelligence for a limited number of supporting |
+| Toon | src/routes/ai/+page.svelte | 29 | painted, photographed, or manually illustrated works by Toon van Berkel. |
+| Toon van Berkel | src/routes/ai/+page.svelte | 29 | painted, photographed, or manually illustrated works by Toon van Berkel. |
+| D&D Portal | src/routes/ai/+page.svelte | 277 | At this time, D&D Portal does not use images that were |
+| D&D Portal | src/routes/ai/+page.svelte | 306 | that reference does not become the property of D&D Portal. Rights in the original |
+| 750 | src/routes/ai/AITransparency.scss | 17 | font-weight: 750; |
+| 750 | src/routes/ai/AITransparency.scss | 123 | font-weight: 750; |
+| D&D Portal | src/routes/changelog/+page.svelte | 117 | This page records meaningful changes made to the D&D Portal Wiki. It |
+| D&D Portal Wiki | src/routes/changelog/+page.svelte | 117 | This page records meaningful changes made to the D&D Portal Wiki. It |
+| D&D Portal | src/routes/changelog/+page.svelte | 314 | D&D Portal uses version numbers to group related changes. A version may |
+| D&D Portal | src/routes/changelog/+page.svelte | 376 | About D&D Portal |
+| 750 | src/routes/changelog/Changelog.scss | 26 | font-weight: 750; |
+| 750 | src/routes/changelog/Changelog.scss | 121 | font-weight: 750; |
+| D&D Portal | src/routes/classes/page.header.ts | 3 | eyebrow: 'D&D Portal wiki - Character classes', |
+| D&D Portal | src/routes/classes/page.meta.ts | 3 | title: 'D&D Portal — Campaign Rules & Reference Wiki', |
+| Toon | src/routes/classes/page.meta.ts | 6 | author: 'Toon van Berkel', |
+| Toon van Berkel | src/routes/classes/page.meta.ts | 6 | author: 'Toon van Berkel', |
+| D&D Portal | src/routes/classes/page.meta.ts | 18 | title: 'D&D Portal — Campaign Rules & Reference Wiki', |
+| D&D Portal | src/routes/classes/page.meta.ts | 22 | imageAlt: 'D&D Portal campaign rules and reference wiki', |
+| D&D Portal | src/routes/classes/page.meta.ts | 23 | siteName: 'D&D Portal', |
+| D&D Portal | src/routes/classes/page.meta.ts | 30 | title: 'D&D Portal — Campaign Rules & Reference Wiki', |
+| D&D Portal | src/routes/content-removal/+page.svelte | 5 | const projectName = 'D&D Portal Wiki'; |
+| D&D Portal Wiki | src/routes/content-removal/+page.svelte | 5 | const projectName = 'D&D Portal Wiki'; |
+| Toon | src/routes/content-removal/+page.svelte | 6 | const projectOwner = 'Toon van Berkel'; |
+| Toon van Berkel | src/routes/content-removal/+page.svelte | 6 | const projectOwner = 'Toon van Berkel'; |
+| https://github.com/toon-van-berkel/dnd-wiki | src/routes/content-removal/+page.svelte | 11 | 'https://github.com/toon-van-berkel/dnd-wiki'; |
+| D&D Portal | src/routes/content-removal/+page.svelte | 21 | 'D&D Portal content removal request'; |
+| D&D Portal | src/routes/content-removal/+page.svelte | 333 | material on D&D Portal that is claimed to infringe it. |
+| D&D Portal | src/routes/content-removal/+page.svelte | 343 | <li>The exact D&D Portal page or image involved.</li> |
+| D&D Portal | src/routes/content-removal/+page.svelte | 413 | <strong>URGENT — D&D Portal security or safety report</strong>. |
+| D&D Portal | src/routes/content-removal/+page.svelte | 636 | D&D Portal. Independent third-party copies remain under the control of |
+| D&D Portal | src/routes/content-removal/+page.svelte | 643 | D&D Portal may link to third-party websites but does not control their |
+| D&D Portal | src/routes/content-removal/+page.svelte | 653 | Where appropriate, D&D Portal may remove or update its link to external |
+| D&D Portal | src/routes/content-removal/+page.svelte | 684 | D&D Portal is independently maintained and does not operate a dedicated |
+| D&D Portal | src/routes/contribution-terms/+page.svelte | 5 | const projectName = 'D&D Portal Wiki'; |
+| D&D Portal Wiki | src/routes/contribution-terms/+page.svelte | 5 | const projectName = 'D&D Portal Wiki'; |
+| Toon | src/routes/contribution-terms/+page.svelte | 6 | const projectOwner = 'Toon van Berkel'; |
+| Toon van Berkel | src/routes/contribution-terms/+page.svelte | 6 | const projectOwner = 'Toon van Berkel'; |
+| https://github.com/toon-van-berkel/dnd-wiki | src/routes/contribution-terms/+page.svelte | 11 | 'https://github.com/toon-van-berkel/dnd-wiki/'; |
+| https://github.com/toon-van-berkel/dnd-wiki | src/routes/contribution-terms/+page.svelte | 14 | 'https://github.com/toon-van-berkel/dnd-wiki/issues'; |
+| https://github.com/toon-van-berkel/dnd-wiki | src/routes/contribution-terms/+page.svelte | 17 | 'https://github.com/toon-van-berkel/dnd-wiki/security/advisories/new'; |
+| D&D Portal | src/routes/contribution-terms/+page.svelte | 45 | D&D Portal receives permission to publish and maintain accepted work. |
+| D&D Portal | src/routes/contribution-terms/+page.svelte | 206 | <li>Existing D&D Portal material.</li> |
+| D&D Portal | src/routes/contribution-terms/+page.svelte | 213 | <PageSection title="Licence granted to D&D Portal"> |
+| D&D Portal | src/routes/contribution-terms/+page.svelte | 411 | itself mean it may be copied into D&D Portal. |
+| D&D Portal | src/routes/contribution-terms/+page.svelte | 423 | D&D Portal is an unofficial fan-created project. Contributions containing |
+| D&D Portal | src/routes/contribution-terms/+page.svelte | 781 | Voluntary donations made to support D&D Portal do not automatically |
+| D&D Portal | src/routes/contribution-terms/+page.svelte | 809 | <PageSection title="No warranties from D&D Portal"> |
+| D&D Portal | src/routes/contribution-terms/+page.svelte | 929 | <li><a href={resolveAppPath('/about')}>About D&D Portal</a></li> |
+| 750 | src/routes/contribution-terms/ContributionTerms.scss | 169 | font-weight: 750; |
+| D&D Portal | src/routes/cookies/+page.svelte | 31 | provider: 'D&D Portal Wiki', |
+| D&D Portal Wiki | src/routes/cookies/+page.svelte | 31 | provider: 'D&D Portal Wiki', |
+| D&D Portal | src/routes/cookies/+page.svelte | 46 | provider: 'D&D Portal Wiki', |
+| D&D Portal Wiki | src/routes/cookies/+page.svelte | 46 | provider: 'D&D Portal Wiki', |
+| D&D Portal | src/routes/cookies/+page.svelte | 110 | The D&D Portal Wiki does not currently use cookies for |
+| D&D Portal Wiki | src/routes/cookies/+page.svelte | 110 | The D&D Portal Wiki does not currently use cookies for |
+| D&D Portal | src/routes/cookies/+page.svelte | 130 | This status applies only to the public D&D Portal Wiki. The separate |
+| D&D Portal Wiki | src/routes/cookies/+page.svelte | 130 | This status applies only to the public D&D Portal Wiki. The separate |
+| Main | src/routes/cookies/+page.svelte | 148 | <li>Maintaining a shopping basket or form session.</li> |
+| D&D Portal | src/routes/cookies/+page.svelte | 201 | D&D Portal currently uses local storage for display preferences. It does |
+| D&D Portal | src/routes/cookies/+page.svelte | 269 | The D&D Portal Wiki does not currently intentionally place |
+| D&D Portal Wiki | src/routes/cookies/+page.svelte | 269 | The D&D Portal Wiki does not currently intentionally place |
+| D&D Portal | src/routes/cookies/+page.svelte | 447 | D&D Portal Wiki does not currently use Google Analytics, advertising |
+| D&D Portal Wiki | src/routes/cookies/+page.svelte | 447 | D&D Portal Wiki does not currently use Google Analytics, advertising |
+| D&D Portal | src/routes/cookies/+page.svelte | 493 | An ordinary external link does not itself give D&D Portal control over |
+| D&D Portal | src/routes/cookies/+page.svelte | 627 | <li><a href={resolveAppPath('/about')}>About D&D Portal</a></li> |
+| 750 | src/routes/cookies/CookieNotice.scss | 95 | font-weight: 750; |
+| https://github.com/toon-van-berkel/dnd-wiki | src/routes/credits/+page.svelte | 6 | const githubRepositoryUrl = 'https://github.com/toon-van-berkel/dnd-wiki'; |
+| D&D Portal | src/routes/credits/+page.svelte | 13 | D&D Portal was designed, developed, published, and is maintained by |
+| Toon | src/routes/credits/+page.svelte | 15 | Toon van Berkel |
+| Toon van Berkel | src/routes/credits/+page.svelte | 15 | Toon van Berkel |
+| Toon | src/routes/credits/+page.svelte | 21 | Dungeons & Dragons campaigns managed by Toon van Berkel. Its primary purpose is |
+| Toon van Berkel | src/routes/credits/+page.svelte | 21 | Dungeons & Dragons campaigns managed by Toon van Berkel. Its primary purpose is |
+| D&D Portal | src/routes/credits/+page.svelte | 64 | Open the D&D Portal GitHub repository |
+| Toon | src/routes/credits/+page.svelte | 151 | design, collaboration, or other business matters, contact Toon van Berkel through |
+| Toon van Berkel | src/routes/credits/+page.svelte | 151 | design, collaboration, or other business matters, contact Toon van Berkel through |
+| D&D Portal | src/routes/credits/+page.svelte | 158 | Questions specifically relating to D&D Portal can be sent to |
+| D&D Portal | src/routes/credits/+page.svelte | 183 | D&D Portal may contain summaries, explanations, campaign interpretations, |
+| D&D Portal | src/routes/credits/+page.svelte | 212 | D&D Portal contains several different types of content. These should not be |
+| D&D Portal | src/routes/credits/+page.svelte | 273 | Artwork and other visual material displayed on D&D Portal may come from several |
+| D&D Portal | src/routes/credits/+page.svelte | 294 | holder. Inclusion on this website does not transfer ownership to D&D Portal or |
+| Toon | src/routes/credits/+page.svelte | 295 | Toon van Berkel. |
+| Toon van Berkel | src/routes/credits/+page.svelte | 295 | Toon van Berkel. |
+| D&D Portal | src/routes/credits/+page.svelte | 301 | Some images used on D&D Portal may have been generated or modified with the |
+| Toon | src/routes/credits/+page.svelte | 308 | content. They are not presented as original, manually created artwork by Toon van |
+| D&D Portal | src/routes/credits/+page.svelte | 339 | Icons and other interface assets used throughout D&D Portal may originate from |
+| D&D Portal | src/routes/credits/+page.svelte | 385 | D&D Portal is built using modern web technologies selected for maintainability, |
+| D&D Portal | src/routes/credits/+page.svelte | 432 | D&D Portal aims to provide information in a format that is readable and usable |
+| D&D Portal | src/routes/credits/+page.svelte | 458 | D&D Portal may contain links to external websites, repositories, social media |
+| D&D Portal | src/routes/credits/+page.svelte | 463 | External websites are operated by their respective owners. D&D Portal does not |
+| Toon | src/routes/credits/+page.svelte | 469 | A link to an external website does not automatically mean that D&D Portal or Toon |
+| D&D Portal | src/routes/credits/+page.svelte | 469 | A link to an external website does not automatically mean that D&D Portal or Toon |
+| D&D Portal | src/routes/credits/+page.svelte | 479 | specifically for D&D Portal are owned by their respective creator. |
+| D&D Portal | src/routes/credits/+page.svelte | 510 | D&D Portal is an unofficial, independently created fan resource. It is not |
+| D&D Portal | src/routes/credits/+page.svelte | 531 | If you are a creator or rights holder and believe that material on D&D Portal: |
+| D&D Portal | src/routes/credits/+page.svelte | 566 | D&D Portal is maintained as an ongoing project. Content, availability rules, |
+| Party 1 | src/routes/locations/+page.svelte | 9 | <p>Party 1 has an established contact at the old observatory above the district.</p> |
+| Sam | src/routes/page.data.ts | 196 | 'Sam', |
+| Casper | src/routes/page.data.ts | 197 | 'Casper', |
+| Liam | src/routes/page.data.ts | 198 | 'Liam', |
+| Ronin | src/routes/page.data.ts | 199 | 'Ronin', |
+| Aron | src/routes/page.data.ts | 200 | 'Aron', |
+| Mathijs | src/routes/page.data.ts | 201 | 'Mathijs' |
+| D&D Portal | src/routes/page.header.ts | 3 | eyebrow: 'D&D Portal wiki', |
+| D&D Portal | src/routes/page.meta.ts | 3 | title: 'D&D Portal — Campaign Rules & Reference Wiki', |
+| Toon | src/routes/page.meta.ts | 6 | author: 'Toon van Berkel', |
+| Toon van Berkel | src/routes/page.meta.ts | 6 | author: 'Toon van Berkel', |
+| D&D Portal | src/routes/page.meta.ts | 18 | title: 'D&D Portal — Campaign Rules & Reference Wiki', |
+| D&D Portal | src/routes/page.meta.ts | 22 | imageAlt: 'D&D Portal campaign rules and reference wiki', |
+| D&D Portal | src/routes/page.meta.ts | 23 | siteName: 'D&D Portal', |
+| D&D Portal | src/routes/page.meta.ts | 30 | title: 'D&D Portal — Campaign Rules & Reference Wiki', |
+| D&D Portal | src/routes/privacy/+page.svelte | 6 | const siteName = 'D&D Portal Wiki'; |
+| D&D Portal Wiki | src/routes/privacy/+page.svelte | 6 | const siteName = 'D&D Portal Wiki'; |
+| Toon | src/routes/privacy/+page.svelte | 7 | const controllerName = 'Toon van Berkel'; |
+| Toon van Berkel | src/routes/privacy/+page.svelte | 7 | const controllerName = 'Toon van Berkel'; |
+| D&D Portal | src/routes/privacy/+page.svelte | 45 | It applies only to the public Wiki. D&D Portal also operates a separate |
+| D&D Portal | src/routes/privacy/+page.svelte | 459 | policies, security practices, and terms. D&D Portal does not control how |
+| D&D Portal | src/routes/privacy/+page.svelte | 643 | <li><a href={resolveAppPath('/about')}>About D&D Portal</a></li> |
+| Party 2 | src/routes/rules/fighting/+page.svelte | 9 | <p>Party 2 uses the same bonus for large tactical encounters, but the DM may waive it for theatre-of-the-mind scenes.</p> |
+| Party 3 | src/routes/rules/movement/+page.svelte | 9 | <p>Party 3 uses stricter climbing and swimming checks during wilderness expeditions.</p> |
+| D&D Portal | src/routes/rules/movement/page.header.ts | 3 | eyebrow: 'D&D Portal wiki', |
+| D&D Portal | src/routes/rules/page.header.ts | 3 | eyebrow: 'D&D Portal wiki', |
+| D&D Portal | src/routes/sources/+page.svelte | 85 | D&D Portal uses a combination of official publications, official online |
+| D&D Portal | src/routes/sources/+page.svelte | 306 | inclusion on this page does not mean that D&D Portal distributes those books or |
+| D&D Portal | src/routes/sources/+page.svelte | 316 | D&D Portal is intended as an informational and campaign-organisational resource, |
+| 750 | src/routes/sources/Sources.scss | 47 | font-weight: 750; |
+| 750 | src/routes/sources/Sources.scss | 73 | font-weight: 750; |
+| Party 1 | src/routes/species/elf/astral-elf/+page.svelte | 11 | <p>Party 1 may use this option only when the character is connected to the campaign’s observatory storyline.</p> |
+| Party 1 | src/routes/species/human/+page.svelte | 14 | <p>Human characters in Party 1 may begin with one additional language tied to the capital.</p> |

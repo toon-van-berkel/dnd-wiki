@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { resolveAppPath } from '$lib/utils/paths';
-	import PageSection from '$lib/components/PageSection.svelte';
+	import PageSection from '$lib/pages/PageSection/PageSection.svelte';
 
 	const websiteUrl = 'https://www.toonvb.com';
 	const githubRepositoryUrl = 'https://github.com/toon-van-berkel/dnd-wiki';

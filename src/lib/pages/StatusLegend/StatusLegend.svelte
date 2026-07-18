@@ -1,6 +1,6 @@
 <!-- site\src\lib\pages\StatusLegend\StatusLegend.svelte -->
 <script lang="ts">
-	import Icon from '$lib/helpers/Icon.svelte';
+	import Icon from '$lib/components/Icon/Icon.svelte';
 
 	import type { StatusLegendProps as Props } from './StatusLegend-Types';
 

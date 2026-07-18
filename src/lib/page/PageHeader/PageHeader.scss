@@ -1,0 +1,39 @@
+@use '$lib/styles/base/mixins' as mixins;
+
+.page__header {
+	width: 100%;
+	margin-bottom: 25px;
+	padding-bottom: 25px;
+	border-bottom: 1px solid var(--border-strong);
+
+	&-sep {
+		margin: 25px 0;
+		border-color: var(--border);
+	}
+
+	&-eyebrow {
+		@include mixins.eyebrow;
+	}
+
+	&-title {
+		@include mixins.header;
+	}
+
+	&-description {
+		max-width: 45rem;
+		margin: 1.15rem 0 0;
+		color: var(--text-secondary);
+		font-size: clamp(1.03rem, 2vw, 1.12rem);
+		line-height: 1.6;
+	}
+
+	&__information {
+		display: grid;
+		gap: 1rem;
+		padding: clamp(1.2rem, 3vw, 1.7rem);
+		margin: 20px 0 10px;
+		border: 1px solid var(--border);
+		border-radius: var(--radius-lg);
+		background-color: var(--surface);
+	}
+}

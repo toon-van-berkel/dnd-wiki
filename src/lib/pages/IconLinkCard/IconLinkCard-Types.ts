@@ -1,5 +1,5 @@
 // site\src\lib\pages\IconLinkCard\IconLinkCard-Types.ts
-import type { IconReference } from '$lib/helpers/Icon-Types';
+import type { IconReference } from '$lib/components/Icon/Icon-Types';
 
 export type IconLinkCardData = {
 	title: string;

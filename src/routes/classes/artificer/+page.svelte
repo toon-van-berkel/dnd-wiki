@@ -1,10 +1,10 @@
 <script lang="ts">
-	import PageSection from '$lib/components/PageSection.svelte';
-	import WikiTable from '$lib/components/WikiTable.svelte';
-	import ChildLinkGrid from '$lib/components/ChildLinkGrid.svelte';
-	import { getNavigationChildren } from '$lib/wiki/navigation';
+	import PageSection from '$lib/pages/PageSection/PageSection.svelte';
+	import WikiTable from '$lib/components/WikiTable/WikiTable.svelte';
+	import ChildLinkGrid from '$lib/components/ChildLinkGrid/ChildLinkGrid.svelte';
+	import { getPageChildren } from '$lib/page/registry';
 
-	const subclassPages = getNavigationChildren('/classes/artificer').map(
+	const subclassPages = getPageChildren('classes--artificer').map(
 		({ title, href, description }) => ({
 			title,
 			href,

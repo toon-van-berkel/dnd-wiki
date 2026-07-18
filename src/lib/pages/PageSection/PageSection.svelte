@@ -1,6 +1,7 @@
 <!-- site\src\lib\pages\PageSection\PageSection.svelte -->
 <script lang="ts">
 	import { cubicOut } from 'svelte/easing';
+	import { untrack } from 'svelte';
 	import { slide } from 'svelte/transition';
 	import type { Props } from './PageSection-Types';
 
@@ -15,7 +16,7 @@
 		defaultExpanded = true
 	}: Props = $props();
 
-	let expanded = $derived(defaultExpanded);
+	let expanded = $state(untrack(() => Boolean(defaultExpanded)));
 	let contentId = $derived(id ? `${id}-content` : undefined);
 
 	function toggleSection() {

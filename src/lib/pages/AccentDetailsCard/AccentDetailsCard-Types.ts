@@ -9,6 +9,8 @@ export type AccentDetailsCardData = {
 	accentColor: string;
 	softColor?: string;
 	details: readonly AccentDetailsRow[];
+	href?: string;
+	actionLabel?: string;
 };
 
 export type AccentDetailsCardProps = AccentDetailsCardData & {

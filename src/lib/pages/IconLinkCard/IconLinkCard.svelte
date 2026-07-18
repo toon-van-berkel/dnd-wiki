@@ -1,6 +1,7 @@
 <!-- site\src\lib\pages\IconLinkCard\IconLinkCard.svelte -->
 <script lang="ts">
-	import Icon from '$lib/helpers/Icon.svelte';
+	import Icon from '$lib/components/Icon/Icon.svelte';
+	import { resolveAppPath } from '$lib/utils/paths';
 
 	import type {
 		IconLinkCardProps as Props
@@ -27,7 +28,7 @@
 
 <a
 	class={classes}
-	href={href}
+	href={resolveAppPath(href)}
 	style:--icon-link-color={color}
 	style:--icon-link-icon-size={iconSize}
 >

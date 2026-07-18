@@ -1,7 +1,7 @@
 // site\src\lib\pages\IconCallout\IconCallout-Types.ts
 import type { Snippet } from 'svelte';
 
-import type { IconReference } from '$lib/helpers/Icon-Types';
+import type { IconReference } from '$lib/components/Icon/Icon-Types';
 
 export type IconCalloutProps = {
 	title: string;

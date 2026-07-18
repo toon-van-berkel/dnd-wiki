@@ -173,23 +173,27 @@ Before adding PageHeader to a page, inspect the complete active layout chain.
 
 ## Current architecture ownership
 
-Class, subclass, species, and child-species metadata is authored in `src/lib/wiki/classes` and `src/lib/wiki/species`.
+Page identity, page metadata, parent/child relationships, navigation eligibility, footer membership, tags, keywords, and icons are authored in `src/lib/page/registry`.
 
-Static Wiki page metadata is authored in `src/lib/wiki/static-pages.ts`.
+The public page registry API is exported from `src/lib/page/registry/index.ts`. Navigation, footer links, search metadata, child cards, `PageHeader`, and document metadata derive from that registry.
 
-The combined page registry lives in `src/lib/wiki/registry.ts`. Navigation, footer links, search metadata, child cards, `PageHeader`, and document metadata derive from that registry.
+Document metadata is rendered by the root layout through `src/lib/page/Metadata/Metadata.svelte`; do not add route-local `<svelte:head>` blocks for registered pages.
 
-Document metadata is rendered by the metadata-owning layout through `PageDocumentMetadata`; do not add route-local `<svelte:head>` blocks for registered pages.
+People are authored in `src/lib/config/people.ts`. Party order, labels, proper names, memberships, Dungeon Master references, guest players, and party colour token names are authored in `src/lib/config/parties.ts`.
 
-Party and Dungeon Master identities, Party order, Party-to-Dungeon-Master relationships, and Party colour token names are authored in `src/lib/config/campaigns.ts`.
+Availability decisions are authored in `src/lib/data/availability.ts` and keyed by stable page ID. Use `PartyId` arrays and registry page IDs; do not use friendly party names or page URLs as primary identifiers.
 
-Availability decisions are authored in `src/lib/data/availability.ts` and consumed by canonical href through `getAvailabilityByHref()`. Do not pass inline availability props from route pages.
+Site identity is authored in `src/lib/config/site.ts`. Navigation ordering is authored in `src/lib/config/navigation.ts` as page IDs only.
+
+Search indexing, scoring, filter state, and search UI live in `src/lib/search`.
+
+Preference storage, validation, and preferences UI live in `src/lib/preferences`.
 
 Reusable styling primitives live in `src/lib/styles` partials. Use the shared breakpoint, focus, panel, button, and form mixins before adding repeated route-local styling.
 
 ## Import conventions
 
-Use `$lib/` imports for Svelte/app imports that cross library ownership boundaries, for example `$lib/config/campaigns`, `$lib/data/availability`, `$lib/wiki/registry`, `$lib/wiki/navigation`, `$lib/wiki/search-index`, `$lib/wiki/icons`, `$lib/utils/wiki-preferences`, and `$lib/utils/availability-metadata`.
+Use `$lib/` imports for Svelte/app imports that cross library ownership boundaries, for example `$lib/config/parties`, `$lib/config/people`, `$lib/config/site`, `$lib/config/navigation`, `$lib/data/availability`, `$lib/page/registry`, `$lib/search/search`, `$lib/preferences/preferences`, and `$lib/utils/paths`.
 
 Plain TypeScript modules included in `tsconfig.test.json` may keep explicit relative `.js` imports because the emitted test JavaScript is executed directly by Node.
 

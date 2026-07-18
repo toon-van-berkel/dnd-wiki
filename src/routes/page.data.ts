@@ -1,22 +1,16 @@
-// site\src\routes\page.data.ts
-import { parties } from '$lib/config/parties';
-import { getWikiPage } from '$lib/wiki/registry';
+import {
+	getDungeonMasterForParty,
+	getGuestPlayers,
+	getPartyDisplayName,
+	getPartyMemberSummary,
+	getSortedParties
+} from '$lib/config/parties';
+import { getPageEntry } from '$lib/page/registry';
 
-import type {
-	AccentDetailsCardData
-} from '$lib/pages/AccentDetailsCard/AccentDetailsCard-Types';
-
-import type {
-	IconLinkCardData
-} from '$lib/pages/IconLinkCard/IconLinkCard-Types';
-
-import type {
-	StatusLegendItem
-} from '$lib/pages/StatusLegend/StatusLegend-Types';
-
-import type {
-	StepListItem
-} from '$lib/pages/StepList/StepList-Types';
+import type { AccentDetailsCardData } from '$lib/pages/AccentDetailsCard/AccentDetailsCard-Types';
+import type { IconLinkCardData } from '$lib/pages/IconLinkCard/IconLinkCard-Types';
+import type { StatusLegendItem } from '$lib/pages/StatusLegend/StatusLegend-Types';
+import type { StepListItem } from '$lib/pages/StepList/StepList-Types';
 
 const quickLinkIds = [
 	'search',
@@ -39,37 +33,31 @@ const quickLinkPresentation: Record<
 		color: 'var(--accent)',
 		iconSize: '8rem'
 	},
-
 	species: {
 		icon: 'iconsList.entity.person',
 		color: 'var(--party-i8)',
 		iconSize: '8.5rem'
 	},
-
 	classes: {
 		icon: 'iconsList.game.character',
 		color: 'var(--party-i7)',
 		iconSize: '8.5rem'
 	},
-
 	'rules--movement': {
 		icon: 'iconsList.movement.walking',
 		color: 'var(--allowed)',
 		iconSize: '8.5rem'
 	},
-
 	'rules--fighting': {
 		icon: 'iconsList.game.combat',
 		color: 'var(--banned)',
 		iconSize: '8.5rem'
 	},
-
 	monsters: {
 		icon: 'iconsList.game.monster',
 		color: 'var(--limited)',
 		iconSize: '9rem'
 	},
-
 	locations: {
 		icon: 'iconsList.entity.location',
 		color: 'var(--approval)',
@@ -77,45 +65,44 @@ const quickLinkPresentation: Record<
 	}
 };
 
-export const quickLinks: IconLinkCardData[] = quickLinkIds.map(
-	(pageId) => {
-		const page = getWikiPage(pageId);
+export const quickLinks: IconLinkCardData[] = quickLinkIds.map((pageId) => {
+	const page = getPageEntry(pageId);
 
-		if (!page) {
-			throw new Error(
-				`Home quick link references unknown Wiki page: ${pageId}`
-			);
-		}
-
-		return {
-			title: page.title,
-			href: page.href,
-			description: page.description ?? '',
-			eyebrow: 'Wiki section',
-			actionLabel: 'Open page',
-			...quickLinkPresentation[pageId]
-		};
+	if (!page) {
+		throw new Error(`Home quick link references unknown page: ${pageId}`);
 	}
-);
+
+	return {
+		title: page.title,
+		href: page.href,
+		description: page.description ?? '',
+		eyebrow: 'Wiki section',
+		actionLabel: 'Open page',
+		...quickLinkPresentation[pageId]
+	};
+});
 
 export const wikiSteps: StepListItem[] = [
 	{
 		icon: 'iconsList.game.party',
 		title: 'Select your campaign',
 		description:
-			'Rules, available character options, and exceptions can differ between parties.'
+			'Rules, available character options, and exceptions can differ between parties.',
+		href: '/preferences'
 	},
 	{
 		icon: 'iconsList.game.source-book',
 		title: 'Check the page information',
 		description:
-			'Each page identifies its tags, source material, and campaign availability.'
+			'Each page identifies its tags, source material, and campaign availability.',
+		href: '/sources'
 	},
 	{
 		icon: 'iconsList.util.search',
 		title: 'Search for a subject',
 		description:
-			'Use search to find classes, species, rules, monsters, locations, and other references.'
+			'Use search to find classes, species, rules, monsters, locations, and other references.',
+		href: '/search'
 	}
 ];
 
@@ -130,8 +117,7 @@ export const availabilityStatuses: StatusLegendItem[] = [
 	{
 		icon: 'iconsList.attribute.penalty',
 		title: 'Limited',
-		description:
-			'Can be used with restrictions or specific conditions.',
+		description: 'Can be used with restrictions or specific conditions.',
 		color: 'var(--limited)',
 		background: 'var(--limited-soft)'
 	},
@@ -151,44 +137,20 @@ export const availabilityStatuses: StatusLegendItem[] = [
 	}
 ];
 
-export const partyCards: AccentDetailsCardData[] = Object.values(parties)
-	.sort((firstParty, secondParty) => {
-		return firstParty.order - secondParty.order;
-	})
-	.map((party) => {
-		const name = [
-			party.names.friendly.basic,
-			party.names.friendly.party
-		]
-			.filter(Boolean)
-			.join(' – ');
+export const partyCards: AccentDetailsCardData[] = getSortedParties().map((party) => ({
+	title: getPartyDisplayName(party),
+	accentColor: `var(${party.colors.basic})`,
+	softColor: `var(${party.colors.soft})`,
+	details: [
+		{
+			label: 'Dungeon Master',
+			value: getDungeonMasterForParty(party).name
+		},
+		{
+			label: 'Members',
+			value: getPartyMemberSummary(party)
+		}
+	]
+}));
 
-		const dungeonMaster =
-			party.dmId.charAt(0).toUpperCase() +
-			party.dmId.slice(1);
-
-		return {
-			title: name,
-			accentColor: `var(${party.colors.basic})`,
-			softColor: `var(${party.colors.soft})`,
-			details: [
-				{
-					label: 'Dungeon Master',
-					value: dungeonMaster
-				},
-				{
-					label: 'Members',
-					value: party.members
-				}
-			]
-		};
-	});
-
-export const guestPlayers = [
-	'Sam',
-	'Casper',
-	'Liam',
-	'Ronin',
-	'Aron',
-	'Mathijs'
-];
+export const guestPlayers = getGuestPlayers().map((person) => person.name);

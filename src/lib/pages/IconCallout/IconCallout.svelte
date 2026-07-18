@@ -1,6 +1,6 @@
 <!-- site\src\lib\pages\IconCallout\IconCallout.svelte -->
 <script lang="ts">
-	import Icon from '$lib/helpers/Icon.svelte';
+	import Icon from '$lib/components/Icon/Icon.svelte';
 
 	import type {
 		IconCalloutProps as Props
