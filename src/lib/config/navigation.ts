@@ -23,7 +23,7 @@ export const resourceNavigationPageIds = [
 ] satisfies PageId[];
 
 export const footerPageIdsByGroup = {
-	wiki: ['home', 'search', 'sources', 'changelog'],
-	project: ['about', 'credits', 'ai', 'accessibility'],
+	browse: ['search', 'classes', 'species', 'rules', 'locations', 'monsters'],
+	project: ['about', 'credits', 'sources', 'ai', 'accessibility', 'changelog'],
 	legal: ['legal', 'privacy', 'cookies', 'contribution-terms', 'content-removal']
 } satisfies Record<string, PageId[]>;
