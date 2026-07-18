@@ -1,46 +1,46 @@
-import { asset, base, resolve } from '$app/paths';
+import { base, resolve } from '$app/paths';
+
+import {
+	isAlreadyBasePrefixed,
+	isExternalUrl,
+	normalizePublicBasePath,
+	normalizeInput,
+	resolveAssetPathWithBase,
+	resolveSrcsetWithBase,
+	shouldPreservePath,
+	splitSuffix
+} from './paths-core';
 
 const resolvePath = resolve as (path: string) => string;
+const appBasePath = normalizePublicBasePath(base);
+const assetBasePath = normalizePublicBasePath(__STATIC_ASSET_BASE_PATH__);
 
-const untouchedUrlPattern =
-	/^(?:[a-z][a-z\d+.-]*:|\/\/|#)/i;
+export { isExternalUrl };
 
-function splitSuffix(path: string) {
-	const match = /([?#].*)$/.exec(path);
-
-	if (!match) {
-		return { pathname: path, suffix: '' };
+function normalizeRoutePathname(pathname: string) {
+	if (pathname === '/') {
+		return pathname;
 	}
 
-	return {
-		pathname: path.slice(0, match.index),
-		suffix: match[0]
-	};
-}
+	if (/\.[a-z0-9]+$/i.test(pathname)) {
+		return pathname;
+	}
 
-function normalizeInput(path?: string | null) {
-	const value = path?.trim();
-
-	if (!value) return '';
-
-	return value;
-}
-
-function isAlreadyBasePrefixed(pathname: string) {
-	return Boolean(base && (pathname === base || pathname.startsWith(`${base}/`)));
+	return pathname.endsWith('/') ? pathname : `${pathname}/`;
 }
 
 export function resolveAppPath(path?: string | null) {
 	const value = normalizeInput(path);
 
-	if (!value || untouchedUrlPattern.test(value)) {
+	if (shouldPreservePath(value)) {
 		return value;
 	}
 
 	const { pathname, suffix } = splitSuffix(value);
-	const normalizedPathname = pathname.startsWith('/') ? pathname : `/${pathname}`;
+	const rawPathname = pathname.startsWith('/') ? pathname : `/${pathname}`;
+	const normalizedPathname = normalizeRoutePathname(rawPathname);
 
-	if (isAlreadyBasePrefixed(normalizedPathname)) {
+	if (isAlreadyBasePrefixed(normalizedPathname, appBasePath)) {
 		return `${normalizedPathname}${suffix}`;
 	}
 
@@ -50,43 +50,13 @@ export function resolveAppPath(path?: string | null) {
 export function resolveAssetPath(path?: string | null) {
 	const value = normalizeInput(path);
 
-	if (!value || untouchedUrlPattern.test(value)) {
+	if (shouldPreservePath(value)) {
 		return value;
 	}
 
-	const { pathname, suffix } = splitSuffix(value);
-	const withoutStaticPrefix = pathname.replace(/^\/?static\//, '');
-	const normalizedPathname = withoutStaticPrefix.startsWith('/')
-		? withoutStaticPrefix
-		: `/${withoutStaticPrefix}`;
-
-	if (isAlreadyBasePrefixed(normalizedPathname)) {
-		return `${normalizedPathname}${suffix}`;
-	}
-
-	return `${asset(normalizedPathname)}${suffix}`;
+	return resolveAssetPathWithBase(value, assetBasePath);
 }
 
 export function resolveSrcset(srcset?: string | null) {
-	const value = normalizeInput(srcset);
-
-	if (!value) {
-		return value;
-	}
-
-	return value
-		.split(',')
-		.map((candidate) => {
-			const trimmed = candidate.trim();
-
-			if (!trimmed) {
-				return trimmed;
-			}
-
-			const [url, ...descriptors] = trimmed.split(/\s+/);
-			const resolvedUrl = resolveAssetPath(url);
-
-			return [resolvedUrl, ...descriptors].filter(Boolean).join(' ');
-		})
-		.join(', ');
+	return resolveSrcsetWithBase(srcset, assetBasePath);
 }

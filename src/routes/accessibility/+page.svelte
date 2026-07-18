@@ -334,7 +334,7 @@ System interface fonts</code></pre>
 /&gt;
 
 &lt;img
-	src="/decorative-divider.svg"
+	src="/icons/util/star.svg"
 	alt=""
 /&gt;</code></pre>
 

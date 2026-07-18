@@ -1,8 +1,15 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import {
+		pageCardAssets,
+		type PageCardAssetManifest,
+		type PageCardAssetSet,
+		type PageCardGender,
+		type PageCardSize
+	} from '$lib/data/generated/PageCardAssets';
 	import { resolveAppPath, resolveAssetPath } from '$lib/utils/paths';
 
-	type Gender = 'female' | 'male';
+	type Gender = PageCardGender;
 
 	type ChildPageLink = {
 		title: string;
@@ -15,16 +22,15 @@
 
 	type Props = {
 		links: readonly ChildPageLink[];
-		imagesInFolder?: string | null;
 	};
 
-	let { links, imagesInFolder = null }: Props = $props();
+	const storageKey = 'class-card-image-gender';
+	const preferredSizes = ['medium', 'small', 'large'] as const satisfies readonly PageCardSize[];
+	const manifest = pageCardAssets as PageCardAssetManifest;
+
+	let { links }: Props = $props();
 
 	let imageGender = $state<Gender>('female');
-
-	function cleanTitle(title: string) {
-		return title.toLocaleLowerCase().replaceAll(' ', '-');
-	}
 
 	function getOppositeGender(gender: Gender): Gender {
 		return gender === 'female' ? 'male' : 'female';
@@ -34,13 +40,16 @@
 		return Math.random() < 0.5 ? 'female' : 'male';
 	}
 
+	function isGender(value: string | null): value is Gender {
+		return value === 'female' || value === 'male';
+	}
+
 	onMount(() => {
-		const storageKey = 'class-card-image-gender';
 		const savedGender = localStorage.getItem(storageKey);
 
 		let selectedGender: Gender;
 
-		if (savedGender === 'female' || savedGender === 'male') {
+		if (isGender(savedGender)) {
 			selectedGender = savedGender;
 		} else {
 			selectedGender = getRandomGender();
@@ -51,16 +60,51 @@
 		localStorage.setItem(storageKey, getOppositeGender(selectedGender));
 	});
 
+	function normalizeHref(href: string) {
+		if (href === '/') {
+			return href;
+		}
+
+		return href.replace(/\/+$/, '');
+	}
+
+	function findFirstAvailableAsset(
+		assets: PageCardAssetSet | undefined,
+		sizes: readonly PageCardSize[]
+	) {
+		if (!assets) {
+			return null;
+		}
+
+		for (const size of sizes) {
+			const asset = assets[size];
+
+			if (asset) {
+				return asset;
+			}
+		}
+
+		return null;
+	}
+
 	function buildLinkToImage(link: ChildPageLink) {
 		if (link.image) {
 			return link.image;
 		}
 
-		if (!imagesInFolder) {
+		const assets = manifest[normalizeHref(link.href)];
+
+		if (!assets) {
 			return null;
 		}
 
-		return `/${imagesInFolder}/${cleanTitle(link.title)}/card-${imageGender}-m.webp`;
+		// Fallback order: requested gender medium, requested gender any size,
+		// alternate gender medium, alternate gender any size, then no artwork.
+		return (
+			findFirstAvailableAsset(assets[imageGender], preferredSizes) ??
+			findFirstAvailableAsset(assets[getOppositeGender(imageGender)], preferredSizes) ??
+			null
+		);
 	}
 
 	function buildBackgroundStyle(link: ChildPageLink) {

@@ -132,12 +132,42 @@ function verifyLocalUrl(file, kind, url) {
 	}
 }
 
+function verifyRouteHref(file, url) {
+	if (isIgnoredUrl(url)) {
+		return;
+	}
+
+	const cleanUrl = stripSuffix(url);
+
+	if (!cleanUrl || cleanUrl.endsWith('/') || /\.[a-z0-9]+$/i.test(cleanUrl)) {
+		return;
+	}
+
+	const publicPath = resolvePublicPath(url, file, 'html');
+
+	if (!publicPath || publicPath === '/') {
+		return;
+	}
+
+	const normalized = decodeURIComponent(publicPath).replace(/^\/+/, '');
+	const directoryIndex = path.join(buildDir, normalized, 'index.html');
+
+	if (fs.existsSync(directoryIndex)) {
+		report(
+			relativeFile(file),
+			url,
+			'static route href must include a trailing slash so relative SvelteKit assets resolve under BASE_PATH'
+		);
+	}
+}
+
 function inspectHtml(file) {
 	const content = fs
 		.readFileSync(file, 'utf8')
 		.replace(/<pre\b[\s\S]*?<\/pre>/gi, '')
 		.replace(/<code\b[\s\S]*?<\/code>/gi, '');
 	const attrPattern = /\b(src|href|poster|srcset)\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s>]+))/gi;
+	const styleUrlPattern = /url\((?:&quot;|")?([^"')&]+)(?:&quot;|")?\)/gi;
 	let match;
 
 	while ((match = attrPattern.exec(content))) {
@@ -148,6 +178,25 @@ function inspectHtml(file) {
 			for (const srcsetUrl of splitSrcset(value)) {
 				verifyLocalUrl(file, 'html', srcsetUrl);
 			}
+			continue;
+		}
+
+		if (attribute === 'href') {
+			verifyRouteHref(file, value);
+		}
+
+		verifyLocalUrl(file, 'html', value);
+	}
+
+	while ((match = styleUrlPattern.exec(content))) {
+		const value = match[1].trim();
+
+		if (value.startsWith('./icons/') || value.startsWith('../icons/')) {
+			report(
+				relativeFile(file),
+				value,
+				'prerendered icon URL is document-relative and will resolve against SvelteKit CSS'
+			);
 			continue;
 		}
 

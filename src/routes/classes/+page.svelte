@@ -37,5 +37,5 @@
 
 <section class="page-links" aria-labelledby="class-pages-heading">
 	<h2 id="class-pages-heading">Class pages</h2>
-	<ChildLinkGrid links={classPages} imagesInFolder="classes" />
+	<ChildLinkGrid links={classPages} />
 </section>

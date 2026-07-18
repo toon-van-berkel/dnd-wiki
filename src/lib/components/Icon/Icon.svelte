@@ -1,5 +1,6 @@
 <!-- site/src/lib$lib/components/Icon/Icon.svelte -->
 <script lang="ts">
+	import { resolveAssetPath } from '$lib/utils/paths';
 	import { resolveIcon } from './Icon-helper';
 	import type { Props } from './Icon-Types';
 
@@ -14,7 +15,7 @@
 		class: className = ''
 	}: Props = $props();
 
-	let resolvedSrc = $derived(resolveIcon(src));
+	let resolvedSrc = $derived(resolveAssetPath(resolveIcon(src)));
 
 	let iconClass = $derived(
 		[

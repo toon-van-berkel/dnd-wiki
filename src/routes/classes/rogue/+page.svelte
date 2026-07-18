@@ -122,7 +122,7 @@
 
 	<section>
 		<h2 id="domains-heading">Rogue archetypes</h2>
-		<ChildLinkGrid links={subclassPages} imagesInFolder="classes/rogue" />
+		<ChildLinkGrid links={subclassPages} />
 	</section>
 
 	<style lang="scss">
