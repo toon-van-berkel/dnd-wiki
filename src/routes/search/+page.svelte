@@ -1,4 +1,4 @@
-<script lang="ts">
+<!-- <script lang="ts">
 	import { browser } from '$app/environment';
 	import { goto } from '$app/navigation';
 	import { page } from '$app/state';
@@ -444,4 +444,4 @@
 
 <style lang="scss">
 	@use './Search.scss';
-</style>
+</style> -->

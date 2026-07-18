@@ -3,10 +3,8 @@
 	import { base } from '$app/paths';
 	import { page } from '$app/state';
 	import type { Snippet } from 'svelte';
-	import '$lib/styles/global.scss';
-	import '$lib/styles/reset.scss';
-	import '$lib/styles/wiki-layout.scss';
-	import WikiLayout from '$lib/components/layout/WikiLayout.svelte';
+	import '$lib/styles/styles.scss';
+	import Wiki from '$lib/layout/Wiki.svelte';
 	import { getWikiPageByHref } from '$lib/wiki/registry';
 
 	type Props = {
@@ -45,6 +43,6 @@
 	<meta name="theme-color" content="#0b0d0c" />
 </svelte:head>
 
-<WikiLayout>
+<Wiki>
 	{@render children()}
-</WikiLayout>
+</Wiki>

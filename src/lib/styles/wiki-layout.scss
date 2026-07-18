@@ -1,5 +1,5 @@
 @use '$lib/styles/breakpoints';
-@use '$lib/styles/mixins';
+@use '$lib/styles/base/mixins';
 
 .wiki-shell {
 	&__grid {
@@ -27,10 +27,10 @@
 	}
 
 	&__main {
-		display: grid;
+		display: flex;
+		flex-direction: column;
 		justify-content: center;
 		width: 100%;
-		min-width: 0;
 		min-height: calc(100vh - var(--header-height));
 		padding: clamp(3.25rem, 6vw, 5.5rem) clamp(1.25rem, 5vw, 4.5rem) 3rem;
 		transition: padding 200ms ease;

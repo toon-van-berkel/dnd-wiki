@@ -1,0 +1,90 @@
+// site\src\lib\pages\StepList\StepList.scss
+.step-list {
+	display: grid;
+	grid-template-columns: repeat(
+		auto-fit,
+		minmax(min(100%, 17rem), 1fr)
+	);
+	grid-auto-rows: 1fr;
+	gap: var(--content-gap);
+
+	margin: 0;
+	padding: 0;
+
+	list-style: none;
+}
+
+.step-list__item {
+	display: grid;
+	grid-template-columns: auto auto minmax(0, 1fr);
+	grid-template-areas:
+		'number icon title'
+		'.      .    description';
+	grid-template-rows: auto 1fr;
+	align-items: center;
+	column-gap: 0.8rem;
+	row-gap: 0.55rem;
+
+	box-sizing: border-box;
+	height: 100%;
+	padding: 1.15rem;
+
+	background-color: var(--surface);
+	border: 1px solid var(--border);
+	border-radius: var(--radius-lg);
+
+	h3 {
+		grid-area: title;
+
+		margin: 0;
+
+		color: var(--text-heading);
+
+		font-size: 0.92rem;
+		font-weight: 700;
+		line-height: 1.35;
+	}
+
+	p {
+		grid-area: description;
+		align-self: start;
+
+		margin: 0;
+
+		color: var(--text-secondary);
+
+		font-size: 0.82rem;
+		line-height: 1.5;
+	}
+}
+
+.step-list__number {
+	grid-area: number;
+
+	display: grid;
+	place-items: center;
+
+	width: 1.6rem;
+	height: 1.6rem;
+
+	color: var(--background);
+	background-color: var(--accent-muted);
+	border-radius: 50%;
+
+	font-size: 0.72rem;
+	font-weight: 800;
+}
+
+.step-list__icon {
+	grid-area: icon;
+
+	display: grid;
+	place-items: center;
+
+	width: 1.5rem;
+	height: 1.5rem;
+}
+
+.step-list__icon--empty {
+	visibility: hidden;
+}

@@ -1,0 +1,15 @@
+// site\src\lib\pages\CardGrid\CardGrid.scss
+.card-grid {
+	display: grid;
+	grid-template-columns: repeat(
+		auto-fit,
+		minmax(
+			min(100%, var(--card-grid-min-width)),
+			1fr
+		)
+	);
+	grid-auto-rows: 1fr;
+	gap: var(--card-grid-gap);
+
+	width: 100%;
+}

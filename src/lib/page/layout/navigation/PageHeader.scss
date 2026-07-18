@@ -1,9 +1,12 @@
 // site\src\lib\page\layout\navigation\PageHeader.scss
-@use '$lib/styles/mixins' as mixins;
+@use '$lib/styles/base/mixins' as mixins;
 
 .page__header {
 	width: 100%;
-	margin: 10px 0;
+	margin-bottom: 25px;
+	padding-bottom: 25px;
+
+	border-bottom: 1px solid var(--border-strong);
 
 	&-sep {
 		margin: 25px 0;
@@ -20,7 +23,7 @@
 		margin: 1.15rem 0 0;
 		color: var(--text-secondary);
 		font-size: clamp(1.03rem, 2vw, 1.12rem);
-		line-height: 1.72;
+		line-height: 1.60;
 	}
 
 	&__information {

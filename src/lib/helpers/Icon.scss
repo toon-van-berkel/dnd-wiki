@@ -1,0 +1,51 @@
+// site/src/lib/helpers/Icon.scss
+.icon {
+	display: inline-block;
+	flex: 0 0 auto;
+
+	width: var(--icon-size, var(--icon-default-size));
+	height: var(--icon-size, var(--icon-default-size));
+
+	background-color: var(--icon-color);
+
+	mask-image: var(--icon-source);
+	mask-position: center;
+	mask-repeat: no-repeat;
+	mask-size: contain;
+
+	-webkit-mask-image: var(--icon-source);
+	-webkit-mask-position: center;
+	-webkit-mask-repeat: no-repeat;
+	-webkit-mask-size: contain;
+
+	transition:
+		background-color 150ms ease,
+		transform 150ms ease;
+}
+
+.icon--normal {
+	--icon-default-size: 1.25rem;
+
+	vertical-align: middle;
+}
+
+.icon--in-text {
+	--icon-default-size: 1em;
+
+	margin-inline: 0.1em;
+	vertical-align: -0.125em;
+}
+
+.icon--change-on-hover:hover,
+:global(a:hover) .icon--change-on-hover,
+:global(a:focus-visible) .icon--change-on-hover,
+:global(button:hover) .icon--change-on-hover,
+:global(button:focus-visible) .icon--change-on-hover {
+	background-color: var(--icon-hover-color);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.icon {
+		transition: none;
+	}
+}

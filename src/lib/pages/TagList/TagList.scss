@@ -1,0 +1,24 @@
+// site\src\lib\pages\TagList\TagList.scss
+.tag-list {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.45rem;
+
+	margin: 0;
+	padding: 0;
+
+	list-style: none;
+
+	li {
+		padding: 0.35rem 0.65rem;
+
+		color: var(--text-primary);
+		background-color: var(--background);
+
+		border: 1px solid var(--border);
+		border-radius: 999px;
+
+		font-size: 0.76rem;
+		line-height: 1.2;
+	}
+}

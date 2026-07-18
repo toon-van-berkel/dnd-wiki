@@ -1,0 +1,9 @@
+// site\src\lib\layout\Wiki.scss
+.wiki__content {
+    display: flex;
+
+    &-main {
+        width: 100%;
+        padding: 0 50px;
+    }
+}

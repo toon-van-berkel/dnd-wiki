@@ -1,5 +1,5 @@
 @use '$lib/styles/breakpoints';
-@use '$lib/styles/mixins';
+@use '$lib/styles/base/mixins';
 
 .sidebar {
 	position: sticky;

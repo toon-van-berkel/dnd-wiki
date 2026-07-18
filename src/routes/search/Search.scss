@@ -1,7 +1,7 @@
 @use '$lib/styles/breakpoints';
 @use '$lib/styles/buttons';
 @use '$lib/styles/forms';
-@use '$lib/styles/mixins';
+@use '$lib/styles/base/mixins';
 @use '$lib/styles/panels';
 
 .search-page {

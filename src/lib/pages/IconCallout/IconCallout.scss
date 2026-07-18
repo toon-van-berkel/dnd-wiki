@@ -1,0 +1,45 @@
+// site\src\lib\pages\IconCallout\IconCallout.scss
+.icon-callout {
+	box-sizing: border-box;
+	padding: 1rem;
+
+	background-color: var(--callout-background);
+
+	border: 1px solid
+		color-mix(
+			in srgb,
+			var(--callout-color) 32%,
+			var(--border)
+		);
+
+	border-radius: var(--radius-lg);
+}
+
+.icon-callout__header {
+	display: grid;
+	grid-template-columns: 1.5rem minmax(0, 1fr);
+	align-items: start;
+	gap: 0.85rem;
+
+	h3 {
+		margin: 0 0 0.25rem;
+
+		color: var(--text-heading);
+
+		font-size: 0.92rem;
+		line-height: 1.35;
+	}
+
+	p {
+		margin: 0;
+
+		color: var(--text-secondary);
+
+		font-size: 0.81rem;
+		line-height: 1.5;
+	}
+}
+
+.icon-callout__content {
+	margin-top: 1rem;
+}
