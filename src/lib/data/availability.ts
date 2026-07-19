@@ -41,7 +41,7 @@ export const availabilityByPageId: Record<string, PageAvailability> = {
 	'classes--paladin': { allowed: allPartyIds },
 	'classes--ranger': { allowed: allPartyIds },
 	'classes--rogue': { allowed: allPartyIds },
-	'classes--rogue--arcane-trickster': { allowed: mainCampaignPartyIds },
+	'classes--rogue--arcane-trickster': { allowed: allPartyIds },
 	'classes--sorcerer': { allowed: allPartyIds },
 	'classes--warlock': { allowed: allPartyIds },
 	'classes--wizard': { allowed: allPartyIds },
@@ -56,8 +56,17 @@ export const availabilityByPageId: Record<string, PageAvailability> = {
 	'classes--warden': { allowed: allPartyIds },
 	'classes--illrigger': { allowed: allPartyIds },
 	'classes--blood-hunter': { allowed: allPartyIds },
-	'classes--vampyr': { banned: mainCampaignPartyIds },
-	'classes--mournbound': { banned: mainCampaignPartyIds }
+	'classes--vampyr': { banned: allPartyIds },
+	'classes--mournbound': { banned: allPartyIds },
+	'classes--shinobi': { banned: allPartyIds },
+	'classes--shinobi--techniques': { banned: allPartyIds },
+	'classes--shinobi--path-of-taijutsu': { banned: allPartyIds },
+	'classes--shinobi--path-of-elemental-ninjutsu': { banned: allPartyIds },
+	'classes--shinobi--path-of-genjutsu': { banned: allPartyIds },
+	'classes--shinobi--path-of-the-bloodline': { banned: allPartyIds },
+	'classes--shinobi--path-of-the-medical-shinobi': { banned: allPartyIds },
+	'classes--shinobi--path-of-sealing': { banned: allPartyIds },
+	'classes--shinobi--path-of-fortune': { banned: allPartyIds }
 } satisfies Record<string, PageAvailability>;
 
 function copyAvailability(availability: PageAvailability | undefined): PageAvailability {

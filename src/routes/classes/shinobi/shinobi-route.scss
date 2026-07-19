@@ -1,0 +1,56 @@
+.shinobi-path-summary {
+	margin-bottom: 1rem;
+	padding: 1rem;
+	border: 1px solid var(--border);
+	border-radius: var(--radius-sm);
+	background: var(--surface-raised);
+
+	dl {
+		display: grid;
+		gap: 0.85rem;
+		margin: 0;
+	}
+
+	div {
+		display: grid;
+		gap: 0.25rem;
+	}
+
+	dt {
+		color: var(--text-heading);
+	}
+
+	dd {
+		margin: 0;
+		color: var(--text-secondary);
+		line-height: 1.5;
+	}
+}
+
+.shinobi-path-links {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.75rem;
+
+	a {
+		display: inline-flex;
+		align-items: center;
+		min-height: 2.5rem;
+		padding: 0.45rem 0.75rem;
+		border: 1px solid var(--border-strong);
+		border-radius: var(--radius-sm);
+		color: var(--text-primary);
+		background: var(--surface-raised);
+		font-weight: 700;
+		text-decoration: none;
+
+		&:hover {
+			background: var(--surface-hover);
+		}
+
+		&:focus-visible {
+			outline: 2px solid var(--accent);
+			outline-offset: 2px;
+		}
+	}
+}

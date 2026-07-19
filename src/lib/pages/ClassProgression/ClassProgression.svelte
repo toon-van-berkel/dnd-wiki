@@ -36,7 +36,7 @@
 		row: ClassProgressionRow,
 		key: string
 	): string | number {
-		return row.values[key] ?? '—';
+		return row.values[key] ?? '-';
 	}
 </script>
 
@@ -136,7 +136,7 @@
 						</strong>
 
 						<span class="class-progression__summary-feature-names">
-							{row.features.map((feature) => feature.label).join(' · ')}
+							{row.features.map((feature) => feature.label).join(' - ')}
 						</span>
 					</span>
 

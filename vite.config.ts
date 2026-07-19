@@ -1,12 +1,11 @@
 import { sveltekit } from '@sveltejs/kit/vite';
 import { defineConfig } from 'vite';
 
-const nodeProcess = (
-	globalThis as typeof globalThis & {
-		process?: { env?: Record<string, string | undefined> };
-	}
-).process;
-const basePath = nodeProcess?.env?.BASE_PATH ?? '';
+declare const process: {
+	env?: Record<string, string | undefined>;
+};
+
+const basePath = process.env?.BASE_PATH ?? '';
 
 export default defineConfig({
 	define: {
