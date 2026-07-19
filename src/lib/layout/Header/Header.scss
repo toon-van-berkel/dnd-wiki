@@ -1,0 +1,100 @@
+@use '$lib/styles/base/mixins';
+
+.site-header {
+	position: sticky;
+	top: 0;
+	z-index: 20;
+	display: grid;
+	grid-template-columns: auto minmax(12rem, 32rem) auto;
+	gap: 1rem;
+	align-items: center;
+	padding: 0.75rem clamp(1rem, 3vw, 2rem);
+	border-bottom: 1px solid var(--border);
+	background: color-mix(in srgb, var(--background) 94%, transparent);
+	backdrop-filter: blur(16px);
+}
+
+.site-header__logo {
+	display: inline-flex;
+	gap: 0.65rem;
+	align-items: center;
+	color: var(--text-heading);
+	font-weight: 800;
+	text-decoration: none;
+
+	img {
+		width: 74px;
+		height: 32px;
+	}
+}
+
+.site-header__search {
+	justify-self: center;
+	width: min(100%, 32rem);
+}
+
+.site-header__search-label {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
+	clip: rect(0 0 0 0);
+	white-space: nowrap;
+}
+
+.site-header__search input {
+	width: 100%;
+	min-height: 2.5rem;
+	padding: 0.5rem 0.85rem;
+	border: 1px solid var(--border);
+	border-radius: var(--radius-sm);
+	background: var(--surface);
+	color: var(--text-primary);
+	font: inherit;
+}
+
+.site-header__actions {
+	display: flex;
+	gap: 0.5rem;
+	justify-content: flex-end;
+}
+
+.site-header__button {
+	@include mixins.focus-ring;
+
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 2.4rem;
+	height: 2.4rem;
+	border: 1px solid var(--border);
+	border-radius: var(--radius-sm);
+	background: var(--surface-raised);
+	color: var(--text-secondary);
+	font: inherit;
+	font-size: 1.2rem;
+	cursor: pointer;
+}
+
+.site-header__button--mobile {
+	display: none;
+}
+
+@media (max-width: 48rem) {
+	.site-header {
+		grid-template-columns: 1fr auto;
+	}
+
+	.site-header__search {
+		grid-column: 1 / -1;
+		order: 3;
+	}
+
+	.site-header__button--desktop {
+		display: none;
+	}
+
+	.site-header__button--mobile {
+		display: inline-flex;
+	}
+}

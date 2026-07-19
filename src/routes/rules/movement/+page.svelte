@@ -1,13 +1,10 @@
 <script lang="ts">
-	import CampaignNote from '$lib/components/CampaignNote.svelte';
-	import PageSection from '$lib/components/PageSection.svelte';
+	import PageSection from '$lib/pages/PageSection/PageSection.svelte';
 </script>
 
 <PageSection title="Tactical movement">
 	<p>Use the grid when positioning matters. Diagonal movement costs 5 feet for simplicity unless the DM calls for a more detailed chase or exploration scene.</p>
-	<CampaignNote partyId="i3">
-		<p>Party 3 uses stricter climbing and swimming checks during wilderness expeditions.</p>
-	</CampaignNote>
+	<p>Hazards, climbing, swimming, squeezing, and uncertain footing can still require checks when the situation is risky enough to matter.</p>
 </PageSection>
 
 <PageSection title="Travel pace">

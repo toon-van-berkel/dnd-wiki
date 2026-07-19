@@ -1,9 +1,9 @@
 <script lang="ts">
-	import ChildLinkGrid from '$lib/components/ChildLinkGrid.svelte';
-	import PageSection from '$lib/components/PageSection.svelte';
-	import { getNavigationChildren } from '$lib/wiki/navigation';
+	import ChildLinkGrid from '$lib/components/ChildLinkGrid/ChildLinkGrid.svelte';
+	import PageSection from '$lib/pages/PageSection/PageSection.svelte';
+	import { getPageChildren } from '$lib/page/registry';
 
-	const rulePages = getNavigationChildren('/rules').map(({ title, href, description }) => ({
+	const rulePages = getPageChildren('rules').map(({ title, href, description }) => ({
 		title,
 		href,
 		description: description ?? ''

@@ -1,0 +1,29 @@
+.tags {
+	display: grid;
+	gap: 0.6rem;
+}
+
+.tags-title {
+	margin: 0;
+	color: var(--text-heading);
+	font-size: 0.9rem;
+}
+
+.tags__list {
+	display: flex;
+	gap: 0.45rem;
+	flex-wrap: wrap;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.tags__list-item {
+	padding: 0.22rem 0.55rem;
+	border: 1px solid var(--border);
+	border-radius: var(--radius-sm);
+	background: var(--surface-raised);
+	color: var(--text-secondary);
+	font-size: 0.78rem;
+	font-weight: 700;
+}

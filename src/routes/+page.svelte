@@ -1,100 +1,77 @@
+<!-- site\src\routes\+page.svelte -->
 <script lang="ts">
-	import ChildLinkGrid from '$lib/components/ChildLinkGrid.svelte';
-	import PageSection from '$lib/components/PageSection.svelte';
-	import WikiTable from '$lib/components/WikiTable.svelte';
-	import { getDungeonMasterForParty, parties } from '$lib/config/campaigns';
-	import { getWikiPage } from '$lib/wiki/registry';
+	import PageSection from '$lib/pages/PageSection/PageSection.svelte';
 
-	const homeQuickLinkIds = [
-		'search',
-		'species',
-		'classes',
-		'rules--movement',
-		'rules--fighting',
-		'monsters',
-		'locations'
-	];
-	const quickLinkAssets: Record<string, { image?: string; imagePosition: string }> = {
-		search: { imagePosition: 'center' },
-		species: { image: '/others/paw.png', imagePosition: 'center' },
-		classes: { image: '/others/classes-diagram.png', imagePosition: 'center' },
-		'rules--movement': { image: '/others/movement-running.png', imagePosition: 'center' },
-		'rules--fighting': { image: '/others/crossed-swords.png', imagePosition: 'center' },
-		monsters: { image: '/others/monster-skull.png', imagePosition: 'center' },
-		locations: { image: '/others/location-pin.png', imagePosition: 'center' }
-	};
+	import AccentDetailsCard from '$lib/pages/AccentDetailsCard/AccentDetailsCard.svelte';
+	import CardGrid from '$lib/pages/CardGrid/CardGrid.svelte';
+	import IconCallout from '$lib/pages/IconCallout/IconCallout.svelte';
+	import IconLinkCard from '$lib/pages/IconLinkCard/IconLinkCard.svelte';
+	import StatusLegend from '$lib/pages/StatusLegend/StatusLegend.svelte';
+	import StepList from '$lib/pages/StepList/StepList.svelte';
+	import TagList from '$lib/pages/TagList/TagList.svelte';
 
-	const quickLinks = homeQuickLinkIds.map((pageId) => {
-		const page = getWikiPage(pageId);
+	import {
+		availabilityStatuses,
+		guestPlayers,
+		partyCards,
+		quickLinks,
+		wikiSteps
+	} from './page.data';
 
-		if (!page) {
-			throw new Error(`Home quick link references unknown Wiki page ${pageId}.`);
-		}
-
-		return {
-			title: page.title,
-			href: page.href,
-			description: page.description ?? '',
-			...quickLinkAssets[pageId]
-		};
-	});
-
-	const partyColumns = ['DM', 'Party', 'Short name', 'Members'];
-
-	const partyRows = parties.map((party) => [
-		getDungeonMasterForParty(party.id)?.shortName ?? party.dmId,
-		party.name,
-		party.shortName,
-		party.members
-	]);
 </script>
 
-<PageSection title="How to use this wiki">
-	<p>
-		Rules can differ between parties because each campaign has its own premise and tone.
-		Campaign notes clearly identify exceptions that only apply to one group.
+<PageSection title="Quick links">
+	<p class="page-section-intro">
+		Open one of the primary wiki sections or search for a specific rule, option, creature, or location.
 	</p>
 
-	<p>
-		Species and class pages show whether an option is <strong>Allowed</strong>,
-		<strong>Limited</strong>, <strong>Banned</strong>, or needs DM approval in each campaign.
+	<CardGrid minCardWidth="14rem">
+		{#each quickLinks as link}
+			<IconLinkCard {...link} />
+		{/each}
+	</CardGrid>
+</PageSection>
+
+<PageSection title="How to use this wiki">
+	<div class="page-section-content">
+		<p class="page-section-intro">
+			The portal combines general D&amp;D reference material with campaign-specific rulings. Check the page 
+			information before using an option in a character or campaign.
+		</p>
+
+		<StepList items={wikiSteps} />
+	</div>
+</PageSection>
+
+<PageSection title="Campaign availability">
+	<p class="page-section-intro">
+		Species, classes, subclasses, equipment, and other options can have a different status in each campaign.
 	</p>
+
+	<StatusLegend items={availabilityStatuses} />
 </PageSection>
 
 <PageSection title="Check your party">
-	<p>If you are unsure which party you are in, please check this list:</p>
+	<p class="page-section-intro">
+		Use the party name and member list below to determine which
+		campaign rules apply to your character.
+	</p>
 
-	<WikiTable
-		caption="Campaign parties and their members"
-		columns={partyColumns}
-		rows={partyRows}
-	/>
+	<CardGrid minCardWidth="17rem">
+		{#each partyCards as party}
+			<AccentDetailsCard {...party} />
+		{/each}
+	</CardGrid>
 
-	<h2>Dedicated guest players</h2>
-	<ol>
-		<li>Sam</li>
-		<li>Casper</li>
-		<li>Liam</li>
-		<li>Ronin</li>
-		<li>Aron</li>
-		<li>Mathijs</li>
-	</ol>
+	<div class="guest-player-callout">
+		<IconCallout
+			title="Dedicated guest players"
+			description="Guest players can join campaigns without belonging to one permanent party."
+			icon="iconsList.game.party"
+			color="var(--guest)"
+			background="var(--guest-soft)"
+		>
+			<TagList items={guestPlayers} />
+		</IconCallout>
+	</div>
 </PageSection>
-
-<section class="home-links" aria-labelledby="quick-links-heading">
-	<h2 id="quick-links-heading">Quick links</h2>
-	<ChildLinkGrid links={quickLinks} />
-</section>
-
-<style lang="scss">
-	.home-links {
-		margin-top: 2.25rem;
-
-		h2 {
-			margin: 0 0 1rem;
-			color: var(--text-heading);
-			font-size: 1.05rem;
-			letter-spacing: -0.01em;
-		}
-	}
-</style>

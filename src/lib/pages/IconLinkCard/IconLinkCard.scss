@@ -1,0 +1,150 @@
+// site\src\lib\pages\IconLinkCard\IconLinkCard.scss
+.icon-link-card {
+	position: relative;
+	isolation: isolate;
+
+	display: flex;
+	box-sizing: border-box;
+
+	width: 100%;
+	height: 100%;
+	min-height: 12rem;
+	padding: 1.15rem;
+
+	overflow: hidden;
+
+	color: var(--text-primary);
+	background:
+		linear-gradient(
+			135deg,
+			color-mix(
+				in srgb,
+				var(--icon-link-color) 8%,
+				transparent
+			),
+			transparent 65%
+		),
+		var(--surface);
+
+	border: 1px solid var(--border);
+	border-radius: var(--radius-lg);
+
+	text-decoration: none;
+
+	transition:
+		border-color 160ms ease,
+		transform 160ms ease;
+
+	&:hover {
+		border-color: color-mix(
+			in srgb,
+			var(--icon-link-color) 45%,
+			var(--border)
+		);
+
+		transform: translateY(-2px);
+
+		:global(.icon-link-card__background-icon) {
+			opacity: 0.22;
+			transform: rotate(-7deg) scale(1.06);
+		}
+
+		.icon-link-card__action {
+			color: var(--icon-link-color);
+		}
+	}
+
+	&:focus-visible {
+		outline: 2px solid var(--icon-link-color);
+		outline-offset: 3px;
+	}
+}
+
+:global(.icon-link-card__background-icon) {
+	position: absolute;
+	right: -1rem;
+	bottom: -1.25rem;
+	z-index: -1;
+
+	opacity: 0.12;
+
+	pointer-events: none;
+
+	transform: rotate(-10deg);
+
+	transition:
+		opacity 160ms ease,
+		transform 160ms ease;
+}
+
+.icon-link-card__content {
+	display: grid;
+	grid-template-rows:
+		auto
+		auto
+		minmax(4.25rem, 1fr)
+		auto;
+	align-items: start;
+
+	width: min(78%, 18rem);
+	height: 100%;
+}
+
+.icon-link-card__eyebrow {
+	margin-bottom: 0.45rem;
+
+	color: var(--icon-link-color);
+
+	font-size: 0.68rem;
+	font-weight: 700;
+	letter-spacing: 0.08em;
+	line-height: 1.2;
+	text-transform: uppercase;
+}
+
+.icon-link-card__title {
+	color: var(--text-heading);
+
+	font-size: 1.05rem;
+	font-weight: 700;
+	line-height: 1.25;
+}
+
+.icon-link-card__description {
+	display: -webkit-box;
+	margin-top: 0.55rem;
+
+	overflow: hidden;
+
+	color: var(--text-secondary);
+
+	font-size: 0.84rem;
+	line-height: 1.5;
+
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 3;
+}
+
+.icon-link-card__action {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.35rem;
+
+	align-self: end;
+	padding-top: 0.9rem;
+
+	color: var(--text-secondary);
+
+	font-size: 0.76rem;
+	font-weight: 700;
+
+	transition: color 160ms ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.icon-link-card,
+	.icon-link-card__action,
+	:global(.icon-link-card__background-icon) {
+		transition: none;
+	}
+}

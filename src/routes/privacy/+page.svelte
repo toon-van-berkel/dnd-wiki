@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { resolveAppPath } from '$lib/utils/paths';
-	import { WIKI_PREFERENCES_STORAGE_KEY } from '$lib/utils/wiki-preferences';
-	import PageSection from '$lib/components/PageSection.svelte';
+	import { WIKI_PREFERENCES_STORAGE_KEY } from '$lib/preferences/preferences';
+	import PageSection from '$lib/pages/PageSection/PageSection.svelte';
 
 	const siteName = 'D&D Portal Wiki';
 	const controllerName = 'Toon van Berkel';

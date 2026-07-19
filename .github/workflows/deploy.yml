@@ -20,7 +20,9 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      BASE_PATH: /${{ github.event.repository.name }}
+      # GitHub Pages serves this repository through the custom domain in static/CNAME.
+      # Static assets must therefore be rooted at /, not /dnd-wiki/.
+      BASE_PATH: ''
 
     steps:
       - name: Checkout

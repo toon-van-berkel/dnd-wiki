@@ -1,9 +1,9 @@
 <script lang="ts">
-	import PageSection from '$lib/components/PageSection.svelte';
-	import { siteConfig } from '$lib/config/site';
+	import PageSection from '$lib/pages/PageSection/PageSection.svelte';
+	import { siteConfig, siteOwner } from '$lib/config/site';
 
-	const websiteName = siteConfig.name;
-	const websiteOwner = siteConfig.ownerName;
+	const websiteName = siteConfig.projectName;
+	const websiteOwner = siteOwner.name;
 	const contactEmail = siteConfig.contactEmail;
 
 	const wizardsFanContentPolicy =

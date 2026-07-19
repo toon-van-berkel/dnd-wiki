@@ -1,9 +1,9 @@
 <script lang="ts">
-	import ChildLinkGrid from '$lib/components/ChildLinkGrid.svelte';
-	import PageSection from '$lib/components/PageSection.svelte';
-	import { getNavigationChildren } from '$lib/wiki/navigation';
+	import ChildLinkGrid from '$lib/components/ChildLinkGrid/ChildLinkGrid.svelte';
+	import PageSection from '$lib/pages/PageSection/PageSection.svelte';
+	import { getPageChildren } from '$lib/page/registry';
 
-	const subclassPages = getNavigationChildren('/classes/cleric').map(({ title, href, description }) => ({
+	const subclassPages = getPageChildren('classes--cleric').map(({ title, href, description }) => ({
 		title,
 		href,
 		description: description ?? ''
@@ -20,7 +20,7 @@
 
 <section class="domain-links" aria-labelledby="domains-heading">
 	<h2 id="domains-heading">Cleric domains</h2>
-	<ChildLinkGrid links={subclassPages} imagesInFolder="classes/cleric" />
+	<ChildLinkGrid links={subclassPages} />
 </section>
 
 <style lang="scss">

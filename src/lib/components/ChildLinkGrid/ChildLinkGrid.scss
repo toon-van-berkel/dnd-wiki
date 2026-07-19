@@ -1,0 +1,87 @@
+@use '$lib/styles/base/mixins';
+@use '$lib/styles/panels';
+
+.child-links {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+	gap: 0.8rem;
+
+	a {
+		@include panels.surface(1.1rem 2.8rem 1.1rem 1.15rem);
+		@include mixins.interactive-surface;
+
+		--card-background-layer: 0;
+		--card-content-layer: 1;
+
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		overflow: hidden;
+
+		min-height: 15rem;
+		background-size: cover;
+		background-position: top;
+		text-decoration: none;
+
+		&::before {
+			content: "";
+			position: absolute;
+			inset: 0;
+			background: rgba(0, 0, 0, 0.3);
+			z-index: var(--card-background-layer);
+		}
+
+		&:hover {
+			border-color: var(--border-strong);
+			background-color: var(--surface-hover);
+		}
+
+		span,
+		p,
+		svg {
+			position: relative;
+			z-index: var(--card-content-layer);
+		}
+
+		span {
+			color: var(--text-heading);
+			font-weight: 680;
+		}
+
+		p {
+			width: 50%;
+			margin: 0.4rem 0 20px;
+			color: var(--text-secondary);
+			font-size: 0.86rem;
+			line-height: 1.5;
+		}
+
+		ul {
+			padding: 0;
+			width: 100%;
+			display: flex;
+			margin-top: auto;
+			gap: 5px;
+			flex-wrap: wrap;
+			list-style: none;
+
+			li {
+				padding: 5px 10px;
+				border-radius: 50px;
+				background-color: color-mix(in srgb, var(--background), transparent 60%);
+			}
+		}
+
+		svg {
+			position: absolute;
+			top: 1.15rem;
+			right: 1rem;
+			width: 1rem;
+			fill: none;
+			stroke: var(--accent-muted);
+			stroke-linecap: round;
+			stroke-linejoin: round;
+			stroke-width: 1.8;
+		}
+	}
+}

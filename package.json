@@ -8,9 +8,13 @@
 		"build": "vite build",
 		"preview": "vite preview",
 		"prepare": "svelte-kit sync || echo ''",
+		"generate:icons": "node scripts/generate-icon-registry.mjs",
+		"generate:page-assets": "node scripts/generate-page-card-assets.mjs",
+		"generate": "npm run generate:icons && npm run generate:page-assets",
+		"verify:assets": "node scripts/verify-assets.mjs",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
-		"test": "tsc -p tsconfig.test.json && node scripts/test-wiki-search.mjs",
+		"test": "tsc -p tsconfig.test.json && node scripts/generate-icon-registry.mjs --check && node scripts/generate-page-card-assets.mjs --check && node scripts/verify-assets.mjs && node scripts/test-paths.mjs && node scripts/test-wiki-search.mjs",
 		"verify:pages": "node scripts/verify-pages-build.mjs"
 	},
 	"devDependencies": {

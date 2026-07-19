@@ -1,0 +1,33 @@
+@use '$lib/styles/panels';
+
+.campaign-note {
+	@include panels.surface(0.85rem);
+
+	display: grid;
+	gap: 0.55rem;
+	margin-top: 1rem;
+	border-color: color-mix(in srgb, var(--campaign) 34%, var(--border));
+	background: color-mix(in srgb, var(--campaign-soft) 65%, var(--surface));
+}
+
+.campaign-note__heading {
+	display: flex;
+	gap: 0.5rem;
+	align-items: center;
+	color: var(--text-heading);
+
+	span {
+		width: 0.65rem;
+		height: 0.65rem;
+		border-radius: 50%;
+		background: var(--campaign);
+	}
+}
+
+.campaign-note__content {
+	color: var(--text-secondary);
+
+	:global(p) {
+		margin: 0;
+	}
+}

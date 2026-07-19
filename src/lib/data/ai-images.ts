@@ -1,4 +1,11 @@
-import { getWikiPageByHref } from '../wiki/registry.js';
+import {
+	pageCardAssets,
+	type PageCardAssetSet,
+	type PageCardGender,
+	type PageCardAssetManifest,
+	type PageCardSize
+} from '$lib/data/generated/PageCardAssets';
+import { getPageEntryByHref } from '$lib/page/registry';
 
 export type AiImageType =
 	| 'Generated'
@@ -21,80 +28,76 @@ export type AiImageEntry = {
 	variants?: string[];
 };
 
-type ClassCardSet = {
-	href: string;
-	genders?: Array<'female' | 'male'>;
-};
+const imageSizeOrder = ['small', 'medium', 'large'] as const satisfies readonly PageCardSize[];
+const variantSizeOrder = ['large', 'medium', 'small'] as const satisfies readonly PageCardSize[];
+const pageCardAssetManifest = pageCardAssets as PageCardAssetManifest;
 
-const classCardSets: ClassCardSet[] = [
-	{ href: '/classes/artificer' },
-	{ href: '/classes/barbarian' },
-	{ href: '/classes/bard' },
-	{ href: '/classes/blood-hunter' },
-	{ href: '/classes/captain' },
-	{ href: '/classes/champion' },
-	{ href: '/classes/cleric' },
-	{ href: '/classes/druid' },
-	{ href: '/classes/fighter' },
-	{ href: '/classes/gunslinger' },
-	{ href: '/classes/illrigger' },
-	{ href: '/classes/messenger' },
-	{ href: '/classes/monk' },
-	{ href: '/classes/monster-hunter' },
-	{ href: '/classes/mournbound' },
-	{ href: '/classes/paladin' },
-	{ href: '/classes/pugilist' },
-	{ href: '/classes/ranger' },
-	{ href: '/classes/rogue' },
-	{ href: '/classes/scholar' },
-	{ href: '/classes/rogue/arcane-trickster', genders: ['female'] },
-	{ href: '/classes/rogue/assassin', genders: ['female'] },
-	{ href: '/classes/rogue/inquisitive', genders: ['female'] },
-	{ href: '/classes/rogue/mastermind', genders: ['female'] },
-	{ href: '/classes/rogue/phantom', genders: ['female'] },
-	{ href: '/classes/rogue/scout', genders: ['female'] },
-	{ href: '/classes/rogue/soulknife', genders: ['female'] },
-	{ href: '/classes/rogue/swashbuckler', genders: ['female'] },
-	{ href: '/classes/rogue/thief', genders: ['female'] }
-];
-
-function createClassCardEntries(classCard: ClassCardSet): AiImageEntry[] {
-	const page = getWikiPageByHref(classCard.href);
-
-	if (!page) {
-		throw new Error(`AI image class card references unknown Wiki page ${classCard.href}.`);
+function firstAvailableImage(assets: PageCardAssetSet) {
+	for (const size of imageSizeOrder) {
+		if (assets[size]) {
+			return assets[size];
+		}
 	}
 
-	const folder = classCard.href.replace(/^\/classes\/?/, '');
-	const genders = classCard.genders ?? ['female', 'male'];
+	return null;
+}
 
-	return genders.map((gender) => {
-		const capitalizedGender =
-			gender.charAt(0).toUpperCase() + gender.slice(1);
+function listVariants(assets: PageCardAssetSet) {
+	return variantSizeOrder
+		.map((size) => assets[size])
+		.filter((asset): asset is string => Boolean(asset));
+}
 
-		return {
-			id: `${folder.replaceAll('/', '-')}-${gender}`,
-			title: `${page.title} - ${capitalizedGender}`,
-			image: `/classes/${folder}/card-${gender}-s.webp`,
-			page: page.href,
-			pageLabel: page.title,
-			type: 'Generated',
-			tool: 'OpenAI image generation',
-			description:
-				`An AI-generated ${gender} class-card illustration used as a visual reference for the ${page.title} page.`,
-			notes:
-				'This image is not official Dungeons & Dragons artwork and is not presented as manually created artwork.',
-			variants: [
-				`/classes/${folder}/card-${gender}-l.webp`,
-				`/classes/${folder}/card-${gender}-m.webp`,
-				`/classes/${folder}/card-${gender}-s.webp`
-			]
-		} satisfies AiImageEntry;
-	});
+function createClassCardEntry(href: string, gender: PageCardGender, assets: PageCardAssetSet) {
+	const page = getPageEntryByHref(href);
+	const image = firstAvailableImage(assets);
+	const variants = listVariants(assets);
+
+	if (!page) {
+		throw new Error(`AI image class card references unknown Wiki page ${href}.`);
+	}
+
+	if (!image) {
+		throw new Error(`AI image class card has no usable image variant for ${href} ${gender}.`);
+	}
+
+	const folder = href.replace(/^\/classes\/?/, '');
+	const capitalizedGender =
+		gender.charAt(0).toUpperCase() + gender.slice(1);
+
+	return {
+		id: `${folder.replaceAll('/', '-')}-${gender}`,
+		title: `${page.title} - ${capitalizedGender}`,
+		image,
+		page: page.href,
+		pageLabel: page.title,
+		type: 'Generated',
+		tool: 'OpenAI image generation',
+		description:
+			`An AI-generated ${gender} class-card illustration used as a visual reference for the ${page.title} page.`,
+		notes:
+			'This image is not official Dungeons & Dragons artwork and is not presented as manually created artwork.',
+		variants
+	} satisfies AiImageEntry;
+}
+
+function createClassCardEntries() {
+	return Object.entries(pageCardAssets)
+		.filter(([href]) => href.startsWith('/classes/'))
+		.flatMap(([href]) =>
+			(['female', 'male'] as const)
+				.flatMap((gender) => {
+					const genderAssets = pageCardAssetManifest[href]?.[gender];
+
+					return genderAssets
+						? [createClassCardEntry(href, gender, genderAssets)]
+						: [];
+				})
+		);
 }
 
 export const aiGeneratedImages: AiImageEntry[] =
-	classCardSets.flatMap(createClassCardEntries);
+	createClassCardEntries();
 
 export const aiEditedImages: AiImageEntry[] = [];
 

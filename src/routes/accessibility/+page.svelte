@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { resolveAppPath } from '$lib/utils/paths';
-	import PageSection from '$lib/components/PageSection.svelte';
+	import PageSection from '$lib/pages/PageSection/PageSection.svelte';
 
 	const contactEmail = 'toonvanberkel.public@gmail.com';
 	const githubRepositoryUrl = 'https://github.com/USERNAME/REPOSITORY';
@@ -334,7 +334,7 @@ System interface fonts</code></pre>
 /&gt;
 
 &lt;img
-	src="/decorative-divider.svg"
+	src="/icons/util/star.svg"
 	alt=""
 /&gt;</code></pre>
 

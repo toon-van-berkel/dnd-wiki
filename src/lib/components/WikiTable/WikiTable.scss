@@ -1,0 +1,99 @@
+@use '$lib/styles/breakpoints';
+@use '$lib/styles/base/mixins';
+@use '$lib/styles/panels';
+
+.wiki-table {
+	@include panels.panel(0);
+
+	width: 100%;
+	margin: 1rem 0;
+	overflow-x: auto;
+	overscroll-behavior-inline: contain;
+	scrollbar-color: var(--border-strong) var(--surface);
+
+	table {
+		width: 100%;
+		min-width: 42rem;
+		border-collapse: collapse;
+		color: var(--text-secondary);
+		font-size: 0.9rem;
+		line-height: 1.5;
+	}
+
+	caption {
+		padding: 1rem 1.1rem;
+		border-bottom: 1px solid var(--border);
+		color: var(--text-heading);
+		font-size: 1rem;
+		font-weight: 700;
+		letter-spacing: -0.01em;
+		text-align: left;
+	}
+
+	thead {
+		background: var(--surface-raised);
+	}
+
+	th,
+	td {
+		padding: 0.72rem 0.9rem;
+		border-right: 1px solid var(--border);
+		border-bottom: 1px solid var(--border);
+		vertical-align: top;
+		text-align: left;
+
+		&:last-child {
+			border-right: 0;
+		}
+	}
+
+	th {
+		color: var(--text-primary);
+		font-size: 0.76rem;
+		font-weight: 750;
+		letter-spacing: 0.045em;
+		text-transform: uppercase;
+		white-space: nowrap;
+	}
+
+	td:first-child {
+		color: var(--text-primary);
+		font-weight: 650;
+		white-space: nowrap;
+	}
+
+	tbody {
+		tr {
+			transition: background 120ms ease;
+
+			&:hover {
+				background: var(--surface-hover);
+			}
+
+			&:last-child td {
+				border-bottom: 0;
+			}
+		}
+	}
+}
+
+@media (max-width: breakpoints.$table-mobile) {
+	.wiki-table {
+		margin-inline: 0;
+
+		table {
+			font-size: 0.86rem;
+		}
+
+		th,
+		td {
+			padding: 0.65rem 0.75rem;
+		}
+	}
+}
+
+@include mixins.reduced-motion {
+	.wiki-table tbody tr {
+		transition: none;
+	}
+}

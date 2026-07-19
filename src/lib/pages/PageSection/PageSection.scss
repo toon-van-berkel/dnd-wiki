@@ -1,0 +1,109 @@
+// site\src\lib\pages\PageSection\PageSection.scss
+.page-section {
+	margin-bottom: 25px;
+	padding-bottom: 25px;
+	border-bottom: 1px solid var(--border-strong);
+	transition:
+		padding-bottom 250ms ease,
+		border-color 250ms ease;
+
+	&__title {
+		margin: 0;
+		font-size: 2rem;
+		line-height: 0.8;
+	}
+
+	&__heading {
+		display: flex;
+		align-items: flex-start;
+		justify-content: space-between;
+		gap: var(--space-md);
+	}
+
+	&__heading-content {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-xs);
+	}
+
+	&__toggle {
+		position: relative;
+		display: grid;
+		flex-shrink: 0;
+		place-items: center;
+		width: 2.25rem;
+		height: 2.25rem;
+		padding: 0;
+		color: var(--text-secondary);
+		background: transparent;
+		border: 1px solid transparent;
+		border-radius: var(--radius-md);
+		cursor: pointer;
+
+		&:hover {
+			color: var(--text-primary);
+			background: var(--surface-hover);
+			border-color: var(--border-subtle);
+		}
+
+		&:focus-visible {
+			outline: 2px solid var(--accent);
+			outline-offset: 2px;
+		}
+
+		&::after {
+			position: absolute;
+			right: 0;
+			bottom: calc(100% + 0.5rem);
+			z-index: 10;
+			padding: 0.35rem 0.55rem;
+			color: var(--text-primary);
+			font-size: 0.75rem;
+			font-weight: 600;
+			white-space: nowrap;
+			content: attr(data-tooltip);
+			background: var(--surface-raised);
+			border: 1px solid var(--border-subtle);
+			border-radius: var(--radius-sm);
+			opacity: 0;
+			pointer-events: none;
+			transform: translateY(0.25rem);
+			transition:
+				opacity 120ms ease,
+				transform 120ms ease;
+		}
+
+		&:hover::after,
+		&:focus-visible::after {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+
+	&__toggle-icon {
+		width: 1.25rem;
+		height: 1.25rem;
+		fill: none;
+		stroke: currentColor;
+		stroke-width: 2;
+		stroke-linecap: round;
+		stroke-linejoin: round;
+		transition: transform 150ms ease;
+
+		&.expanded {
+			transform: rotate(180deg);
+		}
+	}
+
+	&--collapsed {
+		gap: 0;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.page-section__toggle,
+	.page-section__toggle::after,
+	.page-section__toggle-icon {
+		transition: none;
+	}
+}

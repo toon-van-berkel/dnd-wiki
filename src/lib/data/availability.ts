@@ -1,24 +1,12 @@
-import { isPartyId, selectAllParties, selectParties, type PartyId } from '../config/campaigns.js';
-import { getWikiPageByHref } from '../wiki/registry.js';
+import { isPartyId, selectAllParties, type PartyId } from '$lib/config/parties';
+import { getPageEntry, getPageEntryByHref } from '$lib/page/registry';
 
-export type PageAvailability = {
-	allowed?: readonly PartyId[];
-	limited?: readonly PartyId[];
-	banned?: readonly PartyId[];
-	approval?: readonly PartyId[];
-};
+export type AvailabilityStatus = 'allowed' | 'limited' | 'banned' | 'approval';
 
-export type AvailabilityNode = PageAvailability & {
-	children?: AvailabilityBranch;
-};
-
-export type AvailabilityBranch = Record<string, AvailabilityNode>;
-
-export type AvailabilityConfig = Record<string, AvailabilityBranch>;
-
-export type AvailabilityStatus = keyof PageAvailability;
+export type PageAvailability = Partial<Record<AvailabilityStatus, readonly PartyId[]>>;
 
 export type AvailabilityInventoryEntry = {
+	pageId: string;
 	href: string;
 	allowed: readonly PartyId[];
 	limited: readonly PartyId[];
@@ -28,330 +16,122 @@ export type AvailabilityInventoryEntry = {
 
 const availabilityStatuses = ['allowed', 'limited', 'banned', 'approval'] as const;
 
-function selectMainCampaignParties(): PartyId[] {
-	return selectParties('i1', 'i2', 'i3', 'i4', 'i5', 'i6');
-}
+const allPartyIds = selectAllParties().map((party) => party.id);
+const mainCampaignPartyIds = ['i1', 'i2', 'i3', 'i4', 'i5', 'i6'] satisfies PartyId[];
 
-export const availability: AvailabilityConfig = {
-	species: {
-		elf: {
-			allowed: selectParties('i1', 'i2', 'i4', 'i5', 'i6', 'i7', 'i8'),
-			banned: selectParties('i3'),
-
-			children: {
-				'astral-elf': {
-					limited: selectParties('i1'),
-					banned: selectParties('i3', 'i4'),
-					approval: selectParties('i2')
-				}
-			}
-		},
+export const availabilityByPageId: Record<string, PageAvailability> = {
+	'species--elf': {
+		allowed: ['i1', 'i2', 'i4', 'i5', 'i6', 'i7', 'i8'],
+		banned: ['i3']
 	},
+	'species--elf--astral-elf': {
+		limited: ['i1'],
+		banned: ['i3', 'i4'],
+		approval: ['i2']
+	},
+	'classes--artificer': { allowed: allPartyIds },
+	'classes--barbarian': { allowed: allPartyIds },
+	'classes--bard': { allowed: allPartyIds },
+	'classes--cleric': { allowed: allPartyIds },
+	'classes--cleric--life-domain': { allowed: allPartyIds },
+	'classes--cleric--death-domain': { allowed: allPartyIds },
+	'classes--druid': { allowed: allPartyIds },
+	'classes--fighter': { allowed: allPartyIds },
+	'classes--monk': { allowed: allPartyIds },
+	'classes--paladin': { allowed: allPartyIds },
+	'classes--ranger': { allowed: allPartyIds },
+	'classes--rogue': { allowed: allPartyIds },
+	'classes--rogue--arcane-trickster': { allowed: mainCampaignPartyIds },
+	'classes--sorcerer': { allowed: allPartyIds },
+	'classes--warlock': { allowed: allPartyIds },
+	'classes--wizard': { allowed: allPartyIds },
+	'classes--gunslinger': { allowed: allPartyIds },
+	'classes--monster-hunter': { allowed: allPartyIds },
+	'classes--pugilist': { allowed: allPartyIds },
+	'classes--captain': { allowed: allPartyIds },
+	'classes--champion': { allowed: allPartyIds },
+	'classes--messenger': { allowed: allPartyIds },
+	'classes--scholar': { allowed: allPartyIds },
+	'classes--treasure-hunter': { allowed: allPartyIds },
+	'classes--warden': { allowed: allPartyIds },
+	'classes--illrigger': { allowed: allPartyIds },
+	'classes--blood-hunter': { allowed: allPartyIds },
+	'classes--vampyr': { banned: mainCampaignPartyIds },
+	'classes--mournbound': { banned: mainCampaignPartyIds }
+} satisfies Record<string, PageAvailability>;
 
-	classes: {
-		artificer: {
-			allowed: selectAllParties()
-		},
-		barbarian: {
-			allowed: selectAllParties()
-		},
-		bard: {
-			allowed: selectAllParties()
-		},
-		cleric: {
-			allowed: selectAllParties(),
+function copyAvailability(availability: PageAvailability | undefined): PageAvailability {
+	if (!availability) return {};
 
-			children: {
-				'life-domain': {
-					allowed: selectAllParties()
-				},
-				'death-domain': {
-					allowed: selectAllParties()
-				}
-			}
-		},
-		druid: {
-			allowed: selectAllParties()
-		},
-		fighter: {
-			allowed: selectAllParties()
-		},
-		monk: {
-			allowed: selectAllParties()
-		},
-		paladin: {
-			allowed: selectAllParties()
-		},
-		ranger: {
-			allowed: selectAllParties()
-		},
-		rogue: {
-			allowed: selectAllParties(),
+	return Object.fromEntries(
+		availabilityStatuses
+			.filter((status) => availability[status] !== undefined)
+			.map((status) => [status, [...(availability[status] ?? [])]])
+	) as PageAvailability;
+}
 
-			children: {
-				'arcane-trickster': {
-					allowed: selectMainCampaignParties()
-				}
-			}
-		},
-		sorcerer: {
-			allowed: selectAllParties()
-		},
-		warlock: {
-			allowed: selectAllParties()
-		},
-		wizard: {
-			allowed: selectAllParties()
-		},
-		gunslinger: {
-			allowed: selectAllParties()
-		},
-		'monster-hunter': {
-			allowed: selectAllParties()
-		},
-		pugilist: {
-			allowed: selectAllParties()
-		},
-		captain: {
-			allowed: selectAllParties()
-		},
-		champion: {
-			allowed: selectAllParties()
-		},
-		messenger: {
-			allowed: selectAllParties()
-		},
-		scholar: {
-			allowed: selectAllParties()
-		},
-		'treasure-hunter': {
-			allowed: selectAllParties()
-		},
-		warden: {
-			allowed: selectAllParties()
-		},
-		illrigger: {
-			allowed: selectAllParties()
-		},
-		'blood-hunter': {
-			allowed: selectAllParties()
-		},
-		vampyr: {
-			banned: selectMainCampaignParties()
-		},
-		mournbound: {
-			banned: selectMainCampaignParties()
+export function getAvailabilityForPage(pageId: string | undefined): PageAvailability {
+	if (!pageId) return {};
+	return copyAvailability(availabilityByPageId[pageId]);
+}
+
+export function getAvailabilityByPageId(pageId: string | undefined): PageAvailability {
+	return getAvailabilityForPage(pageId);
+}
+
+export function getAvailabilityByHref(href: string | undefined): PageAvailability {
+	if (!href) return {};
+	return getAvailabilityForPage(getPageEntryByHref(href)?.id);
+}
+
+export function getAvailabilityInventory(): AvailabilityInventoryEntry[] {
+	return Object.entries(availabilityByPageId).map(([pageId, availability]) => {
+		const page = getPageEntry(pageId);
+
+		if (!page) {
+			throw new Error(`Availability references unknown page id ${pageId}`);
 		}
-	}
-};
 
-export function normalizeAvailabilityHref(href: string): string {
-	const cleanHref = href
-		.split('?')[0]
-		.split('#')[0]
-		.trim();
-
-	const normalizedHref = `/${cleanHref}`
-		.replace(/\/+/g, '/')
-		.replace(/\/+$/, '');
-
-	const canonicalPage = getWikiPageByHref(normalizedHref || '/');
-
-	return canonicalPage?.href ?? (normalizedHref || '/');
-}
-
-function getAvailabilityNode(
-	branch: AvailabilityBranch | undefined,
-	segments: string[]
-): AvailabilityNode | undefined {
-	const [segment, ...childSegments] = segments;
-
-	if (!branch || !segment) {
-		return undefined;
-	}
-
-	const node = branch[segment];
-
-	if (!node) {
-		return undefined;
-	}
-
-	if (childSegments.length === 0) {
-		return node;
-	}
-
-	return getAvailabilityNode(node.children, childSegments);
-}
-
-function getPageAvailabilityFromNode(
-	node: AvailabilityNode | undefined
-): PageAvailability {
-	if (!node) {
-		return {};
-	}
-
-	return createPageAvailability({
-		allowed: node.allowed,
-		limited: node.limited,
-		banned: node.banned,
-		approval: node.approval
+		return {
+			pageId,
+			href: page.href,
+			allowed: availability.allowed ?? [],
+			limited: availability.limited ?? [],
+			banned: availability.banned ?? [],
+			approval: availability.approval ?? []
+		};
 	});
 }
 
-export function getAvailabilityByHref(
-	href: string | undefined
-): PageAvailability {
-	if (!href) {
-		return {};
-	}
+export function validateAvailabilityConfig(): string[] {
+	const errors: string[] = [];
 
-	const normalizedHref = normalizeAvailabilityHref(href);
+	for (const entry of getAvailabilityInventory()) {
+		const seenStatusesByParty = new Map<PartyId, AvailabilityStatus>();
 
-	const pathSegments = normalizedHref
-		.replace(/^\/+|\/+$/g, '')
-		.split('/')
-		.filter(Boolean);
+		for (const status of availabilityStatuses) {
+			const partyIds = entry[status];
+			const seenPartyIds = new Set<PartyId>();
 
-	const [section, ...pageSegments] = pathSegments;
+			for (const partyId of partyIds) {
+				if (!isPartyId(partyId)) {
+					errors.push(`${entry.pageId} ${status} references unknown party ${partyId}`);
+				}
 
-	if (!section || pageSegments.length === 0) {
-		return {};
-	}
+				if (seenPartyIds.has(partyId)) {
+					errors.push(`${entry.pageId} repeats party ${partyId} in ${status}`);
+				}
 
-	const availabilityNode = getAvailabilityNode(availability[section], pageSegments);
+				const previousStatus = seenStatusesByParty.get(partyId);
+				if (previousStatus) {
+					errors.push(`${entry.pageId} puts party ${partyId} in both ${previousStatus} and ${status}`);
+				}
 
-	return getPageAvailabilityFromNode(availabilityNode);
-}
-
-function createPageAvailability(availabilityConfig: PageAvailability): PageAvailability {
-	const pageAvailability: PageAvailability = {};
-
-	if (availabilityConfig.allowed !== undefined) {
-		pageAvailability.allowed = [...availabilityConfig.allowed];
-	}
-
-	if (availabilityConfig.limited !== undefined) {
-		pageAvailability.limited = [...availabilityConfig.limited];
-	}
-
-	if (availabilityConfig.banned !== undefined) {
-		pageAvailability.banned = [...availabilityConfig.banned];
-	}
-
-	if (availabilityConfig.approval !== undefined) {
-		pageAvailability.approval = [...availabilityConfig.approval];
-	}
-
-	return pageAvailability;
-}
-
-export function getAvailabilityInventory(
-	config: AvailabilityConfig = availability
-): AvailabilityInventoryEntry[] {
-	const entries: AvailabilityInventoryEntry[] = [];
-
-	for (const [section, branch] of Object.entries(config)) {
-		collectAvailabilityEntries(entries, `/${section}`, branch);
-	}
-
-	return entries;
-}
-
-export function validateAvailabilityConfig(config: AvailabilityConfig = availability): void {
-	const seenHrefs = new Set<string>();
-
-	for (const entry of getAvailabilityInventory(config)) {
-		if (seenHrefs.has(entry.href)) {
-			throw new Error(`Duplicate availability href: ${entry.href}.`);
-		}
-
-		seenHrefs.add(entry.href);
-
-		const wikiPage = getWikiPageByHref(entry.href);
-
-		if (!wikiPage) {
-			throw new Error(`Availability entry references unknown Wiki href: ${entry.href}.`);
-		}
-
-		if (wikiPage.kind === 'collection') {
-			throw new Error(`Availability entry references collection page: ${entry.href}.`);
-		}
-
-		validateStatusArrays(entry);
-	}
-}
-
-function collectAvailabilityEntries(
-	entries: AvailabilityInventoryEntry[],
-	parentHref: string,
-	branch: AvailabilityBranch | undefined
-) {
-	if (!branch) {
-		return;
-	}
-
-	for (const [segment, node] of Object.entries(branch)) {
-		if (!node || typeof node !== 'object' || Array.isArray(node)) {
-			throw new Error(`Invalid availability node at ${parentHref}/${segment}.`);
-		}
-
-		const childHref = normalizeAvailabilityHref(`${parentHref}/${segment}`);
-		const pageAvailability = getPageAvailabilityFromNode(node);
-		const hasAvailability = availabilityStatuses.some(
-			(status) => pageAvailability[status] !== undefined
-		);
-		const hasChildren = Object.keys(node.children ?? {}).length > 0;
-
-		if (!hasAvailability && !hasChildren) {
-			throw new Error(`Empty availability node at ${childHref}.`);
-		}
-
-		if (childHref !== `/${`${parentHref}/${segment}`.replace(/^\/+/, '')}`.replace(/\/+/g, '/')) {
-			throw new Error(`Availability path normalizes to a different href: ${parentHref}/${segment}.`);
-		}
-
-		if (hasAvailability) {
-			entries.push({
-				href: childHref,
-				allowed: pageAvailability.allowed ?? [],
-				limited: pageAvailability.limited ?? [],
-				banned: pageAvailability.banned ?? [],
-				approval: pageAvailability.approval ?? []
-			});
-		}
-
-		collectAvailabilityEntries(entries, childHref, node.children);
-	}
-}
-
-function validateStatusArrays(entry: AvailabilityInventoryEntry) {
-	const seenStatusesByParty = new Map<PartyId, AvailabilityStatus>();
-
-	for (const status of availabilityStatuses) {
-		const partyIds = entry[status];
-		const seenPartyIds = new Set<PartyId>();
-
-		for (const partyId of partyIds) {
-			if (!isPartyId(partyId)) {
-				throw new Error(`Availability entry ${entry.href} references unknown Party ${partyId}.`);
+				seenPartyIds.add(partyId);
+				seenStatusesByParty.set(partyId, status);
 			}
-
-			if (seenPartyIds.has(partyId)) {
-				throw new Error(`Availability entry ${entry.href} repeats Party ${partyId} in ${status}.`);
-			}
-
-			const previousStatus = seenStatusesByParty.get(partyId);
-
-			if (previousStatus) {
-				throw new Error(
-					`Availability entry ${entry.href} puts Party ${partyId} in both ${previousStatus} and ${status}.`
-				);
-			}
-
-			seenPartyIds.add(partyId);
-			seenStatusesByParty.set(partyId, status);
 		}
 	}
-}
 
-validateAvailabilityConfig();
+	return errors;
+}

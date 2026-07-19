@@ -1,0 +1,262 @@
+// site\src\lib\layout\snippets\Sidebar.scss
+.sidebar {
+	box-sizing: border-box;
+	display: flex;
+	flex-direction: column;
+
+	width: 100%;
+	max-width: var(--sidebar-width);
+	min-height: 100%;
+	padding: 2.5rem 1.25rem;
+
+	overflow-y: auto;
+
+	color: var(--text-primary);
+	background-color: var(--background);
+	border-right: 1px solid var(--border);
+}
+
+.sidebar__section {
+	display: flex;
+	flex-direction: column;
+	gap: 0.75rem;
+}
+
+.sidebar__section--resources {
+	margin-top: 2.5rem;
+	padding-top: 1.5rem;
+
+	border-top: 1px solid var(--border);
+}
+
+.sidebar__heading {
+	margin: 0;
+	padding-inline: 0.75rem;
+
+	color: var(--text-secondary);
+
+	font-size: 0.75rem;
+	font-weight: 700;
+	letter-spacing: 0.08em;
+	line-height: 1.2;
+	text-transform: uppercase;
+}
+
+.sidebar__list {
+	display: flex;
+	flex-direction: column;
+	gap: 0.25rem;
+
+	margin: 0;
+	padding: 0;
+
+	list-style: none;
+}
+
+.sidebar__item,
+.sidebar__tree-item {
+	margin: 0;
+	padding: 0;
+}
+
+.sidebar__link {
+	display: flex;
+	align-items: center;
+	gap: 0.75rem;
+
+	box-sizing: border-box;
+	width: 100%;
+	min-height: 2.625rem;
+	padding: 0.625rem 0.75rem;
+
+	border-radius: var(--radius-sm);
+
+	color: var(--text-secondary);
+	text-decoration: none;
+
+	transition:
+		color 140ms ease,
+		background-color 140ms ease;
+
+	span {
+		font-size: 0.875rem;
+		font-weight: 500;
+		line-height: 1.2;
+	}
+
+	&:hover {
+		color: var(--text-heading);
+		background-color: var(--surface-hover);
+	}
+
+	&:focus-visible {
+		color: var(--text-heading);
+		background-color: var(--surface-hover);
+
+		outline: 2px solid var(--accent);
+		outline-offset: 2px;
+	}
+}
+
+.sidebar__link--active,
+.sidebar__link[aria-current='page'] {
+	color: var(--text-heading);
+	background-color: var(--accent-soft);
+
+	span {
+		font-weight: 700;
+	}
+}
+
+.sidebar__link--active:hover,
+.sidebar__link[aria-current='page']:hover {
+	background-color: color-mix(
+		in srgb,
+		var(--accent) 13%,
+		var(--surface)
+	);
+}
+
+.sidebar__divider {
+	width: calc(100% - 1.5rem);
+	height: 1px;
+	margin: 0.25rem 0.75rem 0.5rem;
+
+	background-color: var(--border);
+}
+
+.sidebar__list--tree {
+	gap: 0.15rem;
+
+	padding-left: calc(var(--sidebar-depth, 0) * 1rem);
+}
+
+.sidebar__tree-item > .sidebar__list--tree {
+	margin-top: 0.15rem;
+}
+
+.sidebar__tree-link {
+	display: grid;
+	grid-template-columns: 0.75rem 1.25rem minmax(0, 1fr);
+	align-items: center;
+	column-gap: 0.5rem;
+
+	box-sizing: border-box;
+	width: 100%;
+	min-height: 2.25rem;
+	padding: 0.4rem 0.75rem;
+
+	border-radius: var(--radius-sm);
+
+	color: var(--text-secondary);
+
+	font-size: 0.875rem;
+	font-weight: 500;
+	line-height: 1.2;
+	text-decoration: none;
+
+	transition:
+		color 140ms ease,
+		background-color 140ms ease;
+
+	&:hover {
+		color: var(--text-heading);
+		background-color: var(--surface-hover);
+
+		.sidebar__chevron {
+			color: var(--accent-muted);
+		}
+
+		.sidebar__dot {
+			background-color: var(--accent-muted);
+		}
+	}
+
+	&:focus-visible {
+		color: var(--text-heading);
+		background-color: var(--surface-hover);
+
+		outline: 2px solid var(--accent);
+		outline-offset: 2px;
+	}
+}
+
+.sidebar__tree-link--active,
+.sidebar__tree-link[aria-current='page'] {
+	color: var(--text-heading);
+	background-color: var(--accent-soft);
+
+	font-weight: 700;
+
+	.sidebar__chevron {
+		color: var(--accent);
+	}
+
+	.sidebar__dot {
+		background-color: var(--accent);
+	}
+}
+
+.sidebar__chevron {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+
+	width: 0.75rem;
+	height: 0.75rem;
+
+	color: var(--text-muted);
+
+	font-size: 1.15rem;
+	line-height: 1;
+
+	transform-origin: center;
+
+	transition:
+		color 140ms ease,
+		transform 140ms ease;
+}
+
+.sidebar__chevron--open {
+	color: var(--accent-muted);
+	transform: rotate(90deg);
+}
+
+.sidebar__chevron--empty {
+	visibility: hidden;
+}
+
+.sidebar__dot {
+	width: 0.35rem;
+	height: 0.35rem;
+
+	justify-self: center;
+
+	border-radius: 50%;
+
+	background-color: var(--border-strong);
+
+	transition: background-color 140ms ease;
+}
+
+.sidebar__list--resources {
+	gap: 0.25rem;
+}
+
+@media (max-width: 48rem) {
+	.sidebar {
+		max-width: none;
+		padding: 1.5rem 1rem;
+
+		border-right: 0;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.sidebar__link,
+	.sidebar__tree-link,
+	.sidebar__chevron,
+	.sidebar__dot {
+		transition: none;
+	}
+}

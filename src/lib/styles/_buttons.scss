@@ -1,4 +1,4 @@
-@use 'mixins';
+@use './base/mixins';
 
 @mixin button-base($min-height: 2.4rem, $padding: 0.4rem 0.75rem) {
 	@include mixins.focus-ring;

@@ -1,4 +1,4 @@
-@use 'mixins';
+@use './base/mixins';
 
 @mixin panel($padding: 1rem, $shadow: true) {
 	padding: $padding;

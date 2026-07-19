@@ -1,0 +1,28 @@
+.allowedin {
+	display: grid;
+	gap: 0.65rem;
+}
+
+.allowedin-title,
+.allowedin__status-title {
+	margin: 0;
+	color: var(--text-heading);
+	font-size: 0.9rem;
+}
+
+.allowedin__status {
+	display: flex;
+	gap: 0.45rem;
+	align-items: baseline;
+	flex-wrap: wrap;
+}
+
+.allowedin__status-list {
+	display: flex;
+	gap: 0.25rem;
+	flex-wrap: wrap;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	color: var(--text-secondary);
+}
