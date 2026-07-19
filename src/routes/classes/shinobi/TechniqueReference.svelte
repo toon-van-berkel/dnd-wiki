@@ -9,6 +9,12 @@
 		techniques: readonly ShinobiTechnique[];
 	};
 
+	type TechniqueSection = {
+		id: string;
+		title: string;
+		techniques: ShinobiTechnique[];
+	};
+
 	let { techniques }: Props = $props();
 
 	const ranks: readonly TechniqueRank[] = ['I', 'II', 'III', 'IV', 'V'];
@@ -49,6 +55,24 @@
 	}
 
 	const restricted = $derived(restrictedTechniques());
+	const rankSections = $derived(
+		ranks
+			.map((rank) => ({
+				id: rankSectionId(rank),
+				title: `Rank ${rank} Techniques`,
+				techniques: techniquesForRank(rank)
+			}))
+			.filter((section) => section.techniques.length > 0)
+	);
+	const restrictedSection = $derived(
+		restricted.length > 0
+			? {
+					id: restrictedSectionId(),
+					title: 'Restricted Techniques',
+					techniques: restricted
+				}
+			: undefined
+	);
 
 	function groupedTechniques(items: readonly ShinobiTechnique[]) {
 		return categories
@@ -98,140 +122,122 @@
 	});
 </script>
 
-<div class="technique-reference">
-	{#each ranks as rank}
-		{@const sectionId = rankSectionId(rank)}
-		{@const sectionTechniques = techniquesForRank(rank)}
-		<section class="technique-section">
-			<header class="technique-section__header">
-				<div>
-					<h2 id={`${sectionId}-heading`}>Rank {rank} Techniques</h2>
-					<span>{sectionTechniques.length} techniques</span>
-				</div>
-
-				<button
-					type="button"
-					aria-expanded={isOpen(sectionId)}
-					aria-controls={`${sectionId}-content`}
-					onclick={() => toggleSection(sectionId)}
-				>
-					{isOpen(sectionId) ? 'Collapse' : 'Expand'}
-				</button>
-			</header>
-
-			{#if isOpen(sectionId)}
-				<div id={`${sectionId}-content`} class="technique-section__content">
-					{#each groupedTechniques(sectionTechniques) as group}
-						<section class="technique-group" aria-labelledby={`${sectionId}-${group.category.toLowerCase()}-heading`}>
-							<h3 id={`${sectionId}-${group.category.toLowerCase()}-heading`}>{group.category}</h3>
-
-							<div class="technique-grid technique-grid--desktop">
-								<div class="technique-grid__header">Technique</div>
-								<div class="technique-grid__header">Category</div>
-								<div class="technique-grid__header">Chakra</div>
-								<div class="technique-grid__header">Activation</div>
-								<div class="technique-grid__header">Range</div>
-								<div class="technique-grid__header">Duration</div>
-
-								{#each group.techniques as technique}
-									<a href={`#${technique.id}`}>{technique.name}</a>
-									<span>{technique.category}</span>
-									<span>{technique.chakraCost}</span>
-									<span>{technique.activation}</span>
-									<span>{technique.range}</span>
-									<span>{technique.duration}</span>
-								{/each}
-							</div>
-
-							<div class="technique-grid--mobile">
-								{#each group.techniques as technique}
-									<article class="technique-card" aria-labelledby={`${technique.id}-mobile-title`}>
-										<h4 id={`${technique.id}-mobile-title`}>
-											<a href={`#${technique.id}`}>{technique.name}</a>
-										</h4>
-
-										<dl>
-											{#each metadata(technique) as [label, value]}
-												<div>
-													<dt>{label}</dt>
-													<dd>{value}</dd>
-												</div>
-											{/each}
-										</dl>
-
-										<RuleBlocks blocks={technique.description} />
-
-										{#if technique.augment}
-											<h5>Augment</h5>
-											<RuleBlocks blocks={technique.augment} />
-										{/if}
-									</article>
-								{/each}
-							</div>
-
-							<div class="technique-details">
-								{#each group.techniques as technique}
-									<article
-										id={technique.id}
-										tabindex="-1"
-										class="technique-detail"
-										aria-labelledby={`${technique.id}-title`}
-									>
-										<h4 id={`${technique.id}-title`}>{technique.name}</h4>
-
-										<dl class="technique-detail__meta">
-											{#each metadata(technique) as [label, value]}
-												<div>
-													<dt>{label}</dt>
-													<dd>{value}</dd>
-												</div>
-											{/each}
-										</dl>
-
-										<RuleBlocks blocks={technique.description} />
-
-										{#if technique.augment}
-											<h5>
-												<IconLabel icon="attribute.bonus"><strong>Augment</strong></IconLabel>
-											</h5>
-											<RuleBlocks blocks={technique.augment} />
-										{/if}
-									</article>
-								{/each}
-							</div>
-						</section>
-					{/each}
-				</div>
-			{/if}
-		</section>
-	{/each}
+{#snippet techniqueSection(section: TechniqueSection)}
 	<section class="technique-section">
 		<header class="technique-section__header">
 			<div>
-				<h2 id="restricted-techniques-heading">Restricted Techniques</h2>
-				<span>{restricted.length} techniques</span>
+				<h2 id={`${section.id}-heading`}>{section.title}</h2>
+				<span>{section.techniques.length} techniques</span>
 			</div>
 
 			<button
 				type="button"
-				aria-expanded={isOpen(restrictedSectionId())}
-				aria-controls="restricted-techniques-content"
-				onclick={() => toggleSection(restrictedSectionId())}
+				aria-expanded={isOpen(section.id)}
+				aria-controls={`${section.id}-content`}
+				onclick={() => toggleSection(section.id)}
 			>
-				{isOpen(restrictedSectionId()) ? 'Collapse' : 'Expand'}
+				{isOpen(section.id) ? 'Collapse' : 'Expand'}
 			</button>
 		</header>
 
-		{#if isOpen(restrictedSectionId())}
-			<div id="restricted-techniques-content" class="technique-section__content">
-				{#each groupedTechniques(restricted) as group}
-					<section class="technique-group">
-						<h3>{group.category}</h3>
+		{#if isOpen(section.id)}
+			<div id={`${section.id}-content`} class="technique-section__content">
+				{#each groupedTechniques(section.techniques) as group}
+					<section
+						class="technique-group"
+						aria-labelledby={`${section.id}-${group.category.toLowerCase()}-heading`}
+					>
+						<h3 id={`${section.id}-${group.category.toLowerCase()}-heading`}>{group.category}</h3>
+
+						<div class="technique-grid technique-grid--desktop">
+							<div class="technique-grid__header">Technique</div>
+							<div class="technique-grid__header">Category</div>
+							<div class="technique-grid__header">Chakra</div>
+							<div class="technique-grid__header">Activation</div>
+							<div class="technique-grid__header">Range</div>
+							<div class="technique-grid__header">Duration</div>
+
+							{#each group.techniques as technique}
+								<a href={`#${technique.id}`}>{technique.name}</a>
+								<span>{technique.category}</span>
+								<span>{technique.chakraCost}</span>
+								<span>{technique.activation}</span>
+								<span>{technique.range}</span>
+								<span>{technique.duration}</span>
+							{/each}
+						</div>
+
+						<div class="technique-grid--mobile">
+							{#each group.techniques as technique}
+								<article class="technique-card" aria-labelledby={`${technique.id}-mobile-title`}>
+									<h4 id={`${technique.id}-mobile-title`}>
+										<a href={`#${technique.id}`}>{technique.name}</a>
+									</h4>
+
+									<dl>
+										{#each metadata(technique) as [label, value]}
+											<div>
+												<dt>{label}</dt>
+												<dd>{value}</dd>
+											</div>
+										{/each}
+									</dl>
+
+									<RuleBlocks blocks={technique.description} />
+
+									{#if technique.augment}
+										<h5>Augment</h5>
+										<RuleBlocks blocks={technique.augment} />
+									{/if}
+								</article>
+							{/each}
+						</div>
+
+						<div class="technique-details">
+							{#each group.techniques as technique}
+								<article
+									id={technique.id}
+									tabindex="-1"
+									class="technique-detail"
+									aria-labelledby={`${technique.id}-title`}
+								>
+									<h4 id={`${technique.id}-title`}>{technique.name}</h4>
+
+									<dl class="technique-detail__meta">
+										{#each metadata(technique) as [label, value]}
+											<div>
+												<dt>{label}</dt>
+												<dd>{value}</dd>
+											</div>
+										{/each}
+									</dl>
+
+									<RuleBlocks blocks={technique.description} />
+
+									{#if technique.augment}
+										<h5>
+											<IconLabel icon="attribute.bonus"><strong>Augment</strong></IconLabel>
+										</h5>
+										<RuleBlocks blocks={technique.augment} />
+									{/if}
+								</article>
+							{/each}
+						</div>
 					</section>
 				{/each}
 			</div>
 		{/if}
 	</section>
+{/snippet}
+
+<div class="technique-reference">
+	{#each rankSections as section (section.id)}
+		{@render techniqueSection(section)}
+	{/each}
+
+	{#if restrictedSection}
+		{@render techniqueSection(restrictedSection)}
+	{/if}
 </div>
 
 <style lang="scss">
