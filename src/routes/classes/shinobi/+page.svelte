@@ -1,41 +1,120 @@
-<!-- site\src\routes\classes\shinobi\+page.svelte -->
 <script lang="ts">
 	import IconLabel from '$lib/components/Icon/IconLabel.svelte';
-	import PageSection from '$lib/pages/PageSection/PageSection.svelte';
-	import ClassTraits from '$lib/pages/ClassTraits/ClassTraits.svelte';
+	import WikiTable from '$lib/components/WikiTable/WikiTable.svelte';
+	import ChildLinkGrid from '$lib/components/ChildLinkGrid/ChildLinkGrid.svelte';
+	import { getPageChildren } from '$lib/page/registry';
 	import ClassProgression from '$lib/pages/ClassProgression/ClassProgression.svelte';
+	import ClassTraits from '$lib/pages/ClassTraits/ClassTraits.svelte';
+	import PageSection from '$lib/pages/PageSection/PageSection.svelte';
+	import { resolveAppPath } from '$lib/utils/paths';
 
-	import {
-		shinobiCoreTraits,
-		shinobiProgression
-	} from './page.data';
+	import { shinobiPageData } from './page.data';
+	import { shinobiPaths } from './paths.data';
+
+	const childPages = getPageChildren('classes--shinobi').map(({ title, href, description }) => ({
+		title,
+		href,
+		description: description ?? ''
+	}));
 </script>
+
+<PageSection title="Shinobi Overview">
+	<p>
+		Shinobi are trained operatives who combine physical discipline with the
+		supernatural manipulation of chakra. They move through the battlefield at
+		extreme speed, deceive their enemies with transformations and illusions, and
+		unleash techniques shaped by elemental affinities or inherited bloodlines.
+	</p>
+
+	<p>
+		A Shinobi is defined by two major choices. A
+		<IconLabel icon="monster.elemental"><strong>Chakra Origin</strong></IconLabel>
+		determines the nature or heritage of the character's chakra, while a
+		<IconLabel icon="game.character"><strong>Shinobi Path</strong></IconLabel>
+		determines how that power is trained and applied. Two Shinobi can share the
+		same Chakra Origin while fighting in completely different ways.
+	</p>
+</PageSection>
 
 <PageSection
 	id="core-traits"
-	title="Core Shinobi Traits"
+	title="Class Summary"
 >
-	<ClassTraits {...shinobiCoreTraits} />
+	<ClassTraits {...shinobiPageData.coreTraits} />
+
+	<WikiTable
+		caption="Shinobi Class Summary"
+		columns={['Trait', 'Rules']}
+		rows={shinobiPageData.summaryRows}
+	/>
+</PageSection>
+
+<PageSection
+	id="hit-points"
+	title="Hit Points"
+>
+	<WikiTable
+		caption="Shinobi Hit Points"
+		columns={['Entry', 'Rules']}
+		rows={shinobiPageData.hitPointRows}
+	/>
+</PageSection>
+
+<PageSection
+	id="proficiencies"
+	title="Proficiencies"
+>
+	<WikiTable
+		caption="Shinobi Proficiencies"
+		columns={['Entry', 'Rules']}
+		rows={shinobiPageData.proficiencyRows}
+	/>
+</PageSection>
+
+<PageSection
+	id="shinobi-weapons"
+	title="Shinobi Weapon Presentation"
+>
+	<p>
+		These names represent alternative appearances for existing weapons. They do not
+		change the weapon's normal statistics unless a Shinobi feature or technique
+		explicitly states otherwise.
+	</p>
+
+	<WikiTable
+		caption="Shinobi Weapon Names"
+		columns={['Shinobi Weapon', 'Existing Weapon Statistics']}
+		rows={shinobiPageData.weaponRows}
+	/>
+</PageSection>
+
+<PageSection
+	id="starting-equipment"
+	title="Starting Equipment"
+>
+	<p>
+		You start with the following equipment, in addition to the equipment granted by
+		your background:
+	</p>
+
+	<ul>
+		{#each shinobiPageData.startingEquipment as item}
+			<li>{item}</li>
+		{/each}
+	</ul>
+
+	<p>
+		Alternatively, you can forgo this starting equipment and begin with 4d4 x 10 gp
+		to purchase your own equipment.
+	</p>
 </PageSection>
 
 <PageSection
 	id="shinobi-progression"
 	title="Shinobi Progression"
-	description="See how the Shinobi develops from level 1 to 20 through Chakra, techniques, inherited manifestations, Fortune Dice, and specialized training."
+	description="See how the Shinobi develops from level 1 to 20 through Chakra, techniques, inherited manifestations, Fortune Dice and specialized training."
 >
-	<ClassProgression {...shinobiProgression} />
-</PageSection>
-
-<PageSection
-	id="class-features"
-	title="Class Features"
-	description="The Shinobi combines dependable martial mobility with a flexible collection of supernatural techniques."
->
-	<p>
-		The base class remains capable after its Chakra Points are spent. Chakra Techniques
-		provide most of the class’s active damage, defense, control, movement, healing,
-		infiltration, summoning, and utility.
-	</p>
+	<ClassProgression {...shinobiPageData.progression} />
 </PageSection>
 
 <PageSection
@@ -44,28 +123,10 @@
 	title="Shinobi Training"
 >
 	<p>
-		Your training is built around
-		<IconLabel icon="ability.dexterity"><strong>Dexterity</strong></IconLabel>
-		and
-		<IconLabel icon="ability.wisdom"><strong>Wisdom</strong></IconLabel>.
-		Dexterity represents your attacks, physical precision, and movement, while
-		Wisdom governs your chakra and techniques.
+		Your training has prepared you for infiltration, pursuit and sudden combat. You
+		gain the proficiencies listed in the Shinobi class description and can use the
+		names of traditional Shinobi weapons for existing weapon statistics.
 	</p>
-
-	<p>
-		<strong>Design status:</strong> this revision does not yet define the Shinobi’s
-		rules listed below:
-	</p>
-
-	<ul>
-		<li><IconLabel icon="dice.d12"><strong>Hit Die</strong></IconLabel></li>
-		<li><IconLabel icon="entity.armor"><strong>Armor proficiencies</strong></IconLabel></li>
-		<li><IconLabel icon="entity.weapon"><strong>Weapon proficiencies</strong></IconLabel></li>
-		<li><IconLabel icon="entity.tool"><strong>Tool proficiencies</strong></IconLabel></li>
-		<li><IconLabel icon="proficiency.proficient"><strong>Skill proficiencies</strong></IconLabel></li>
-		<li><IconLabel icon="entity.pack"><strong>Starting equipment</strong></IconLabel></li>
-		<li><IconLabel icon="game.character"><strong>Multiclassing requirements</strong></IconLabel></li>
-	</ul>
 </PageSection>
 
 <PageSection
@@ -74,24 +135,23 @@
 	title="Chakra Pool"
 >
 	<p>
-		You have a pool of
+		You possess a pool of
 		<IconLabel icon="game.spell"><strong>Chakra Points</strong></IconLabel>
-		shown in the Chakra column of the Shinobi progression. You expend Chakra Points
-		to activate techniques and class features.
+		shown in the Chakra Points column of the Shinobi table. You expend Chakra
+		Points to activate techniques and class features.
 	</p>
 
 	<p>
-		You regain all expended Chakra Points whenever you finish a
-		<IconLabel icon="game.rest"><strong>Short or Long Rest</strong></IconLabel>.
+		You regain all expended Chakra Points when you finish a
+		<IconLabel icon="game.rest"><strong>short or long rest</strong></IconLabel>.
+		To regain Chakra Points during a rest, you must spend at least 30 minutes
+		meditating, controlling your breathing, maintaining your equipment or performing
+		chakra exercises.
 	</p>
 
 	<p>
-		Because Chakra returns on a Short Rest, individual techniques can include their
-		own restrictions. An
-		<IconLabel icon="game.lock"><strong>extreme or ultimate technique</strong></IconLabel>
-		can state that it cannot be used again until you finish a
-		<IconLabel icon="game.rest"><strong>Long Rest</strong></IconLabel>, even when
-		you have enough Chakra to pay its cost.
+		You cannot regain Chakra Points from more than two short rests between long
+		rests.
 	</p>
 </PageSection>
 
@@ -100,130 +160,146 @@
 	eyebrow="Level 1"
 	title="Chakra Techniques"
 >
-	<p>
-		You learn the number of Chakra Techniques shown in the Techniques Known column
-		of the Shinobi progression. The highest rank of technique you can learn is shown
-		in the Maximum Rank column.
-	</p>
-
-	<ul>
-		<li><strong>Rank I techniques:</strong> available from 1st level</li>
-		<li><strong>Rank II techniques:</strong> available from 5th level</li>
-		<li><strong>Rank III techniques:</strong> available from 9th level</li>
-		<li><strong>Rank IV techniques:</strong> available from 13th level</li>
-		<li><strong>Rank V techniques:</strong> available from 17th level</li>
-	</ul>
-
 	<h3>Technique Ability</h3>
 
 	<p>
 		<IconLabel icon="ability.wisdom"><strong>Wisdom</strong></IconLabel>
-		is your technique ability.
+		is your technique ability for your Shinobi techniques. Your control over chakra
+		depends on awareness, focus and mental discipline.
 	</p>
 
 	<ul>
 		<li>
-			<IconLabel icon="attribute.saving-throw"><strong>Technique save DC:</strong></IconLabel>
-			8 + your Proficiency Bonus + your Wisdom modifier
+			<IconLabel icon="attribute.saving-throw"><strong>Technique Save DC:</strong></IconLabel>
+			8 + your proficiency bonus + your Wisdom modifier
 		</li>
 		<li>
-			<IconLabel icon="d20test.attacking"><strong>Technique attack modifier:</strong></IconLabel>
-			your Proficiency Bonus + your Wisdom modifier
+			<IconLabel icon="d20test.attacking"><strong>Technique Attack Modifier:</strong></IconLabel>
+			your proficiency bonus + your Wisdom modifier
 		</li>
 	</ul>
 
-	<h3>Technique Categories</h3>
+	<h3>Technique Components</h3>
 
-	<dl>
-		<dt><IconLabel icon="game.spell"><strong>Standard</strong></IconLabel></dt>
-		<dd>
-			These techniques cost Chakra and are intended for frequently used attacks,
-			movement, defense, control, and utility.
-		</dd>
+	<p>
+		Shinobi techniques are performed through chakra control, physical movement and
+		hand signs.
+	</p>
+	<p>
+		Unless a technique states otherwise, you must be able to move at least one hand
+		freely to activate it.
+	</p>
+	<p>
+		You cannot activate a technique while Incapacitated, Unconscious, Petrified or
+		unable to move either hand.
+	</p>
+	<p>Being silenced does not normally prevent you from activating a technique.</p>
+	<p>
+		A creature that can see you perform a technique can recognize that you are using
+		a supernatural ability, even when it does not understand the specific technique.
+	</p>
 
-		<dt><IconLabel icon="combat.target"><strong>Powerful</strong></IconLabel></dt>
-		<dd>
-			These techniques have a high Chakra cost, a prerequisite, or both. They are
-			intended to create encounter-defining effects with meaningful resource pressure.
-		</dd>
+	<h3>Techniques and Armor</h3>
 
-		<dt><IconLabel icon="game.lock"><strong>Extreme or Ultimate</strong></IconLabel></dt>
-		<dd>
-			These techniques are normally limited to once per Long Rest and can also cost
-			Chakra. This category includes transformations, forbidden techniques, massive
-			summons, and other decisive effects.
-		</dd>
-	</dl>
+	<p>You can activate Shinobi techniques while wearing light armor.</p>
+	<p>
+		You cannot activate a Shinobi technique while wearing medium armor, heavy armor
+		or wielding a shield unless that technique or another Shinobi feature explicitly
+		allows it.
+	</p>
+	<p>
+		A technique that is already active is suppressed while you wear prohibited armor
+		or wield a shield. Its duration continues to pass while suppressed.
+	</p>
 
-	<h3>Recommended Technique Roles</h3>
+	<h3>Learning Techniques</h3>
 
+	<p>
+		You learn three Rank I Shinobi techniques of your choice. The number of
+		techniques you know increases as shown in the Techniques Known column of the
+		Shinobi table.
+	</p>
+	<p>
+		Whenever you gain a Shinobi level, you can replace one technique you know with
+		another Shinobi technique for which you meet the requirements.
+	</p>
+	<p>
+		You cannot learn a technique with a rank higher than the Maximum Technique Rank
+		shown for your Shinobi level.
+	</p>
+	<p>Techniques are divided into four categories:</p>
 	<ul>
-		<li>
-			<IconLabel icon="combat.melee"><strong>Offensive:</strong></IconLabel>
-			single-target attacks, area damage, weapon enhancements, and damaging conditions
-		</li>
-		<li>
-			<IconLabel icon="entity.armor"><strong>Defensive:</strong></IconLabel>
-			reactions, barriers, substitutions, resistances, and damage reduction
-		</li>
-		<li>
-			<IconLabel icon="movement.walking"><strong>Movement:</strong></IconLabel>
-			Body Flicker, teleportation, enhanced jumping, flight, and pursuit
-		</li>
-		<li>
-			<IconLabel icon="condition.restrained"><strong>Control:</strong></IconLabel>
-			restraining, blinding, frightening, forced movement, illusions, and terrain effects
-		</li>
-		<li>
-			<IconLabel icon="entity.tool"><strong>Utility:</strong></IconLabel>
-			clones, disguises, scouting, infiltration, sensory abilities, and communication
-		</li>
-		<li>
-			<IconLabel icon="game.party"><strong>Support:</strong></IconLabel>
-			healing, cleansing conditions, empowering allies, sealing, and protection
-		</li>
+		<li><strong>Universal Techniques:</strong> can be learned by any Shinobi.</li>
+		<li><strong>Nature Techniques:</strong> require access to the listed Chakra Nature.</li>
+		<li><strong>Heritage Techniques:</strong> require the listed Rare Chakra Heritage.</li>
+		<li><strong>Path Techniques:</strong> require the listed Shinobi Path.</li>
 	</ul>
+	<p>
+		A technique that requires concentration follows the normal concentration rules.
+	</p>
+
+	<p>
+		<a href={resolveAppPath('/classes/shinobi/techniques')}>
+			View the Shinobi Technique List
+		</a>
+	</p>
 </PageSection>
 
 <PageSection
 	id="chakra-origin"
-	eyebrow="Levels 1, 5, 9, 13, and 17"
+	eyebrow="Level 1"
 	title="Chakra Origin"
 >
 	<p>
-		Your
-		<IconLabel icon="monster.elemental"><strong>Chakra Origin</strong></IconLabel>
-		describes the type of chakra or inherited power you possess. You select or roll
-		your Origin at 1st level. It develops through five manifestations.
+		At 1st level, determine how your chakra developed. Choose Trained Affinity or
+		Bloodline of Fate.
 	</p>
 
+	<h3>Trained Affinity</h3>
 	<p>
-		Your Chakra Origin is separate from your Shinobi Path. Your Origin describes what
-		power you possess, while your Path describes how you were trained.
+		You developed a stable elemental affinity through training. Choose one of the
+		following Chakra Natures:
+	</p>
+	<ul>
+		<li>Fire Release</li>
+		<li>Wind Release</li>
+		<li>Lightning Release</li>
+		<li>Earth Release</li>
+		<li>Water Release</li>
+	</ul>
+	<p>You can learn Nature Techniques that require the chosen Chakra Nature.</p>
+	<p>
+		You also learn one additional Rank I Nature Technique associated with the chosen
+		Chakra Nature. This technique does not count against your number of techniques
+		known.
+	</p>
+	<p>
+		Trained Affinity cannot grant a combined Chakra Nature, Rare Chakra Heritage or
+		Dojutsu.
 	</p>
 
-	<ul>
-		<li>
-			<strong>1st level — Initial Manifestation:</strong>
-			an identity-defining ability or minor passive benefit
-		</li>
-		<li>
-			<strong>5th level — Developed Manifestation:</strong>
-			a reliable combat or utility improvement
-		</li>
-		<li>
-			<strong>9th level — Advanced Manifestation:</strong>
-			a distinctive technique, defense, or movement option
-		</li>
-		<li>
-			<strong>13th level — Greater Manifestation:</strong>
-			a powerful expression of the Origin
-		</li>
-		<li>
-			<strong>17th level — Perfected Manifestation:</strong>
-			a high-level capstone for the Origin
-		</li>
-	</ul>
+	<h3>Bloodline of Fate</h3>
+	<p>
+		Rather than selecting a standard Chakra Nature, roll 1d100 on the Rare Chakra
+		Heritage table. You must accept the result.
+	</p>
+	<p>This roll is not a d20 roll and cannot be modified by Fortune Dice.</p>
+	<p>
+		A Rare Chakra Heritage grants its listed initial manifestation and allows you to
+		learn Heritage Techniques that require that heritage.
+	</p>
+
+	<WikiTable
+		caption="Rare Chakra Heritage"
+		columns={['d100', 'Rare Chakra Heritage']}
+		rows={shinobiPageData.rareHeritageRows}
+	/>
+
+	<WikiTable
+		caption="Initial Manifestations"
+		columns={['Rare Chakra Heritage', 'Initial Manifestation']}
+		rows={shinobiPageData.initialManifestations}
+	/>
 </PageSection>
 
 <PageSection
@@ -232,143 +308,67 @@
 	title="Shinobi Step"
 >
 	<p>
-		As a Bonus Action, you can take the
+		As a bonus action, you can take the
 		<IconLabel icon="movement.walking"><strong>Dash</strong></IconLabel>,
-		<IconLabel icon="combat.bonus-action"><strong>Disengage</strong></IconLabel>,
+		<IconLabel icon="combat.bonus-action"><strong>Disengage</strong></IconLabel>
 		or
 		<IconLabel icon="skill.stealth"><strong>Hide</strong></IconLabel>
 		action.
-	</p>
-
-	<p>
-		This feature does not cost Chakra.
-		<IconLabel icon="movement.walking"><strong>Movement techniques</strong></IconLabel>
-		such as Body Flicker can still provide stronger effects, including teleportation,
-		increased Speed, ignoring Difficult Terrain, or protection from
-		<IconLabel icon="combat.reaction"><strong>Opportunity Attacks</strong></IconLabel>.
 	</p>
 </PageSection>
 
 <PageSection
 	id="fortune-dice"
-	eyebrow="Levels 2, 6, 11, and 17"
+	eyebrow="Level 2"
 	title="Fortune Dice"
 >
 	<p>
-		You have a number of
+		You possess a number of
 		<IconLabel icon="dice.d20"><strong>Fortune Dice</strong></IconLabel>
-		equal to your Proficiency Bonus.
+		equal to your proficiency bonus. Your Fortune Die begins as a d6 and changes as
+		shown in the Fortune Die column of the Shinobi table.
 	</p>
-
 	<p>
-		When you or a creature you can see within 30 feet makes an
-		<IconLabel icon="d20test.attacking"><strong>attack roll</strong></IconLabel>,
-		<IconLabel icon="attribute.skillcheck"><strong>Ability Check</strong></IconLabel>,
-		or
-		<IconLabel icon="attribute.saving-throw"><strong>Saving Throw</strong></IconLabel>,
-		you can use your
-		<IconLabel icon="combat.reaction"><strong>Reaction</strong></IconLabel>
-		to roll one Fortune Die.
+		When you or another creature you can see within 30 feet makes an attack roll,
+		ability check or saving throw, you can use your reaction and expend one Fortune
+		Die.
 	</p>
-
+	<p>Roll the die and either:</p>
 	<ul>
-		<li>Add the result to the roll of yourself or an ally.</li>
-		<li>Subtract the result from the roll of an enemy.</li>
+		<li>Add the result to the roll made by you or an ally.</li>
+		<li>Subtract the result from the roll made by an enemy.</li>
 	</ul>
-
-	<p>
-		You decide whether to use the die after the d20 is rolled but before the outcome
-		is announced.
-	</p>
-
-	<h3>Fortune Progression</h3>
-
-	<ul>
-		<li>
-			<strong>Levels 2–5:</strong> your Fortune Dice are d6s. You regain all expended
-			dice when you finish a
-			<IconLabel icon="game.rest"><strong>Long Rest</strong></IconLabel>.
-		</li>
-		<li>
-			<strong>Levels 6–10:</strong> your Fortune Dice become d8s. You regain one
-			expended die after a
-			<IconLabel icon="game.rest"><strong>Short Rest</strong></IconLabel>
-			and all expended dice after a
-			<IconLabel icon="game.rest"><strong>Long Rest</strong></IconLabel>.
-		</li>
-		<li>
-			<strong>Levels 11–16:</strong> your Fortune Dice become d10s. You regain two
-			expended dice after a
-			<IconLabel icon="game.rest"><strong>Short Rest</strong></IconLabel>
-			and all expended dice after a
-			<IconLabel icon="game.rest"><strong>Long Rest</strong></IconLabel>.
-		</li>
-		<li>
-			<strong>Levels 17–20:</strong> your Fortune Dice become d12s. You regain all
-			expended dice after a
-			<IconLabel icon="game.rest"><strong>Short or Long Rest</strong></IconLabel>.
-		</li>
-	</ul>
+	<p>You decide after the d20 is rolled but before the outcome is announced.</p>
+	<p>Only one Fortune Die can be applied to a roll.</p>
+	<p>You regain all expended Fortune Dice when you finish a long rest.</p>
 </PageSection>
 
 <PageSection
 	id="shinobi-path"
-	eyebrow="Levels 3, 6, 10, and 14"
+	eyebrow="Level 3"
 	title="Shinobi Path"
 >
 	<p>
-		At 3rd level, you choose a Shinobi Path that represents how you were trained.
-		Your Path functions as your subclass and grants features at 3rd, 6th, 10th, and
-		14th level.
+		At 3rd level, choose the specialized discipline through which you apply your
+		Shinobi training:
 	</p>
-
-	<h3>Available Paths</h3>
-
 	<ul>
-		<li><IconLabel icon="weapon.strike"><strong>Path of Taijutsu</strong></IconLabel></li>
-		<li><IconLabel icon="monster.elemental"><strong>Path of Elemental Ninjutsu</strong></IconLabel></li>
-		<li><IconLabel icon="spell.illusion"><strong>Path of Genjutsu</strong></IconLabel></li>
-		<li><IconLabel icon="skill.medicine"><strong>Path of the Medical Shinobi</strong></IconLabel></li>
-		<li><IconLabel icon="game.lock"><strong>Path of Sealing</strong></IconLabel></li>
-		<li><IconLabel icon="entity.summon"><strong>Path of Summoning</strong></IconLabel></li>
-		<li><IconLabel icon="skill.stealth"><strong>Path of Assassination</strong></IconLabel></li>
-		<li><IconLabel icon="dice.d20"><strong>Path of Fortune</strong></IconLabel></li>
+		{#each shinobiPaths as path}
+			<li><a href={resolveAppPath(path.href)}>{path.title}</a></li>
+		{/each}
 	</ul>
-
-	<p>
-		Your Chakra Origin does not determine your Path. A Bone Bloodline Shinobi can
-		follow Taijutsu or Medical training, a Fire Release Shinobi can specialize in
-		Genjutsu, and a Water Release Shinobi can specialize in Sealing.
-	</p>
+	<p>Your chosen path grants features at 3rd, 6th, 10th and 14th level.</p>
 </PageSection>
 
 <PageSection
 	id="ability-score-improvement"
-	eyebrow="Levels 4, 8, 12, 16, and 19"
+	eyebrow="Levels 4, 8, 12, 16 and 19"
 	title="Ability Score Improvement"
 >
 	<p>
-		When you reach 4th level, and again at 8th, 12th, 16th, and 19th level, choose
-		one of the following options:
-	</p>
-
-	<ul>
-		<li>
-			Increase one
-			<IconLabel icon="attribute.bonus"><strong>Ability Score</strong></IconLabel>
-			of your choice by 2.
-		</li>
-		<li>
-			Increase two
-			<IconLabel icon="attribute.bonus"><strong>Ability Scores</strong></IconLabel>
-			of your choice by 1 each.
-		</li>
-	</ul>
-
-	<p>
-		You cannot increase an
-		<IconLabel icon="attribute.penalty"><strong>Ability Score above 20</strong></IconLabel>
-		using this feature.
+		When you reach this level, you can increase one ability score of your choice by
+		2, increase two ability scores of your choice by 1, or select a feat for which
+		you qualify. You cannot increase an ability score above 20 using this feature.
 	</p>
 </PageSection>
 
@@ -378,53 +378,59 @@
 	title="Extra Attack"
 >
 	<p>
-		You can
-		<IconLabel icon="d20test.attacking"><strong>attack twice</strong></IconLabel>,
-		instead of once, whenever you take the
-		<IconLabel icon="combat.action"><strong>Attack action</strong></IconLabel>
-		on your turn.
+		You can attack twice, instead of once, whenever you take the Attack action on
+		your turn.
 	</p>
-
 	<p>
-		Using a
-		<IconLabel icon="game.spell"><strong>technique</strong></IconLabel>
-		is not normally the Attack action unless the technique states otherwise.
+		Activating a technique is not the Attack action unless the technique explicitly
+		states otherwise.
 	</p>
 </PageSection>
 
 <PageSection
 	id="chakra-infused-strike"
-	eyebrow="Levels 5, 11, and 17"
+	eyebrow="Level 5"
 	title="Chakra-Infused Strike"
 >
 	<p>
-		Once on each of your turns when you hit a creature with a
-		<IconLabel icon="entity.weapon"><strong>weapon attack</strong></IconLabel>
-		or
-		<IconLabel icon="weapon.strike"><strong>Unarmed Strike</strong></IconLabel>,
-		you deal additional damage determined by your Shinobi level. This damage does
-		not cost Chakra.
+		Once on each of your turns when you hit a creature with a weapon attack or
+		unarmed strike, you deal an additional 1d6 damage.
 	</p>
-
-	<ul>
-		<li><strong>Levels 5–10:</strong> 1d6 additional damage</li>
-		<li><strong>Levels 11–16:</strong> 2d6 additional damage</li>
-		<li><strong>Levels 17–20:</strong> 3d6 additional damage</li>
-	</ul>
-
 	<p>
-		The damage type is determined by your
-		<IconLabel icon="game.spell"><strong>Chakra Origin</strong></IconLabel>.
+		The damage type is determined by the technique, Chakra Nature or Rare Chakra
+		Heritage used to empower the strike. If no feature determines the damage type,
+		the additional damage is force damage.
 	</p>
+	<p>The additional damage increases to 2d6 at 11th level and 3d6 at 17th level.</p>
+</PageSection>
 
-	<ul>
-		<li><IconLabel icon="damage.fire"><strong>Fire:</strong></IconLabel> Fire damage</li>
-		<li><IconLabel icon="damage.lightning"><strong>Lightning:</strong></IconLabel> Lightning damage</li>
-		<li><IconLabel icon="damage.slashing"><strong>Wind:</strong></IconLabel> Slashing damage</li>
-		<li><IconLabel icon="damage.bludgeoning"><strong>Earth:</strong></IconLabel> Bludgeoning damage</li>
-		<li><IconLabel icon="damage.cold"><strong>Water:</strong></IconLabel> Cold or Bludgeoning damage</li>
-		<li><IconLabel icon="damage.piercing"><strong>Bone Bloodline:</strong></IconLabel> Piercing damage</li>
-	</ul>
+<PageSection
+	id="developed-manifestation"
+	eyebrow="Level 5"
+	title="Developed Manifestation"
+>
+	<p>Your Chakra Origin develops further.</p>
+	<p>
+		If you selected Trained Affinity, learn one additional Nature Technique
+		associated with your chosen Chakra Nature.
+	</p>
+	<p>
+		If you selected Bloodline of Fate, learn one additional Heritage Technique
+		associated with your Rare Chakra Heritage.
+	</p>
+	<p>
+		The technique must be of a rank you can use and does not count against your
+		number of techniques known.
+	</p>
+</PageSection>
+
+<PageSection
+	id="improved-fortune-6"
+	eyebrow="Level 6"
+	title="Improved Fortune"
+>
+	<p>Your Fortune Die becomes a d8.</p>
+	<p>When you finish a short rest, you regain one expended Fortune Die.</p>
 </PageSection>
 
 <PageSection
@@ -433,13 +439,11 @@
 	title="Evasion"
 >
 	<p>
-		When an effect allows you to make a
-		<IconLabel icon="ability.dexterity"><strong>Dexterity Saving Throw</strong></IconLabel>
-		to take only half damage, you instead take no damage on a
-		<IconLabel icon="util.tick"><strong>successful save</strong></IconLabel>
-		and half damage on a
-		<IconLabel icon="util.cross"><strong>failed save</strong></IconLabel>.
+		When an effect allows you to make a Dexterity saving throw to take only half
+		damage, you instead take no damage on a successful saving throw and half damage
+		on a failed saving throw.
 	</p>
+	<p>You cannot use this feature while Incapacitated.</p>
 </PageSection>
 
 <PageSection
@@ -448,22 +452,47 @@
 	title="Chakra Movement"
 >
 	<p>
-		While you are not Incapacitated, you can
-		<IconLabel icon="movement.walking"><strong>move</strong></IconLabel>
-		across
-		<IconLabel icon="movement.swimming"><strong>liquids</strong></IconLabel>
-		and
-		<IconLabel icon="movement.climbing"><strong>vertical surfaces</strong></IconLabel>
-		as though they were solid ground.
+		While you are not Incapacitated, you can move across liquids and vertical
+		surfaces as though they were solid ground.
 	</p>
-
+	<p>You do not need to expend Chakra Points to maintain this movement.</p>
 	<p>
-		If you end your turn on such a surface, you must expend 1 Chakra Point or
-		immediately begin
-		<IconLabel icon="condition.prone"><strong>falling</strong></IconLabel>
-		or
-		<IconLabel icon="movement.swimming"><strong>sinking</strong></IconLabel>.
+		If you are knocked Prone or become Incapacitated while standing on a liquid or
+		vertical surface, you immediately begin falling or sinking.
 	</p>
+</PageSection>
+
+<PageSection
+	id="advanced-manifestation"
+	eyebrow="Level 9"
+	title="Advanced Manifestation"
+>
+	<p>
+		Once on each of your turns when you activate a technique associated with your
+		Chakra Origin, add your Wisdom modifier to one damage roll or healing roll of
+		that technique.
+	</p>
+	<p>
+		If the technique produces neither damage nor healing, you instead gain temporary
+		hit points equal to your Wisdom modifier after activating it.
+	</p>
+</PageSection>
+
+<PageSection
+	id="chakra-infused-strike-improvement-11"
+	eyebrow="Level 11"
+	title="Chakra-Infused Strike Improvement"
+>
+	<p>The additional damage from Chakra-Infused Strike becomes 2d6.</p>
+</PageSection>
+
+<PageSection
+	id="improved-fortune-11"
+	eyebrow="Level 11"
+	title="Improved Fortune"
+>
+	<p>Your Fortune Die becomes a d10.</p>
+	<p>When you finish a short rest, you regain up to two expended Fortune Dice.</p>
 </PageSection>
 
 <PageSection
@@ -472,19 +501,24 @@
 	title="Unbroken Focus"
 >
 	<p>
-		You have Advantage on
-		<IconLabel icon="ability.constitution"><strong>Constitution Saving Throws</strong></IconLabel>
-		made to maintain
-		<IconLabel icon="game.concentration"><strong>Concentration</strong></IconLabel>
-		on a technique.
+		You have advantage on Constitution saving throws made to maintain concentration
+		on a Shinobi technique.
 	</p>
-
 	<p>
-		When you fail such a Saving Throw, you can expend
-		<IconLabel icon="game.spell"><strong>2 Chakra Points</strong></IconLabel>
-		to
-		<IconLabel icon="dice.roll"><strong>reroll</strong></IconLabel>
-		it. You must use the new result.
+		When you fail a Constitution saving throw made to maintain concentration on a
+		Shinobi technique, you can expend 2 Chakra Points to reroll the saving throw.
+		You must use the new result.
+	</p>
+</PageSection>
+
+<PageSection
+	id="greater-manifestation"
+	eyebrow="Level 13"
+	title="Greater Manifestation"
+>
+	<p>
+		Once on each of your turns when you activate a technique associated with your
+		Chakra Origin, reduce its Chakra Point cost by 1, to a minimum cost of 1.
 	</p>
 </PageSection>
 
@@ -498,12 +532,40 @@
 		<IconLabel icon="spell.cost"><strong>Chakra Point cost</strong></IconLabel>
 		of one Rank I technique by 1, to a minimum cost of 0.
 	</p>
-
 	<p>
-		<IconLabel icon="game.hazard"><strong>Hostile effects</strong></IconLabel>
-		cannot remove your Chakra Points unless you are
+		Hostile effects cannot remove your Chakra Points unless you are
 		<IconLabel icon="condition.unconscious"><strong>Unconscious</strong></IconLabel>.
 	</p>
+</PageSection>
+
+<PageSection
+	id="chakra-infused-strike-improvement-17"
+	eyebrow="Level 17"
+	title="Chakra-Infused Strike Improvement"
+>
+	<p>The additional damage from Chakra-Infused Strike becomes 3d6.</p>
+</PageSection>
+
+<PageSection
+	id="perfected-manifestation"
+	eyebrow="Level 17"
+	title="Perfected Manifestation"
+>
+	<p>Choose one Rank IV or lower technique associated with your Chakra Origin.</p>
+	<p>
+		You can activate that technique once without expending Chakra Points. You regain
+		this use when you finish a short or long rest.
+	</p>
+	<p>You can change the selected technique whenever you gain another Shinobi level.</p>
+</PageSection>
+
+<PageSection
+	id="improved-fortune-17"
+	eyebrow="Level 17"
+	title="Improved Fortune"
+>
+	<p>Your Fortune Die becomes a d12.</p>
+	<p>You regain all expended Fortune Dice when you finish a short or long rest.</p>
 </PageSection>
 
 <PageSection
@@ -511,28 +573,17 @@
 	eyebrow="Level 18"
 	title="Hidden Technique Mastery"
 >
+	<p>Choose one Rank III or lower technique you know as your Signature Technique.</p>
+	<p>The Chakra Point cost of the technique is reduced by 1, to a minimum cost of 0.</p>
 	<p>
-		Choose one Rank III or lower technique you know as your
-		<IconLabel icon="game.spell"><strong>Signature Technique</strong></IconLabel>.
+		You can activate the technique once without expending Chakra Points and regain
+		this use when you finish a long rest.
 	</p>
-
-	<ul>
-		<li>
-			Its
-			<IconLabel icon="spell.cost"><strong>Chakra Point cost</strong></IconLabel>
-			is reduced by 1.
-		</li>
-		<li>
-			You can use it once per
-			<IconLabel icon="game.rest"><strong>Long Rest</strong></IconLabel>
-			without expending Chakra Points.
-		</li>
-		<li>
-			It
-			<IconLabel icon="game.lock"><strong>cannot be removed or forgotten</strong></IconLabel>
-			against your will.
-		</li>
-	</ul>
+	<p>The technique cannot be removed, replaced or forgotten against your will.</p>
+	<p>
+		Whenever you gain a Shinobi level, you can choose a different qualifying
+		technique as your Signature Technique.
+	</p>
 </PageSection>
 
 <PageSection
@@ -541,104 +592,62 @@
 	title="Kage State"
 >
 	<p>
-		As a Bonus Action, you enter a Kage State for 1 minute. Once you use this
-		feature, you cannot use it again until you finish a Long Rest.
+		As a bonus action, you enter a Kage State for 1 minute. Once you use this
+		feature, you cannot use it again until you finish a long rest.
+	</p>
+	<p>When the state begins:</p>
+	<ul>
+		<li>You immediately regain 10 Chakra Points.</li>
+		<li>You have advantage on Dexterity and Wisdom saving throws.</li>
+		<li>The Chakra Point cost of your techniques is reduced by 2, to a minimum cost of 1.</li>
+		<li>Once on each of your turns, you can use a Fortune Die without expending it.</li>
+		<li>Your walking speed increases by 20 feet.</li>
+	</ul>
+	<p>The Kage State ends early if you become Unconscious.</p>
+</PageSection>
+
+<PageSection
+	id="multiclassing"
+	title="Multiclassing"
+>
+	<p>
+		To multiclass into or out of the Shinobi class, you must have a Dexterity score
+		of at least 13 and a Wisdom score of at least 13.
 	</p>
 
-	<p>While your Kage State is active, you gain the following benefits:</p>
-
+	<h3>Proficiencies Gained</h3>
+	<p>When a character gains their first Shinobi level after 1st level, they gain:</p>
 	<ul>
-		<li>
-			You immediately
-			<IconLabel icon="game.spell"><strong>regain 10 Chakra Points</strong></IconLabel>.
-		</li>
-		<li>
-			You have Advantage on
-			<IconLabel icon="ability.dexterity"><strong>Dexterity Saving Throws</strong></IconLabel>
-			and
-			<IconLabel icon="ability.wisdom"><strong>Wisdom Saving Throws</strong></IconLabel>.
-		</li>
-		<li>
-			The
-			<IconLabel icon="spell.cost"><strong>Chakra Point cost</strong></IconLabel>
-			of your techniques is reduced by 2, to a minimum cost of 1.
-		</li>
-		<li>
-			Once on each of your turns, you can use a
-			<IconLabel icon="dice.d20"><strong>Fortune Die</strong></IconLabel>
-			without expending it.
-		</li>
-		<li>
-			Your
-			<IconLabel icon="movement.walking"><strong>walking Speed</strong></IconLabel>
-			increases by 20 feet.
-		</li>
+		<li>Light armor</li>
+		<li>Simple weapons</li>
+		<li>Shortswords</li>
+		<li>Disguise kits</li>
+		<li>One skill of their choice from the Shinobi skill list</li>
 	</ul>
 
+	<p>They do not gain:</p>
+	<ul>
+		<li>Shinobi saving throw proficiencies</li>
+		<li>The additional tool choice</li>
+		<li>Starting equipment</li>
+		<li>The complete Shinobi weapon proficiency list</li>
+	</ul>
+
+	<h3>Chakra and Multiclassing</h3>
 	<p>
-		The state ends early when you become
-		<IconLabel icon="condition.unconscious"><strong>Unconscious</strong></IconLabel>.
+		Your Chakra Points, techniques known and maximum technique rank are determined
+		only by your Shinobi level.
+	</p>
+	<p>
+		Chakra Points are separate from Ki Points, Sorcery Points, spell slots,
+		Superiority Dice, Psionic Energy Dice and similar class resources.
+	</p>
+	<p>
+		One resource cannot be spent in place of another unless a feature explicitly
+		states otherwise.
 	</p>
 </PageSection>
 
-<!-- <PageSection
-	id="design-notes"
-	title="Revision 0.2 Design and Playtest Notes"
-	collapsible
-	defaultExpanded={false}
->
-	<h3>Revision Goal</h3>
-
-	<p>
-		The base class should remain a capable, mobile Shinobi after its Chakra Points
-		are spent. Techniques remain the primary source of supernatural damage, control,
-		defense, and utility.
-	</p>
-
-	<h3>Character-Building Safeguard</h3>
-
-	<p>
-		Consider requiring every Shinobi to learn at least one offensive technique at
-		1st level. This prevents inexperienced players from accidentally selecting only
-		situational utility options.
-	</p>
-
-	<h3>Level 8 Balance Target</h3>
-
-	<p>
-		At 8th level, the revised Shinobi has Extra Attack, free Bonus Action Dash,
-		Disengage, or Hide, 11 Chakra Points per Short Rest, seven techniques up to Rank
-		II, 1d6 Chakra-Infused Strike damage once per turn, three d8 Fortune Dice with
-		partial Short Rest recovery, Evasion, two Origin manifestations, two subclass
-		features, and two Ability Score Improvements.
-	</p>
-
-	<h3>Playtest Checkpoints</h3>
-
-	<ul>
-		<li>
-			Compare sustained weapon damage after Chakra is exhausted with Rogue, Monk,
-			Ranger, and Fighter baselines.
-		</li>
-		<li>
-			Test an adventuring day with two Short Rests to ensure repeated Rank II
-			techniques are not excessive.
-		</li>
-		<li>
-			Check whether Fortune Dice are being saved all day or used regularly before
-			adjusting their recovery.
-		</li>
-		<li>
-			Ensure Origin manifestations remain smaller than full subclass features,
-			because the Shinobi receives both progressions.
-		</li>
-		<li>
-			Mark extreme techniques clearly with a Long Rest restriction so Short Rest
-			Chakra recovery cannot bypass their intended limit.
-		</li>
-		<li>
-			Review multiclass interactions involving Shinobi Step, Extra Attack, and
-			Chakra-Infused Strike.
-		</li>
-	</ul>
-</PageSection> -->
+<PageSection title="Shinobi References">
+	<ChildLinkGrid links={childPages} />
+</PageSection>

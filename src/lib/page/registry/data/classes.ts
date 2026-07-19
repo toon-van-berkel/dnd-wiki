@@ -16,6 +16,12 @@ const clericParent = {
 	eyebrow: 'Cleric domain'
 } as const;
 
+const shinobiParent = {
+	parentId: 'classes--shinobi',
+	eyebrow: 'Shinobi Path',
+	icon: 'iconsList.game.character'
+} as const;
+
 export const classPages = [
 	{
 		id: 'classes',
@@ -421,34 +427,111 @@ export const classPages = [
 		id: 'classes--shinobi',
 		title: 'Shinobi',
 		href: '/classes/shinobi',
-
+		description:
+			'A mobile chakra-wielding combatant who combines martial training, supernatural techniques, inherited abilities and control over fortune.',
 		shortDescription:
-			'A mobile chakra warrior who combines precise attacks, supernatural techniques, and adaptable training.',
-
-		longDescription:
-			`<p>Shinobi are highly trained warriors who combine physical precision, rapid movement, and supernatural
-			techniques powered by Chakra. They move quickly across the battlefield, exploit openings in an enemy’s
-			defenses, and adapt their fighting style to the demands of each mission.</p>
-
-			<p>Every Shinobi develops a Chakra Origin that represents the elemental power, inherited bloodline, or unusual
-			source of chakra they possess. They also follow a Shinobi Path that reflects how they were trained, allowing
-			two characters with the same Origin to develop into completely different specialists.</p>
-
-			<p>Through their chosen techniques, Shinobi can become destructive combatants, elusive infiltrators, battlefield
-			controllers, healers, summoners, or tactical supporters. Even after their Chakra is exhausted, their martial
-			training, mobility, and Chakra-Infused Strikes allow them to remain capable participants in battle.</p>`,
-
+			'A mobile chakra-wielding combatant who combines martial training, supernatural techniques, inherited abilities and control over fortune.',
 		icon: 'iconsList.game.character',
 		aliases: ['ninja'],
-
-		tags: [
-			'mobility',
-			'melee',
-			'control',
-			'utility',
-			'support'
-		],
-
-		...classParent
+		keywords: ['chakra', 'ninja', 'shinobi', 'techniques', 'martial', 'wisdom', 'dexterity'],
+		tags: ['Class', 'Shinobi', 'Homebrew', 'Chakra', 'Techniques', 'Martial', 'Wisdom', 'Dexterity'],
+		kind: 'class',
+		...classParent,
+		eyebrow: 'Class'
+	},
+	{
+		id: 'classes--shinobi--techniques',
+		title: 'Shinobi Techniques',
+		href: '/classes/shinobi/techniques',
+		description: 'A complete reference for the supernatural techniques available to the Shinobi class.',
+		eyebrow: 'Shinobi Class Feature',
+		icon: 'iconsList.game.spell',
+		keywords: ['chakra', 'ninja', 'shinobi', 'techniques', 'ninjutsu', 'class feature'],
+		tags: ['Shinobi', 'Techniques', 'Chakra', 'Class Feature'],
+		kind: 'class',
+		parentId: 'classes--shinobi'
+	},
+	{
+		id: 'classes--shinobi--path-of-taijutsu',
+		title: 'Path of Taijutsu',
+		href: '/classes/shinobi/path-of-taijutsu',
+		description:
+			'A relentless close-combat specialist who turns speed, precision and physical conditioning into a weapon.',
+		keywords: ['chakra', 'ninja', 'shinobi', 'taijutsu', 'subclass', 'path', 'melee', 'martial'],
+		tags: ['Shinobi', 'Path', 'Subclass', 'Chakra', 'Taijutsu', 'Melee', 'Martial'],
+		kind: 'subclass',
+		...shinobiParent,
+		icon: 'iconsList.weapon.strike'
+	},
+	{
+		id: 'classes--shinobi--path-of-elemental-ninjutsu',
+		title: 'Path of Elemental Ninjutsu',
+		href: '/classes/shinobi/path-of-elemental-ninjutsu',
+		description:
+			'A master of elemental chakra who overwhelms enemies with destructive force and battlefield control.',
+		keywords: ['chakra', 'ninja', 'shinobi', 'ninjutsu', 'elemental', 'nature', 'subclass', 'path'],
+		tags: ['Shinobi', 'Path', 'Subclass', 'Chakra', 'Ninjutsu', 'Elemental', 'Nature'],
+		kind: 'subclass',
+		...shinobiParent,
+		icon: 'iconsList.monster.elemental'
+	},
+	{
+		id: 'classes--shinobi--path-of-genjutsu',
+		title: 'Path of Genjutsu',
+		href: '/classes/shinobi/path-of-genjutsu',
+		description:
+			'A mental manipulator who distorts perception, creates false realities and controls enemy decisions.',
+		keywords: ['chakra', 'ninja', 'shinobi', 'genjutsu', 'illusion', 'control', 'subclass', 'path'],
+		tags: ['Shinobi', 'Path', 'Subclass', 'Chakra', 'Genjutsu', 'Illusion', 'Control'],
+		kind: 'subclass',
+		...shinobiParent,
+		icon: 'iconsList.spell.illusion'
+	},
+	{
+		id: 'classes--shinobi--path-of-the-bloodline',
+		title: 'Path of the Bloodline',
+		href: '/classes/shinobi/path-of-the-bloodline',
+		description:
+			'A specialist who dedicates every aspect of their training to awakening an inherited Rare Chakra Heritage.',
+		keywords: ['chakra', 'ninja', 'shinobi', 'bloodline', 'heritage', 'chakra heritage', 'subclass', 'path'],
+		tags: ['Shinobi', 'Path', 'Subclass', 'Chakra', 'Bloodline', 'Chakra Heritage', 'Heritage'],
+		kind: 'subclass',
+		...shinobiParent,
+		icon: 'iconsList.hp.blood'
+	},
+	{
+		id: 'classes--shinobi--path-of-the-medical-shinobi',
+		title: 'Path of the Medical Shinobi',
+		href: '/classes/shinobi/path-of-the-medical-shinobi',
+		description:
+			'A precise chakra specialist who restores allies, removes harmful conditions and weaponizes biological knowledge.',
+		keywords: ['chakra', 'ninja', 'shinobi', 'medical', 'healing', 'support', 'subclass', 'path'],
+		tags: ['Shinobi', 'Path', 'Subclass', 'Chakra', 'Medical', 'Healing', 'Support'],
+		kind: 'subclass',
+		...shinobiParent,
+		icon: 'iconsList.skill.medicine'
+	},
+	{
+		id: 'classes--shinobi--path-of-sealing',
+		title: 'Path of Sealing',
+		href: '/classes/shinobi/path-of-sealing',
+		description:
+			'A tactical specialist who stores chakra in formulas, prepares traps and suppresses supernatural abilities.',
+		keywords: ['chakra', 'ninja', 'shinobi', 'sealing', 'control', 'utility', 'subclass', 'path'],
+		tags: ['Shinobi', 'Path', 'Subclass', 'Chakra', 'Sealing', 'Control', 'Utility'],
+		kind: 'subclass',
+		...shinobiParent,
+		icon: 'iconsList.game.lock'
+	},
+	{
+		id: 'classes--shinobi--path-of-fortune',
+		title: 'Path of Fortune',
+		href: '/classes/shinobi/path-of-fortune',
+		description: 'A probability manipulator who turns unlikely events into reliable weapons.',
+		keywords: ['chakra', 'ninja', 'shinobi', 'fortune', 'luck', 'support', 'subclass', 'path'],
+		tags: ['Shinobi', 'Path', 'Subclass', 'Chakra', 'Fortune', 'Luck', 'Support'],
+		kind: 'subclass',
+		...shinobiParent,
+		icon: 'iconsList.dice.d20'
 	}
 ] satisfies PageRegistryEntry[];

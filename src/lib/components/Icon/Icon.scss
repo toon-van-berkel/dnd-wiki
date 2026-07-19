@@ -32,7 +32,12 @@
 .icon--in-text {
 	--icon-default-size: 1em;
 
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+
 	margin-inline: 0.1em;
+	line-height: 1;
 	vertical-align: -0.125em;
 }
 
