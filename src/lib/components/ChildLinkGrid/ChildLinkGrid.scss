@@ -2,6 +2,7 @@
 @use '$lib/styles/panels';
 
 .child-links {
+	margin-top: 20px;
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 	gap: 0.8rem;

@@ -165,7 +165,9 @@
 	{/if}
 	<h1 class="page__header-title">{pageEntry.title}</h1>
 	{#if pageEntry.description}
-		<p class="page__header-description">{pageEntry.description}</p>
+		<article class="page__header-description">
+			{@html pageEntry.description}
+		</article>
 	{/if}
 </header>
 
