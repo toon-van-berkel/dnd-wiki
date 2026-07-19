@@ -21,11 +21,12 @@
 	}
 
 	&-description {
-		max-width: 45rem;
 		margin: 1.15rem 0 0;
-		color: var(--text-secondary);
-		font-size: clamp(1.03rem, 2vw, 1.12rem);
-		line-height: 1.6;
+		& p {			
+			color: var(--text-secondary);
+			font-size: clamp(1.03rem, 2vw, 1.12rem);
+			line-height: 1.6;
+		}
 	}
 
 	&__information {

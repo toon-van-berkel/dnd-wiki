@@ -1,24 +1,43 @@
 // site\src\lib\layout\snippets\Sidebar.scss
 .sidebar {
+	position: sticky;
+	top: var(--header-height);
+
 	box-sizing: border-box;
 	display: flex;
 	flex-direction: column;
 
 	width: 100%;
 	max-width: var(--sidebar-width);
-	min-height: 100%;
+
+	/*
+	 * A scroll container needs a constrained height.
+	 * The sidebar occupies the viewport below the sticky header.
+	 */
+	height: calc(100vh - var(--header-height));
+	height: calc(100dvh - var(--header-height));
+	min-height: 0;
+	max-height: calc(100vh - var(--header-height));
+	max-height: calc(100dvh - var(--header-height));
+
 	padding: 2.5rem 1.25rem;
 
+	overflow-x: hidden;
 	overflow-y: auto;
+	overscroll-behavior-y: contain;
+	scrollbar-gutter: stable;
 
 	color: var(--text-primary);
 	background-color: var(--background);
 	border-right: 1px solid var(--border);
+
+	-webkit-overflow-scrolling: touch;
 }
 
 .sidebar__section {
 	display: flex;
 	flex-direction: column;
+	flex-shrink: 0;
 	gap: 0.75rem;
 }
 
@@ -45,6 +64,7 @@
 .sidebar__list {
 	display: flex;
 	flex-direction: column;
+	flex-shrink: 0;
 	gap: 0.25rem;
 
 	margin: 0;
@@ -118,6 +138,8 @@
 }
 
 .sidebar__divider {
+	flex-shrink: 0;
+
 	width: calc(100% - 1.5rem);
 	height: 1px;
 	margin: 0.25rem 0.75rem 0.5rem;
@@ -137,7 +159,10 @@
 
 .sidebar__tree-link {
 	display: grid;
-	grid-template-columns: 0.75rem 1.25rem minmax(0, 1fr);
+	grid-template-columns:
+		0.75rem
+		1.25rem
+		minmax(0, 1fr);
 	align-items: center;
 	column-gap: 0.5rem;
 
@@ -243,9 +268,23 @@
 	gap: 0.25rem;
 }
 
+/*
+ * On mobile, .site-shell__sidebar is already a fixed,
+ * full-height drawer. The sidebar fills that drawer and
+ * handles its own vertical scrolling.
+ */
 @media (max-width: 48rem) {
 	.sidebar {
+		position: static;
+		top: auto;
+
+		width: 100%;
 		max-width: none;
+
+		height: 100%;
+		min-height: 0;
+		max-height: 100%;
+
 		padding: 1.5rem 1rem;
 
 		border-right: 0;
