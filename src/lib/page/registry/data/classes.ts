@@ -1,3 +1,4 @@
+// site\src\lib\page\registry\data\classes.ts
 import type { PageRegistryEntry } from '../Registry-Types';
 
 const classParent = {
@@ -41,19 +42,33 @@ export const classPages = [
 		id: 'classes--barbarian',
 		title: 'Barbarian',
 		href: '/classes/barbarian',
-		description:
-			`<p>Barbarians are mighty warriors who are powered by primal forces of the multiverse that manifest as a 
-			Rage. More than a mere emotion—and not limited to anger—this Rage is an incarnation of a predator’s ferocity, 
+
+		shortDescription:
+			'A primal warrior built around rage, raw strength, toughness, and explosive melee pressure.',
+
+		longDescription:
+			`<p>Barbarians are mighty warriors who are powered by primal forces of the multiverse that manifest as a
+			Rage. More than a mere emotion and not limited to anger this Rage is an incarnation of a predator’s ferocity,
 			a storm’s fury, and a sea’s turmoil.</p>
-			<p>Some Barbarians personify their Rage as a fierce spirit or revered forebear. Others see it as a connection 
-			to the pain and anguish of the world, as an impersonal tangle of wild magic, or as an expression of their 
-			own deepest self. For every Barbarian, their Rage is a power that fuels not just battle prowess, but also 
+
+			<p>Some Barbarians personify their Rage as a fierce spirit or revered forebear. Others see it as a connection
+			to the pain and anguish of the world, as an impersonal tangle of wild magic, or as an expression of their
+			own deepest self. For every Barbarian, their Rage is a power that fuels not just battle prowess, but also
 			uncanny reflexes and heightened senses.</p>
-			<p>Barbarians often serve as protectors and leaders in their communities. They charge headlong into danger so 
-			those under their protection don’t have to. Their courage in the face of danger makes Barbarians perfectly 
+
+			<p>Barbarians often serve as protectors and leaders in their communities. They charge headlong into danger so
+			those under their protection don’t have to. Their courage in the face of danger makes Barbarians perfectly
 			suited for adventure.</p>`,
+
 		icon: 'iconsList.class.barbarian',
-		tags: ['tank', 'melee', 'brute', 'burst-damage', 'sustained-damage'],
+		tags: [
+			'tank',
+			'melee',
+			'brute',
+			'burst-damage',
+			'sustained-damage'
+		],
+
 		...classParent
 	},
 	{
@@ -400,6 +415,40 @@ export const classPages = [
 		description: 'A Mournbound is a cursed warrior whose sadness has become physical.',
 		icon: 'iconsList.entity.wand',
 		tags: ['melee', 'dark-magic', 'cursed', 'control', 'chains', 'grief'],
+		...classParent
+	},
+	{
+		id: 'classes--shinobi',
+		title: 'Shinobi',
+		href: '/classes/shinobi',
+
+		shortDescription:
+			'A mobile chakra warrior who combines precise attacks, supernatural techniques, and adaptable training.',
+
+		longDescription:
+			`<p>Shinobi are highly trained warriors who combine physical precision, rapid movement, and supernatural
+			techniques powered by Chakra. They move quickly across the battlefield, exploit openings in an enemy’s
+			defenses, and adapt their fighting style to the demands of each mission.</p>
+
+			<p>Every Shinobi develops a Chakra Origin that represents the elemental power, inherited bloodline, or unusual
+			source of chakra they possess. They also follow a Shinobi Path that reflects how they were trained, allowing
+			two characters with the same Origin to develop into completely different specialists.</p>
+
+			<p>Through their chosen techniques, Shinobi can become destructive combatants, elusive infiltrators, battlefield
+			controllers, healers, summoners, or tactical supporters. Even after their Chakra is exhausted, their martial
+			training, mobility, and Chakra-Infused Strikes allow them to remain capable participants in battle.</p>`,
+
+		icon: 'iconsList.game.character',
+		aliases: ['ninja'],
+
+		tags: [
+			'mobility',
+			'melee',
+			'control',
+			'utility',
+			'support'
+		],
+
 		...classParent
 	}
 ] satisfies PageRegistryEntry[];
