@@ -1,0 +1,263 @@
+// site\src\lib\pages\ClassTraits\ClassTraits.scss
+@use '$lib/styles/panels';
+
+.class-traits {
+	width: 100%;
+	min-width: 0;
+	margin-top: 15px;
+
+	container-name: class-traits;
+	container-type: inline-size;
+}
+
+.class-traits__layout {
+	display: grid;
+	grid-template-columns:
+		minmax(0, 1fr)
+		clamp(15rem, 28%, 19rem);
+	align-items: stretch;
+	gap: 1rem;
+
+	width: 100%;
+	min-width: 0;
+}
+
+.class-traits--without-image {
+	.class-traits__layout {
+		grid-template-columns: minmax(0, 1fr);
+	}
+}
+
+.class-traits__artwork {
+	@include panels.panel(0, false);
+
+	grid-column: 2;
+	grid-row: 1;
+	align-self: stretch;
+	justify-self: end;
+
+	display: grid;
+	grid-template-rows: minmax(0, 1fr) auto;
+
+	width: 100%;
+	max-width: 19rem;
+	min-width: 0;
+	min-height: 0;
+	margin: 0;
+	overflow: hidden;
+
+	background-color: var(--surface);
+}
+
+.class-traits__image-frame {
+	position: relative;
+
+	width: 100%;
+	height: 100%;
+	min-width: 0;
+	min-height: 0;
+	overflow: hidden;
+
+	background-color: var(--surface-raised);
+}
+
+/*
+ * WikiImage is a child Svelte component.
+ * :global targets the actual rendered img element.
+ */
+.class-traits__image-frame :global(.class-traits__image) {
+	position: absolute;
+	inset: 0;
+
+	display: block;
+
+	width: 100%;
+	height: 100%;
+	max-width: none;
+
+	object-fit: cover;
+	object-position: var(
+		--class-traits-image-position,
+		center center
+	);
+}
+
+.class-traits__caption {
+	padding: 0.85rem 1rem;
+
+	color: var(--text-secondary);
+	background-color: var(--surface);
+	border-top: 1px solid var(--border);
+
+	font-size: 0.88rem;
+	font-style: italic;
+	font-weight: 500;
+	line-height: 1.5;
+	text-align: center;
+}
+
+.class-traits__table {
+	@include panels.panel(0, false);
+
+	grid-column: 1;
+	grid-row: 1;
+
+	width: 100%;
+	min-width: 0;
+	margin: 0;
+	overflow: hidden;
+}
+
+.class-traits__row {
+	display: grid;
+	grid-template-columns:
+		minmax(8.5rem, 38%)
+		minmax(0, 1fr);
+
+	min-width: 0;
+	border-bottom: 1px solid var(--border);
+
+	&:nth-child(odd) {
+		background-color: var(--surface-raised);
+	}
+
+	&:nth-child(even) {
+		background-color: color-mix(
+			in srgb,
+			var(--surface-raised) 48%,
+			var(--surface)
+		);
+	}
+
+	&:last-child {
+		border-bottom: 0;
+	}
+
+	dt,
+	dd {
+		min-width: 0;
+		padding: 0.85rem 1rem;
+
+		overflow-wrap: anywhere;
+	}
+
+	dt {
+		display: flex;
+		align-items: center;
+
+		margin: 0;
+
+		color: var(--text-heading);
+		border-right: 1px solid var(--border);
+
+		font-size: 0.84rem;
+		font-weight: 750;
+		line-height: 1.4;
+	}
+
+	dd {
+		display: block;
+
+		margin: 0;
+
+		color: var(--text-primary);
+
+		font-size: 0.88rem;
+		line-height: 1.55;
+	    white-space: pre-line;
+	}
+
+	em {
+		color: var(--text-secondary);
+	}
+
+	strong {
+		color: var(--text-heading);
+	}
+}
+
+.class-traits__accent {
+	color: var(--accent-muted) !important;
+}
+
+/*
+ * Switches based on the available width of ClassTraits,
+ * rather than the full viewport width.
+ */
+@container class-traits (max-width: 600px) {
+	.class-traits__layout {
+		grid-template-columns: minmax(0, 1fr);
+		align-items: start;
+		gap: 0.85rem;
+	}
+
+	.class-traits__artwork {
+		grid-column: 1;
+		grid-row: 1;
+		align-self: start;
+		justify-self: stretch;
+
+		width: 100%;
+		max-width: none;
+		min-height: 0;
+	}
+
+	.class-traits__image-frame {
+		width: 100%;
+		height: auto;
+		aspect-ratio: 4 / 3;
+	}
+
+	.class-traits__table {
+		grid-column: 1;
+		grid-row: 2;
+	}
+
+	.class-traits__row {
+		grid-template-columns:
+			minmax(7.5rem, 38%)
+			minmax(0, 1fr);
+
+		dt,
+		dd {
+			padding: 0.75rem 0.8rem;
+		}
+
+		dt {
+			font-size: 0.79rem;
+		}
+
+		dd {
+			font-size: 0.83rem;
+		}
+	}
+
+	.class-traits__caption {
+		padding: 0.8rem 0.9rem;
+
+		font-size: 0.84rem;
+		line-height: 1.5;
+	}
+}
+
+@container class-traits (max-width: 420px) {
+	.class-traits__row {
+		grid-template-columns:
+			minmax(6.75rem, 36%)
+			minmax(0, 1fr);
+
+		dt,
+		dd {
+			padding: 0.7rem;
+		}
+
+		dt {
+			font-size: 0.76rem;
+		}
+
+		dd {
+			font-size: 0.8rem;
+			line-height: 1.5;
+		}
+	}
+}

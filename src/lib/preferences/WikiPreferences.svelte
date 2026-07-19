@@ -21,7 +21,14 @@
 	let preferences = $state<WikiPreferences>(createEmptyWikiPreferences());
 	let saved = $state(false);
 
-	let hasPreferences = $derived(Boolean(preferences.partyId || preferences.dmId));
+	let hasPreferences = $derived(
+		Boolean(
+			preferences.partyId ||
+				preferences.dmId ||
+				preferences.pageInformationPanel ||
+				preferences.pageTags
+		)
+	);
 	const partyOptions = [
 		{ value: '', label: 'No preferred party' },
 		...getSortedParties().map((party) => ({ value: party.id, label: getPartyDisplayName(party) }))
@@ -94,7 +101,7 @@
 			{#if saved}
 				Preferences saved in this browser.
 			{:else}
-				Preferences do not hide unrelated Wiki content. Search filters are managed separately on the Search page.
+				Page display preferences are managed from page information panels. Search filters are managed separately on the Search page.
 			{/if}
 		</p>
 

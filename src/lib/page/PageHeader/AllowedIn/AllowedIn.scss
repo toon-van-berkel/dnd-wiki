@@ -3,18 +3,21 @@
 	gap: 0.65rem;
 }
 
-.allowedin-title,
 .allowedin__status-title {
 	margin: 0;
-	color: var(--text-heading);
+	color: var(--availability-status-color, var(--text-heading));
 	font-size: 0.9rem;
 }
 
 .allowedin__status {
+	--availability-status-color: var(--text-heading);
+	--availability-status-surface: transparent;
+
 	display: flex;
 	gap: 0.45rem;
 	align-items: baseline;
 	flex-wrap: wrap;
+	padding: 0.1rem 0;
 }
 
 .allowedin__status-list {
@@ -24,5 +27,29 @@
 	margin: 0;
 	padding: 0;
 	list-style: none;
-	color: var(--text-secondary);
+	color: color-mix(in srgb, var(--availability-status-color) 68%, var(--text-secondary));
+}
+
+.allowedin__status-list-item {
+	border-radius: var(--radius-sm);
+}
+
+.allowedin__status--allowed {
+	--availability-status-color: var(--allowed);
+	--availability-status-surface: var(--allowed-soft);
+}
+
+.allowedin__status--limited {
+	--availability-status-color: var(--limited);
+	--availability-status-surface: var(--limited-soft);
+}
+
+.allowedin__status--banned {
+	--availability-status-color: var(--banned);
+	--availability-status-surface: var(--banned-soft);
+}
+
+.allowedin__status--approval {
+	--availability-status-color: var(--approval);
+	--availability-status-surface: var(--approval-soft);
 }
