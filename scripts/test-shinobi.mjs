@@ -140,6 +140,18 @@ test('technique sections and mobile rendering follow the interaction contract', 
 	assert.match(techniquesComponent, /class="technique-grid--mobile"/);
 });
 
+test('technique sections render only populated data and default closed after Rank I', () => {
+	assert.match(techniquesComponent, /const rankSections = \$derived\(/);
+	assert.match(techniquesComponent, /\.filter\(\(section\) => section\.techniques\.length > 0\)/);
+	assert.match(techniquesComponent, /title: `Rank \$\{rank\} Techniques`/);
+	assert.match(techniquesComponent, /restricted\.length > 0/);
+	assert.doesNotMatch(techniquesComponent, /\{#each ranks as rank\}/);
+	assert.match(techniquesComponent, /\{#each rankSections as section \(section\.id\)\}/);
+	assert.match(techniquesComponent, /\{#if restrictedSection\}/);
+	assert.match(techniquesComponent, /aria-expanded=\{isOpen\(section\.id\)\}/);
+	assert.match(techniquesComponent, /aria-controls=\{`\$\{section\.id\}-content`\}/);
+});
+
 test('inline icon prose variant is central and navigation icon layout remains separate', () => {
 	assert.match(iconStyles, /\.icon--in-text\s*\{[\s\S]*display: inline-flex;/);
 	assert.match(iconStyles, /\.icon--in-text\s*\{[\s\S]*vertical-align: -0\.125em;/);
