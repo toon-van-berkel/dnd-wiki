@@ -1,0 +1,14 @@
+.icon-label {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.3em;
+	vertical-align: baseline;
+	line-height: inherit;
+	color: var(--icon-label-color, currentColor);
+	white-space: nowrap;
+}
+
+.icon-label__text {
+	display: inline;
+	min-width: 0;
+}

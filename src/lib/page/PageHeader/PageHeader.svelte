@@ -164,10 +164,14 @@
 		<span class="page__header-eyebrow">{pageEntry.eyebrow}</span>
 	{/if}
 	<h1 class="page__header-title">{pageEntry.title}</h1>
-	{#if pageEntry.description}
-		<article class="page__header-description">
-			{@html pageEntry.description}
+	{#if pageEntry.longDescription}
+		<article class="class-introduction">
+			{@html pageEntry.longDescription}
 		</article>
+	{:else if pageEntry.shortDescription}
+		<p>{pageEntry.shortDescription}</p>
+	{:else if pageEntry.description}
+		<p>{pageEntry.description}</p>
 	{/if}
 </header>
 
