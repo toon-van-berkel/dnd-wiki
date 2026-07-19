@@ -332,6 +332,17 @@
 		white-space: nowrap;
 	}
 
+	.class-progression__summary-feature-names {
+		overflow: hidden;
+
+		color: var(--text-muted);
+
+		font-size: 0.72rem;
+		line-height: 1.3;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
 	.class-progression__chevron {
 		width: 0.45rem;
 		height: 0.45rem;

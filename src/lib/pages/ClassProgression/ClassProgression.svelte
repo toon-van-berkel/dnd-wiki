@@ -130,15 +130,14 @@
 
 					<span class="class-progression__summary-content">
 						<strong>
-							{row.features[0]?.label ?? 'No new feature'}
+							{row.features.length === 1
+								? '1 feature gained'
+								: `${row.features.length} features gained`}
 						</strong>
 
-						{#if row.features.length > 1}
-							<span>
-								+{row.features.length - 1}
-								{row.features.length === 2 ? ' more feature' : ' more features'}
-							</span>
-						{/if}
+						<span class="class-progression__summary-feature-names">
+							{row.features.map((feature) => feature.label).join(' · ')}
+						</span>
 					</span>
 
 					<span
