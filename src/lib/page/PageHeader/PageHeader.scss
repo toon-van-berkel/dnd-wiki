@@ -1,4 +1,5 @@
 @use '$lib/styles/base/mixins' as mixins;
+@use '$lib/styles/buttons';
 
 .page__header {
 	width: 100%;
@@ -29,11 +30,104 @@
 
 	&__information {
 		display: grid;
-		gap: 1rem;
+		gap: 0;
 		padding: clamp(1.2rem, 3vw, 1.7rem);
 		margin: 20px 0 10px;
 		border: 1px solid var(--border);
 		border-radius: var(--radius-lg);
 		background-color: var(--surface);
+	}
+
+	&__information-header {
+		display: flex;
+		gap: 0.75rem;
+		align-items: center;
+		justify-content: space-between;
+		min-width: 0;
+
+		h2 {
+			margin: 0;
+			color: var(--text-heading);
+			font-size: 0.95rem;
+			font-weight: 800;
+		}
+	}
+
+	&__information-actions {
+		display: flex;
+		gap: 0.45rem;
+		align-items: center;
+		flex: 0 0 auto;
+	}
+
+	&__information-button {
+		@include buttons.secondary-action(2.75rem, 0.55rem);
+
+		width: 2.75rem;
+		color: var(--text-secondary);
+
+		&:hover {
+			border-color: var(--border-strong);
+			background: var(--surface-hover);
+			color: var(--text-heading);
+		}
+
+		&[aria-pressed='true'] {
+			border-color: color-mix(in srgb, var(--accent) 34%, var(--border));
+			background: var(--accent-soft);
+			color: var(--accent-muted);
+		}
+	}
+
+	&__information-content {
+		display: grid;
+		grid-template-rows: 1fr;
+		margin-top: 1rem;
+		overflow: hidden;
+		transition:
+			grid-template-rows 180ms ease,
+			margin-top 180ms ease,
+			opacity 160ms ease;
+	}
+
+	&__information--is-collapsed &__information-content {
+		grid-template-rows: 0fr;
+		margin-top: 0;
+		opacity: 0;
+		pointer-events: none;
+	}
+
+	&__information-content-inner {
+		display: grid;
+		gap: 1rem;
+		min-height: 0;
+		overflow: hidden;
+	}
+
+	&__information-empty {
+		margin: 0;
+		color: var(--text-muted);
+		font-size: 0.9rem;
+	}
+}
+
+@media (max-width: 48rem) {
+	.page__header {
+		&__information {
+			padding: 1rem;
+		}
+
+		&__information--responsive-default &__information-content {
+			grid-template-rows: 0fr;
+			margin-top: 0;
+			opacity: 0;
+			pointer-events: none;
+		}
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.page__header__information-content {
+		transition: none;
 	}
 }

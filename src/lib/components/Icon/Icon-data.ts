@@ -296,8 +296,12 @@ export const iconsList = {
 	'util': {
 		'bubble': '/icons/util/bubble.svg',
 		'build': '/icons/util/build.svg',
+		'chevron-down': '/icons/util/chevron-down.svg',
+		'chevron-up': '/icons/util/chevron-up.svg',
 		'cog': '/icons/util/cog.svg',
 		'cross': '/icons/util/cross.svg',
+		'eye': '/icons/util/eye.svg',
+		'eye-off': '/icons/util/eye-off.svg',
 		'home': '/icons/util/home.svg',
 		'not-applicable': '/icons/util/not-applicable.svg',
 		'search': '/icons/util/search.svg',

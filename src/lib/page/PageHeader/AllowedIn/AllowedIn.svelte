@@ -15,14 +15,12 @@
 			{ id: 'allowed', label: 'Allowed', partyIds: availability.allowed ?? [] },
 			{ id: 'limited', label: 'Limited', partyIds: availability.limited ?? [] },
 			{ id: 'banned', label: 'Banned', partyIds: availability.banned ?? [] },
-			{ id: 'approval', label: 'Approval', partyIds: availability.approval ?? [] }
+			{ id: 'approval', label: 'Approval required', partyIds: availability.approval ?? [] }
 		] satisfies StatusItem[]).filter((status) => status.partyIds.length > 0)
 	);
 </script>
 
 <div class="allowedin">
-	<h2 class="allowedin-title">Page information:</h2>
-
 	{#each statuses as status}
 		<div class="allowedin__status allowedin__status--{status.id}">
 			<h3 class="allowedin__status-title">{status.label}:</h3>
