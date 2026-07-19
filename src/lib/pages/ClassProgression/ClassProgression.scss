@@ -1,0 +1,489 @@
+// site\src\lib\pages\ClassProgression\ClassProgression.scss
+@use '$lib/styles/base/mixins';
+@use '$lib/styles/panels';
+
+.class-progression {
+	width: 100%;
+	min-width: 0;
+
+	container-name: class-progression;
+	container-type: inline-size;
+}
+
+.class-progression__description {
+	max-width: 70rem;
+	margin: 0 0 1rem;
+
+	color: var(--text-secondary);
+
+	font-size: 0.92rem;
+	line-height: 1.6;
+}
+
+.class-progression__desktop {
+	display: block;
+}
+
+.class-progression__mobile {
+	display: none;
+}
+
+.class-progression__table {
+	@include panels.panel(0, false);
+
+	width: 100%;
+	overflow: hidden;
+
+	table {
+		width: 100%;
+		border-collapse: collapse;
+
+		color: var(--text-secondary);
+
+		font-size: 0.88rem;
+		line-height: 1.45;
+	}
+
+	caption {
+		padding: 1rem 1.1rem;
+
+		color: var(--text-heading);
+		background-color: var(--surface-raised);
+		border-bottom: 1px solid var(--border);
+
+		font-size: 1rem;
+		font-weight: 750;
+		text-align: left;
+	}
+
+	thead {
+		background-color: color-mix(
+			in srgb,
+			var(--surface-raised) 75%,
+			var(--background)
+		);
+	}
+
+	th,
+	td {
+		padding: 0.8rem 0.9rem;
+
+		border-right: 1px solid var(--border);
+		border-bottom: 1px solid var(--border);
+
+		vertical-align: top;
+		text-align: left;
+
+		&:last-child {
+			border-right: 0;
+		}
+	}
+
+	thead th {
+		color: var(--text-primary);
+
+		font-size: 0.74rem;
+		font-weight: 750;
+		letter-spacing: 0.045em;
+		line-height: 1.35;
+		text-transform: uppercase;
+	}
+
+	tbody {
+		tr {
+			transition: background-color 140ms ease;
+
+			&:hover {
+				background-color: var(--surface-hover);
+			}
+
+			&:nth-child(even) {
+				background-color: color-mix(
+					in srgb,
+					var(--surface-raised) 42%,
+					transparent
+				);
+			}
+
+			&:nth-child(even):hover {
+				background-color: var(--surface-hover);
+			}
+
+			&:last-child {
+				th,
+				td {
+					border-bottom: 0;
+				}
+			}
+		}
+
+		th {
+			color: var(--text-heading);
+
+			font-weight: 750;
+			white-space: nowrap;
+		}
+	}
+
+	th:nth-child(1) {
+		width: 5rem;
+	}
+
+	th:nth-child(2) {
+		width: 8rem;
+	}
+
+	th:nth-child(3) {
+		width: 45%;
+	}
+}
+
+.class-progression__centered-cell {
+	text-align: center !important;
+	white-space: nowrap;
+}
+
+.class-progression__feature-list {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.25rem 0.45rem;
+
+	margin: 0;
+	padding: 0;
+
+	list-style: none;
+
+	li {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.35rem;
+
+		&:not(:last-child)::after {
+			content: ',';
+
+			color: var(--text-muted);
+		}
+	}
+
+	a {
+		color: var(--text-primary);
+		text-decoration: none;
+
+		&:hover {
+			color: var(--accent-muted);
+			text-decoration: underline;
+			text-underline-offset: 0.18rem;
+		}
+
+		@include mixins.focus-ring;
+	}
+}
+
+.class-progression__optional {
+	display: inline-flex;
+	align-items: center;
+
+	padding: 0.08rem 0.35rem;
+
+	color: var(--approval);
+	background-color: var(--approval-soft);
+	border: 1px solid
+		color-mix(
+			in srgb,
+			var(--approval) 28%,
+			var(--border)
+		);
+	border-radius: 999px;
+
+	font-size: 0.62rem;
+	font-weight: 750;
+	letter-spacing: 0.04em;
+	line-height: 1.35;
+	text-transform: uppercase;
+}
+
+/*
+ * The layout changes based on the width available to this component.
+ * It does not use the browser viewport width.
+ */
+@container class-progression (max-width: 600px) {
+	.class-progression__desktop {
+		display: none;
+	}
+
+	.class-progression__mobile {
+		display: grid;
+		gap: 0.65rem;
+	}
+
+	.class-progression__level {
+		@include panels.panel(0, false);
+
+		overflow: hidden;
+
+		transition:
+			border-color 140ms ease,
+			background-color 140ms ease;
+
+		&[open] {
+			background-color: var(--surface-raised);
+			border-color: var(--border-strong);
+		}
+	}
+
+	.class-progression__summary {
+		display: grid;
+		grid-template-columns:
+			3.25rem
+			minmax(0, 1fr)
+			auto
+			0.75rem;
+		align-items: center;
+		gap: 0.75rem;
+
+		min-height: 4rem;
+		padding: 0.65rem 0.85rem;
+
+		color: var(--text-primary);
+
+		cursor: pointer;
+		list-style: none;
+
+		transition:
+			color 140ms ease,
+			background-color 140ms ease;
+
+		&::-webkit-details-marker {
+			display: none;
+		}
+
+		&::marker {
+			content: '';
+		}
+
+		&:hover {
+			color: var(--text-heading);
+			background-color: var(--surface-hover);
+		}
+
+		@include mixins.focus-ring;
+	}
+
+	.class-progression__level-number {
+		display: grid;
+		place-items: center;
+
+		min-height: 2.8rem;
+		padding-right: 0.75rem;
+
+		border-right: 1px solid var(--border);
+
+		span {
+			color: var(--text-muted);
+
+			font-size: 0.61rem;
+			font-weight: 750;
+			letter-spacing: 0.08em;
+			line-height: 1;
+			text-transform: uppercase;
+		}
+
+		strong {
+			color: var(--accent-muted);
+
+			font-size: 1.25rem;
+			font-weight: 800;
+			line-height: 1.1;
+		}
+	}
+
+	.class-progression__summary-content {
+		display: flex;
+		flex-direction: column;
+		gap: 0.2rem;
+
+		min-width: 0;
+
+		strong {
+			overflow: hidden;
+
+			color: var(--text-heading);
+
+			font-size: 0.86rem;
+			font-weight: 700;
+			line-height: 1.3;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+
+		span {
+			color: var(--text-muted);
+
+			font-size: 0.72rem;
+			line-height: 1.3;
+		}
+	}
+
+	.class-progression__summary-proficiency {
+		color: var(--text-secondary);
+
+		font-size: 0.72rem;
+		font-weight: 750;
+		white-space: nowrap;
+	}
+
+	.class-progression__chevron {
+		width: 0.45rem;
+		height: 0.45rem;
+
+		border-right: 2px solid var(--text-muted);
+		border-bottom: 2px solid var(--text-muted);
+
+		transform: rotate(45deg) translate(-0.1rem, -0.1rem);
+
+		transition: transform 160ms ease;
+	}
+
+	.class-progression__level[open] {
+		.class-progression__chevron {
+			transform: rotate(225deg) translate(-0.1rem, -0.1rem);
+		}
+	}
+
+	.class-progression__level-content {
+		display: grid;
+		gap: 1rem;
+
+		padding: 0 0.85rem 1rem;
+		border-top: 1px solid var(--border);
+	}
+
+	.class-progression__facts {
+		display: grid;
+		grid-template-columns: repeat(
+			auto-fit,
+			minmax(min(100%, 7rem), 1fr)
+		);
+		gap: 0.55rem;
+
+		margin: 0;
+		padding: 0.85rem 0 0;
+	}
+
+	.class-progression__fact {
+		display: flex;
+		flex-direction: column;
+		gap: 0.2rem;
+
+		min-width: 0;
+
+		dt {
+			color: var(--text-muted);
+
+			font-size: 0.65rem;
+			font-weight: 750;
+			letter-spacing: 0.055em;
+			line-height: 1.3;
+			text-transform: uppercase;
+		}
+
+		dd {
+			margin: 0;
+
+			color: var(--text-heading);
+
+			font-size: 0.9rem;
+			font-weight: 700;
+			line-height: 1.35;
+		}
+	}
+
+	.class-progression__mobile-features {
+		display: grid;
+		gap: 0.65rem;
+
+		h3 {
+			margin: 0;
+
+			color: var(--text-muted);
+
+			font-size: 0.67rem;
+			font-weight: 750;
+			letter-spacing: 0.075em;
+			line-height: 1.4;
+			text-transform: uppercase;
+		}
+
+		ul {
+			display: grid;
+			gap: 0.5rem;
+
+			margin: 0;
+			padding: 0;
+
+			list-style: none;
+		}
+
+		li {
+			display: grid;
+			grid-template-columns:
+				auto
+				minmax(0, 1fr)
+				auto;
+			align-items: center;
+			gap: 0.7rem;
+
+			min-height: 3rem;
+			padding: 0.7rem 0.8rem;
+
+			background-color: color-mix(
+				in srgb,
+				var(--surface-raised) 70%,
+				var(--surface)
+			);
+			border: 1px solid var(--border);
+			border-radius: var(--radius-sm);
+		}
+
+		a,
+		.class-progression__feature-name {
+			color: var(--text-heading);
+
+			font-size: 0.92rem;
+			font-weight: 700;
+			line-height: 1.4;
+			text-decoration: none;
+		}
+
+		a {
+			&:hover {
+				color: var(--accent-muted);
+				text-decoration: underline;
+				text-underline-offset: 0.18rem;
+			}
+
+			@include mixins.focus-ring;
+		}
+	}
+
+	.class-progression__feature-marker {
+		width: 0.45rem;
+		height: 0.45rem;
+
+		background-color: var(--accent-muted);
+		border-radius: 50%;
+	}
+
+	.class-progression__feature-content {
+		min-width: 0;
+	}
+}
+
+@include mixins.reduced-motion {
+	.class-progression__table tbody tr,
+	.class-progression__level,
+	.class-progression__summary,
+	.class-progression__chevron {
+		transition: none;
+	}
+}
