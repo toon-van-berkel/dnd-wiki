@@ -110,8 +110,16 @@
 								<strong class="class-traits__accent">
 									{part.text}
 								</strong>
-							{:else}
+							{:else if part.text}
 								<span>{part.text}</span>
+							{/if}
+
+							{#if part.items?.length}
+								<ul>
+									{#each part.items as item}
+										<li>{item}</li>
+									{/each}
+								</ul>
 							{/if}
 						{/each}
 					</dd>

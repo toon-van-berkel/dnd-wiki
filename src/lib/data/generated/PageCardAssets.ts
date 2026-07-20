@@ -336,6 +336,18 @@ export const pageCardAssets = {
 			large: '/classes/scholar/card-male-l.webp',
 		},
 	},
+	'/classes/shinobi': {
+		female: {
+			small: '/classes/shinobi/card-female-s.webp',
+			medium: '/classes/shinobi/card-female-m.webp',
+			large: '/classes/shinobi/card-female-l.webp',
+		},
+		male: {
+			small: '/classes/shinobi/card-male-s.webp',
+			medium: '/classes/shinobi/card-male-m.webp',
+			large: '/classes/shinobi/card-male-l.webp',
+		},
+	},
 	'/classes/sorcerer': {
 		female: {
 			small: '/classes/sorcerer/card-female-s.webp',
@@ -406,6 +418,18 @@ export const pageCardAssets = {
 			small: '/classes/wizard/card-male-s.webp',
 			medium: '/classes/wizard/card-male-m.webp',
 			large: '/classes/wizard/card-male-l.webp',
+		},
+	},
+	'/species/chakraborn': {
+		female: {
+			small: '/species/chakraborn/card-female-s.webp',
+			medium: '/species/chakraborn/card-female-m.webp',
+			large: '/species/chakraborn/card-female-l.webp',
+		},
+		male: {
+			small: '/species/chakraborn/card-male-s.webp',
+			medium: '/species/chakraborn/card-male-m.webp',
+			large: '/species/chakraborn/card-male-l.webp',
 		},
 	},
 	'/species/elf': {

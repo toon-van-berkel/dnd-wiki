@@ -239,7 +239,7 @@
 	</p>
 
 	<p>
-		<a href={resolveAppPath('/classes/shinobi/techniques')}>
+		<a href={resolveAppPath('/spells-and-abilities/techniques')}>
 			View the Shinobi Technique List
 		</a>
 	</p>
@@ -351,6 +351,9 @@
 	<p>
 		At 3rd level, choose the specialized discipline through which you apply your
 		Shinobi training:
+	</p>
+	<p>
+		<a href={resolveAppPath('/classes/shinobi/paths')}>View the Shinobi Paths overview</a>
 	</p>
 	<ul>
 		{#each shinobiPaths as path}

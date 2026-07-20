@@ -9,6 +9,7 @@ export const mainNavigationPageIds = [
 export const browseNavigationPageIds = [
 	'species',
 	'classes',
+	'spells-and-abilities',
 	'rules',
 	'monsters',
 	'locations'

@@ -1,0 +1,65 @@
+@use '$lib/styles/panels';
+
+.shinobi-path-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+	gap: 1rem;
+}
+
+.shinobi-path-card {
+	@include panels.panel(1rem);
+
+	display: flex;
+	flex-direction: column;
+	gap: 0.8rem;
+
+	h2 {
+		margin: 0;
+		font-size: 1.05rem;
+		line-height: 1.3;
+	}
+
+	a {
+		color: var(--text-heading);
+		text-decoration-thickness: 0.08em;
+		text-underline-offset: 0.18em;
+
+		&:focus-visible {
+			outline: 2px solid var(--accent);
+			outline-offset: 3px;
+			border-radius: var(--radius-xs);
+		}
+	}
+
+	dl {
+		display: grid;
+		gap: 0.55rem;
+		margin: 0;
+	}
+
+	div {
+		display: grid;
+		gap: 0.2rem;
+	}
+
+	dt {
+		color: var(--text-heading);
+		font-size: 0.72rem;
+		font-weight: 750;
+		letter-spacing: 0.045em;
+		text-transform: uppercase;
+	}
+
+	dd,
+	p {
+		margin: 0;
+		color: var(--text-secondary);
+		line-height: 1.5;
+	}
+}
+
+.shinobi-path-card__link {
+	align-self: flex-start;
+	margin-top: auto;
+	font-weight: 750;
+}

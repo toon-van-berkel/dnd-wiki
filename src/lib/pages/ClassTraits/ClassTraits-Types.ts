@@ -6,7 +6,8 @@ export type ClassTraitPartVariant =
 	| 'accent';
 
 export type ClassTraitPart = {
-	text: string;
+	text?: string;
+	items?: readonly string[];
 	variant?: ClassTraitPartVariant;
 };
 

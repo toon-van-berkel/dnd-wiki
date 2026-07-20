@@ -164,7 +164,17 @@
 
 		font-size: 0.88rem;
 		line-height: 1.55;
-	    white-space: pre-line;
+		white-space: pre-line;
+
+		ul {
+			margin: 0.35rem 0 0;
+			padding-left: 1.1rem;
+			white-space: normal;
+		}
+
+		li + li {
+			margin-top: 0.18rem;
+		}
 	}
 
 	em {

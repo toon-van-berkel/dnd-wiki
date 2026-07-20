@@ -48,7 +48,9 @@ export const contentTypeLabels: Record<SearchEntryKind, string> = {
 	rule: 'Rule',
 	class: 'Class',
 	subclass: 'Subclass',
-	species: 'Species'
+	species: 'Species',
+	technique: 'Technique',
+	spell: 'Spell'
 };
 
 export function createEmptySearchState(): WikiSearchState {
@@ -87,7 +89,7 @@ function buildSearchEntries(): SearchEntry[] {
 			id: entry.id,
 			title: entry.title,
 			href: entry.href,
-			description: entry.description ?? '',
+			description: entry.shortDescription ?? entry.description ?? '',
 			kind: entry.kind ?? inferEntryKind(entry.id),
 			parentTitle: parent?.title,
 			tags: entry.tags ?? [],
@@ -101,8 +103,16 @@ function buildSearchEntries(): SearchEntry[] {
 const searchEntries = buildSearchEntries();
 
 function inferEntryKind(id: string): SearchEntryKind {
-	if (['classes', 'species', 'rules', 'monsters', 'locations'].includes(id)) {
+	if (['classes', 'species', 'spells-and-abilities', 'rules', 'monsters', 'locations'].includes(id)) {
 		return 'collection';
+	}
+
+	if (id.startsWith('spells-and-abilities--techniques--')) {
+		return 'technique';
+	}
+
+	if (id.startsWith('spells-and-abilities--spells--')) {
+		return 'spell';
 	}
 
 	if (id.startsWith('classes--rogue--') || id.startsWith('classes--cleric--')) {
