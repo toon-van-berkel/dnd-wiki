@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { RuleBlock } from './types';
+	import type { RuleBlock } from '$lib/data/techniques';
 
 	type Props = {
 		blocks: readonly RuleBlock[];

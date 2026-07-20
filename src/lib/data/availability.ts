@@ -1,4 +1,5 @@
 import { isPartyId, selectAllParties, type PartyId } from '$lib/config/parties';
+import { getTechniquePageId, techniques } from '$lib/data/techniques';
 import { getPageEntry, getPageEntryByHref } from '$lib/page/registry';
 
 export type AvailabilityStatus = 'allowed' | 'limited' | 'banned' | 'approval';
@@ -20,6 +21,7 @@ const allPartyIds = selectAllParties().map((party) => party.id);
 const mainCampaignPartyIds = ['i1', 'i2', 'i3', 'i4', 'i5', 'i6'] satisfies PartyId[];
 
 export const availabilityByPageId: Record<string, PageAvailability> = {
+	'species--chakraborn': { banned: allPartyIds },
 	'species--elf': {
 		allowed: ['i1', 'i2', 'i4', 'i5', 'i6', 'i7', 'i8'],
 		banned: ['i3']
@@ -59,14 +61,20 @@ export const availabilityByPageId: Record<string, PageAvailability> = {
 	'classes--vampyr': { banned: allPartyIds },
 	'classes--mournbound': { banned: allPartyIds },
 	'classes--shinobi': { banned: allPartyIds },
-	'classes--shinobi--techniques': { banned: allPartyIds },
+	'classes--shinobi--paths': { banned: allPartyIds },
 	'classes--shinobi--path-of-taijutsu': { banned: allPartyIds },
 	'classes--shinobi--path-of-elemental-ninjutsu': { banned: allPartyIds },
 	'classes--shinobi--path-of-genjutsu': { banned: allPartyIds },
 	'classes--shinobi--path-of-the-bloodline': { banned: allPartyIds },
 	'classes--shinobi--path-of-the-medical-shinobi': { banned: allPartyIds },
 	'classes--shinobi--path-of-sealing': { banned: allPartyIds },
-	'classes--shinobi--path-of-fortune': { banned: allPartyIds }
+	'classes--shinobi--path-of-fortune': { banned: allPartyIds },
+	'spells-and-abilities--techniques': { banned: allPartyIds },
+	...Object.fromEntries(
+		techniques
+			.filter((technique) => technique.source === 'shinobi')
+			.map((technique) => [getTechniquePageId(technique), { banned: allPartyIds }])
+	)
 } satisfies Record<string, PageAvailability>;
 
 function copyAvailability(availability: PageAvailability | undefined): PageAvailability {

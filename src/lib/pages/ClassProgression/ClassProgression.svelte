@@ -10,7 +10,8 @@
 		description,
 		metrics,
 		rows,
-		defaultOpenLevels = [1]
+		defaultOpenLevels = [1],
+		variant = 'standard'
 	}: Props = $props();
 
 	function formatLevel(level: number): string {
@@ -40,7 +41,7 @@
 	}
 </script>
 
-<div class="class-progression">
+<div class="class-progression class-progression--{variant}">
 	{#if description}
 		<p class="class-progression__description">
 			{description}

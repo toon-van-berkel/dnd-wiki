@@ -4,6 +4,8 @@ import {
 	mainNavigationPageIds,
 	resourceNavigationPageIds
 } from '$lib/config/navigation';
+import { spells, getSpellHref } from '$lib/data/spells';
+import { techniques, getTechniqueHref } from '$lib/data/techniques';
 
 import { pageRegistry } from './Registry-data';
 import type { PageId, PageRegistryEntry } from './Registry-Types';
@@ -54,9 +56,10 @@ const routeManifest = new Set([
 	'/classes/shinobi/path-of-taijutsu',
 	'/classes/shinobi/path-of-the-bloodline',
 	'/classes/shinobi/path-of-the-medical-shinobi',
-	'/classes/shinobi/techniques',
+	'/classes/shinobi/paths',
 	'/classes/sorcerer',
 	'/classes/treasure-hunter',
+	'/classes/vanguard',
 	'/classes/vampyr',
 	'/classes/warden',
 	'/classes/warlock',
@@ -76,9 +79,15 @@ const routeManifest = new Set([
 	'/search',
 	'/sources',
 	'/species',
+	'/species/chakraborn',
 	'/species/elf',
 	'/species/elf/astral-elf',
-	'/species/human'
+	'/species/human',
+	'/spells-and-abilities',
+	'/spells-and-abilities/spells',
+	'/spells-and-abilities/techniques',
+	...techniques.map(getTechniqueHref),
+	...spells.map(getSpellHref)
 ]);
 
 function collectDuplicateValues(entries: readonly PageRegistryEntry[], key: 'id' | 'href'): string[] {

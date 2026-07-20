@@ -1,12 +1,23 @@
 <script lang="ts">
 	import { page } from '$app/state';
-	import { getPageAncestors, type PageRegistryEntry } from '$lib/page/registry';
+	import { getPageAncestors, getPageEntry, type PageRegistryEntry } from '$lib/page/registry';
 	import { resolveAppPath } from '$lib/utils/paths';
 
 	let { pageEntry }: { pageEntry: PageRegistryEntry } = $props();
 
-	const breadcrumbs = $derived([...getPageAncestors(pageEntry), pageEntry]);
+	const homeEntry = getPageEntry('home');
+	const breadcrumbs = $derived(
+		pageEntry.id === 'home'
+			? [pageEntry]
+			: [homeEntry, ...getPageAncestors(pageEntry), pageEntry].filter(
+					(entry): entry is PageRegistryEntry => Boolean(entry)
+				)
+	);
 	const canGoBack = $derived(breadcrumbs.length > 1);
+
+	function breadcrumbLabel(breadcrumb: PageRegistryEntry) {
+		return breadcrumb.id === 'home' ? 'Home' : breadcrumb.title;
+	}
 
 	function handleBack() {
 		if (canGoBack && typeof history !== 'undefined' && history.length > 1) {
@@ -29,7 +40,7 @@
 					href={resolveAppPath(breadcrumb.href)}
 					aria-current={breadcrumb.href === page.url.pathname ? 'page' : undefined}
 				>
-					{breadcrumb.title}
+					{breadcrumbLabel(breadcrumb)}
 				</a>
 			</li>
 		{/each}

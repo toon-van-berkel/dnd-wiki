@@ -1,11 +1,14 @@
 <script lang="ts">
+	import type { Snippet } from 'svelte';
+
 	type Props = {
 		caption?: string;
 		columns: readonly string[];
-		rows: readonly (readonly string[])[];
+		rows?: readonly (readonly string[])[];
+		body?: Snippet;
 	};
 
-	let { caption, columns, rows }: Props = $props();
+	let { caption, columns, rows = [], body }: Props = $props();
 </script>
 
 <div class="wiki-table">
@@ -21,13 +24,17 @@
 			</tr>
 		</thead>
 		<tbody>
-			{#each rows as row}
-				<tr>
-					{#each row as cell}
-						<td>{cell}</td>
-					{/each}
-				</tr>
-			{/each}
+			{#if body}
+				{@render body()}
+			{:else}
+				{#each rows as row}
+					<tr>
+						{#each row as cell}
+							<td>{cell}</td>
+						{/each}
+					</tr>
+				{/each}
+			{/if}
 		</tbody>
 	</table>
 </div>

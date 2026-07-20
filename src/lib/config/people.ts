@@ -27,9 +27,11 @@ export type PersonId =
 export type Person = {
 	id: PersonId;
 	name: string;
+	shortName?: string;
+	aliases?: readonly string[];
 };
 
-export const people = {
+export const people: Record<PersonId, Person> = {
 	andy: { id: 'andy', name: 'Andy' },
 	arch: { id: 'arch', name: 'Arch' },
 	aron: { id: 'aron', name: 'Aron' },
@@ -49,12 +51,12 @@ export const people = {
 	stan: { id: 'stan', name: 'Stan' },
 	stijn: { id: 'stijn', name: 'Stijn' },
 	thomas: { id: 'thomas', name: 'Thomas' },
-	tijs: { id: 'tijs', name: 'Tijs' },
+	tijs: { id: 'tijs', name: 'Tijs', aliases: ['Elenor'] },
 	tiago: { id: 'tiago', name: 'Tiago' },
-	toon: { id: 'toon', name: 'Toon van Berkel' },
+	toon: { id: 'toon', name: 'Toon van Berkel', shortName: 'Toon' },
 	tyler: { id: 'tyler', name: 'Tyler' },
 	vince: { id: 'vince', name: 'Vince' }
-} satisfies Record<PersonId, Person>;
+};
 
 export function isPersonId(value: string): value is PersonId {
 	return value in people;
@@ -66,6 +68,10 @@ export function getPerson(id: PersonId): Person {
 
 export function getPersonDisplayName(id: PersonId): string {
 	return people[id].name;
+}
+
+export function getPersonShortDisplayName(id: PersonId): string {
+	return people[id].shortName ?? people[id].name;
 }
 
 export function getPersonDisplayNames(ids: readonly PersonId[]): string[] {

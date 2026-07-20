@@ -77,6 +77,53 @@
 	}
 }
 
+:global(.wiki-table tbody th[scope='row']) {
+	color: var(--text-primary);
+	font-size: inherit;
+	font-weight: 650;
+	letter-spacing: 0;
+	text-transform: none;
+	white-space: nowrap;
+}
+
+:global(.wiki-table__list) {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.35rem 0.7rem;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+:global(.wiki-table__list-item) {
+	display: inline-flex;
+	align-items: baseline;
+	gap: 0.3rem;
+	min-width: 0;
+}
+
+:global(.wiki-table__status) {
+	display: inline-flex;
+	align-items: center;
+	padding: 0.08rem 0.38rem;
+	border: 1px solid color-mix(in srgb, var(--approval) 35%, var(--border));
+	border-radius: 999px;
+	background: var(--approval-soft);
+	color: var(--approval);
+	font-size: 0.66rem;
+	font-weight: 750;
+	letter-spacing: 0.04em;
+	line-height: 1.35;
+	text-transform: uppercase;
+	white-space: nowrap;
+}
+
+:global(.wiki-table__external-indicator) {
+	color: var(--text-muted);
+	font-size: 0.82em;
+	font-weight: 700;
+}
+
 @media (max-width: breakpoints.$table-mobile) {
 	.wiki-table {
 		margin-inline: 0;

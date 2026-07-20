@@ -1,5 +1,6 @@
 // site\src\lib\page\registry\Registry-Types.ts
 import type { IconReference } from '$lib/components/Icon/Icon-Types';
+import type { PersonId } from '$lib/config/people';
 
 export type PageId = string;
 
@@ -11,7 +12,9 @@ export type PageKind =
 	| 'rule'
 	| 'class'
 	| 'subclass'
-	| 'species';
+	| 'species'
+	| 'technique'
+	| 'spell';
 
 export type PageRegistryEntry = {
 	id: PageId;
@@ -29,6 +32,7 @@ export type PageRegistryEntry = {
 	tags?: string[];
 	keywords?: string[];
 	aliases?: string[];
+	authorId?: PersonId;
 	searchable?: boolean;
 	navigation?: boolean;
 	footer?: boolean;

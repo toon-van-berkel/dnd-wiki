@@ -2,7 +2,13 @@
 	import { base } from '$app/paths';
 	import { page } from '$app/state';
 	import Icon from '$lib/components/Icon/Icon.svelte';
-	import { getNavigationPages, getPageChildren, type PageRegistryEntry } from '$lib/page/registry';
+	import {
+		getNavigationPages,
+		getPageAncestors,
+		getPageChildren,
+		getPageEntryByHref,
+		type PageRegistryEntry
+	} from '$lib/page/registry';
 	import { resolveAppPath } from '$lib/utils/paths';
 
 	const appBasePath = base.replace(/\/+$/, '');
@@ -34,15 +40,24 @@
 		return pathname === route || pathname.startsWith(`${route}/`);
 	}
 
+	const activeEntry = $derived(getPageEntryByHref(normalizeActivePath(page.url.pathname)));
+	const activeAncestorIds = $derived(
+		new Set(activeEntry ? getPageAncestors(activeEntry).map((entry) => entry.id) : [])
+	);
+
+	function isBranchActive(item: PageRegistryEntry): boolean {
+		return isWithinRoute(item.href) || activeAncestorIds.has(item.id);
+	}
+
 	function isBranchOpen(item: PageRegistryEntry): boolean {
 		return (
 			userOpenedBranchIds.has(item.id) ||
-			(isWithinRoute(item.href) && !userClosedBranchIds.has(item.id))
+			(isBranchActive(item) && !userClosedBranchIds.has(item.id))
 		);
 	}
 
 	function childrenFor(item: PageRegistryEntry): PageRegistryEntry[] {
-		return getPageChildren(item.id);
+		return getPageChildren(item.id).filter((child) => child.navigation !== false);
 	}
 
 	let userOpenedBranchIds = $state(new Set<string>());
@@ -72,7 +87,7 @@
 			{@const children = childrenFor(item)}
 			{@const hasChildren = children.length > 0}
 			{@const branchOpen = hasChildren && isBranchOpen(item)}
-			{@const branchActive = isWithinRoute(item.href)}
+			{@const branchActive = isBranchActive(item)}
 
 			<li class="sidebar__tree-item">
 				<div

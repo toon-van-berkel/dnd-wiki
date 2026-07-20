@@ -3,10 +3,10 @@
 	import PageSection from '$lib/pages/PageSection/PageSection.svelte';
 	import { getPageChildren } from '$lib/page/registry';
 
-	const classPages = getPageChildren('classes').map(({ title, href, description, tags }) => ({
+	const classPages = getPageChildren('classes').map(({ title, href, shortDescription, description, tags }) => ({
 		title,
 		href,
-		description: description ?? '',
+		description: shortDescription ?? description ?? '',
 		tags: tags ?? []
 	}));
 </script>

@@ -1,7 +1,6 @@
 <script lang="ts">
-	import { base } from '$app/paths';
-	import { page } from '$app/state';
 	import type { Snippet } from 'svelte';
+	import type { LayoutData } from './$types';
 
 	import Metadata from '$lib/page/Metadata/Metadata.svelte';
 	import PageHeader from '$lib/page/PageHeader/PageHeader.svelte';
@@ -12,19 +11,12 @@
 
 	type Props = {
 		children: Snippet;
+		data: LayoutData;
 	};
 
-	let { children }: Props = $props();
+	let { children, data }: Props = $props();
 
-	function normalizeRoutePathname(pathname: string) {
-		if (base && (pathname === base || pathname.startsWith(`${base}/`))) {
-			return pathname.slice(base.length) || '/';
-		}
-
-		return pathname;
-	}
-
-	const pageEntry = $derived(getPageEntryByHref(normalizeRoutePathname(page.url.pathname)));
+	const pageEntry = $derived(getPageEntryByHref(data.pathname));
 </script>
 
 <svelte:head>

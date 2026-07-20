@@ -1,0 +1,26 @@
+.author {
+	display: inline-flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.45rem;
+	margin-bottom: 1.5rem;
+	padding: 0.45rem 0.65rem;
+	border: 1px solid var(--border);
+	border-radius: var(--radius-sm);
+	background: var(--surface-raised);
+	color: var(--text-secondary);
+	font-size: 0.95rem;
+	line-height: 1.45;
+}
+
+.author__label {
+	color: var(--text-muted);
+	font-size: 0.78rem;
+	font-weight: 800;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+}
+
+.author__name {
+	color: var(--text-heading);
+}

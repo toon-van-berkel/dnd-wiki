@@ -138,6 +138,21 @@
 	}
 }
 
+.class-progression--wide {
+	.class-progression__table {
+		overflow-x: auto;
+		overflow-y: hidden;
+	}
+
+	.class-progression__table table {
+		min-width: 72rem;
+	}
+
+	.class-progression__table th:nth-child(3) {
+		width: 28%;
+	}
+}
+
 .class-progression__centered-cell {
 	text-align: center !important;
 	white-space: nowrap;
@@ -206,7 +221,7 @@
  * The layout changes based on the width available to this component.
  * It does not use the browser viewport width.
  */
-@container class-progression (max-width: 600px) {
+@mixin class-progression-mobile-layout {
 	.class-progression__desktop {
 		display: none;
 	}
@@ -489,6 +504,17 @@
 		min-width: 0;
 	}
 }
+
+@container class-progression (max-width: 600px) {
+	@include class-progression-mobile-layout;
+}
+
+@container class-progression (max-width: 860px) {
+	.class-progression--wide {
+		@include class-progression-mobile-layout;
+	}
+}
+
 
 @include mixins.reduced-motion {
 	.class-progression__table tbody tr,

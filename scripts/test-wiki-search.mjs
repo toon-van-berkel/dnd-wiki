@@ -50,6 +50,16 @@ function routeHrefFromPage(path) {
 	return route || '/';
 }
 
+function dynamicTechniqueHrefs() {
+	return [...read('src/lib/data/techniques/shinobi.ts').matchAll(/slug: '([^']+)'/g)]
+		.map((match) => `/spells-and-abilities/techniques/${match[1]}`);
+}
+
+function dynamicSpellHrefs() {
+	return [...read('src/lib/data/spells/spells.ts').matchAll(/slug: '([^']+)'/g)]
+		.map((match) => `/spells-and-abilities/spells/${match[1]}`);
+}
+
 function arrayLiteralValues(source, exportName) {
 	const match = source.match(new RegExp(`export const ${exportName}\\s*=\\s*\\[([\\s\\S]*?)\\]`));
 	if (!match) return [];
@@ -64,6 +74,9 @@ test('page registry has stable unique ids and existing routes', () => {
 			.filter((path) => path.endsWith('/+page.svelte') || path === 'src/routes/+page.svelte')
 			.map(routeHrefFromPage)
 	);
+	for (const href of [...dynamicTechniqueHrefs(), ...dynamicSpellHrefs()]) {
+		routeHrefs.add(href);
+	}
 
 	assert.equal(ids.length, new Set(ids).size, 'registry ids must be unique');
 	assert.equal(hrefs.length, new Set(hrefs).size, 'registry hrefs must be unique');
@@ -167,8 +180,11 @@ test('route pages leave page identity to the root layout', () => {
 
 test('root layout owns metadata and PageHeader', () => {
 	const layout = read('src/routes/+layout.svelte');
+	const layoutLoad = read('src/routes/+layout.ts');
 	assert.match(layout, /Metadata/);
 	assert.match(layout, /PageHeader/);
 	assert.match(layout, /getPageEntryByHref/);
-	assert.match(layout, /normalizeRoutePathname/);
+	assert.match(layout, /data\.pathname/);
+	assert.match(layoutLoad, /normalizeRoutePathname/);
+	assert.match(layoutLoad, /export const load/);
 });

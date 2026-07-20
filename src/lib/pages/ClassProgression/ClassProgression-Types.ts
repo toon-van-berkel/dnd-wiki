@@ -29,4 +29,5 @@ export type ClassProgressionData = {
 
 export type Props = ClassProgressionData & {
 	defaultOpenLevels?: readonly number[];
+	variant?: 'standard' | 'wide';
 };

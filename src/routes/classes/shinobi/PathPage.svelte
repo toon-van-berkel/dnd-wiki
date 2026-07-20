@@ -2,9 +2,9 @@
 	import IconLabel from '$lib/components/Icon/IconLabel.svelte';
 	import WikiTable from '$lib/components/WikiTable/WikiTable.svelte';
 	import PageSection from '$lib/pages/PageSection/PageSection.svelte';
+	import RuleBlocks from '$lib/pages/RuleBlocks/RuleBlocks.svelte';
 	import { resolveAppPath } from '$lib/utils/paths';
 
-	import RuleBlocks from './RuleBlocks.svelte';
 	import type { ShinobiPath } from './types';
 
 	type Props = {
@@ -85,7 +85,10 @@
 
 	<p class="shinobi-path-links">
 		<a href={resolveAppPath('/classes/shinobi')}>Return to the Shinobi class</a>
-		<a href={resolveAppPath('/classes/shinobi/techniques')}>View Shinobi Techniques</a>
+		<a href={resolveAppPath('/spells-and-abilities/techniques')}>View Shinobi Techniques</a>
+		{#if path.id === 'path-of-the-bloodline'}
+			<a href={resolveAppPath('/spells-and-abilities/techniques')}>View Living Shadow Heritage Techniques</a>
+		{/if}
 	</p>
 </PageSection>
 

@@ -16,8 +16,8 @@ const clericParent = {
 	eyebrow: 'Cleric domain'
 } as const;
 
-const shinobiParent = {
-	parentId: 'classes--shinobi',
+const shinobiPathParent = {
+	parentId: 'classes--shinobi--paths',
 	eyebrow: 'Shinobi Path',
 	icon: 'iconsList.game.character'
 } as const;
@@ -440,15 +440,46 @@ export const classPages = [
 		eyebrow: 'Class'
 	},
 	{
-		id: 'classes--shinobi--techniques',
-		title: 'Shinobi Techniques',
-		href: '/classes/shinobi/techniques',
-		description: 'A complete reference for the supernatural techniques available to the Shinobi class.',
-		eyebrow: 'Shinobi Class Feature',
-		icon: 'iconsList.game.spell',
-		keywords: ['chakra', 'ninja', 'shinobi', 'techniques', 'ninjutsu', 'class feature'],
-		tags: ['Shinobi', 'Techniques', 'Chakra', 'Class Feature'],
+		id: 'classes--vanguard',
+		title: 'Vanguard',
+		href: '/classes/vanguard',
+		description:
+			'Vanguards are bound not by sacred oaths or ancient bloodlines, but by an unshakable resolve to stand between danger and those who cannot face it alone. Their strength is born from compassion, their magic fueled by an unwavering will to aid others, no matter the sacrifice. To a Vanguard, every life is worth protecting, and every battle is another chance to become the shield that others can rely upon.',
+		shortDescription:
+			'Vanguards are bound not by sacred oaths or ancient bloodlines, but by an unshakable resolve to stand between danger and those who cannot face it alone. Their strength is born from compassion, their magic fueled by an unwavering will to aid others, no matter the sacrifice. To a Vanguard, every life is worth protecting, and every battle is another chance to become the shield that others can rely upon.',
+		longDescription:
+			`<p>Vanguards are bound not by sacred oaths or ancient bloodlines, but by an unshakable resolve to stand between danger and those who cannot face it alone. Their strength is born from compassion, their magic fueled by an unwavering will to aid others, no matter the sacrifice. To a Vanguard, every life is worth protecting, and every battle is another chance to become the shield that others can rely upon.</p>
+
+<p>Vanguards dedicate themselves to mastering supportive magic and battlefield tactics, empowering allies while unraveling the resolve of their enemies. Their spells bolster the weary, strengthen the courageous, and turn the tide of battle through careful guidance rather than overwhelming force. At the same time, they sap the strength and spirit of those who threaten the innocent, ensuring their companions always fight with the advantage.</p>
+
+<p>For a Vanguard, the call to adventure is a call to service. Whether defending a village from invading monsters, standing beside heroes against impossible odds, or offering hope where all seems lost, they place themselves in harm's way so that others do not have to. Their greatest victories are not measured by the foes they defeat, but by the lives they save.</p>`,
+		icon: 'iconsList.entity.armor',
+		authorId: 'tijs',
+		aliases: ['Elenor', 'support'],
+		keywords: [
+			'vanguard',
+			'tool points',
+			'helpful companion',
+			'thaumaturgist',
+			'saboteur',
+			'living shield'
+		],
+		tags: ['Class', 'Vanguard', 'Homebrew'],
 		kind: 'class',
+		...classParent,
+		eyebrow: 'Class'
+	},
+	{
+		id: 'classes--shinobi--paths',
+		title: 'Shinobi Paths',
+		href: '/classes/shinobi/paths',
+		description:
+			'Specialized disciplines that determine how a Shinobi applies martial training and chakra.',
+		eyebrow: 'Shinobi Class Feature',
+		icon: 'iconsList.game.character',
+		keywords: ['chakra', 'ninja', 'shinobi', 'paths', 'subclasses', 'taijutsu', 'ninjutsu', 'genjutsu', 'bloodline', 'medical', 'sealing', 'fortune'],
+		tags: ['Shinobi', 'Paths', 'Chakra', 'Class Feature'],
+		kind: 'collection',
 		parentId: 'classes--shinobi'
 	},
 	{
@@ -460,7 +491,7 @@ export const classPages = [
 		keywords: ['chakra', 'ninja', 'shinobi', 'taijutsu', 'subclass', 'path', 'melee', 'martial'],
 		tags: ['Shinobi', 'Path', 'Subclass', 'Chakra', 'Taijutsu', 'Melee', 'Martial'],
 		kind: 'subclass',
-		...shinobiParent,
+		...shinobiPathParent,
 		icon: 'iconsList.weapon.strike'
 	},
 	{
@@ -472,7 +503,7 @@ export const classPages = [
 		keywords: ['chakra', 'ninja', 'shinobi', 'ninjutsu', 'elemental', 'nature', 'subclass', 'path'],
 		tags: ['Shinobi', 'Path', 'Subclass', 'Chakra', 'Ninjutsu', 'Elemental', 'Nature'],
 		kind: 'subclass',
-		...shinobiParent,
+		...shinobiPathParent,
 		icon: 'iconsList.monster.elemental'
 	},
 	{
@@ -484,7 +515,7 @@ export const classPages = [
 		keywords: ['chakra', 'ninja', 'shinobi', 'genjutsu', 'illusion', 'control', 'subclass', 'path'],
 		tags: ['Shinobi', 'Path', 'Subclass', 'Chakra', 'Genjutsu', 'Illusion', 'Control'],
 		kind: 'subclass',
-		...shinobiParent,
+		...shinobiPathParent,
 		icon: 'iconsList.spell.illusion'
 	},
 	{
@@ -496,7 +527,7 @@ export const classPages = [
 		keywords: ['chakra', 'ninja', 'shinobi', 'bloodline', 'heritage', 'chakra heritage', 'subclass', 'path'],
 		tags: ['Shinobi', 'Path', 'Subclass', 'Chakra', 'Bloodline', 'Chakra Heritage', 'Heritage'],
 		kind: 'subclass',
-		...shinobiParent,
+		...shinobiPathParent,
 		icon: 'iconsList.hp.blood'
 	},
 	{
@@ -508,7 +539,7 @@ export const classPages = [
 		keywords: ['chakra', 'ninja', 'shinobi', 'medical', 'healing', 'support', 'subclass', 'path'],
 		tags: ['Shinobi', 'Path', 'Subclass', 'Chakra', 'Medical', 'Healing', 'Support'],
 		kind: 'subclass',
-		...shinobiParent,
+		...shinobiPathParent,
 		icon: 'iconsList.skill.medicine'
 	},
 	{
@@ -520,7 +551,7 @@ export const classPages = [
 		keywords: ['chakra', 'ninja', 'shinobi', 'sealing', 'control', 'utility', 'subclass', 'path'],
 		tags: ['Shinobi', 'Path', 'Subclass', 'Chakra', 'Sealing', 'Control', 'Utility'],
 		kind: 'subclass',
-		...shinobiParent,
+		...shinobiPathParent,
 		icon: 'iconsList.game.lock'
 	},
 	{
@@ -531,7 +562,7 @@ export const classPages = [
 		keywords: ['chakra', 'ninja', 'shinobi', 'fortune', 'luck', 'support', 'subclass', 'path'],
 		tags: ['Shinobi', 'Path', 'Subclass', 'Chakra', 'Fortune', 'Luck', 'Support'],
 		kind: 'subclass',
-		...shinobiParent,
+		...shinobiPathParent,
 		icon: 'iconsList.dice.d20'
 	}
 ] satisfies PageRegistryEntry[];

@@ -16,6 +16,18 @@ const config = {
 		paths: {
 			base: basePath,
 			relative: true
+		},
+		prerender: {
+			handleUnseenRoutes: ({ routes }) => {
+				const allowedUnseenRoutes = new Set(['/spells-and-abilities/spells/[slug]']);
+				const unexpectedRoutes = routes.filter((route) => !allowedUnseenRoutes.has(route));
+
+				if (unexpectedRoutes.length > 0) {
+					throw new Error(
+						`Unexpected prerenderable routes were not rendered: ${unexpectedRoutes.join(', ')}`
+					);
+				}
+			}
 		}
 	}
 };
