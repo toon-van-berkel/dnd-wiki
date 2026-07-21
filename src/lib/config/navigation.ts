@@ -1,3 +1,4 @@
+// site\src\lib\config\navigation.ts
 import type { PageId } from '$lib/page/registry/Registry-Types';
 
 export const mainNavigationPageIds = [
@@ -13,6 +14,11 @@ export const browseNavigationPageIds = [
 	'rules',
 	'monsters',
 	'locations'
+] satisfies PageId[];
+
+export const notesNavigationPageIds = [
+	'notes-campaigns',
+	'notes-one-shots'
 ] satisfies PageId[];
 
 export const resourceNavigationPageIds = [

@@ -1,7 +1,9 @@
+// site\src\lib\page\registry\Registry-helper.ts
 import {
 	browseNavigationPageIds,
 	footerPageIdsByGroup,
 	mainNavigationPageIds,
+	notesNavigationPageIds,
 	resourceNavigationPageIds
 } from '$lib/config/navigation';
 
@@ -26,26 +28,50 @@ function resolveRequiredPage(id: PageId): PageRegistryEntry {
 	return page;
 }
 
-export function getPageEntry(id: PageId): PageRegistryEntry | undefined {
+export function getPageEntry(
+	id: PageId
+): PageRegistryEntry | undefined {
 	return pageById.get(id);
 }
 
-export function getPageEntryByHref(href: string): PageRegistryEntry | undefined {
-	const normalizedHref = href === '' ? '/' : href.replace(/\/$/, '') || '/';
+export function getPageEntryByHref(
+	href: string
+): PageRegistryEntry | undefined {
+	const normalizedHref =
+		href === '' ? '/' : href.replace(/\/$/, '') || '/';
+
 	return pageByHref.get(normalizedHref);
 }
 
-export function getPageChildren(parentId: PageId): PageRegistryEntry[] {
-	return pageRegistry.filter((entry) => entry.parentId === parentId);
+export function getPageChildren(
+	parentId: PageId
+): PageRegistryEntry[] {
+	return pageRegistry.filter(
+		(entry) => entry.parentId === parentId
+	);
 }
 
-export function getPageParent(entryOrId: PageRegistryEntry | PageId): PageRegistryEntry | undefined {
-	const entry = typeof entryOrId === 'string' ? getPageEntry(entryOrId) : entryOrId;
-	return entry?.parentId ? getPageEntry(entry.parentId) : undefined;
+export function getPageParent(
+	entryOrId: PageRegistryEntry | PageId
+): PageRegistryEntry | undefined {
+	const entry =
+		typeof entryOrId === 'string'
+			? getPageEntry(entryOrId)
+			: entryOrId;
+
+	return entry?.parentId
+		? getPageEntry(entry.parentId)
+		: undefined;
 }
 
-export function getPageAncestors(entryOrId: PageRegistryEntry | PageId): PageRegistryEntry[] {
-	const entry = typeof entryOrId === 'string' ? getPageEntry(entryOrId) : entryOrId;
+export function getPageAncestors(
+	entryOrId: PageRegistryEntry | PageId
+): PageRegistryEntry[] {
+	const entry =
+		typeof entryOrId === 'string'
+			? getPageEntry(entryOrId)
+			: entryOrId;
+
 	const ancestors: PageRegistryEntry[] = [];
 	let current = entry ? getPageParent(entry) : undefined;
 
@@ -57,36 +83,65 @@ export function getPageAncestors(entryOrId: PageRegistryEntry | PageId): PageReg
 	return ancestors;
 }
 
-export function getNavigationPages(section: 'main' | 'browse' | 'resources' = 'browse'): PageRegistryEntry[] {
-	const ids =
-		section === 'main'
-			? mainNavigationPageIds
-			: section === 'resources'
-				? resourceNavigationPageIds
-				: browseNavigationPageIds;
+export type NavigationSection =
+	| 'main'
+	| 'browse'
+	| 'notes'
+	| 'resources';
 
-	return ids.map(resolveRequiredPage);
+export function getNavigationPages(
+	section: NavigationSection = 'browse'
+): PageRegistryEntry[] {
+	const idsBySection: Record<
+		NavigationSection,
+		readonly PageId[]
+	> = {
+		main: mainNavigationPageIds,
+		browse: browseNavigationPageIds,
+		notes: notesNavigationPageIds,
+		resources: resourceNavigationPageIds
+	};
+
+	return idsBySection[section].map(resolveRequiredPage);
 }
 
-export function getFooterPages(): Record<string, PageRegistryEntry[]>;
-export function getFooterPages(groupId: string): PageRegistryEntry[];
-export function getFooterPages(groupId?: string): Record<string, PageRegistryEntry[]> | PageRegistryEntry[] {
+export function getFooterPages(): Record<
+	string,
+	PageRegistryEntry[]
+>;
+export function getFooterPages(
+	groupId: string
+): PageRegistryEntry[];
+export function getFooterPages(
+	groupId?: string
+):
+	| Record<string, PageRegistryEntry[]>
+	| PageRegistryEntry[] {
 	if (groupId) {
-		return ((footerPageIdsByGroup as Record<string, readonly PageId[]>)[groupId] ?? []).map(
-			resolveRequiredPage
-		);
+		return (
+			(
+				footerPageIdsByGroup as Record<
+					string,
+					readonly PageId[]
+				>
+			)[groupId] ?? []
+		).map(resolveRequiredPage);
 	}
 
 	return Object.fromEntries(
-		Object.entries(footerPageIdsByGroup).map(([id, pageIds]) => [
-			id,
-			pageIds.map(resolveRequiredPage)
-		])
+		Object.entries(footerPageIdsByGroup).map(
+			([id, pageIds]) => [
+				id,
+				pageIds.map(resolveRequiredPage)
+			]
+		)
 	);
 }
 
 export function getSearchablePages(): PageRegistryEntry[] {
-	return pageRegistry.filter((entry) => entry.searchable !== false);
+	return pageRegistry.filter(
+		(entry) => entry.searchable !== false
+	);
 }
 
 export { pageRegistry };

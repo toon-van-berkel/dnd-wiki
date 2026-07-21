@@ -14,7 +14,11 @@ export type PageKind =
 	| 'subclass'
 	| 'species'
 	| 'technique'
-	| 'spell';
+	| 'spell'
+	| 'notes'
+	| 'campaign'
+	| 'session'
+	| 'one-shot';
 
 export type PageRegistryEntry = {
 	id: PageId;
