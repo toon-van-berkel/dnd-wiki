@@ -13,10 +13,16 @@
 
 	const appBasePath = base.replace(/\/+$/, '');
 
+	let userOpenedBranchIds = $state(new Set<string>());
+	let userClosedBranchIds = $state(new Set<string>());
+
 	function normalizeActivePath(pathname: string): string {
 		let normalized = pathname;
 
-		if (appBasePath && (pathname === appBasePath || pathname.startsWith(`${appBasePath}/`))) {
+		if (
+			appBasePath &&
+			(pathname === appBasePath || pathname.startsWith(`${appBasePath}/`))
+		) {
 			normalized = pathname.slice(appBasePath.length) || '/';
 		}
 
@@ -32,7 +38,9 @@
 	}
 
 	function isWithinRoute(url: string): boolean {
-		if (url === '/') return isExactActive(url);
+		if (url === '/') {
+			return isExactActive(url);
+		}
 
 		const pathname = normalizeActivePath(page.url.pathname);
 		const route = normalizeActivePath(url);
@@ -40,9 +48,16 @@
 		return pathname === route || pathname.startsWith(`${route}/`);
 	}
 
-	const activeEntry = $derived(getPageEntryByHref(normalizeActivePath(page.url.pathname)));
+	const activeEntry = $derived(
+		getPageEntryByHref(normalizeActivePath(page.url.pathname))
+	);
+
 	const activeAncestorIds = $derived(
-		new Set(activeEntry ? getPageAncestors(activeEntry).map((entry) => entry.id) : [])
+		new Set(
+			activeEntry
+				? getPageAncestors(activeEntry).map((entry) => entry.id)
+				: []
+		)
 	);
 
 	function isBranchActive(item: PageRegistryEntry): boolean {
@@ -57,11 +72,10 @@
 	}
 
 	function childrenFor(item: PageRegistryEntry): PageRegistryEntry[] {
-		return getPageChildren(item.id).filter((child) => child.navigation !== false);
+		return getPageChildren(item.id).filter(
+			(child) => child.navigation !== false
+		);
 	}
-
-	let userOpenedBranchIds = $state(new Set<string>());
-	let userClosedBranchIds = $state(new Set<string>());
 
 	function toggleBranch(item: PageRegistryEntry): void {
 		const branchOpen = isBranchOpen(item);
@@ -82,7 +96,10 @@
 </script>
 
 {#snippet browseTree(items: PageRegistryEntry[], depth = 0)}
-	<ul class="sidebar__list sidebar__list--tree" style:--sidebar-depth={depth}>
+	<ul
+		class="sidebar__list sidebar__list--tree"
+		style:--sidebar-depth={depth}
+	>
 		{#each items as item}
 			{@const children = childrenFor(item)}
 			{@const hasChildren = children.length > 0}
@@ -111,7 +128,10 @@
 							</span>
 						</button>
 					{:else}
-						<span class="sidebar__chevron sidebar__chevron--empty" aria-hidden="true"></span>
+						<span
+							class="sidebar__chevron sidebar__chevron--empty"
+							aria-hidden="true"
+						></span>
 					{/if}
 
 					<a
@@ -121,7 +141,12 @@
 						aria-current={isExactActive(item.href) ? 'page' : undefined}
 					>
 						{#if item.icon}
-							<Icon src={item.icon} type="normal" color="currentColor" size="1rem" />
+							<Icon
+								src={item.icon}
+								type="normal"
+								color="currentColor"
+								size="1rem"
+							/>
 						{:else}
 							<span class="sidebar__dot" aria-hidden="true"></span>
 						{/if}
@@ -152,9 +177,16 @@
 						aria-current={isExactActive(item.href) ? 'page' : undefined}
 					>
 						{#if item.icon}
-							<Icon src={item.icon} type="normal" color="currentColor" />
+							<Icon
+								src={item.icon}
+								type="normal"
+								color="currentColor"
+							/>
 						{/if}
-						<span>{item.id === 'home' ? 'Wiki home' : item.title}</span>
+
+						<span>
+							{item.id === 'home' ? 'Wiki home' : item.title}
+						</span>
 					</a>
 				</li>
 			{/each}
@@ -162,7 +194,15 @@
 
 		<div class="sidebar__divider"></div>
 
+		<h2 class="sidebar__heading">Wiki pages</h2>
+
 		{@render browseTree(getNavigationPages('browse'))}
+	</section>
+
+	<section class="sidebar__section sidebar__section--notes">
+		<h2 class="sidebar__heading">Notes</h2>
+
+		{@render browseTree(getNavigationPages('notes'))}
 	</section>
 
 	<section class="sidebar__section sidebar__section--resources">
@@ -178,8 +218,13 @@
 						aria-current={isExactActive(item.href) ? 'page' : undefined}
 					>
 						{#if item.icon}
-							<Icon src={item.icon} type="normal" color="currentColor" />
+							<Icon
+								src={item.icon}
+								type="normal"
+								color="currentColor"
+							/>
 						{/if}
+
 						<span>{item.title}</span>
 					</a>
 				</li>

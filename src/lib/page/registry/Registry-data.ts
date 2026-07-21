@@ -1,6 +1,7 @@
 import { classPages } from './data/classes';
 import { corePages } from './data/core';
 import { legalPages } from './data/legal';
+import { notesPages } from './data/notes';
 import { projectPages } from './data/project';
 import { rulePages } from './data/rules';
 import { speciesPages } from './data/species';
@@ -13,6 +14,7 @@ export const pageRegistry: PageRegistryEntry[] = [
 	...classPages,
 	...spellsAndAbilitiesPages,
 	...speciesPages,
+	...notesPages,
 	...projectPages,
 	...legalPages
 ];
