@@ -50,7 +50,11 @@ export const contentTypeLabels: Record<SearchEntryKind, string> = {
 	subclass: 'Subclass',
 	species: 'Species',
 	technique: 'Technique',
-	spell: 'Spell'
+	spell: 'Spell',
+	notes: 'Notes',
+	campaign: 'Campaign',
+	session: 'Session',
+	'one-shot': 'One-shot'
 };
 
 export function createEmptySearchState(): WikiSearchState {
