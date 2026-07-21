@@ -21,52 +21,43 @@
 
 .site-footer__main-inner {
 	display: grid;
-	grid-template-areas:
-		'brand browse project legal'
-		'brand community resources legal';
 	grid-template-columns:
 		minmax(18rem, 1.5fr)
-		minmax(10rem, 0.8fr)
-		minmax(10rem, 0.8fr)
-		minmax(10rem, 0.8fr);
+		repeat(3, minmax(10rem, 0.8fr));
 	gap: clamp(2rem, 4vw, 3.5rem) clamp(1.5rem, 4vw, 3rem);
 	align-items: start;
 }
 
 .site-footer__brand {
-	grid-area: brand;
+	grid-row: span 2;
 	max-width: 30rem;
 }
 
 .site-footer__brand-heading {
 	display: flex;
-	gap: 1rem;
 	align-items: center;
+	gap: 1rem;
 	margin-bottom: 1.35rem;
+
+	h2 {
+		margin: 0;
+		color: var(--text-heading);
+		font-size: clamp(1.25rem, 2vw, 1.55rem);
+		line-height: 1.1;
+	}
+
+	p {
+		margin: 0.25rem 0 0;
+		color: var(--text-muted);
+		font-size: 0.9rem;
+		line-height: 1.4;
+	}
 }
 
 .site-footer__logo {
 	width: 74px;
 	height: 32px;
 	flex: 0 0 auto;
-}
-
-.site-footer__brand h2,
-.site-footer__group h2 {
-	margin: 0;
-	color: var(--text-heading);
-}
-
-.site-footer__brand h2 {
-	font-size: clamp(1.25rem, 2vw, 1.55rem);
-	line-height: 1.1;
-}
-
-.site-footer__brand-heading p {
-	margin: 0.25rem 0 0;
-	color: var(--text-muted);
-	font-size: 0.9rem;
-	line-height: 1.4;
 }
 
 .site-footer__description,
@@ -114,35 +105,19 @@
 	@include mixins.focus-ring;
 
 	&:hover {
-		border-color: color-mix(in srgb, var(--accent) 42%, var(--border-strong));
+		border-color: color-mix(
+			in srgb,
+			var(--accent) 42%,
+			var(--border-strong)
+		);
 		background: var(--accent-soft);
 		color: var(--text-heading);
 	}
 }
 
 .site-footer__group {
-	&--browse {
-		grid-area: browse;
-	}
-
-	&--project {
-		grid-area: project;
-	}
-
-	&--legal {
-		grid-area: legal;
-	}
-
-	&--community {
-		grid-area: community;
-	}
-
-	&--resources {
-		grid-area: resources;
-	}
-
 	h2 {
-		margin-bottom: 0.85rem;
+		margin: 0 0 0.85rem;
 		color: var(--text-muted);
 		font-size: 0.76rem;
 		font-weight: 800;
@@ -187,14 +162,48 @@
 }
 
 .site-footer__legal {
-	border-top: 1px solid var(--border);
-	background: color-mix(in srgb, var(--background) 72%, var(--surface));
 	padding: 1.75rem clamp(1rem, 4vw, 3rem);
+	border-top: 1px solid var(--border);
+	background: color-mix(
+		in srgb,
+		var(--background) 72%,
+		var(--surface)
+	);
+
+	p {
+		margin: 0;
+		color: var(--text-muted);
+		font-size: 0.86rem;
+		line-height: 1.65;
+	}
+
+	strong {
+		color: var(--text-primary);
+	}
+
+	a {
+		color: var(--text-secondary);
+		font-weight: 700;
+		text-decoration-color: color-mix(
+			in srgb,
+			currentColor 45%,
+			transparent
+		);
+		text-underline-offset: 0.24em;
+
+		@include mixins.interactive-surface;
+		@include mixins.focus-ring;
+
+		&:hover {
+			color: var(--accent-muted);
+			text-decoration-color: currentColor;
+		}
+	}
 }
 
 .site-footer__legal-inner {
 	display: grid;
-	grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+	grid-template-columns: repeat(2, minmax(0, 1fr));
 	gap: clamp(1.5rem, 4vw, 3rem);
 	align-items: start;
 }
@@ -205,43 +214,14 @@
 	gap: 0.75rem;
 }
 
-.site-footer__legal p {
-	margin: 0;
-	color: var(--text-muted);
-	font-size: 0.86rem;
-	line-height: 1.65;
-}
-
-.site-footer__legal strong {
-	color: var(--text-primary);
-}
-
-.site-footer__legal a {
-	color: var(--text-secondary);
-	font-weight: 700;
-	text-decoration-color: color-mix(in srgb, currentColor 45%, transparent);
-	text-underline-offset: 0.24em;
-
-	@include mixins.interactive-surface;
-	@include mixins.focus-ring;
-
-	&:hover {
-		color: var(--accent-muted);
-		text-decoration-color: currentColor;
-	}
-}
-
 @media (max-width: 70rem) {
 	.site-footer__main-inner {
-		grid-template-areas:
-			'brand brand'
-			'browse project'
-			'community resources'
-			'legal legal';
 		grid-template-columns: repeat(2, minmax(0, 1fr));
 	}
 
 	.site-footer__brand {
+		grid-column: 1 / -1;
+		grid-row: auto;
 		max-width: 42rem;
 	}
 }
@@ -256,15 +236,8 @@
 		grid-template-columns: 1fr;
 	}
 
-	.site-footer__main-inner {
-		grid-template-areas:
-			'brand'
-			'browse'
-			'project'
-			'community'
-			'resources'
-			'legal';
-		gap: 2rem;
+	.site-footer__brand {
+		grid-column: auto;
 	}
 
 	.site-footer__brand-heading {

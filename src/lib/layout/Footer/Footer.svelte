@@ -22,7 +22,7 @@
 		<div class="site-footer__main-inner">
 			<section class="site-footer__brand" aria-labelledby="footer-brand-heading">
 				<div class="site-footer__brand-heading">
-					<!-- TODO: Replace this D&D text wordmark with fully original site branding before enlarging it. -->
+					<!-- TODO: Replace this D&D text wordmark with fully original site branding. -->
 					<img
 						class="site-footer__logo"
 						src={resolveAssetPath('/dndportal_wiki-74x32.svg')}
@@ -30,6 +30,7 @@
 						width="74"
 						height="32"
 					/>
+
 					<div>
 						<h2 id="footer-brand-heading">{siteConfig.longProjectName}</h2>
 						<p>Campaign rules and reference wiki</p>
@@ -45,7 +46,10 @@
 					Designed, developed, and maintained by {siteOwner.name}.
 				</p>
 
-				<ul class="site-footer__actions" aria-label={`${siteConfig.projectName} owner links`}>
+				<ul
+					class="site-footer__actions"
+					aria-label={`${siteConfig.projectName} owner links`}
+				>
 					{#each footer.actionLinks as link}
 						<li>
 							<a
@@ -54,8 +58,14 @@
 								{...externalAttributes(link.external)}
 							>
 								{link.label}
+
 								{#if link.external}
-									<span class="site-footer__external-indicator" aria-hidden="true">↗</span>
+									<span
+										class="site-footer__external-indicator"
+										aria-hidden="true"
+									>
+										↗
+									</span>
 								{/if}
 							</a>
 						</li>
@@ -65,27 +75,42 @@
 
 			{#each footer.internalGroups as group}
 				<nav
-					class={`site-footer__group site-footer__group--${group.id}`}
+					class="site-footer__group"
 					aria-labelledby={`footer-${group.id}-heading`}
 				>
 					<h2 id={`footer-${group.id}-heading`}>{group.title}</h2>
+
 					<ul>
 						{#each group.links as link}
-							<li><a href={resolveAppPath(link.href)}>{link.title}</a></li>
+							<li>
+								<a href={resolveAppPath(link.href)}>
+									{link.title}
+								</a>
+							</li>
 						{/each}
 					</ul>
 				</nav>
 			{/each}
 
-			<nav class="site-footer__group site-footer__group--community" aria-labelledby="footer-community-heading">
+			<nav
+				class="site-footer__group"
+				aria-labelledby="footer-community-heading"
+			>
 				<h2 id="footer-community-heading">Community</h2>
+
 				<ul>
 					{#each footer.communityLinks as link}
 						<li>
 							<a href={link.href} {...externalAttributes(link.external)}>
 								{link.label}
+
 								{#if link.external}
-									<span class="site-footer__external-indicator" aria-hidden="true">↗</span>
+									<span
+										class="site-footer__external-indicator"
+										aria-hidden="true"
+									>
+										↗
+									</span>
 								{/if}
 							</a>
 						</li>
@@ -94,16 +119,23 @@
 			</nav>
 
 			<nav
-				class="site-footer__group site-footer__group--resources"
+				class="site-footer__group"
 				aria-labelledby="footer-resources-heading"
 			>
 				<h2 id="footer-resources-heading">External Resources</h2>
+
 				<ul>
 					{#each footer.externalResourceLinks as link}
 						<li>
 							<a href={link.href} {...externalAttributes(link.external)}>
 								{link.label}
-								<span class="site-footer__external-indicator" aria-hidden="true">↗</span>
+
+								<span
+									class="site-footer__external-indicator"
+									aria-hidden="true"
+								>
+									↗
+								</span>
 							</a>
 						</li>
 					{/each}
@@ -119,6 +151,7 @@
 					© {currentYear} {siteOwner.name}. Original website content is protected
 					unless otherwise stated.
 				</p>
+
 				<p>
 					Dungeons & Dragons, D&D, Wizards of the Coast, the dragon ampersand,
 					and related properties belong to Wizards of the Coast LLC.
@@ -132,6 +165,7 @@
 					Portions of referenced material may be Wizards property, and this site
 					remains responsible for complying with applicable policies.
 				</p>
+
 				<p>
 					<a
 						href={siteConfig.fanContentPolicyUrl}
@@ -139,13 +173,23 @@
 						rel="noopener noreferrer external"
 					>
 						Wizards Fan Content Policy
-						<span class="site-footer__external-indicator" aria-hidden="true">↗</span>
+
+						<span
+							class="site-footer__external-indicator"
+							aria-hidden="true"
+						>
+							↗
+						</span>
 					</a>
 				</p>
+
 				<p>
 					See
 					{#each footer.attributionLinks as link, index}
-						<a href={resolveAppPath(link.href)}>{link.title}</a>{index < footer.attributionLinks.length - 1 ? ', ' : ''}
+						<a href={resolveAppPath(link.href)}>{link.title}</a>{index <
+						footer.attributionLinks.length - 1
+							? ', '
+							: ''}
 					{/each}
 					for attribution and usage information.
 				</p>
