@@ -1,0 +1,59 @@
+/*  
+    Location: src\lib\scss\core\colors.scss
+    Use: Stores all application colors.
+*/
+
+@use 'sass:map';
+
+$colors: (
+    light: (
+        background: #ffffff,
+
+        text: (
+            headings: #111411,
+            primary: #252a26,
+            secondary: #59615a,
+            tertiary: #737d75
+        ),
+
+        theme: (
+            primary: #4da832,
+            secondary: #68a855
+        )
+    ),
+
+    dark: (
+        background: (
+            primary: #0b0d0c,
+            secondary: #111512,
+            tiertiary: #1b211c,
+            quaternary: #737d75,
+            hover: #1b211c
+        ),
+
+        text: (
+            headings: #f3f6f3,
+            primary: #d9dfda,
+            secondary: #a5afa7,
+            tertiary: #737d75,
+
+            links: (
+                base: #f3f6f3,
+                hover: #7bff53,
+            )
+        ),
+
+        theme: (
+            primary: #7bff53,
+            secondary: #a0e88a
+        )
+    )
+);
+
+@function get-light($keys...) {
+    @return map.get($colors, light, $keys...);
+}
+
+@function get-dark($keys...) {
+    @return map.get($colors, dark, $keys...);
+}

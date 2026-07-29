@@ -1,0 +1,24 @@
+@use '../core/colors' as colors;
+
+.link {
+	color: colors.get-dark(text, links, base);
+	font-weight: bold;
+
+	&-container {
+		position: relative;
+		display: inline-block;
+
+		&:hover {
+			.link {
+				color: colors.get-dark(text, links, hover);
+				border-color: colors.get-dark(theme, primary);
+			}
+
+			.popup {
+				opacity: 1;
+				visibility: visible;
+				pointer-events: auto;
+			}
+		}
+	}
+}

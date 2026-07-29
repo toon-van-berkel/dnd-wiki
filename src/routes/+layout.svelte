@@ -1,34 +1,35 @@
+<!--  
+    Location: src\routes\+layout.svelte
+    use: 
+-->
 <script lang="ts">
 	import type { Snippet } from 'svelte';
-	import type { LayoutData } from './$types';
+	import favicon from '$lib/assets/site/favicon.svg';
+	import '$lib/scss/style.scss';
 
-	import Metadata from '$lib/page/Metadata/Metadata.svelte';
-	import PageHeader from '$lib/page/PageHeader/PageHeader.svelte';
-	import SiteShell from '$lib/layout/SiteShell/SiteShell.svelte';
-	import { getPageEntryByHref } from '$lib/page/registry';
+	import { buildPage } from '$lib/typescript/pages/pageBuilder';
 
-	import '$lib/styles/styles.scss';
+	import Footer from '$lib/svelte/components/page/Footer.svelte';
+	import Tooltip from '$lib/svelte/components/Tooltip.svelte';
 
-	type Props = {
-		children: Snippet;
-		data: LayoutData;
-	};
-
-	let { children, data }: Props = $props();
-
-	const pageEntry = $derived(getPageEntryByHref(data.pathname));
+	const page = buildPage();
+	let { children }: { children: Snippet } = $props();
 </script>
 
 <svelte:head>
-	<meta name="theme-color" content="#0b0d0c" />
+	<link rel="icon" href={favicon} />
+	<title>D&D Portal Wiki</title>
+	<meta
+		name="description"
+		content="This wiki contains the information needed for Dungeons & Dragons campaigns."
+	/>
 </svelte:head>
+<!-- <Link goto='github.profile' /> -->
+<p>You must have a <Tooltip tip='Strength' /> score of 13 or higher to multiclass into or out of the Barbarian class.</p>
 
-<Metadata {pageEntry} />
+{#if page.footer}
+	<Footer {...page.footer} />
+{/if}
+<!-- <pre>{JSON.stringify(page, null, 2)}</pre> -->
 
-<SiteShell>
-	{#if pageEntry && pageEntry.header !== false}
-		<PageHeader {pageEntry} />
-	{/if}
-
-	{@render children()}
-</SiteShell>
+{@render children()}

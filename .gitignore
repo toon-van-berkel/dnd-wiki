@@ -1,15 +1,12 @@
-node_modules/
+node_modules
 
 # Output
 .output
 .vercel
 .netlify
 .wrangler
-.svelte-kit/
-build/
-dist/
-coverage/
-.codex-tmp/
+/.svelte-kit
+/build
 
 # OS
 .DS_Store
@@ -24,19 +21,3 @@ Thumbs.db
 # Vite
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
-
-AGENTS.md
-AGENTS.md
-AGENTS.md
-
-docs
-scripts/*
-!scripts/
-!scripts/generate-icon-registry.mjs
-!scripts/generate-page-card-assets.mjs
-!scripts/test-shinobi.mjs
-!scripts/test-paths.mjs
-!scripts/test-wiki-search.mjs
-!scripts/verify-assets.mjs
-!scripts/verify-pages-build.mjs
-

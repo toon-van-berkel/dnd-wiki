@@ -1,0 +1,9 @@
+@use 'sass:map';
+
+$sizes: (
+    section: 20px 50px
+);
+
+@function get($size) {
+    @return map.get($sizes, $size);
+}
