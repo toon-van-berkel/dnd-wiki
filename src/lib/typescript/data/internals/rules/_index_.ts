@@ -1,16 +1,23 @@
 import * as core from '../../core/_index_';
-import { createInternalPage } from '../_helpers_';
 
-const website = core.internals.website;
+import { abilityScores } from './ability-scores/_index_';
+import { characterCreation } from './character-creation/_index_';
+
 const current = core.internals.rules;
 
 export const rules = {
-	page: createInternalPage({
+	page: {
 		href: current.baseUrl,
+		external: false,
 
-		title: `${website.name.short} - ${current.name.normal}`,
+		img: current.logos.simple,
+
+		title: `D&D Portal - ${current.name.normal}`,
 		subTitle: 'Gameplay rules',
 		description: `Browse general rules, combat mechanics, character
 			rules, campaign rulings, and other gameplay information.`
-	})
+	},
+
+	abilityScores,
+	characterCreation
 } as const;

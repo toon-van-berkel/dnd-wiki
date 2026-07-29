@@ -1,8 +1,13 @@
 @use '../core/colors' as colors;
 
 .link {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.35em;
+
 	color: colors.get-dark(text, links, base);
 	font-weight: bold;
+	line-height: inherit;
 
 	&-container {
 		position: relative;
@@ -20,5 +25,24 @@
 				pointer-events: auto;
 			}
 		}
+	}
+
+	&-img {
+		display: inline-block;
+		width: 1em;
+		height: 1em;
+		flex: 0 0 1em;
+
+		background-color: currentColor;
+
+		mask-image: var(--link-icon);
+		mask-repeat: no-repeat;
+		mask-position: center;
+		mask-size: contain;
+
+		-webkit-mask-image: var(--link-icon);
+		-webkit-mask-repeat: no-repeat;
+		-webkit-mask-position: center;
+		-webkit-mask-size: contain;
 	}
 }

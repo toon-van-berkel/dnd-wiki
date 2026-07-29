@@ -17,6 +17,8 @@ export const project = {
 	credits: createInternalPage({
 		href: current.credits.href,
 
+		img: current.credits.logos.simple,
+
 		title: `${website.name.short} - ${current.credits.name.normal}`,
 		subTitle: 'Creators and contributors',
 		description: `View acknowledgements for the people, projects,
@@ -25,6 +27,8 @@ export const project = {
 
 	sources: createInternalPage({
 		href: current.sources.href,
+
+		img: current.changelog.logos.simple,
 
 		title: `${website.name.short} - ${current.sources.name.normal}`,
 		subTitle: 'Referenced material',
@@ -52,6 +56,8 @@ export const project = {
 
 	changelog: createInternalPage({
 		href: current.changelog.href,
+
+		img: current.changelog.logos.simple,
 
 		title: `${website.name.short} - ${current.changelog.name.normal}`,
 		subTitle: 'Project updates',

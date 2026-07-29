@@ -17,6 +17,8 @@ export const utility = {
 	search: createInternalPage({
 		href: current.search.href,
 
+		img: current.search.logos.simple,
+
 		title: `${website.name.short} - ${current.search.name.normal}`,
 		subTitle: 'Search the wiki',
 		description: `Search the D&D Portal Wiki for rules, character

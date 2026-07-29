@@ -20,5 +20,8 @@ export function getData<P extends functionType.DataPath<functionType.Data>>(
 		current = (current as Record<string, unknown>)[key];
 	}
 
-	return current as functionType.DataPathValue<functionType.Data, P>;
+	return current as functionType.DataPathValue<
+		functionType.Data,
+		P
+	>;
 }

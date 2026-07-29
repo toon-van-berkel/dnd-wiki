@@ -1,5 +1,5 @@
 export { externals } from "./externals"
-export { internals } from "./internals"
+export { internals } from "./internals/_index_"
 
 export const base = {
     siteSocial: 'D&D Portal Wiki',

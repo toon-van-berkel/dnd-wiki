@@ -8,6 +8,8 @@ export const monsters = {
 	page: createInternalPage({
 		href: current.baseUrl,
 
+		img: current.logos.simple,
+
 		title: `${website.name.short} - ${current.name.normal}`,
 		subTitle: 'Creatures and enemies',
 		description: `Browse monsters, creatures, enemies, statistics,

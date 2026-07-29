@@ -1,27 +1,23 @@
 <script lang="ts">
-	import { getData } from '$lib/typescript/data/_index_';
+	import {
+		getData,
+		type LinkPath
+	} from '$lib/typescript/data/_index_';
 
 	import { base } from '$app/paths';
 	import { page } from '$app/state';
-	type DataPath = Parameters<typeof getData>[0];
 
-	type ResolvedLink = Extract<
-		ReturnType<typeof getData>,
-		{
-			href: unknown;
-			external: unknown;
-			img: {
-				href: unknown;
-				alt: unknown;
-			};
-			title: unknown;
-			subTitle: unknown;
-			description: unknown;
-		}
-	>;
+	let {
+		placeholder,
+		showIcon = false,
+		goto
+	}: {
+		placeholder?: string;
+		showIcon?: boolean;
+		goto: LinkPath;
+	} = $props();
 
-	let { goto }: { goto: DataPath } = $props();
-	let link = $derived(getData(goto) as ResolvedLink);
+	let link = $derived(getData(goto));
 	let popup!: HTMLElement;
 
 	function getValidUrl(href: string): string {
@@ -70,7 +66,14 @@
 		rel={link.external ? 'noopener noreferrer' : undefined}
 		onmouseenter={positionPopup}
 	>
-		{link.title} 
+		{#if showIcon}
+			<span
+				class="link-img"
+				style={`--link-icon: url("${link.img.href}")`}
+				aria-hidden="true"
+			></span>
+		{/if}
+		{placeholder ?? link.title}
 		{#if link.external} 
 			↗
 		{/if}
@@ -80,6 +83,7 @@
 		<span class="popup__top">
 			<img
 				class="popup__top-img"
+				class:popup__top-img--white={link.img.href.includes('/icons/white/')}
 				src={link.img.href}
 				alt={link.img.alt}
 			>

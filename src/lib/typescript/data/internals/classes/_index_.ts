@@ -11,10 +11,22 @@ export const classes = {
 	page: createInternalPage({
 		href: current.baseUrl,
 
+		img: current.logos.simple,
+
 		title: `${website.name.short} - ${current.name.normal}`,
 		subTitle: 'Character classes',
 		description: `Browse available classes, their core features,
-			progression, abilities, subclasses, and character options.`
+			progression, abilities, subclasses, and character options.`,
+
+		tags: [
+			'classes',
+			'character creation',
+			'player options',
+			'progression',
+			'class features',
+			'subclasses',
+			'abilities'
+		]
 	}),
 
 	artificer,

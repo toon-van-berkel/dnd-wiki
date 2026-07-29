@@ -44,6 +44,10 @@
 
 			flex-shrink: 0;
 			object-fit: contain;
+
+			&--white {
+				filter: brightness(0) invert(1);
+			}
 		}
 
 		&__header {

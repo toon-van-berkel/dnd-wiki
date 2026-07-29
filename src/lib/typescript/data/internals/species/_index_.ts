@@ -7,6 +7,8 @@ const current = core.internals.species;
 export const species = {
 	page: createInternalPage({
 		href: current.baseUrl,
+		
+		img: current.logos.simple,
 
 		title: `${website.name.short} - ${current.name.normal}`,
 		subTitle: 'Playable species',

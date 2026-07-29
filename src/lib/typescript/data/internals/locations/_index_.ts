@@ -8,6 +8,8 @@ export const locations = {
 	page: createInternalPage({
 		href: current.baseUrl,
 
+		img: current.logos.simple,
+
 		title: `${website.name.short} - ${current.name.normal}`,
 		subTitle: 'World locations',
 		description: `Explore regions, settlements, landmarks, planes,
