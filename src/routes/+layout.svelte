@@ -11,6 +11,7 @@
 
 	import Footer from '$lib/svelte/components/page/Footer.svelte';
 	import Tooltip from '$lib/svelte/components/Tooltip.svelte';
+	import Link from '$lib/svelte/components/Link.svelte';
 
 	const page = buildPage();
 	let { children }: { children: Snippet } = $props();
@@ -25,7 +26,8 @@
 	/>
 </svelte:head>
 <!-- <Link goto='github.profile' /> -->
-<p>You must have a <Tooltip tip='Strength' /> score of 13 or higher to multiclass into or out of the Barbarian class.</p>
+<p>You must have a <Tooltip tip='Strength' /> score of 13 or higher to multiclass into or 
+	out of the <Link goto='internals.classes.barbarian.page' /> class.</p>
 
 {#if page.footer}
 	<Footer {...page.footer} />

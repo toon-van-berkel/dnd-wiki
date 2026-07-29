@@ -1,24 +1,29 @@
 /*  
-    Location: src\lib\typescript\components\footer-type.ts
+    Location: src/lib/typescript/components/footer/footer-type.ts
     use:
 */
 
+import { getData } from '$lib/typescript/data/_index_';
+
+type DataPath = Parameters<typeof getData>[0];
+
 export type FooterSectionType = {
     title: string;
-    links: string[];
+    links: DataPath[];
 };
 
 export type FooterDataType = {
     informationSection: {
         img: {
-            href: string,
-            alt: string
-        },
+            href: string;
+            alt: string;
+        };
+
         title: string;
         subTitle: string;
         description: string;
         subDescription: string;
-        buttons: string[];
+        buttons: DataPath[];
     };
 
     browseSection: FooterSectionType;
@@ -31,11 +36,11 @@ export type FooterDataType = {
         copyright: string;
         subCopyright: string;
         warning: string;
-        reference: string;
+        reference: DataPath;
 
         usage: {
             before: string;
-            links: string[];
+            links: DataPath[];
             after: string;
         };
     };
