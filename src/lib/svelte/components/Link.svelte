@@ -1,16 +1,28 @@
-<!--  
-    Location: src\lib\svelte\components\Links.svelte
-    use: 
--->
 <script lang="ts">
-	import { getLink } from '$lib/typescript/data/links';
+	import { getData } from '$lib/typescript/data/_index_';
+
 	import { base } from '$app/paths';
 	import { page } from '$app/state';
+	type DataPath = Parameters<typeof getData>[0];
 
-	let { goto }: { goto: string } = $props();
+	type ResolvedLink = Extract<
+		ReturnType<typeof getData>,
+		{
+			href: unknown;
+			external: unknown;
+			img: {
+				href: unknown;
+				alt: unknown;
+			};
+			title: unknown;
+			subTitle: unknown;
+			description: unknown;
+		}
+	>;
 
-	let link = $derived(getLink(goto));
-	let popup: HTMLElement;
+	let { goto }: { goto: DataPath } = $props();
+	let link = $derived(getData(goto) as ResolvedLink);
+	let popup!: HTMLElement;
 
 	function getValidUrl(href: string): string {
 		if (!href.startsWith('/')) {
