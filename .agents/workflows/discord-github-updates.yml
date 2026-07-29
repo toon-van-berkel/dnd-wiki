@@ -1,0 +1,185 @@
+name: Discord GitHub Updates
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  notify-discord:
+    name: Send push statistics
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Calculate changes and notify Discord
+        shell: bash
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+
+          REPOSITORY: ${{ github.repository }}
+          ACTOR: ${{ github.actor }}
+          BRANCH: ${{ github.ref_name }}
+
+          BEFORE_SHA: ${{ github.event.before }}
+          AFTER_SHA: ${{ github.event.after }}
+          COMPARE_URL: ${{ github.event.compare }}
+
+          GITHUB_SERVER_URL: ${{ github.server_url }}
+
+        run: |
+          set -euo pipefail
+
+          if [[ -z "${DISCORD_WEBHOOK_URL}" ]]; then
+            echo "DISCORD_WEBHOOK_URL has not been configured."
+            exit 1
+          fi
+
+          # New branches use an all-zero 'before' SHA.
+          if [[ "${BEFORE_SHA}" =~ ^0+$ ]]; then
+            if git rev-parse "${AFTER_SHA}^" >/dev/null 2>&1; then
+              BASE_SHA="${AFTER_SHA}^"
+            else
+              # Empty tree for the repository's first commit.
+              BASE_SHA="$(git hash-object -t tree /dev/null)"
+            fi
+          else
+            BASE_SHA="${BEFORE_SHA}"
+          fi
+
+          ADDED_FILES="$(
+            git diff --name-status "${BASE_SHA}" "${AFTER_SHA}" |
+            awk '$1 == "A" { count++ } END { print count + 0 }'
+          )"
+
+          MODIFIED_FILES="$(
+            git diff --name-status "${BASE_SHA}" "${AFTER_SHA}" |
+            awk '
+              $1 == "M" || $1 ~ /^R/ || $1 ~ /^C/ {
+                count++
+              }
+              END {
+                print count + 0
+              }
+            '
+          )"
+
+          DELETED_FILES="$(
+            git diff --name-status "${BASE_SHA}" "${AFTER_SHA}" |
+            awk '$1 == "D" { count++ } END { print count + 0 }'
+          )"
+
+          read -r ADDED_LINES DELETED_LINES < <(
+            git diff --numstat "${BASE_SHA}" "${AFTER_SHA}" |
+            awk '
+              $1 ~ /^[0-9]+$/ {
+                additions += $1
+              }
+
+              $2 ~ /^[0-9]+$/ {
+                deletions += $2
+              }
+
+              END {
+                print additions + 0, deletions + 0
+              }
+            '
+          )
+
+          COMMIT_COUNT="$(
+            git rev-list --count "${BASE_SHA}..${AFTER_SHA}"
+          )"
+
+          SHORT_SHA="${AFTER_SHA:0:7}"
+
+          COMMIT_MESSAGE="$(
+            git log -1 --pretty=%s "${AFTER_SHA}"
+          )"
+
+          COMMIT_URL="${GITHUB_SERVER_URL}/${REPOSITORY}/commit/${AFTER_SHA}"
+
+          if [[ -z "${COMPARE_URL}" ]]; then
+            COMPARE_URL="${COMMIT_URL}"
+          fi
+
+          PAYLOAD="$(
+            jq -n \
+              --arg repository "${REPOSITORY}" \
+              --arg actor "${ACTOR}" \
+              --arg branch "${BRANCH}" \
+              --arg compare_url "${COMPARE_URL}" \
+              --arg commit_url "${COMMIT_URL}" \
+              --arg short_sha "${SHORT_SHA}" \
+              --arg commit_message "${COMMIT_MESSAGE}" \
+              --argjson commit_count "${COMMIT_COUNT}" \
+              --argjson added_files "${ADDED_FILES}" \
+              --argjson modified_files "${MODIFIED_FILES}" \
+              --argjson deleted_files "${DELETED_FILES}" \
+              --argjson added_lines "${ADDED_LINES}" \
+              --argjson deleted_lines "${DELETED_LINES}" \
+              '{
+                username: "D&D Portal GitHub",
+
+                allowed_mentions: {
+                  parse: []
+                },
+
+                embeds: [
+                  {
+                    title: "Push to \($branch)",
+                    url: $compare_url,
+                    color: 5763719,
+
+                    description:
+                      "**\($actor)** pushed **\($commit_count) commit(s)**.",
+
+                    fields: [
+                      {
+                        name: "➕ Added",
+                        value:
+                          "**\($added_files) files**\n**\($added_lines) lines**",
+                        inline: true
+                      },
+                      {
+                        name: "📝 Modified",
+                        value:
+                          "**\($modified_files) files**",
+                        inline: true
+                      },
+                      {
+                        name: "➖ Deleted",
+                        value:
+                          "**\($deleted_files) files**\n**\($deleted_lines) lines**",
+                        inline: true
+                      },
+                      {
+                        name: "Latest commit",
+                        value:
+                          "[`\($short_sha)`](\($commit_url)) — \($commit_message)",
+                        inline: false
+                      }
+                    ],
+
+                    footer: {
+                      text: $repository
+                    }
+                  }
+                ]
+              }'
+          )"
+
+          curl \
+            --fail-with-body \
+            --silent \
+            --show-error \
+            --header "Content-Type: application/json" \
+            --request POST \
+            --data "${PAYLOAD}" \
+            "${DISCORD_WEBHOOK_URL}"
