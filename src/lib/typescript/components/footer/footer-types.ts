@@ -1,15 +1,13 @@
 /*  
-    Location: src/lib/typescript/components/footer/footer-type.ts
+    Location: src/lib/typescript/components/footer/footer-types.ts
     use:
 */
 
-import { getData } from '$lib/typescript/data/_index_';
-
-type DataPath = Parameters<typeof getData>[0];
+import type { LinkPath } from '$lib/typescript/data/_index_';
 
 export type FooterSectionType = {
     title: string;
-    links: DataPath[];
+    links: LinkPath[];
 };
 
 export type FooterDataType = {
@@ -23,24 +21,26 @@ export type FooterDataType = {
         subTitle: string;
         description: string;
         subDescription: string;
-        buttons: DataPath[];
+        buttons: LinkPath[];
     };
 
     browseSection: FooterSectionType;
     projectSection: FooterSectionType;
     legalSection: FooterSectionType;
     communitySection: FooterSectionType;
+    socialSection: FooterSectionType;
+    youtubeSection: FooterSectionType;
     externalSection: FooterSectionType;
 
     bottomSection: {
         copyright: string;
         subCopyright: string;
         warning: string;
-        reference: DataPath;
+        reference: LinkPath;
 
         usage: {
             before: string;
-            links: DataPath[];
+            links: LinkPath[];
             after: string;
         };
     };

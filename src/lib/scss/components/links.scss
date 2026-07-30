@@ -18,12 +18,6 @@
 				color: colors.get-dark(text, links, hover);
 				border-color: colors.get-dark(theme, primary);
 			}
-
-			.popup {
-				opacity: 1;
-				visibility: visible;
-				pointer-events: auto;
-			}
 		}
 	}
 

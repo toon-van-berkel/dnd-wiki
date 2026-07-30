@@ -28,6 +28,31 @@
 		opacity 150ms ease,
 		visibility 150ms ease;
 
+	&--visible {
+		opacity: 1;
+		visibility: visible;
+	}
+
+	&--full {
+		&.popup--visible {
+			pointer-events: auto;
+		}
+	}
+
+	&--description {
+		width: min(260px, calc(100vw - 24px));
+		padding: 10px 12px;
+
+		overflow: hidden;
+		pointer-events: none;
+
+		border-radius: 5px;
+
+		.popup-description {
+			margin-bottom: 0;
+		}
+	}
+
 	&__top {
 		margin-bottom: 10px;
 		padding-bottom: 10px;
@@ -103,5 +128,11 @@
         &:hover {
             color: colors.get-dark(text, links, hover);
         }
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.popup {
+		transition: none;
 	}
 }

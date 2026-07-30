@@ -10,6 +10,7 @@
 	import { buildPage } from '$lib/typescript/pages/pageBuilder';
 
 	import Footer from '$lib/svelte/components/page/Footer.svelte';
+	import Sidebar from '$lib/svelte/components/page/Sidebar.svelte';
 
 	const page = buildPage();
 	let { children }: { children: Snippet } = $props();
@@ -24,8 +25,18 @@
 	/>
 </svelte:head>
 
-{@render children()}
+<div class='layout'>
+	<div class='layout__body'>
+		{#if page.sidebar}
+			<Sidebar {...page.sidebar} />
+		{/if}
 
-{#if page.footer}
-	<Footer {...page.footer} />
-{/if}
+		<main class='layout__content'>
+			{@render children()}
+		</main>
+	</div>
+
+	{#if page.footer}
+		<Footer {...page.footer} />
+	{/if}
+</div>

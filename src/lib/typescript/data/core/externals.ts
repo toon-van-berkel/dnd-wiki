@@ -1,4 +1,47 @@
 export const externals = {
+    discord: {
+        name: {
+            normal: 'Discord',
+            slug: 'discord',
+            server: 'D&D Portal'
+        },
+
+        baseUrl: 'https://discord.gg/RVArwj6nuq',
+
+        channels: {
+            rules: {
+                name: 'Rules',
+                slug: 'rules',
+                url: 'https://discord.gg/t9V3U6qa3d'
+            },
+
+            announcements: {
+                name: 'Announcements',
+                slug: 'announcements',
+                url: 'https://discord.gg/cTafJ89KVt'
+            },
+
+            wikiUpdates: {
+                name: 'Wiki Updates',
+                slug: 'wiki-updates',
+                url: 'https://discord.gg/Kq5hzTnWHv'
+            },
+
+            general: {
+                name: 'General',
+                slug: 'general',
+                url: 'https://discord.gg/5krJ2RGDJ4'
+            }
+        },
+
+        logos: {
+            simple: {
+                href: '/icons/color/externals/discord/icon-color-discord.svg',
+                alt: `The Discord logo showing a stylized controller-shaped
+                    face representing the Discord communication platform.`
+            }
+        }
+    },
     dndbeyond: {
         name: {
             normal: 'D&D Beyond',
@@ -91,6 +134,38 @@ export const externals = {
                 href: '/icons/color/externals/wizards/icon-color-wizards.png',
                 alt: `The Wizards of the Coast logo representing the company
                     that publishes Dungeons & Dragons.`
+            }
+        }
+    },
+    youtube: {
+        name: {
+            normal: 'YouTube',
+            slug: 'youtube',
+            channel: 'D&D Portal',
+            handle: '@dnd-portal'
+        },
+
+        baseUrl: 'https://www.youtube.com/@dnd-portal',
+
+        pages: {
+            featured: {
+                name: 'Featured',
+                slug: 'featured',
+                url: 'https://www.youtube.com/@dnd-portal/featured'
+            },
+
+            posts: {
+                name: 'Posts',
+                slug: 'posts',
+                url: 'https://www.youtube.com/@dnd-portal/posts'
+            }
+        },
+
+        logos: {
+            simple: {
+                href: '/icons/color/externals/youtube/icon-color-youtube.svg',
+                alt: `The YouTube logo showing a white play symbol inside a
+                    red rounded rectangle, representing the video platform.`
             }
         }
     }

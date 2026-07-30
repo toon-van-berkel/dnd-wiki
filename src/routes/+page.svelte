@@ -14,7 +14,8 @@
 	class.
 </p>
 
+<!-- 
 <PageCard
 	page="internals.classes.barbarian.page"
 	variant="image"
-/>
+/> -->

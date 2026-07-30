@@ -76,6 +76,28 @@ export const footerData: FooterDataType = {
 		]
 	},
 
+	socialSection: {
+		title: 'Community Discord',
+
+		links: [
+			'externals.discord.homepage',
+			'externals.discord.rules',
+			'externals.discord.announcements',
+			'externals.discord.wikiUpdates',
+			'externals.discord.general'
+		]
+	},
+
+	youtubeSection: {
+		title: 'Community Youtube',
+
+		links: [
+			'externals.youtube.homepage',
+			'externals.youtube.featured',
+			'externals.youtube.posts'
+		]
+	},
+
 	externalSection: {
 		title: 'External Resources',
 

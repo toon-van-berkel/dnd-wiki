@@ -21,9 +21,7 @@
 		imageSize?: ImageSize;
 	} = $props();
 
-	let pageData = $derived(
-		getData(page) as PageData
-	);
+	let pageData: PageData = $derived(getData(page));
 
 	let cardImage = $derived(
 		pageData.images?.card?.[imageGender]

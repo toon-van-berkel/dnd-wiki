@@ -6,18 +6,41 @@
 @use '../core/sizes' as sizes;
 
 .layout {
-    width: 100svw;
-    height: 100svh;
+    width: 100%;
+    min-height: 100svh;
+
+    display: flex;
+    flex-direction: column;
+
     background-color: colors.get-dark(background, primary);
     color: colors.get-dark(text, primary);
+
+    &__body {
+        min-width: 0;
+
+        display: flex;
+        flex: 1 1 auto;
+    }
+
+    &__content {
+        min-width: 0;
+        max-width: 2150px;
+        min-height: 50svh;
+        padding: sizes.get(section);
+        box-sizing: border-box;
+        flex: 1 1 auto;
+    }
 }
 
 .layout__footer {
     width: 100%;
+    min-width: 0;
 
     &__top {
+        width: 100%;
         max-width: 2150px;
         padding: sizes.get(section);
+        box-sizing: border-box;
 
         display: flex;
         justify-content: center;
@@ -32,7 +55,8 @@
             border-top: 1px solid colors.get-dark(text, tertiary);
         }
         &__information {
-            width: 500px;
+            width: min(500px, 100%);
+            min-width: 0;
             
             display: flex;
             flex-direction: column;
@@ -89,8 +113,9 @@
             }
         }
         &__section {
-            min-width: 300px;
+            min-width: min(300px, 100%);
             padding: 10px;
+            box-sizing: border-box;
 
             &-title {
                 margin-bottom: 10px;
@@ -113,8 +138,10 @@
         }
     }
     &__bottom {
+        width: 100%;
         max-width: 2150px;
         padding: sizes.get(section);
+        box-sizing: border-box;
         
         display: flex;
         gap: 20px;
@@ -129,7 +156,8 @@
 
         &__copyright,
         &__disclaimer {
-            width: 50%;
+            min-width: 0;
+            flex: 1 1 0;
         
             display: flex;
             flex-direction: column;
@@ -142,7 +170,24 @@
             & a {
                 font-weight: 500;
                 color: colors.get-dark(text, secondary);
+                overflow-wrap: anywhere;
             }
         }
+    }
+}
+
+@media (max-width: 800px) {
+    .layout {
+        &__body {
+            display: block;
+        }
+        
+        &__content {
+            padding: 20px;
+        }
+    }
+
+    .layout__footer__bottom {
+        flex-direction: column;
     }
 }

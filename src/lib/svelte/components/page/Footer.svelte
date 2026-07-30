@@ -14,6 +14,8 @@
 		data.projectSection,
 		data.legalSection,
 		data.communitySection,
+		data.socialSection,
+        data.youtubeSection,
 		data.externalSection
 	]);
 </script>

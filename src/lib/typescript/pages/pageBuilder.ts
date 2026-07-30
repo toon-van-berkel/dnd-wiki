@@ -5,6 +5,7 @@
 import * as components from '$lib/typescript/components/_index_';
 
 export const page = {
+    sidebar: components.sidebarData,
     footer: components.footerData
 };
 
