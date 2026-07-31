@@ -23,5 +23,16 @@ export const utility = {
 		subTitle: 'Search the wiki',
 		description: `Search the D&D Portal Wiki for rules, character
 			options, creatures, locations, and other available content.`
+	}),
+
+	preferences: createInternalPage({
+		href: current.preferences.href,
+
+		img: current.preferences.logos.simple,
+
+		title: `${website.name.short} - ${current.preferences.name.normal}`,
+		subTitle: 'Website preferences',
+		description: `Open website preferences for display, reading, and
+			interface settings when they become available.`
 	})
 } as const;

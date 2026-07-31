@@ -10,6 +10,11 @@ export const website = {
 			href: '/icons/color/internal/icon-color-dndportalwiki.png',
 			alt: `The D&D Portal Wiki logo representing an internal page
 				within the website.`
+		},
+
+		wide: {
+			href: '/icons/color/internal/icon-color-dndportalwiki-wide.png',
+			alt: `The wide D&D Portal Wiki logo representing the website.`
 		}
 	}
 }

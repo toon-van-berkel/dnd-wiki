@@ -10,6 +10,7 @@
 	import { buildPage } from '$lib/typescript/pages/pageBuilder';
 
 	import Footer from '$lib/svelte/components/page/Footer.svelte';
+	import Navbar from '$lib/svelte/components/page/Navbar.svelte';
 	import Sidebar from '$lib/svelte/components/page/Sidebar.svelte';
 
 	const page = buildPage();
@@ -26,6 +27,10 @@
 </svelte:head>
 
 <div class='layout'>
+	{#if page.navbar}
+		<Navbar {...page.navbar} />
+	{/if}
+
 	<div class='layout__body'>
 		{#if page.sidebar}
 			<Sidebar {...page.sidebar} />

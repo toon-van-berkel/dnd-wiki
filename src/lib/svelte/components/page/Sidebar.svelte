@@ -5,6 +5,7 @@
 <script lang="ts">
 	import { base } from '$app/paths';
 	import { page } from '$app/state';
+	import { onMount } from 'svelte';
 	import {
 		getSidebarLabel,
 		type SidebarDataType,
@@ -16,7 +17,37 @@
 
 	let { sections }: SidebarDataType = $props();
 	let mobileOpen = $state(false);
+	let isCollapsed = $state(false);
+	let isDesktop = $state(false);
+	let hasLoadedCollapsePreference = $state(false);
 	let expandedPaths = $state<ReadonlySet<string>>(new Set());
+	let sidebarHidden = $derived(isDesktop && isCollapsed);
+	const collapseStorageKey = 'dnd-portal-sidebar-collapsed';
+
+	onMount(() => {
+		const desktopQuery = window.matchMedia('(min-width: 801px)');
+		const updateDesktopState = (event: MediaQueryList | MediaQueryListEvent) => {
+			isDesktop = event.matches;
+		};
+
+		updateDesktopState(desktopQuery);
+		isCollapsed = localStorage.getItem(collapseStorageKey) === 'true';
+		hasLoadedCollapsePreference = true;
+
+		desktopQuery.addEventListener('change', updateDesktopState);
+
+		return () => {
+			desktopQuery.removeEventListener('change', updateDesktopState);
+		};
+	});
+
+	$effect(() => {
+		if (!hasLoadedCollapsePreference) {
+			return;
+		}
+
+		localStorage.setItem(collapseStorageKey, String(isCollapsed));
+	});
 
 	function normalizePath(path: string): string {
 		const pathname = path.split(/[?#]/, 1)[0] || '/';
@@ -62,6 +93,10 @@
 
 	function closeMobileSidebar(): void {
 		mobileOpen = false;
+	}
+
+	function toggleSidebarCollapse(): void {
+		isCollapsed = !isCollapsed;
 	}
 </script>
 
@@ -127,31 +162,54 @@
 	Navigation
 </button>
 
-<aside
-	id="wiki-sidebar"
-	class="sidebar"
-	class:sidebar--open={mobileOpen}
-	aria-label="Wiki navigation"
+<div
+	class="sidebar-shell"
+	class:sidebar-shell--collapsed={sidebarHidden}
 >
-	<nav class="sidebar__nav">
-		{#each sections as section}
-			<section class="sidebar__section">
-				<h2 class="sidebar__section-title">{section.title}</h2>
+	<aside
+		id="wiki-sidebar"
+		class="sidebar"
+		class:sidebar--open={mobileOpen}
+		aria-label="Wiki navigation"
+		aria-hidden={sidebarHidden}
+	>
+		{#if !sidebarHidden}
+			<nav class="sidebar__nav">
+				{#each sections as section}
+					<section class="sidebar__section">
+						<h2 class="sidebar__section-title">{section.title}</h2>
 
-				<ul class="sidebar__list">
-					{#each section.roots as root (root.path)}
-						{@render renderNode(root, 0)}
-					{/each}
-				</ul>
-			</section>
-		{/each}
-	</nav>
+						<ul class="sidebar__list">
+							{#each section.roots as root (root.path)}
+								{@render renderNode(root, 0)}
+							{/each}
+						</ul>
+					</section>
+				{/each}
+			</nav>
+
+			<button
+				class="sidebar__mobile-close"
+				type="button"
+				onclick={closeMobileSidebar}
+			>
+				Close
+			</button>
+		{/if}
+	</aside>
 
 	<button
-		class="sidebar__mobile-close"
+		class="sidebar-shell__toggle"
 		type="button"
-		onclick={closeMobileSidebar}
+		aria-controls="wiki-sidebar"
+		aria-expanded={!sidebarHidden}
+		aria-label={sidebarHidden ? 'Open sidebar' : 'Close sidebar'}
+		onclick={toggleSidebarCollapse}
 	>
-		Close
+		<span
+			class="sidebar-shell__toggle-icon"
+			class:sidebar-shell__toggle-icon--collapsed={sidebarHidden}
+			aria-hidden="true"
+		></span>
 	</button>
-</aside>
+</div>

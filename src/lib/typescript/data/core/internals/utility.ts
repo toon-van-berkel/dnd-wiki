@@ -21,5 +21,21 @@ export const utility = {
 		},
 		
 		href: '/search'
+	},
+
+	preferences: {
+		name: {
+			normal: 'Preferences',
+			slug: 'preferences'
+		},
+		logos: {
+			simple: {
+				href: '/icons/white/util/cog.svg',
+				alt: `A stylized cog icon representing website preferences
+					and settings.`
+			}
+		},
+
+		href: '/preferences'
 	}
 }

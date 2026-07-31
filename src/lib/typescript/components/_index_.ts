@@ -3,7 +3,10 @@
     use:
 */
 export { footerData } from './footer/footer';
+export { navbarData } from './navbar/navbar';
 export { getSidebarLabel, sidebarData } from './sidebar/sidebar';
+
+export type { NavbarAction, NavbarDataType } from './navbar/navbar-types';
 
 export type {
 	SidebarDataType,

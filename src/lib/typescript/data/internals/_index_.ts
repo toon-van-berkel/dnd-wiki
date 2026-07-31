@@ -1,3 +1,4 @@
+import { website } from './website';
 import { utility } from './utility';
 import { classes } from './classes/_index_';
 import { species } from './species/_index_';
@@ -8,6 +9,7 @@ import { project } from './project';
 import { legal } from './legal';
 
 export const internals = {
+	website,
 	utility,
 
 	classes,
