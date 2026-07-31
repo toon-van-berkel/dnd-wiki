@@ -17,4 +17,19 @@ export type {
 	PagePath
 } from './functions/_index_';
 
+export type {
+	CoreTraitsData,
+	EquipmentChoiceGroup,
+	InlineContent,
+	InlineContentBlock,
+	InlineContentNode,
+	InlineContentParagraphs,
+	ProgressionColumn,
+	ProgressionData,
+	ProgressionFeature,
+	ProgressionRow,
+	ProgressionValue,
+	TraitTableRow
+} from '$lib/typescript/pages/content-types';
+
 export const data = { externals, internals, socials};

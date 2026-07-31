@@ -1,6 +1,8 @@
 import { movement } from './movement';
 import { abilityScores } from './ability-scores/_index_';
 import { characterCreation } from './character-creation/_index_';
+import { equipment } from './equipment';
+import { skills } from './skills';
 
 export const rules = {
 	name: {
@@ -21,5 +23,7 @@ export const rules = {
 
 	movement,
 	abilityScores,
-	characterCreation
+	characterCreation,
+	skills,
+	equipment
 } as const;

@@ -2,6 +2,8 @@ import * as core from '../../core/_index_';
 
 import { abilityScores } from './ability-scores/_index_';
 import { characterCreation } from './character-creation/_index_';
+import { equipment } from './equipment';
+import { skills } from './skills';
 
 const current = core.internals.rules;
 
@@ -19,5 +21,7 @@ export const rules = {
 	},
 
 	abilityScores,
-	characterCreation
+	characterCreation,
+	skills,
+	equipment
 } as const;

@@ -1,1 +1,208 @@
-// tertiary
+/*
+	Location: src/lib/scss/components/PageCard.scss
+	Use: Styles reusable page-card variants.
+*/
+
+@use '../core/colors' as colors;
+
+.pagecard {
+	min-width: 0;
+	position: relative;
+	display: block;
+	overflow: hidden;
+
+	color: colors.get-dark(text, primary);
+	text-decoration: none;
+
+	background: colors.get-dark(background, secondary);
+	border: 1px solid colors.get-dark(text, tertiary);
+	border-radius: 8px;
+
+	transition:
+		border-color 160ms ease,
+		background-color 160ms ease,
+		transform 160ms ease;
+
+	&:hover,
+	&:focus-visible {
+		border-color: colors.get-dark(theme, primary);
+		background: colors.get-dark(background, hover);
+	}
+
+	&:focus-visible {
+		outline: 2px solid colors.get-dark(theme, primary);
+		outline-offset: 3px;
+	}
+
+	&__content {
+		min-width: 0;
+		position: relative;
+		z-index: 1;
+
+		display: flex;
+		flex-direction: column;
+		gap: 12px;
+	}
+
+	h3 {
+		color: colors.get-dark(text, headings);
+		font-size: 1.25rem;
+		line-height: 1.15;
+	}
+
+	p {
+		color: colors.get-dark(text, secondary);
+		line-height: 1.45;
+		overflow-wrap: anywhere;
+	}
+
+	&__eyebrow {
+		color: colors.get-dark(text, tertiary);
+		font-size: 0.78rem;
+		font-weight: 700;
+		text-transform: uppercase;
+	}
+
+	&__open {
+		margin-top: auto;
+		color: colors.get-dark(text, links, base);
+		font-weight: 500;
+	}
+
+	&__icon {
+		width: 130px;
+		height: 130px;
+		position: absolute;
+		right: -18px;
+		bottom: -22px;
+
+		background: colors.get-dark(theme, primary);
+		opacity: 0.12;
+		transform: rotate(-8deg);
+		pointer-events: none;
+
+		mask: var(--pagecard-icon) center / contain no-repeat;
+		-webkit-mask: var(--pagecard-icon) center / contain no-repeat;
+
+		transition:
+			opacity 160ms ease,
+			transform 160ms ease;
+	}
+
+	&--icon {
+		min-height: 220px;
+		padding: 24px;
+
+		&:hover,
+		&:focus-visible {
+			.pagecard__icon {
+				opacity: 0.22;
+				transform: rotate(-3deg) scale(1.03);
+			}
+		}
+	}
+
+	&--compact {
+		min-height: 160px;
+		padding: 18px;
+
+		.pagecard__content {
+			gap: 8px;
+		}
+
+		.pagecard__eyebrow {
+			margin-bottom: -4px;
+		}
+
+		.pagecard__icon {
+			width: 112px;
+			height: 112px;
+			right: -34px;
+			bottom: -34px;
+		}
+
+		h3 {
+			font-size: 1.12rem;
+		}
+
+		p {
+			font-size: 0.92rem;
+		}
+	}
+
+	&--image {
+		aspect-ratio: 4 / 5;
+		min-height: 320px;
+		display: flex;
+		align-items: flex-end;
+
+		&::after {
+			content: '';
+			position: absolute;
+			inset: 0;
+			background:
+				linear-gradient(
+					to top,
+					rgb(0 0 0 / 80%),
+					rgb(0 0 0 / 18%) 58%,
+					rgb(0 0 0 / 4%)
+				);
+			z-index: 0;
+		}
+
+		.pagecard__background {
+			width: 100%;
+			height: 100%;
+			position: absolute;
+			inset: 0;
+
+			object-fit: cover;
+			transition:
+				opacity 160ms ease,
+				transform 180ms ease;
+		}
+
+		.pagecard__content {
+			width: 100%;
+			padding: 22px;
+			box-sizing: border-box;
+		}
+
+		ul {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 6px;
+		}
+
+		li {
+			padding: 3px 7px;
+
+			color: colors.get-dark(text, secondary);
+			background: rgb(0 0 0 / 35%);
+			border: 1px solid rgb(255 255 255 / 14%);
+			border-radius: 999px;
+			font-size: 0.75rem;
+		}
+
+		&:hover,
+		&:focus-visible {
+			.pagecard__background {
+				transform: scale(1.035);
+			}
+		}
+	}
+
+	&--pending {
+		.pagecard__background {
+			opacity: 0;
+		}
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.pagecard,
+	.pagecard__icon,
+	.pagecard--image .pagecard__background {
+		transition: none;
+	}
+}

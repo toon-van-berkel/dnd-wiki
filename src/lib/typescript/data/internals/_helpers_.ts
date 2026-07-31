@@ -1,4 +1,5 @@
 import * as core from '../core/_index_';
+import type { InlineContentBlock } from '$lib/typescript/pages/content-types';
 
 type ImageSizeSources = {
 	s: string;
@@ -8,6 +9,7 @@ type ImageSizeSources = {
 
 type CardImage = {
 	alt: string;
+	caption?: string;
 	position?: string;
 	sources: ImageSizeSources;
 };
@@ -16,7 +18,13 @@ interface InternalPageInput {
 	href: string;
 	title: string;
 	subTitle: string;
-	description: string;
+	label?: string;
+	description?: string;
+	descriptions?: {
+		short?: string;
+		medium?: string;
+		long?: InlineContentBlock;
+	};
 
 	img?: {
 		href: string;
@@ -28,6 +36,15 @@ interface InternalPageInput {
 			female: CardImage;
 			male: CardImage;
 		};
+		header?: {
+			female: CardImage;
+			male: CardImage;
+		};
+	};
+
+	navigation?: {
+		label?: string;
+		parent?: string;
 	};
 
 	tags?: readonly string[];
@@ -36,8 +53,15 @@ interface InternalPageInput {
 export function createInternalPage<const T extends InternalPageInput>(
 	page: T
 ) {
+	const description =
+		page.description ??
+		page.descriptions?.medium ??
+		page.descriptions?.short ??
+		'';
+
 	return {
 		...page,
+		description,
 		external: false as const,
 		img: page.img ?? core.internals.website.logos.simple
 	};
