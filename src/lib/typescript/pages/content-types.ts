@@ -31,13 +31,87 @@ export type PageSection = {
 	readonly title: string;
 };
 
+export type PageTableOfContentsSection = PageSection & {
+	readonly children?: readonly PageTableOfContentsSection[];
+};
+
 export type HeaderContentSection = PageSection & {
 	readonly content: InlineContentBlock;
 };
 
+export type PageContentField = {
+	readonly label: string;
+	readonly content?: InlineContent;
+	readonly items?: readonly InlineContent[];
+};
+
+export type PageContentCard =
+	| {
+			readonly page: string;
+			readonly source: string;
+	  }
+	| {
+			readonly title: string;
+			readonly source: string;
+			readonly description: string;
+			readonly tags?: readonly string[];
+	  };
+
+export type PageContentFallbackCard = {
+	readonly title: string;
+	readonly source: string;
+	readonly description: string;
+	readonly tags?: readonly string[];
+};
+
+export type PageContentCardGroup = {
+	readonly title: string;
+	readonly cards: readonly PageContentCard[];
+};
+
+export type PageContentBlock =
+	| {
+			readonly type: 'paragraph';
+			readonly content: InlineContent;
+	  }
+	| {
+			readonly type: 'list';
+			readonly items: readonly InlineContent[];
+	  }
+	| {
+			readonly type: 'field-list';
+			readonly items: readonly PageContentField[];
+	  }
+	| {
+			readonly type: 'table';
+			readonly caption: string;
+			readonly showCaption?: boolean;
+			readonly columns: TraitTableColumnLabels;
+			readonly rows: readonly TraitTableRow[];
+	  }
+	| {
+			readonly type: 'card-grid';
+			readonly groups: readonly PageContentCardGroup[];
+	  }
+	| {
+			readonly type: 'formula';
+			readonly content: InlineContent;
+	  };
+
+export type PageContentSection = PageSection & {
+	readonly optional?: boolean;
+	readonly blocks: readonly PageContentBlock[];
+};
+
 export type TraitTableRow = {
 	readonly label: string;
+	readonly labelContent?: InlineContent;
 	readonly value: InlineContent;
+};
+
+export type TraitTableColumnLabels = {
+	readonly label: string;
+	readonly value: string;
 };
 
 export type EquipmentChoiceGroup = {
@@ -56,9 +130,10 @@ export type ProgressionValue = string | number;
 
 export type ProgressionColumnFormat = 'plain' | 'ordinal' | 'signed';
 
-export type ProgressionFeature = {
+export type ProgressionFeature<Path extends string = string> = {
 	readonly label: string;
-	readonly path?: string;
+	readonly path?: Path;
+	readonly sectionId?: string;
 	readonly optional?: boolean;
 };
 
@@ -69,17 +144,17 @@ export type ProgressionColumn = {
 	readonly format?: ProgressionColumnFormat;
 };
 
-export type ProgressionRow = {
+export type ProgressionRow<Path extends string = string> = {
 	readonly level: number;
 	readonly proficiencyBonus: number;
-	readonly features: readonly ProgressionFeature[];
+	readonly features: readonly ProgressionFeature<Path>[];
 	readonly values: Readonly<Record<string, ProgressionValue>>;
 };
 
-export type ProgressionData = {
+export type ProgressionData<Path extends string = string> = {
 	readonly title: string;
 	readonly heading?: string;
 	readonly description?: string;
 	readonly columns: readonly ProgressionColumn[];
-	readonly rows: readonly ProgressionRow[];
+	readonly rows: readonly ProgressionRow<Path>[];
 };

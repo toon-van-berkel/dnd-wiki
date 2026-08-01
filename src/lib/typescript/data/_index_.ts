@@ -25,12 +25,20 @@ export type {
 	InlineContentBlock,
 	InlineContentNode,
 	InlineContentParagraphs,
+	PageContentBlock,
+	PageContentCard,
+	PageContentFallbackCard,
+	PageContentCardGroup,
+	PageContentField,
+	PageContentSection,
 	PageSection,
+	PageTableOfContentsSection,
 	ProgressionColumn,
 	ProgressionData,
 	ProgressionFeature,
 	ProgressionRow,
 	ProgressionValue,
+	TraitTableColumnLabels,
 	TraitTableRow
 } from '$lib/typescript/pages/content-types';
 

@@ -1,4 +1,5 @@
 import * as core from '../../../core/_index_';
+import { createAbilityScoreContent } from '../_content_';
 
 const parent = core.internals.rules.abilityScores;
 const current = parent.constitution;
@@ -12,5 +13,6 @@ export const constitution = {
 	title: `D&D Portal - ${current.name.normal}`,
 	subTitle: 'Health, stamina, and endurance',
 	description: `${current.name.normal} measures health, stamina, endurance,
-		and a character's resistance to physical hardship.`
+		and a character's resistance to physical hardship.`,
+	content: createAbilityScoreContent(current)
 } as const;

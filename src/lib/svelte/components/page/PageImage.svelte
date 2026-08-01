@@ -72,7 +72,10 @@
 					aria-pressed={displayGender === 'male'}
 					onclick={() => selectGender('male')}
 				>
-					M
+					<span
+						class="page-image__control-icon page-image__control-icon--male"
+						aria-hidden="true"
+					></span>
 				</button>
 
 				<button
@@ -83,7 +86,10 @@
 					aria-pressed={displayGender === 'female'}
 					onclick={() => selectGender('female')}
 				>
-					F
+					<span
+						class="page-image__control-icon page-image__control-icon--female"
+						aria-hidden="true"
+					></span>
 				</button>
 			</div>
 

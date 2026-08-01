@@ -4,6 +4,7 @@
 -->
 <script lang="ts">
 	import type {
+		LinkPath,
 		ProgressionColumn,
 		ProgressionData,
 		ProgressionFeature,
@@ -22,7 +23,7 @@
 			title: data.heading ?? 'Class Progression'
 		}
 	}: {
-		data: ProgressionData;
+		data: ProgressionData<LinkPath>;
 		section?: PageSection;
 	} = $props();
 	let selectedLevel = $state<number | null>(null);
@@ -66,7 +67,7 @@
 	}
 
 	function getColumnValue(
-		row: ProgressionRow,
+		row: ProgressionRow<LinkPath>,
 		column: ProgressionColumn
 	): ProgressionValue | null {
 		if (column.key === 'level') {
@@ -80,7 +81,7 @@
 		return row.values[column.key] ?? null;
 	}
 
-	function getFeatureCountLabel(row: ProgressionRow): string {
+	function getFeatureCountLabel(row: ProgressionRow<LinkPath>): string {
 		const featureCount = row.features.length;
 
 		if (featureCount === 0) {
@@ -90,7 +91,7 @@
 		return `${featureCount} feature${featureCount === 1 ? '' : 's'} gained`;
 	}
 
-	function getFeaturePreview(row: ProgressionRow): string {
+	function getFeaturePreview(row: ProgressionRow<LinkPath>): string {
 		if (row.features.length === 0) {
 			return 'No new features';
 		}
@@ -111,7 +112,7 @@
 	}
 </script>
 
-{#snippet renderFeature(feature: ProgressionFeature)}
+{#snippet renderFeature(feature: ProgressionFeature<LinkPath>)}
 	{@const featurePath = feature.path ? resolveLinkPath(feature.path) : null}
 
 	<span class="progression-feature">
@@ -121,6 +122,10 @@
 				placeholder={feature.label}
 				popup="full"
 			/>
+		{:else if feature.sectionId}
+			<a class="progression-feature__anchor" href={`#${feature.sectionId}`}>
+				{feature.label}
+			</a>
 		{:else}
 			<span class="progression-feature__text">{feature.label}</span>
 		{/if}
@@ -131,7 +136,7 @@
 	</span>
 {/snippet}
 
-{#snippet renderFeatureList(row: ProgressionRow)}
+{#snippet renderFeatureList(row: ProgressionRow<LinkPath>)}
 	{#if row.features.length}
 		<ul class="progression-feature-list">
 			{#each row.features as feature, index}

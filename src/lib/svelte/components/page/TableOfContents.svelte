@@ -4,15 +4,26 @@
 -->
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import type { PageSection } from '$lib/typescript/data/_index_';
+	import type { PageTableOfContentsSection } from '$lib/typescript/data/_index_';
 
-	let { sections }: { sections: readonly PageSection[] } = $props();
+	let { sections }: { sections: readonly PageTableOfContentsSection[] } = $props();
 	let activeSectionId = $state('');
 
-	onMount(() => {
-		activeSectionId = sections[0]?.id ?? '';
+	function flattenSections(
+		items: readonly PageTableOfContentsSection[]
+	): readonly PageTableOfContentsSection[] {
+		return items.flatMap((section) => [
+			section,
+			...flattenSections(section.children ?? [])
+		]);
+	}
 
-		const sectionElements = sections
+	let flatSections = $derived(flattenSections(sections));
+
+	onMount(() => {
+		activeSectionId = flatSections[0]?.id ?? '';
+
+		const sectionElements = flatSections
 			.map((section) => document.getElementById(section.id))
 			.filter((element): element is HTMLElement => element !== null);
 
@@ -59,6 +70,21 @@
 					>
 						{section.title}
 					</a>
+
+					{#if section.children?.length}
+						<ol class="table-of-contents__list table-of-contents__list--nested">
+							{#each section.children as child}
+								<li>
+									<a
+										href={`#${child.id}`}
+										aria-current={activeSectionId === child.id ? 'location' : undefined}
+									>
+										{child.title}
+									</a>
+								</li>
+							{/each}
+						</ol>
+					{/if}
 				</li>
 			{/each}
 		</ol>

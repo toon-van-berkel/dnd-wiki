@@ -1,5 +1,9 @@
 import * as core from '../../core/_index_';
 import { createInternalPage } from '../_helpers_';
+import {
+	createGenericRuleContent,
+	createGroupContent
+} from './_content_';
 
 const website = core.internals.website;
 const current = core.internals.rules.equipment;
@@ -25,7 +29,8 @@ function createEquipmentPage(item: EquipmentReference) {
 		title: `${website.name.short} - ${item.name.normal}`,
 		subTitle: 'Equipment reference',
 		description: `${item.name.normal} is an equipment reference used by
-			character options and rules.`
+			character options and rules.`,
+		content: createGenericRuleContent(item, 'equipment rule')
 	});
 }
 
@@ -37,13 +42,15 @@ export const equipment = {
 		title: `${website.name.short} - ${current.name.normal}`,
 		subTitle: 'Equipment references',
 		description: `Browse weapon, armor, shield, and adventuring gear
-			references used by character options.`
+			references used by character options.`,
+		content: createGroupContent(current.name.normal, 'equipment rule')
 	}),
 
 	simpleWeapons: createEquipmentPage(current.simpleWeapons),
 	martialWeapons: createEquipmentPage(current.martialWeapons),
 	lightArmor: createEquipmentPage(current.lightArmor),
 	mediumArmor: createEquipmentPage(current.mediumArmor),
+	heavyArmor: createEquipmentPage(current.heavyArmor),
 	shields: createEquipmentPage(current.shields),
 	greataxe: createEquipmentPage(current.greataxe),
 	handaxes: createEquipmentPage(current.handaxes),

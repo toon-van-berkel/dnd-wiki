@@ -71,6 +71,20 @@ export const equipment = {
 		}
 	},
 
+	heavyArmor: {
+		name: {
+			normal: 'Heavy Armor',
+			slug: 'heavy-armor'
+		},
+
+		logos: {
+			simple: {
+				href: '/icons/white/entity/armor.svg',
+				alt: `A stylized armor icon representing heavy armor.`
+			}
+		}
+	},
+
 	shields: {
 		name: {
 			normal: 'Shields',

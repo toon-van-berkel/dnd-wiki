@@ -6,6 +6,7 @@ import { constitution } from './constitution';
 import { intelligence } from './intelligence';
 import { wisdom } from './wisdom';
 import { charisma } from './charisma';
+import { createGroupContent } from '../_content_';
 
 const current = core.internals.rules.abilityScores;
 
@@ -19,7 +20,8 @@ export const abilityScores = {
 		title: `D&D Portal - ${current.name.normal}`,
 		subTitle: 'Core character attributes',
 		description: `Learn how the six ability scores describe a character's
-			physical and mental capabilities.`
+			physical and mental capabilities.`,
+		content: createGroupContent(current.name.normal, 'ability score')
 	},
 
 	strength,

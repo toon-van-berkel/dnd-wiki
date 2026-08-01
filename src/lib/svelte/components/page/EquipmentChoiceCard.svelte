@@ -22,25 +22,34 @@
 	{#if group.choices?.length}
 		<p class="equipment-card__sentence">
 			{#each group.choices as choice, index}
-				<InlineContent content={choice} />
+				<span class="equipment-card__choice">
+					<InlineContent content={choice} />
+				</span>
 
 				{#if index < group.choices.length - 1}
 					<span class="equipment-card__separator">
 						or
 					</span>
+				{:else}
+					<span>.</span>
 				{/if}
 			{/each}
-			.
 		</p>
 	{/if}
 
 	{#if group.items?.length}
-		<ul class="equipment-card__list">
-			{#each group.items as item}
-				<li>
+		<p class="equipment-card__sentence">
+			{#each group.items as item, index}
+				<span class="equipment-card__choice">
 					<InlineContent content={item} />
-				</li>
+				</span>
+
+				{#if index < group.items.length - 1}
+					<span>, </span>
+				{:else}
+					<span>.</span>
+				{/if}
 			{/each}
-		</ul>
+		</p>
 	{/if}
 </article>

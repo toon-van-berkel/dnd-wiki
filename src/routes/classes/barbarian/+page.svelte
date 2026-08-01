@@ -5,24 +5,21 @@
 <script lang="ts">
 	import { getData } from '$lib/typescript/data/_index_';
 
-	import CoreTraits from '$lib/svelte/components/page/CoreTraits.svelte';
-	import PageCard from '$lib/svelte/components/PageCard.svelte';
+	import PageContentSection from '$lib/svelte/components/page/PageContentSection.svelte';
 	import PageHeader from '$lib/svelte/components/page/PageHeader.svelte';
 	import ProgressionTable from '$lib/svelte/components/page/ProgressionTable.svelte';
+	import StartingEquipment from '$lib/svelte/components/page/StartingEquipment.svelte';
 	import TableOfContents from '$lib/svelte/components/page/TableOfContents.svelte';
 
 	const barbarian = getData('internals.classes.barbarian');
+	const classFeatureOverview = barbarian.content.classFeatureSections[0];
+	const coreTraitSections = barbarian.content.classFeatureSections.slice(1, 3);
+	const classFeatureSections = barbarian.content.classFeatureSections.slice(3);
 </script>
 
 <div class="page-layout">
 	<article class="wiki-article page-layout__article">
 		<PageHeader />
-
-		<CoreTraits
-			traits={barbarian.content.coreTraits}
-			section={barbarian.content.sections.coreTraits}
-			startingEquipmentSection={barbarian.content.sections.startingEquipment}
-		/>
 
 		<ProgressionTable
 			data={barbarian.content.progression}
@@ -31,29 +28,30 @@
 
 		<section
 			class="wiki-article__section"
-			id={barbarian.content.sections.primalPaths.id}
-			aria-labelledby={`${barbarian.content.sections.primalPaths.id}-title`}
+			id={barbarian.content.sections.coreTraits.id}
+			aria-labelledby={`${barbarian.content.sections.coreTraits.id}-title`}
 		>
-			<h2 id={`${barbarian.content.sections.primalPaths.id}-title`}>
-				{barbarian.content.sections.primalPaths.title}
+			<h2 id={`${barbarian.content.sections.coreTraits.id}-title`}>
+				{barbarian.content.sections.coreTraits.title}
 			</h2>
-
-			<div class="wiki-article__cards">
-				<PageCard
-					page="internals.classes.barbarian.subclasses.berserker"
-					variant="icon"
-					density="compact"
-					eyebrow="Barbarian subclass"
-				/>
-
-				<PageCard
-					page="internals.classes.barbarian.subclasses.zealot"
-					variant="icon"
-					density="compact"
-					eyebrow="Barbarian subclass"
-				/>
-			</div>
 		</section>
+
+		{#each coreTraitSections as section}
+			<PageContentSection {section} headingLevel="subsection" />
+		{/each}
+
+		<StartingEquipment
+			groups={barbarian.content.coreTraits.startingEquipment}
+			intro={barbarian.content.startingEquipmentIntro}
+			section={barbarian.content.sections.startingEquipment}
+			headingLevel="subsection"
+		/>
+
+		<PageContentSection section={classFeatureOverview} />
+
+		{#each classFeatureSections as section}
+			<PageContentSection {section} headingLevel="subsection" />
+		{/each}
 	</article>
 
 	<aside class="page-layout__toc">

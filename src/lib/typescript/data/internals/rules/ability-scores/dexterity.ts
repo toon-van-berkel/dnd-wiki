@@ -1,4 +1,5 @@
 import * as core from '../../../core/_index_';
+import { createAbilityScoreContent } from '../_content_';
 
 const parent = core.internals.rules.abilityScores;
 const current = parent.dexterity;
@@ -12,5 +13,6 @@ export const dexterity = {
 	title: `D&D Portal - ${current.name.normal}`,
 	subTitle: 'Agility, reflexes, and coordination',
 	description: `${current.name.normal} measures agility, reflexes, balance,
-		and precise physical coordination.`
+		and precise physical coordination.`,
+	content: createAbilityScoreContent(current)
 } as const;

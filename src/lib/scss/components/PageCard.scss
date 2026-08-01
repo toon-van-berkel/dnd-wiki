@@ -221,15 +221,17 @@
 				linear-gradient(
 					to top,
 					colors.get-dark(overlay, image-strong),
-					colors.get-dark(overlay, image-mid) 48%,
+					colors.get-dark(overlay, image-strong) 16%,
+					colors.get-dark(overlay, image-mid) 58%,
 					colors.get-dark(overlay, image-soft)
 				),
 				linear-gradient(
 					to right,
 					colors.get-dark(overlay, image-strong),
-					colors.get-dark(overlay, image-mid) 42%,
-					colors.get-dark(overlay, image-soft) 74%
-				);
+					colors.get-dark(overlay, image-strong) 18%,
+					colors.get-dark(overlay, image-mid) 52%,
+					colors.get-dark(overlay, image-soft) 78%
+				),
 		}
 
 		.pagecard__background {
@@ -240,6 +242,7 @@
 			inset: 0;
 
 			object-fit: cover;
+			filter: brightness(0.6);
 
 			transition:
 				opacity sizes.get(transition, base) ease,
@@ -256,6 +259,11 @@
 			grid-template-rows: auto auto 1fr auto;
 			align-content: start;
 			gap: sizes.get(spacing, sm);
+		}
+
+		.pagecard__eyebrow {
+			font-size: 0.68rem;
+			line-height: 1;
 		}
 
 		h3,
@@ -321,6 +329,37 @@
 				background-color: colors.get-dark(text, links, hover);
 				transform: translateX(3px);
 			}
+		}
+	}
+
+	&--static {
+		cursor: default;
+
+		&:hover,
+		&:focus-visible {
+			background-color: colors.get-dark(background, secondary);
+			border-color: colors.get-dark(border, base);
+
+			.pagecard__background {
+				transform: none;
+			}
+		}
+	}
+
+	&--no-image {
+		background:
+			linear-gradient(
+				135deg,
+				colors.get-dark(background, secondary),
+				colors.get-dark(background, primary)
+			);
+
+		&::after {
+			background: linear-gradient(
+				to top,
+				colors.get-dark(overlay, image-strong),
+				colors.get-dark(overlay, image-mid)
+			);
 		}
 	}
 
