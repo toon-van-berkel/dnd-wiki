@@ -8,13 +8,23 @@
 		ProgressionData,
 		ProgressionFeature,
 		ProgressionRow,
-		ProgressionValue
+		ProgressionValue,
+		PageSection
 	} from '$lib/typescript/data/_index_';
 	import { resolveLinkPath } from '$lib/typescript/pages/currentPage';
 
 	import Link from '$lib/svelte/components/Link.svelte';
 
-	let { data }: { data: ProgressionData } = $props();
+	let {
+		data,
+		section = {
+			id: 'progression',
+			title: data.heading ?? 'Class Progression'
+		}
+	}: {
+		data: ProgressionData;
+		section?: PageSection;
+	} = $props();
 	let selectedLevel = $state<number | null>(null);
 
 	function formatOrdinal(value: number): string {
@@ -141,9 +151,9 @@
 	{/if}
 {/snippet}
 
-<section class="progression" aria-labelledby="progression-title">
+<section class="progression" id={section.id} aria-labelledby={`${section.id}-title`}>
 	<header class="progression__header">
-		<h2 id="progression-title">{data.heading ?? 'Class Progression'}</h2>
+		<h2 id={`${section.id}-title`}>{section.title}</h2>
 
 		{#if data.description}
 			<p>{data.description}</p>

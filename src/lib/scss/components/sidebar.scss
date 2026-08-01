@@ -4,23 +4,24 @@
 */
 
 @use '../core/colors' as colors;
+@use '../core/sizes' as sizes;
 
 .sidebar-shell {
-	--sidebar-width: 280px;
-	--sidebar-toggle-width: 32px;
+	--sidebar-width: #{sizes.get(sidebar, width)};
+	--sidebar-toggle-width: #{sizes.get(sidebar, toggle-width)};
 
 	width: var(--sidebar-width);
-	height: 100svh;
+	height: calc(100dvh - var(--navbar-height, #{sizes.get(navbar, height)}) - #{sizes.get(border, thin)});
 	flex: 0 0 var(--sidebar-width);
 
 	position: sticky;
-	top: 0;
+	top: calc(var(--navbar-height, #{sizes.get(navbar, height)}) + #{sizes.get(border, thin)});
 	z-index: 800;
 
 	overflow: visible;
 	transition:
-		width 180ms ease,
-		flex-basis 180ms ease;
+		width sizes.get(transition, sidebar) ease,
+		flex-basis sizes.get(transition, sidebar) ease;
 
 	&--collapsed {
 		width: 0;
@@ -34,16 +35,16 @@
 
 		.sidebar-shell__toggle {
 			left: 0;
-			border-left: 1px solid colors.get-dark(text, tertiary);
+			border-left: 1px solid colors.get-dark(border, base);
 		}
 	}
 
 	&__toggle {
 		width: var(--sidebar-toggle-width);
-		height: 44px;
+		height: sizes.get(control, lg);
 
 		position: absolute;
-		top: 72px;
+		top: sizes.get(spacing, sm);
 		left: calc(100% - 1px);
 		z-index: 2;
 
@@ -52,9 +53,9 @@
 		justify-content: center;
 
 		background-color: colors.get-dark(background, secondary);
-		border: 1px solid colors.get-dark(text, tertiary);
+		border: 1px solid colors.get-dark(border, base);
 		border-left: 0;
-		border-radius: 0 5px 5px 0;
+		border-radius: 0 sizes.get(radius, sm) sizes.get(radius, sm) 0;
 		color: colors.get-dark(text, tertiary);
 		cursor: pointer;
 
@@ -62,13 +63,14 @@
 		&:focus-visible {
 			color: colors.get-dark(text, links, hover);
 			background-color: colors.get-dark(background, tiertiary);
+			border-color: colors.get-dark(border, interactive);
 			outline: none;
 		}
 	}
 
 	&__toggle-icon {
-		width: 16px;
-		height: 16px;
+		width: sizes.get(icon, sm);
+		height: sizes.get(icon, sm);
 
 		display: block;
 
@@ -92,13 +94,15 @@
 
 .sidebar {
 	width: 100%;
-	height: 100svh;
-	padding: 16px 10px;
+	height: 100%;
+	padding: sizes.get(spacing, lg) 10px;
 	box-sizing: border-box;
 
 	overflow-y: auto;
+	overflow-x: hidden;
+	scrollbar-gutter: stable;
 
-	border-right: 1px solid colors.get-dark(text, tertiary);
+	border-right: 1px solid colors.get-dark(border, subtle);
 
 	&__nav {
 		display: flex;
@@ -107,8 +111,8 @@
 	}
 
 	&__section + &__section {
-		padding-top: 16px;
-		border-top: 1px solid colors.get-dark(text, tertiary);
+		padding-top: sizes.get(spacing, lg);
+		border-top: 1px solid colors.get-dark(border, subtle);
 	}
 
 	&__section-title {
@@ -138,7 +142,7 @@
 		align-items: center;
 		gap: 4px;
 
-		border-radius: 5px;
+		border-radius: sizes.get(radius, sm);
 
 		&--active {
 			background-color: colors.get-dark(background, hover);
@@ -170,9 +174,9 @@
 
 	&__toggle,
 	&__toggle-spacer {
-		width: 28px;
-		height: 28px;
-		flex: 0 0 28px;
+		width: sizes.get(control, sm);
+		height: sizes.get(control, sm);
+		flex: 0 0 sizes.get(control, sm);
 	}
 
 	&__toggle {
@@ -182,7 +186,7 @@
 
 		background: transparent;
 		border: 0;
-		border-radius: 5px;
+		border-radius: sizes.get(radius, sm);
 		color: colors.get-dark(text, tertiary);
 		cursor: pointer;
 
@@ -200,7 +204,7 @@
 		font-size: 1.25rem;
 		line-height: 1;
 		transform: rotate(0deg);
-		transition: transform 150ms ease;
+		transition: transform sizes.get(transition, fast) ease;
 
 		&--expanded {
 			transform: rotate(90deg);
@@ -223,7 +227,7 @@
 	}
 }
 
-@media (max-width: 800px) {
+@media (max-width: #{sizes.get(breakpoint, sidebar)}) {
 	.sidebar-shell {
 		width: 0;
 		height: 0;
@@ -244,11 +248,17 @@
 		inset: 0 auto 0 0;
 		z-index: 900;
 
-		transform: translateX(-100%);
-		transition: transform 150ms ease;
+		clip-path: inset(0 100% 0 0);
+		visibility: hidden;
+		pointer-events: none;
+		transition:
+			clip-path sizes.get(transition, fast) ease,
+			visibility sizes.get(transition, fast) ease;
 
 		&--open {
-			transform: translateX(0);
+			clip-path: inset(0);
+			visibility: visible;
+			pointer-events: auto;
 		}
 
 		&__mobile-toggle,
@@ -261,14 +271,14 @@
 			padding: 0 12px;
 
 			background-color: colors.get-dark(background, secondary);
-			border: 1px solid colors.get-dark(text, tertiary);
-			border-radius: 5px;
+			border: 1px solid colors.get-dark(border, base);
+			border-radius: sizes.get(radius, sm);
 			color: colors.get-dark(text, primary);
 		}
 
 		&__mobile-close {
 			width: 100%;
-			margin-top: 16px;
+			margin-top: sizes.get(spacing, lg);
 		}
 	}
 

@@ -6,6 +6,12 @@
 @use '../core/sizes' as sizes;
 
 .layout {
+    --content-max-width: #{sizes.get(content, max-width)};
+    --content-wide-max-width: #{sizes.get(content, wide-max-width)};
+    --content-footer-max-width: #{sizes.get(content, footer-max-width)};
+    --content-padding-inline: clamp(20px, 4vw, 56px);
+    --navbar-height: #{sizes.get(navbar, height)};
+
     width: 100%;
     min-height: 100svh;
 
@@ -23,12 +29,14 @@
     }
 
     &__content {
+        width: 100%;
+        max-width: var(--content-max-width);
+        margin-inline: auto;
         min-width: 0;
-        max-width: 2150px;
         min-height: 50svh;
-        padding: sizes.get(section);
+        padding: sizes.get(spacing, xxl) var(--content-padding-inline);
         box-sizing: border-box;
-        flex: 1 1 auto;
+        flex: 1 1 var(--content-max-width);
     }
 }
 
@@ -38,7 +46,7 @@
 
     &__top {
         width: 100%;
-        max-width: 2150px;
+        max-width: var(--content-footer-max-width);
         padding: sizes.get(section);
         box-sizing: border-box;
 
@@ -52,7 +60,7 @@
             justify-content: center;
 
             background-color: colors.get-dark(background, tiertiary);
-            border-top: 1px solid colors.get-dark(text, tertiary);
+            border-top: 1px solid colors.get-dark(border, footer);
         }
         &__information {
             width: min(500px, 100%);
@@ -64,12 +72,14 @@
 
             &__head {
                 padding-bottom: 10px;
+                min-width: 0;
 
                 display: flex;
                 align-items: center;
+                flex-wrap: wrap;
                 gap: 20px;
 
-                border-bottom: 1px solid colors.get-dark(text, tertiary);
+                border-bottom: 1px solid colors.get-dark(border, footer);
 
                 &-img {
                     padding: 10px;
@@ -77,11 +87,15 @@
                     height: 70px;
                 }
                 &__text {
+                    min-width: 0;
+
                     &-title {
                         text-decoration: none;
+                        overflow-wrap: anywhere;
                     }
                     &-subtitle {
                         color: colors.get-dark(text, tertiary);
+                        overflow-wrap: anywhere;
                     }
                 }
             }
@@ -103,8 +117,8 @@
 
                     padding: 5px 10px;
 
-                    border: 1px solid colors.get-dark(background, quaternary);
-                    border-radius: 5px;
+                    border: 1px solid colors.get-dark(border, footer);
+                    border-radius: sizes.get(radius, sm);
 
                     font-size: 0.8em;
                     font-weight: 500;
@@ -139,7 +153,7 @@
     }
     &__bottom {
         width: 100%;
-        max-width: 2150px;
+        max-width: var(--content-wide-max-width);
         padding: sizes.get(section);
         box-sizing: border-box;
         
@@ -151,7 +165,7 @@
             justify-content: center;
 
             background-color: colors.get-dark(background, secondary);
-            border-top: 1px solid colors.get-dark(text, tertiary);
+            border-top: 1px solid colors.get-dark(border, footer);
         }
 
         &__copyright,
@@ -176,14 +190,14 @@
     }
 }
 
-@media (max-width: 800px) {
+@media (max-width: #{sizes.get(breakpoint, sidebar)}) {
     .layout {
         &__body {
             display: block;
         }
         
         &__content {
-            padding: 20px;
+            padding: sizes.get(section-mobile);
         }
     }
 

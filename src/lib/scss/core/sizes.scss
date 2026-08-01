@@ -1,9 +1,114 @@
 @use 'sass:map';
 
 $sizes: (
-    section: 20px 50px
+    section: 20px 50px,
+    section-mobile: 24px 20px,
+
+    content: (
+        max-width: 1500px,
+        wide-max-width: 1480px,
+        article-max-width: 1180px,
+        footer-max-width: 2400px,
+        header-max-width: 1200px,
+        text-max-width: 76ch,
+        description-max-width: 72ch,
+        toc-width: 220px,
+        page-image-max-height: 500px,
+        card-grid-max-width: 820px,
+        image-card-min-width: 240px,
+        image-card-max-width: 320px,
+        trait-table-max-width: 1120px,
+        equipment-grid-max-width: 980px,
+        equipment-three-column-min-width: 820px
+    ),
+
+    popup: (
+        full-width: 320px,
+        description-width: 260px,
+        viewport-gutter: 24px
+    ),
+
+    dialog: (
+        image-max-width: 980px,
+        viewport-gutter: 32px
+    ),
+
+    spacing: (
+        xs: 4px,
+        sm: 8px,
+        md: 12px,
+        lg: 16px,
+        xl: 24px,
+        xxl: 32px,
+        section-gap: 36px,
+        eyebrow-title-gap: 3px,
+        title-description-gap: 18px
+    ),
+
+    radius: (
+        sm: 5px,
+        md: 6px,
+        lg: 8px,
+        pill: 999px
+    ),
+
+    border: (
+        thin: 1px
+    ),
+
+    control: (
+        sm: 28px,
+        md: 34px,
+        lg: 44px
+    ),
+
+    icon: (
+        sm: 16px,
+        pagecard: 145px,
+        pagecard-mobile: 105px
+    ),
+
+    navbar: (
+        height: 64px
+    ),
+
+    sidebar: (
+        width: 280px,
+        toggle-width: 32px,
+        depth-step: 18px,
+        mobile-breakpoint: 800px
+    ),
+
+    breakpoint: (
+        phone: 600px,
+        narrow: 620px,
+        navbar: 700px,
+        sidebar: 800px,
+        toc: 1700px,
+        page-header: 900px,
+        progression: 900px
+    ),
+
+    typography: (
+        eyebrow-line-height: 1,
+        title-line-height: 0.95,
+        body-line-height: 1.65
+    ),
+
+    transition: (
+        fast: 150ms,
+        base: 160ms,
+        sidebar: 180ms
+    ),
+
+    scrollbar: (
+        width: 12px,
+        thin-width: 10px,
+        radius: 999px,
+        border: 3px
+    )
 );
 
-@function get($size) {
-    @return map.get($sizes, $size);
+@function get($keys...) {
+    @return map.get($sizes, $keys...);
 }

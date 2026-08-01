@@ -1,12 +1,15 @@
 @use '../core/colors' as colors;
+@use '../core/sizes' as sizes;
 
 .popup {
-	width: min(320px, calc(100vw - 24px));
+	width: min(sizes.get(popup, full-width), calc(100vw - #{sizes.get(popup, viewport-gutter)}));
 	max-height: calc(100vh - 24px);
 	padding: 20px;
 	box-sizing: border-box;
 
 	position: fixed;
+	top: 0;
+	left: 0;
 	z-index: 1000;
 
 	display: block;
@@ -17,16 +20,17 @@
 	pointer-events: none;
 
 	background-color: colors.get-dark(background, tiertiary);
+	border: 1px solid colors.get-dark(border, base);
 	border-radius: 10px;
-	box-shadow: 0 8px 20px rgb(0 0 0 / 35%);
+	box-shadow: 0 8px 20px colors.get-dark(overlay, shadow);
 
 	color: colors.get-dark(text, primary);
 	text-align: left;
 	white-space: normal;
 
 	transition:
-		opacity 150ms ease,
-		visibility 150ms ease;
+		opacity sizes.get(transition, fast) ease,
+		visibility sizes.get(transition, fast) ease;
 
 	&--visible {
 		opacity: 1;
@@ -40,7 +44,7 @@
 	}
 
 	&--description {
-		width: min(260px, calc(100vw - 24px));
+		width: min(sizes.get(popup, description-width), calc(100vw - #{sizes.get(popup, viewport-gutter)}));
 		padding: 10px 12px;
 
 		overflow: hidden;
@@ -60,7 +64,7 @@
 		display: flex;
 		align-items: center;
 
-		border-bottom: 1px solid colors.get-dark(text, tertiary);
+		border-bottom: 1px solid colors.get-dark(border, subtle);
 
 		&-img {
 			width: 50px;

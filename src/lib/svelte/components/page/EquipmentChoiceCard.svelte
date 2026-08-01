@@ -12,11 +12,11 @@
 
 <article class="equipment-card">
 	<header>
-		<h3>{group.label}</h3>
-
 		{#if group.instruction}
-			<p>{group.instruction}</p>
+			<p class="equipment-card__eyebrow">{group.instruction}</p>
 		{/if}
+
+		<h3>{group.label}</h3>
 	</header>
 
 	{#if group.choices?.length}

@@ -6,46 +6,57 @@
 	import { getData } from '$lib/typescript/data/_index_';
 
 	import CoreTraits from '$lib/svelte/components/page/CoreTraits.svelte';
-	import InlineContent from '$lib/svelte/components/page/InlineContent.svelte';
 	import PageCard from '$lib/svelte/components/PageCard.svelte';
 	import PageHeader from '$lib/svelte/components/page/PageHeader.svelte';
 	import ProgressionTable from '$lib/svelte/components/page/ProgressionTable.svelte';
+	import TableOfContents from '$lib/svelte/components/page/TableOfContents.svelte';
 
 	const barbarian = getData('internals.classes.barbarian');
 </script>
 
-<article class="barbarian-page">
-	<PageHeader />
+<div class="page-layout">
+	<article class="wiki-article page-layout__article">
+		<PageHeader />
 
-	<section class="barbarian-page__section" aria-labelledby="barbarian-multiclassing-title">
-		<h2 id="barbarian-multiclassing-title">Multiclassing</h2>
+		<CoreTraits
+			traits={barbarian.content.coreTraits}
+			section={barbarian.content.sections.coreTraits}
+			startingEquipmentSection={barbarian.content.sections.startingEquipment}
+		/>
 
-		<p class="barbarian-page__copy barbarian-page__copy--wide">
-			<InlineContent content={barbarian.content.multiclassingRequirement} />
-		</p>
-	</section>
+		<ProgressionTable
+			data={barbarian.content.progression}
+			section={barbarian.content.sections.progression}
+		/>
 
-	<CoreTraits traits={barbarian.content.coreTraits} />
+		<section
+			class="wiki-article__section"
+			id={barbarian.content.sections.primalPaths.id}
+			aria-labelledby={`${barbarian.content.sections.primalPaths.id}-title`}
+		>
+			<h2 id={`${barbarian.content.sections.primalPaths.id}-title`}>
+				{barbarian.content.sections.primalPaths.title}
+			</h2>
 
-	<ProgressionTable data={barbarian.content.progression} />
+			<div class="wiki-article__cards">
+				<PageCard
+					page="internals.classes.barbarian.subclasses.berserker"
+					variant="icon"
+					density="compact"
+					eyebrow="Barbarian subclass"
+				/>
 
-	<section class="barbarian-page__section" aria-labelledby="barbarian-paths-title">
-		<h2 id="barbarian-paths-title">Primal Paths</h2>
+				<PageCard
+					page="internals.classes.barbarian.subclasses.zealot"
+					variant="icon"
+					density="compact"
+					eyebrow="Barbarian subclass"
+				/>
+			</div>
+		</section>
+	</article>
 
-		<div class="barbarian-page__cards">
-			<PageCard
-				page="internals.classes.barbarian.subclasses.berserker"
-				variant="icon"
-				density="compact"
-				eyebrow="Barbarian subclass"
-			/>
-
-			<PageCard
-				page="internals.classes.barbarian.subclasses.zealot"
-				variant="icon"
-				density="compact"
-				eyebrow="Barbarian subclass"
-			/>
-		</div>
-	</section>
-</article>
+	<aside class="page-layout__toc">
+		<TableOfContents sections={barbarian.content.tableOfContents} />
+	</aside>
+</div>

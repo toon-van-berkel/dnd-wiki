@@ -1,5 +1,8 @@
 import * as core from '../core/_index_';
-import type { InlineContentBlock } from '$lib/typescript/pages/content-types';
+import type {
+	HeaderContentSection,
+	InlineContentBlock
+} from '$lib/typescript/pages/content-types';
 
 type ImageSizeSources = {
 	s: string;
@@ -26,20 +29,18 @@ interface InternalPageInput {
 		long?: InlineContentBlock;
 	};
 
+	header?: {
+		sections?: readonly HeaderContentSection[];
+	};
+
 	img?: {
 		href: string;
 		alt: string;
 	};
 
 	images?: {
-		card?: {
-			female: CardImage;
-			male: CardImage;
-		};
-		header?: {
-			female: CardImage;
-			male: CardImage;
-		};
+		card?: Partial<Record<'female' | 'male', CardImage>>;
+		header?: Partial<Record<'female' | 'male', CardImage>>;
 	};
 
 	navigation?: {

@@ -4,6 +4,7 @@
 */
 
 @use '../core/colors' as colors;
+@use '../core/sizes' as sizes;
 
 .navbar {
 	width: 100%;
@@ -15,12 +16,14 @@
 	z-index: 850;
 
 	background-color: colors.get-dark(background, primary);
-	border-bottom: 1px solid colors.get-dark(text, tertiary);
+	border-bottom: 1px solid colors.get-dark(border, subtle);
 
 	&__inner {
 		width: 100%;
+		max-width: var(--content-wide-max-width, #{sizes.get(content, wide-max-width)});
+		margin-inline: auto;
 		min-width: 0;
-		min-height: 64px;
+		min-height: sizes.get(navbar, height);
 		padding: 10px 16px;
 		box-sizing: border-box;
 
@@ -72,16 +75,16 @@
 		overflow: hidden;
 
 		background-color: colors.get-dark(background, primary);
-		border: 1px solid colors.get-dark(text, tertiary);
-		border-radius: 6px;
+		border: 1px solid colors.get-dark(border, base);
+		border-radius: sizes.get(radius, md);
 
 		transition:
-			border-color 150ms ease,
-			box-shadow 150ms ease;
+			border-color sizes.get(transition, fast) ease,
+			box-shadow sizes.get(transition, fast) ease;
 
 		&:focus-within {
-			border-color: colors.get-dark(theme, primary);
-			box-shadow: 0 0 0 1px colors.get-dark(theme, primary);
+			border-color: colors.get-dark(border, interactive);
+			box-shadow: 0 0 0 1px colors.get-dark(border, interactive);
 		}
 	}
 
@@ -147,7 +150,7 @@
 
 		background-color: transparent;
 		border: 0;
-		border-left: 1px solid colors.get-dark(text, tertiary);
+		border-left: 1px solid colors.get-dark(border, subtle);
 
 		color: colors.get-dark(text, primary);
 		font: inherit;
@@ -156,8 +159,8 @@
 		cursor: pointer;
 
 		transition:
-			background-color 150ms ease,
-			color 150ms ease;
+			background-color sizes.get(transition, fast) ease,
+			color sizes.get(transition, fast) ease;
 
 		&:hover {
 			background-color: colors.get-dark(background, tiertiary);
@@ -184,15 +187,15 @@
 			padding: 0 10px;
 
 			border: 0;
-			border-radius: 6px;
+			border-radius: sizes.get(radius, md);
 
 			background-color: transparent;
 			text-decoration: none;
 			white-space: nowrap;
 
 			transition:
-				background-color 150ms ease,
-				color 150ms ease;
+				background-color sizes.get(transition, fast) ease,
+				color sizes.get(transition, fast) ease;
 
 			&:hover {
 				background-color: colors.get-dark(background, tiertiary);
@@ -239,7 +242,7 @@
 	}
 }
 
-@media (max-width: 700px) {
+@media (max-width: #{sizes.get(breakpoint, navbar)}) {
 	.navbar {
 		position: static;
 

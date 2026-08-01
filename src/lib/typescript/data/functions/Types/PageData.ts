@@ -1,5 +1,8 @@
 import type { LinkData } from './LinkData';
-import type { InlineContentBlock } from '$lib/typescript/pages/content-types';
+import type {
+	HeaderContentSection,
+	InlineContentBlock
+} from '$lib/typescript/pages/content-types';
 
 export type ImageGender = 'female' | 'male';
 export type ImageSize = 's' | 'm' | 'l';
@@ -22,15 +25,19 @@ export type PageData = LinkData & {
 		readonly long?: InlineContentBlock;
 	};
 
+	readonly header?: {
+		readonly sections?: readonly HeaderContentSection[];
+	};
+
 	readonly images?: {
-		readonly card?: Record<
+		readonly card?: Partial<Record<
 			ImageGender,
 			ResponsiveImageData
-		>;
-		readonly header?: Record<
+		>>;
+		readonly header?: Partial<Record<
 			ImageGender,
 			ResponsiveImageData
-		>;
+		>>;
 	};
 
 	readonly navigation?: {

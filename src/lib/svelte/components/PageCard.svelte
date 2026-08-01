@@ -39,7 +39,9 @@
 	);
 
 	let cardImage = $derived(
-		pageData.images?.card?.[displayGender]
+		pageData.images?.card?.[displayGender] ??
+			pageData.images?.card?.female ??
+			pageData.images?.card?.male
 	);
 
 	let cardImageHref = $derived(
@@ -70,6 +72,8 @@
 			style={`object-position: ${cardImage.position ?? 'center'}`}
 			loading="lazy"
 		/>
+
+		<span class="pagecard__chevron" aria-hidden="true"></span>
 
 		<article class="pagecard__content">
 			<h3>{getPageLabel(page)}</h3>

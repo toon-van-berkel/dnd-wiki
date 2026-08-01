@@ -20,10 +20,12 @@ export type {
 export type {
 	CoreTraitsData,
 	EquipmentChoiceGroup,
+	HeaderContentSection,
 	InlineContent,
 	InlineContentBlock,
 	InlineContentNode,
 	InlineContentParagraphs,
+	PageSection,
 	ProgressionColumn,
 	ProgressionData,
 	ProgressionFeature,

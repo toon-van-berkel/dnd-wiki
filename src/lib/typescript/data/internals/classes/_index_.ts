@@ -3,6 +3,7 @@ import { createInternalPage } from '../_helpers_';
 
 import { artificer } from './artificer';
 import { barbarian } from './barbarian';
+import { rogue } from './rogue';
 
 const website = core.internals.website;
 const current = core.internals.classes;
@@ -30,5 +31,6 @@ export const classes = {
 	}),
 
 	artificer,
-	barbarian
+	barbarian,
+	rogue
 } as const;

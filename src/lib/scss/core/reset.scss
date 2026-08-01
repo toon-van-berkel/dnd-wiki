@@ -1,11 +1,53 @@
-/*  
+/*
     Location: src\lib\scss\core\reset.scss
     use: This file resets basic styling.
 */
+
+@use './colors' as colors;
+@use './sizes' as sizes;
 
 * {
     margin: 0;
     padding: 0;
 
     list-style: none;
+}
+
+html {
+    scrollbar-color: colors.get-dark(scrollbar, thumb) colors.get-dark(scrollbar, track);
+    scrollbar-width: auto;
+}
+
+* {
+    scrollbar-color: colors.get-dark(scrollbar, thumb) colors.get-dark(scrollbar, track);
+}
+
+::-webkit-scrollbar {
+    width: sizes.get(scrollbar, width);
+    height: sizes.get(scrollbar, width);
+}
+
+::-webkit-scrollbar-track {
+    background-color: colors.get-dark(scrollbar, track);
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: colors.get-dark(scrollbar, thumb);
+    border: sizes.get(scrollbar, border) solid colors.get-dark(scrollbar, border);
+    border-radius: sizes.get(scrollbar, radius);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: colors.get-dark(scrollbar, thumb-hover);
+}
+
+::-webkit-scrollbar-thumb:active {
+    background-color: colors.get-dark(scrollbar, thumb-active);
+}
+
+@media (forced-colors: active) {
+    html,
+    * {
+        scrollbar-color: auto;
+    }
 }

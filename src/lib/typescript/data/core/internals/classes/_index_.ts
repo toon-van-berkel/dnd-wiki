@@ -1,5 +1,6 @@
 import { barbarian } from "./barbarian"
 import { artificer } from "./artificer"
+import { rogue } from './rogue';
 
 export const classes = {
 	name: {
@@ -18,5 +19,7 @@ export const classes = {
     
 	baseUrl: '/classes',
 
-    barbarian, artificer
+	barbarian,
+	artificer,
+	rogue
 }

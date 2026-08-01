@@ -23,7 +23,7 @@
 	);
 	let displayGender = $derived(selectedGender ?? 'female');
 	let image = $derived<ResponsiveImageData | undefined>(
-		imageSet?.[displayGender]
+		imageSet?.[displayGender] ?? imageSet?.female ?? imageSet?.male
 	);
 
 	onMount(() => {

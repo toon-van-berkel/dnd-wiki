@@ -26,6 +26,15 @@ export type InlineContent = readonly InlineContentNode[];
 export type InlineContentParagraphs = readonly InlineContent[];
 export type InlineContentBlock = InlineContent | InlineContentParagraphs;
 
+export type PageSection = {
+	readonly id: string;
+	readonly title: string;
+};
+
+export type HeaderContentSection = PageSection & {
+	readonly content: InlineContentBlock;
+};
+
 export type TraitTableRow = {
 	readonly label: string;
 	readonly value: InlineContent;

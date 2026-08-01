@@ -63,6 +63,26 @@
 					</p>
 				{/each}
 			</div>
+
+			{#if currentPage.data.header?.sections?.length}
+				<div class="page-header__sections">
+					{#each currentPage.data.header.sections as section}
+						<section
+							class="page-header__section"
+							id={section.id}
+							aria-labelledby={`${section.id}-title`}
+						>
+							<h2 id={`${section.id}-title`}>{section.title}</h2>
+
+							{#each getDescriptionParagraphs(section.content, '') as paragraph}
+								<p>
+									<InlineContent content={paragraph} />
+								</p>
+							{/each}
+						</section>
+					{/each}
+				</div>
+			{/if}
 		</div>
 
 		<PageImage />

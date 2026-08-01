@@ -4,8 +4,10 @@
 */
 
 @use '../core/colors' as colors;
+@use '../core/sizes' as sizes;
 
 .progression {
+	max-width: sizes.get(content, article-max-width);
 	min-width: 0;
 
 	&__header {
@@ -26,14 +28,15 @@
 	&__table-container {
 		min-width: 0;
 		overflow-x: auto;
-		border: 1px solid colors.get-dark(text, tertiary);
-		border-radius: 8px;
+		border: 1px solid colors.get-dark(border, strong);
+		border-radius: sizes.get(radius, lg);
 	}
 
 	&__table {
 		width: 100%;
 		min-width: 720px;
 		border-collapse: collapse;
+		table-layout: fixed;
 
 		caption {
 			position: absolute;
@@ -48,7 +51,7 @@
 		td {
 			padding: 13px 14px;
 			vertical-align: top;
-			border-bottom: 1px solid colors.get-dark(text, tertiary);
+			border-bottom: 1px solid colors.get-dark(border, subtle);
 		}
 
 		thead th {
@@ -57,6 +60,22 @@
 			font-size: 0.82rem;
 			text-align: left;
 			text-transform: uppercase;
+
+			&:nth-child(1) {
+				width: 88px;
+			}
+
+			&:nth-child(2) {
+				width: 132px;
+			}
+
+			&:nth-child(4) {
+				width: 92px;
+			}
+
+			&:nth-child(5) {
+				width: 122px;
+			}
 		}
 
 		tbody {
@@ -102,7 +121,7 @@
 
 		&:hover,
 		&:focus-visible {
-			border-color: colors.get-dark(text, tertiary);
+			border-color: colors.get-dark(border, interactive);
 		}
 
 		&:focus-visible {
@@ -112,14 +131,14 @@
 
 		&--selected {
 			color: colors.get-dark(theme, primary);
-			text-shadow: 0 0 10px rgb(123 255 83 / 28%);
+			text-shadow: 0 0 10px colors.get-dark(overlay, selected-text);
 		}
 	}
 
 	&__row--selected {
 		td,
 		th {
-			box-shadow: inset 0 1px 0 rgb(123 255 83 / 16%);
+			box-shadow: inset 0 1px 0 colors.get-dark(overlay, selected-glow);
 		}
 	}
 
@@ -163,10 +182,10 @@
 	&__badge {
 		padding: 2px 6px;
 
-		color: colors.get-dark(theme, primary);
+		color: colors.get-dark(badge, optional-text);
 		background: colors.get-dark(background, secondary);
-		border: 1px solid colors.get-dark(theme, tertiary);
-		border-radius: 999px;
+		border: 1px solid colors.get-dark(badge, optional-border);
+		border-radius: sizes.get(radius, pill);
 
 		font-size: 0.68rem;
 		font-weight: 700;
@@ -179,8 +198,8 @@
 	min-width: 0;
 
 	background: colors.get-dark(background, secondary);
-	border: 1px solid colors.get-dark(text, tertiary);
-	border-radius: 8px;
+	border: 1px solid colors.get-dark(border, base);
+	border-radius: sizes.get(radius, lg);
 
 	&[open] {
 		border-color: colors.get-dark(theme, tertiary);
@@ -281,7 +300,7 @@
 		mask: url('/icons/white/util/chevron-down.svg') center / contain no-repeat;
 		-webkit-mask: url('/icons/white/util/chevron-down.svg') center / contain no-repeat;
 
-		transition: transform 160ms ease;
+		transition: transform sizes.get(transition, base) ease;
 	}
 
 	&__details {
@@ -292,7 +311,7 @@
 		div {
 			min-width: 0;
 			padding-top: 10px;
-			border-top: 1px solid colors.get-dark(text, tertiary);
+			border-top: 1px solid colors.get-dark(border, subtle);
 		}
 
 		dt {
@@ -313,11 +332,11 @@
 .progression-card--selected {
 	.progression-card__level strong {
 		color: colors.get-dark(theme, primary);
-		text-shadow: 0 0 10px rgb(123 255 83 / 28%);
+		text-shadow: 0 0 10px colors.get-dark(overlay, selected-text);
 	}
 }
 
-@media (max-width: 900px) {
+@media (max-width: #{sizes.get(breakpoint, progression)}) {
 	.progression {
 		&__table-presentation {
 			display: none;

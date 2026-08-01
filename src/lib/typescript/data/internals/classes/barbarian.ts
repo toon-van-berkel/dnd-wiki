@@ -61,6 +61,29 @@ const multiclassingRequirement = [
 	}
 ] as const;
 
+const sections = {
+	multiclassing: {
+		id: 'multiclassing',
+		title: 'Multiclassing'
+	},
+	coreTraits: {
+		id: 'core-traits',
+		title: 'Core Barbarian Traits'
+	},
+	startingEquipment: {
+		id: 'starting-equipment',
+		title: 'Starting Equipment'
+	},
+	progression: {
+		id: 'progression',
+		title: 'Barbarian Progression'
+	},
+	primalPaths: {
+		id: 'primal-paths',
+		title: 'Primal Paths'
+	}
+} as const;
+
 const coreTraits = {
 	traits: [
 		{
@@ -523,6 +546,15 @@ export const barbarian = {
 			]
 		},
 
+		header: {
+			sections: [
+				{
+					...sections.multiclassing,
+					content: multiclassingRequirement
+				}
+			]
+		},
+
 		navigation: {
 			parent: 'internals.classes.page'
 		},
@@ -576,7 +608,14 @@ export const barbarian = {
 	},
 
 	content: {
-		multiclassingRequirement,
+		sections,
+		tableOfContents: [
+			sections.multiclassing,
+			sections.coreTraits,
+			sections.startingEquipment,
+			sections.progression,
+			sections.primalPaths
+		],
 		coreTraits,
 		progression: barbarianProgression
 	}

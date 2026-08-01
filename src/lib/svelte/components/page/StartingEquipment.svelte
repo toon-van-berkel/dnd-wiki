@@ -3,15 +3,27 @@
 	Use: Renders responsive starting-equipment cards.
 -->
 <script lang="ts">
-	import type { EquipmentChoiceGroup } from '$lib/typescript/data/_index_';
+	import type {
+		EquipmentChoiceGroup,
+		PageSection
+	} from '$lib/typescript/data/_index_';
 
 	import EquipmentChoiceCard from './EquipmentChoiceCard.svelte';
 
-	let { groups }: { groups: readonly EquipmentChoiceGroup[] } = $props();
+	let {
+		groups,
+		section = {
+			id: 'starting-equipment',
+			title: 'Starting Equipment'
+		}
+	}: {
+		groups: readonly EquipmentChoiceGroup[];
+		section?: PageSection;
+	} = $props();
 </script>
 
-<section class="starting-equipment" aria-labelledby="starting-equipment-title">
-	<h2 id="starting-equipment-title">Starting Equipment</h2>
+<section class="starting-equipment" id={section.id} aria-labelledby={`${section.id}-title`}>
+	<h2 id={`${section.id}-title`}>{section.title}</h2>
 
 	<div class="starting-equipment__grid">
 		{#each groups as group}

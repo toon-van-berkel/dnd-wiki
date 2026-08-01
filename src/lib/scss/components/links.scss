@@ -16,7 +16,7 @@
 		&:hover {
 			.link {
 				color: colors.get-dark(text, links, hover);
-				border-color: colors.get-dark(theme, primary);
+				border-color: colors.get-dark(border, interactive);
 			}
 		}
 	}
