@@ -5,15 +5,29 @@ import { artificer } from './artificer';
 import { barbarian } from './barbarian';
 import { bard } from './bard';
 import { bloodHunter } from './blood-hunter';
+import { captain } from './captain';
+import { champion } from './champion';
 import { cleric } from './cleric';
 import { druid } from './druid';
 import { fighter } from './fighter';
+import { gunslinger } from './gunslinger';
+import { illrigger } from './illrigger';
+import { messenger } from './messenger';
 import { monk } from './monk';
+import { monsterHunter } from './monster-hunter';
+import { mournbound } from './mournbound';
 import { paladin } from './paladin';
+import { pugilist } from './pugilist';
 import { ranger } from './ranger';
 import { rogue } from './rogue';
+import { scholar } from './scholar';
+import { shinobi } from './shinobi';
 import { sorcerer } from './sorcerer';
+import { treasureHunter } from './treasure-hunter';
+import { vampyr } from './vampyr';
+import { vanguard } from './vanguard';
 import { warlock } from './warlock';
+import { warden } from './warden';
 import { wizard } from './wizard';
 
 const website = core.internals.website;
@@ -54,7 +68,21 @@ export const classes = {
 	sorcerer,
 	warlock,
 	wizard,
-	bloodHunter
+	bloodHunter,
+	captain,
+	champion,
+	gunslinger,
+	illrigger,
+	messenger,
+	monsterHunter,
+	mournbound,
+	pugilist,
+	scholar,
+	shinobi,
+	treasureHunter,
+	vampyr,
+	vanguard,
+	warden
 } as const;
 
 export const classList = [
@@ -127,6 +155,76 @@ export const classList = [
 		name: 'Blood Hunter',
 		slug: 'blood-hunter',
 		path: 'internals.classes.bloodHunter.page'
+	},
+	{
+		name: 'Captain',
+		slug: 'captain',
+		path: 'internals.classes.captain.page'
+	},
+	{
+		name: 'Champion',
+		slug: 'champion',
+		path: 'internals.classes.champion.page'
+	},
+	{
+		name: 'Gunslinger',
+		slug: 'gunslinger',
+		path: 'internals.classes.gunslinger.page'
+	},
+	{
+		name: 'Illrigger',
+		slug: 'illrigger',
+		path: 'internals.classes.illrigger.page'
+	},
+	{
+		name: 'Messenger',
+		slug: 'messenger',
+		path: 'internals.classes.messenger.page'
+	},
+	{
+		name: 'Monster Hunter',
+		slug: 'monster-hunter',
+		path: 'internals.classes.monsterHunter.page'
+	},
+	{
+		name: 'Mournbound',
+		slug: 'mournbound',
+		path: 'internals.classes.mournbound.page'
+	},
+	{
+		name: 'Pugilist',
+		slug: 'pugilist',
+		path: 'internals.classes.pugilist.page'
+	},
+	{
+		name: 'Scholar',
+		slug: 'scholar',
+		path: 'internals.classes.scholar.page'
+	},
+	{
+		name: 'Shinobi',
+		slug: 'shinobi',
+		path: 'internals.classes.shinobi.page'
+	},
+	{
+		name: 'Treasure Hunter',
+		slug: 'treasure-hunter',
+		path: 'internals.classes.treasureHunter.page'
+	},
+	{
+		name: 'Vampyr',
+		slug: 'vampyr',
+		path: 'internals.classes.vampyr.page'
+	},
+	{
+		name: 'Vanguard',
+		slug: 'vanguard',
+		path: 'internals.classes.vanguard.page'
+	},
+	{
+		name: 'Warden',
+		slug: 'warden',
+		path: 'internals.classes.warden.page'
 	}
 ] as const;
 
@@ -182,6 +280,62 @@ const genericClassEntries = [
 	{
 		slug: 'blood-hunter',
 		data: bloodHunter
+	},
+	{
+		slug: 'captain',
+		data: captain
+	},
+	{
+		slug: 'champion',
+		data: champion
+	},
+	{
+		slug: 'gunslinger',
+		data: gunslinger
+	},
+	{
+		slug: 'illrigger',
+		data: illrigger
+	},
+	{
+		slug: 'messenger',
+		data: messenger
+	},
+	{
+		slug: 'monster-hunter',
+		data: monsterHunter
+	},
+	{
+		slug: 'mournbound',
+		data: mournbound
+	},
+	{
+		slug: 'pugilist',
+		data: pugilist
+	},
+	{
+		slug: 'scholar',
+		data: scholar
+	},
+	{
+		slug: 'shinobi',
+		data: shinobi
+	},
+	{
+		slug: 'treasure-hunter',
+		data: treasureHunter
+	},
+	{
+		slug: 'vampyr',
+		data: vampyr
+	},
+	{
+		slug: 'vanguard',
+		data: vanguard
+	},
+	{
+		slug: 'warden',
+		data: warden
 	}
 ] as const;
 

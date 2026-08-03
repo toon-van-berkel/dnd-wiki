@@ -4,7 +4,6 @@
 -->
 <script lang="ts">
 	import type {
-		LinkPath,
 		ProgressionColumn,
 		ProgressionData,
 		ProgressionFeature,
@@ -23,7 +22,7 @@
 			title: data.heading ?? 'Class Progression'
 		}
 	}: {
-		data: ProgressionData<LinkPath>;
+		data: ProgressionData<string>;
 		section?: PageSection;
 	} = $props();
 	let selectedLevel = $state<number | null>(null);
@@ -56,7 +55,7 @@
 
 	function formatValue(
 		value: ProgressionValue,
-		column: ProgressionColumn<LinkPath>
+		column: ProgressionColumn<string>
 	): string {
 		if (column.format === 'ordinal' && typeof value === 'number') {
 			return formatOrdinal(value);
@@ -70,8 +69,8 @@
 	}
 
 	function getColumnValue(
-		row: ProgressionRow<LinkPath>,
-		column: ProgressionColumn<LinkPath>
+		row: ProgressionRow<string>,
+		column: ProgressionColumn<string>
 	): ProgressionValue | null {
 		if (column.key === 'level') {
 			return row.level;
@@ -84,7 +83,7 @@
 		return row.values[column.key] ?? null;
 	}
 
-	function getFeatureCountLabel(row: ProgressionRow<LinkPath>): string {
+	function getFeatureCountLabel(row: ProgressionRow<string>): string {
 		const featureCount = row.features.length;
 
 		if (featureCount === 0) {
@@ -94,7 +93,7 @@
 		return `${featureCount} feature${featureCount === 1 ? '' : 's'} gained`;
 	}
 
-	function getFeaturePreview(row: ProgressionRow<LinkPath>): string {
+	function getFeaturePreview(row: ProgressionRow<string>): string {
 		if (row.features.length === 0) {
 			return 'No new features';
 		}
@@ -102,7 +101,7 @@
 		return row.features.map((feature) => feature.label).join(' | ');
 	}
 
-	function getDetailColumns(): readonly ProgressionColumn<LinkPath>[] {
+	function getDetailColumns(): readonly ProgressionColumn<string>[] {
 		return data.columns.filter((column) => column.key !== 'level');
 	}
 
@@ -115,7 +114,7 @@
 	}
 </script>
 
-{#snippet renderColumnLabel(column: ProgressionColumn<LinkPath>, label = column.label)}
+{#snippet renderColumnLabel(column: ProgressionColumn<string>, label = column.label)}
 	{@const columnPath = column.path ? resolveLinkPath(column.path) : null}
 
 	{#if columnPath}
@@ -129,7 +128,7 @@
 	{/if}
 {/snippet}
 
-{#snippet renderFeature(feature: ProgressionFeature<LinkPath>)}
+{#snippet renderFeature(feature: ProgressionFeature<string>)}
 	{@const featurePath = feature.path ? resolveLinkPath(feature.path) : null}
 
 	<span class="progression-feature">
@@ -153,7 +152,7 @@
 	</span>
 {/snippet}
 
-{#snippet renderFeatureList(row: ProgressionRow<LinkPath>)}
+{#snippet renderFeatureList(row: ProgressionRow<string>)}
 	{#if row.features.length}
 		<ul class="progression-feature-list">
 			{#each row.features as feature, index}

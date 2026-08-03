@@ -19,7 +19,7 @@
 
 	type ClassPageContentData = {
 		readonly startingEquipment: readonly EquipmentChoiceGroup[];
-		readonly progression: ProgressionData<LinkPath>;
+		readonly progression: ProgressionData<string>;
 		readonly sections: {
 			readonly identity: PageContentSectionData;
 			readonly coreTraits: PageContentSectionData;

@@ -417,7 +417,7 @@ const subclasses = {
 	}
 }),
 	death: createInternalPage({
-	"href": "/classes/cleric/death",
+	"href": "/classes/cleric/death-domain",
 	"img": {
 		"href": "/icons/white/classes/cleric.svg",
 		"alt": "A stylized Cleric class icon."
@@ -1430,7 +1430,7 @@ const subclasses = {
 	}
 }),
 	life: createInternalPage({
-	"href": "/classes/cleric/life",
+	"href": "/classes/cleric/life-domain",
 	"img": {
 		"href": "/icons/white/classes/cleric.svg",
 		"alt": "A stylized Cleric class icon."
