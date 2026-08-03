@@ -11,6 +11,7 @@
 
 	import PageCard from '$lib/svelte/components/PageCard.svelte';
 
+	import Changelog from './Changelog.svelte';
 	import InlineContent from './InlineContent.svelte';
 	import TraitTable from './TraitTable.svelte';
 
@@ -111,6 +112,8 @@
 		<p class="content-section__formula">
 			<InlineContent content={block.content} />
 		</p>
+	{:else if block.type === 'changelog'}
+		<Changelog releases={block.releases} />
 	{/if}
 {/snippet}
 

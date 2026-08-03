@@ -18,6 +18,10 @@ export type {
 } from './functions/_index_';
 
 export type {
+	ChangelogAction,
+	ChangelogCategory,
+	ChangelogChange,
+	ChangelogRelease,
 	CoreTraitsData,
 	EquipmentChoiceGroup,
 	HeaderContentSection,

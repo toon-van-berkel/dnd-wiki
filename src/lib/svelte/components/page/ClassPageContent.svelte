@@ -23,6 +23,7 @@
 		readonly sections: {
 			readonly identity: PageContentSectionData;
 			readonly coreTraits: PageContentSectionData;
+			readonly detailSections?: readonly PageContentSectionData[];
 			readonly classFeaturesOverview: PageContentSectionData;
 			readonly featureSections: readonly PageContentSectionData[];
 			readonly subclasses: PageContentSectionData;
@@ -39,6 +40,10 @@
 
 		<PageContentSection section={content.sections.identity} />
 		<PageContentSection section={content.sections.coreTraits} />
+
+		{#each content.sections.detailSections ?? [] as section}
+			<PageContentSection {section} />
+		{/each}
 
 		<StartingEquipment
 			groups={content.startingEquipment}

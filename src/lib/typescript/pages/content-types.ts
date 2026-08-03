@@ -71,6 +71,34 @@ export type PageContentCardGroup = {
 	readonly cards: readonly PageContentCard[];
 };
 
+export type ChangelogCategory =
+	| 'added'
+	| 'changed'
+	| 'fixed'
+	| 'content'
+	| 'removed'
+	| 'security';
+
+export type ChangelogAction = {
+	readonly label: string;
+	readonly path: string;
+};
+
+export type ChangelogChange = {
+	readonly category: ChangelogCategory;
+	readonly title: string;
+	readonly description: string;
+	readonly action?: ChangelogAction;
+};
+
+export type ChangelogRelease = {
+	readonly version: string;
+	readonly date: string;
+	readonly title: string;
+	readonly description: string;
+	readonly changes: readonly ChangelogChange[];
+};
+
 export type PageContentBlock =
 	| {
 			readonly type: 'paragraph';
@@ -98,6 +126,10 @@ export type PageContentBlock =
 	| {
 			readonly type: 'formula';
 			readonly content: InlineContent;
+	  }
+	| {
+			readonly type: 'changelog';
+			readonly releases: readonly ChangelogRelease[];
 	  };
 
 export type PageContentSection = PageSection & {

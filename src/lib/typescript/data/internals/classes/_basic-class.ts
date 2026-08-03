@@ -244,11 +244,11 @@ export function createBasicClass(config: BasicClassConfig) {
 		content: {
 			startingEquipment: config.startingEquipment ?? [
 				{
-					label: 'Starting package',
+					label: 'Data missing',
 					items: [
 						[
 							text(
-								'Use the equipment package from the published class source or choose equivalent starting gold when your table uses that option.'
+								'Starting equipment data has not been added for this class yet.'
 							)
 						]
 					]
