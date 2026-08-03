@@ -1,8 +1,8 @@
 import * as core from '../../core/_index_';
 import { createInternalPage } from '../_helpers_';
 
-import { artificer } from './artificer';
 import { barbarian } from './barbarian';
+import { contentPackClasses } from './content-pack';
 import { rogue } from './rogue';
 
 const website = core.internals.website;
@@ -30,7 +30,7 @@ export const classes = {
 		]
 	}),
 
-	artificer,
+	...contentPackClasses,
 	barbarian,
 	rogue
 } as const;
