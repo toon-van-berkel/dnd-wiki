@@ -1,13 +1,24 @@
 import * as core from '../../core/_index_';
 import { createInternalPage } from '../_helpers_';
-import {
-	getSpellsByLevel,
-	spells as spellData,
-	type SpellLevel
-} from '../rules/spellcasting/spells/spell-data';
 
 const website = core.internals.website;
 const current = core.internals.spells;
+
+type SpellLevel = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
+
+const spellCounts: Record<SpellLevel | 'all', number> = {
+	all: 574,
+	0: 49,
+	1: 91,
+	2: 97,
+	3: 83,
+	4: 61,
+	5: 66,
+	6: 51,
+	7: 30,
+	8: 24,
+	9: 22
+};
 
 type SpellReference = {
 	readonly name: {
@@ -23,7 +34,7 @@ type SpellReference = {
 };
 
 function createSpellListPage(item: SpellReference, level?: SpellLevel) {
-	const list = level === undefined ? spellData : getSpellsByLevel(level);
+	const spellCount = level === undefined ? spellCounts.all : spellCounts[level];
 	const href = level === undefined
 		? current.baseUrl
 		: `${current.baseUrl}/${item.name.slug}`;
@@ -34,7 +45,7 @@ function createSpellListPage(item: SpellReference, level?: SpellLevel) {
 		label: item.name.normal,
 		title: `${website.name.short} - ${item.name.normal}`,
 		subTitle: level === undefined ? 'Spell browser' : 'Spell level list',
-		description: `Browse ${list.length} ${item.name.normal.toLowerCase()} with casting time, range, duration, components, classes, and full spell text.`,
+		description: `Browse ${spellCount} ${item.name.normal.toLowerCase()} with casting time, range, duration, components, classes, and full spell text.`,
 		navigation: level === undefined
 			? undefined
 			: {

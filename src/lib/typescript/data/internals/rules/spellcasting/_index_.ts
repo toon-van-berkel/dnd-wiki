@@ -4,13 +4,24 @@ import {
 	createGenericRuleContent,
 	createGroupContent
 } from '../_content_';
-import {
-	getSpellsByLevel,
-	type SpellLevel
-} from './spells/spell-data';
 
 const website = core.internals.website;
 const current = core.internals.rules.spellcasting;
+
+type SpellLevel = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
+
+const spellCounts: Record<SpellLevel, number> = {
+	0: 49,
+	1: 91,
+	2: 97,
+	3: 83,
+	4: 61,
+	5: 66,
+	6: 51,
+	7: 30,
+	8: 24,
+	9: 22
+};
 
 type SpellcastingReference = {
 	readonly name: {
@@ -47,8 +58,6 @@ function createSpellLevelPage(
 	item: SpellcastingReference,
 	level: SpellLevel
 ) {
-	const spells = getSpellsByLevel(level);
-
 	return createInternalPage({
 		href: level === 0
 			? `${current.baseUrl}/${item.name.slug}`
@@ -57,7 +66,7 @@ function createSpellLevelPage(
 		label: item.name.normal,
 		title: `${website.name.short} - ${item.name.normal}`,
 		subTitle: level === 0 ? 'Cantrip list' : 'Spell level list',
-		description: `Browse ${spells.length} ${item.name.normal.toLowerCase()}
+		description: `Browse ${spellCounts[level]} ${item.name.normal.toLowerCase()}
 			with casting metadata, classes, components, duration, and range.`,
 		content: createGenericRuleContent(item, 'spell list')
 	});

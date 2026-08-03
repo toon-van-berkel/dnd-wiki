@@ -45,10 +45,17 @@
 			currentPage.data?.description ?? ''
 		)
 	);
+	let imageSet = $derived(
+		currentPage.data?.images?.header ?? currentPage.data?.images?.card
+	);
+	let hasHeaderImage = $derived(Boolean(imageSet?.female ?? imageSet?.male));
 </script>
 
 {#if currentPage.path && currentPage.data}
-	<section class="page-header">
+	<section
+		class="page-header"
+		class:page-header--without-image={!hasHeaderImage}
+	>
 		<div class="page-header__content">
 			<p class="page-header__subtitle">
 				{currentPage.data.subTitle}

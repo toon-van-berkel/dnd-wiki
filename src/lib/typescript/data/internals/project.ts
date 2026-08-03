@@ -113,16 +113,58 @@ const aiImageRegister = [
 const changelogReleases = [
 	{
 		version: 'Unreleased',
-		date: '3 August 2026',
-		title: 'Local content and data expansion',
+		date: '4 August 2026',
+		title: 'Branch-wide Wiki rebuild and content expansion',
 		description:
-			'Work currently present in the local project after the live 0.8.0 changelog, based on local commit history and the current workspace state.',
+			'Large local branch update covering the TypeScript data migration, expanded rules content, class and subclass pages, spell browsing, search, reusable page components, styling, assets, and pre-live validation work.',
 		changes: [
 			{
-				category: 'content',
-				title: 'Expanded class content',
+				category: 'changed',
+				title: 'TypeScript data source migration',
 				description:
-					'Added and migrated large class-data files, subclass pages, page-header descriptions, progression data, and reusable class content structures.',
+					'Rebuilt the Wiki around centralized TypeScript data modules for internal pages, external links, socials, page metadata, images, tags, inline content, hover previews, navigation, and route resolution.',
+				action: {
+					label: 'Browse Wiki',
+					path: 'internals.website.homepage'
+				}
+			},
+			{
+				category: 'changed',
+				title: 'Reusable page rendering system',
+				description:
+					'Replaced many route-specific page implementations with shared Svelte components for page headers, responsive images, breadcrumbs, cards, inline content, content sections, tables, progression blocks, core traits, starting equipment, and table-of-contents navigation.'
+			},
+			{
+				category: 'changed',
+				title: 'Generic dynamic routes',
+				description:
+					'Moved many static route files into dynamic page routes for top-level project pages, rules pages, spell pages, class pages, and subclass pages so the central data tree controls what renders.'
+			},
+			{
+				category: 'content',
+				title: 'Expanded class library',
+				description:
+					'Added and migrated a broad class library with page-header descriptions, class overview data, core traits, progression data, feature sections, subclass navigation, images, and page-card presentation for official and homebrew classes.',
+				action: {
+					label: 'Browse Classes',
+					path: 'internals.classes.page'
+				}
+			},
+			{
+				category: 'content',
+				title: 'Official class pages',
+				description:
+					'Added or rewrote class pages for Artificer, Barbarian, Bard, Cleric, Druid, Fighter, Monk, Paladin, Ranger, Rogue, Sorcerer, Warlock, and Wizard using the shared class-page content model.',
+				action: {
+					label: 'View Classes',
+					path: 'internals.classes.page'
+				}
+			},
+			{
+				category: 'content',
+				title: 'Additional and homebrew class pages',
+				description:
+					'Added or migrated Blood Hunter, Captain, Champion, Gunslinger, Illrigger, Messenger, Monster Hunter, Mournbound, Pugilist, Scholar, Shinobi, Treasure Hunter, Vampyr, Vanguard, and Warden pages into the same central class system.',
 				action: {
 					label: 'Browse Classes',
 					path: 'internals.classes.page'
@@ -132,7 +174,7 @@ const changelogReleases = [
 				category: 'content',
 				title: 'Shinobi class and paths',
 				description:
-					'Added Shinobi class content, Chakra progression, class features, weapon presentation notes, and the Shinobi path pages.',
+					'Expanded the Shinobi class with Chakra progression, class features, weapon and resource presentation, stronger page content, and Shinobi path pages for Taijutsu, Elemental Ninjutsu, Genjutsu, Bloodline, Medical, Sealing, and Fortune paths.',
 				action: {
 					label: 'View Shinobi',
 					path: 'internals.classes.shinobi.page'
@@ -142,41 +184,201 @@ const changelogReleases = [
 				category: 'content',
 				title: 'Barbarian content expansion',
 				description:
-					'Expanded Barbarian content with structured features, subclass cards, linked rules references, and page-header image handling.',
+					'Expanded the Barbarian page with multi-paragraph header copy, structured class features, core-trait presentation, corrected class-feature hierarchy, refined Starting Equipment cards, Primal Path card grids, subclass pages, linked rules references, and gender-switchable header artwork.',
 				action: {
 					label: 'View Barbarian',
 					path: 'internals.classes.barbarian.page'
 				}
 			},
 			{
+				category: 'content',
+				title: 'Barbarian subclass pages',
+				description:
+					'Added Barbarian subclass pages for Ancestral Guardian, Battlerager, Beast, Berserker, Giant, Storm Herald, Totem Warrior, Wild Magic, and Zealot using the central subclass route and shared page-header/image system.',
+				action: {
+					label: 'View Berserker',
+					path: 'internals.classes.barbarian.subclasses.berserker'
+				}
+			},
+			{
+				category: 'content',
+				title: 'Subclass descriptions and cards',
+				description:
+					'Expanded subclass descriptions toward full page-header copy, normalized card-description length, reused PageCard for subclass and path grids, preserved available images and tags, and avoided inventing routes for unavailable pages.'
+			},
+			{
 				category: 'added',
 				title: 'Spell list and spell pages',
 				description:
-					'Added a large spell dataset, spellcasting sections, level-based spell pages, and a browsable spell list with filters, pagination, and view modes.'
+					'Added a 574-spell dataset with individual spell pages, full spell text, class tags, schools, levels, casting time, range, duration, components, material details, ritual and concentration flags, and level-based spell collection pages.',
+				action: {
+					label: 'Browse Spells',
+					path: 'internals.spells.page'
+				}
+			},
+			{
+				category: 'added',
+				title: 'Spell browser filtering and view modes',
+				description:
+					'Built the spell browser with search, level/class/school filters, component toggles, ritual and concentration filters, active-filter state, reset controls, 30-result pagination, and card, list, and table view modes.',
+				action: {
+					label: 'Browse Spells',
+					path: 'internals.spells.page'
+				}
+			},
+			{
+				category: 'content',
+				title: 'Spellcasting rule pages',
+				description:
+					'Separated spellcasting content into a dedicated spellcasting area with rules pages for spellcasting, cantrips, and 1st-level through 9th-level spells, instead of mixing those pages into the general rules index.',
+				action: {
+					label: 'View Spellcasting',
+					path: 'internals.spells.spellcasting'
+				}
 			},
 			{
 				category: 'added',
 				title: 'Rules reference pages',
 				description:
-					'Expanded rules references for actions, movement, damage types, conditions, abbreviations, spellcasting concepts, and related hover-link targets.'
+					'Expanded rules references for ability scores, actions, combat terms, damage types, conditions, d20 tests, movement, rests, equipment, skills, abbreviations, and spellcasting concepts used by hover links and inline rules references.',
+				action: {
+					label: 'Browse Rules',
+					path: 'internals.rules.page'
+				}
+			},
+			{
+				category: 'content',
+				title: 'Rules explanations and usable mechanics',
+				description:
+					'Added clearer explanations to rules pages, including what a rule means, when it is used, what can and cannot be done with it, what rolls are involved, and structured examples such as fall-damage calculation.'
 			},
 			{
 				category: 'changed',
-				title: 'Central data structure',
+				title: 'Inline rules linking and hover previews',
 				description:
-					'Moved more page content into TypeScript data modules so pages, links, images, navigation, and hover previews can share the same central source.'
+					'Linked ability scores, damage types, conditions, actions, attacks, rests, hit points, spellcasting terms, abbreviations, and other rules terms through the central data path system and existing Link/InlineContent components instead of hard-coded hrefs.'
 			},
 			{
 				category: 'changed',
-				title: 'Navigation and layout styling',
+				title: 'Quiet inline link styling',
 				description:
-					'Updated navbar, sidebar, footer, table styling, page cards, filters, class headers, and reusable content components.'
+					'Adjusted paragraph links so rules references remain discoverable through underline and hover preview behavior without turning every linked term into heavy white bold text.'
+			},
+			{
+				category: 'added',
+				title: 'Dedicated Wiki search',
+				description:
+					'Built a new search page that indexes central page data and spell data, scores results by title, subtitle, description, tags, URL, and structured content, and supports URL-backed query, type, tag, and pagination state.',
+				action: {
+					label: 'Search Wiki',
+					path: 'internals.utility.search'
+				}
+			},
+			{
+				category: 'changed',
+				title: 'Search interface components',
+				description:
+					'Added reusable WikiSearch, WikiSearchFilters, and WikiSearchResult components with clearer filter grouping, styled reset controls, result metadata, and consistent result cards.'
+			},
+			{
+				category: 'changed',
+				title: 'Navigation, sidebar, and footer rebuild',
+				description:
+					'Rebuilt navbar, sidebar, footer, breadcrumbs, section navigation, page-specific table of contents, sidebar expansion behavior, nav link weight, spacing, and page-resource links using the central navigation data.'
+			},
+			{
+				category: 'changed',
+				title: 'Page-header image handling',
+				description:
+					'Added male/female image switching with white utility icons, top-right image alignment, expanded image controls, reusable responsive image handling, and full-width text layout for page headers that do not have artwork.'
+			},
+			{
+				category: 'changed',
+				title: 'Card and table presentation',
+				description:
+					'Reworked page cards, subclass cards, Primal Path cards, spell cards, rule cards, table styling, trait tables, and filter rows for clearer hierarchy, tighter subtitles, darker image overlays, responsive grids, and more consistent spacing.'
+			},
+			{
+				category: 'changed',
+				title: 'Starting equipment presentation',
+				description:
+					'Changed Starting Equipment from plain tables/lists into cards with small section subtitles, option titles, paragraph-style equipment text, inline item links, and comma-separated included items where appropriate.'
+			},
+			{
+				category: 'content',
+				title: 'Project resource pages',
+				description:
+					'Reworked project pages such as About, Sources, Credits, Accessibility, AI Transparency, and Changelog with central page data, longer page-header descriptions, clearer body copy, and reusable content sections.',
+				action: {
+					label: 'View Changelog',
+					path: 'internals.project.changelog'
+				}
+			},
+			{
+				category: 'added',
+				title: 'Changelog component',
+				description:
+					'Added a reusable changelog timeline component with release cards, category badges, search, filters, anchors, action links, and responsive styling for version history pages.'
+			},
+			{
+				category: 'changed',
+				title: 'Homepage and collection pages',
+				description:
+					'Replaced the old homepage/demo content with real Wiki entry points and compact PageCards for Search, Classes, Spells, Rules, Species, Monsters, Locations, and project-resource pages.'
+			},
+			{
+				category: 'added',
+				title: 'Class, species, and icon assets',
+				description:
+					'Added and reorganized large sets of class portraits, subclass portraits, species portraits, white rule icons, class icons, spell icons, condition icons, damage icons, movement icons, utility icons, logos, and favicon assets.'
+			},
+			{
+				category: 'removed',
+				title: 'Old Svelte component and route structure',
+				description:
+					'Removed the previous route-specific component folders, legacy registry files, older search implementation, old SCSS tree, deprecated scripts, and obsolete static asset locations after the TypeScript data rebuild replaced them.'
+			},
+			{
+				category: 'removed',
+				title: 'Obsolete placeholder and fallback wording',
+				description:
+					'Removed misleading fallback copy such as unavailable equipment-package text and replaced incomplete spell-card placeholders with clearer links to full spell pages.'
 			},
 			{
 				category: 'fixed',
 				title: 'Table and rendering fixes',
 				description:
 					'Fixed table styling inconsistencies, missing data-path errors, not-found cases, footer typing issues, and page rendering problems found during local development.'
+			},
+			{
+				category: 'fixed',
+				title: 'Data-path and route errors',
+				description:
+					'Fixed missing subclass data paths, incorrect central link references, not-found route cases, broken page navigation, spell route slugs, duplicated Primal Path sections, and page rendering errors uncovered while browsing class pages.'
+			},
+			{
+				category: 'fixed',
+				title: 'Spell browser display fixes',
+				description:
+					'Fixed spell filter colors, active filter visibility, duplicated material component text, card click behavior, source-link noise, default result overload, and inconsistent spell card description lengths.'
+			},
+			{
+				category: 'fixed',
+				title: 'Barbarian layout and readability fixes',
+				description:
+					'Fixed Barbarian feature hierarchy, page-specific contents spacing, Primal Path card bullet artifacts, subclass card subtitle scale, image overlay darkness, rules-link emphasis, and page-header description preservation.'
+			},
+			{
+				category: 'fixed',
+				title: 'Build and dependency setup',
+				description:
+					'Switched production builds from adapter-auto to adapter-node, added pnpm build-script approval for @parcel/watcher, removed the unused adapter dependency, and raised the Vite chunk warning threshold for the current data size.'
+			},
+			{
+				category: 'added',
+				title: 'Pre-live audit tooling',
+				description:
+					'Added a pre-live audit script that checks duplicate internal hrefs, unknown route shapes, missing central data paths, missing static assets, invalid or duplicate spell slugs, placeholder content markers, and built-route renderability without requiring a devserver.'
 			}
 		]
 	},

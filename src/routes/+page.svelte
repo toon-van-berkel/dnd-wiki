@@ -1,21 +1,39 @@
+<!--
+	Location: src/routes/+page.svelte
+	Use: D&D Portal Wiki homepage.
+-->
 <script lang="ts">
-	import Link from '$lib/svelte/components/Link.svelte';
-
 	import PageCard from '$lib/svelte/components/PageCard.svelte';
+	import PageHeader from '$lib/svelte/components/page/PageHeader.svelte';
 </script>
- 
-<p>
-	You must have a
-	<Link goto='internals.rules.abilityScores.strength' placeholder='strength' showIcon />
-	score of 13 or higher to
-	<Link goto='internals.rules.characterCreation.multiclassing' placeholder='multiclassing' showIcon />
-	into or out of the
-	<Link goto='internals.classes.barbarian.page' placeholder='barbarian' showIcon />
-	class.
-</p>
 
-<!-- 
-<PageCard
-	page="internals.classes.barbarian.page"
-	variant="image"
-/> -->
+<article class="wiki-article">
+	<PageHeader />
+
+	<section class="wiki-article__section" aria-labelledby="browse-wiki-title">
+		<h2 id="browse-wiki-title">Browse Wiki</h2>
+
+		<div class="wiki-article__image-cards">
+			<PageCard page="internals.utility.search" density="compact" />
+			<PageCard page="internals.classes.page" density="compact" />
+			<PageCard page="internals.spells.page" density="compact" />
+			<PageCard page="internals.rules.page" density="compact" />
+			<PageCard page="internals.species.page" density="compact" />
+			<PageCard page="internals.monsters.page" density="compact" />
+			<PageCard page="internals.locations.page" density="compact" />
+		</div>
+	</section>
+
+	<section class="wiki-article__section" aria-labelledby="project-title">
+		<h2 id="project-title">Project</h2>
+
+		<div class="wiki-article__cards">
+			<PageCard page="internals.project.about" density="compact" />
+			<PageCard page="internals.project.sources" density="compact" />
+			<PageCard page="internals.project.credits" density="compact" />
+			<PageCard page="internals.project.aiTransparency" density="compact" />
+			<PageCard page="internals.project.accessibility" density="compact" />
+			<PageCard page="internals.project.changelog" density="compact" />
+		</div>
+	</section>
+</article>

@@ -100,7 +100,7 @@
 	}
 
 	function getSpellPreview(spell: SpellData) {
-		return spell.description[0] ?? 'No spell description is available yet.';
+		return spell.description[0] ?? 'Open the spell page for the full spell text.';
 	}
 
 	function resetFilters() {

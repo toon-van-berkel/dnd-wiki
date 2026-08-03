@@ -132,6 +132,14 @@
 			line-height: sizes.get(typography, body-line-height);
 		}
 	}
+
+	&--without-image {
+		grid-template-columns: minmax(0, 1fr);
+
+		.page-header__description {
+			max-width: none;
+		}
+	}
 }
 
 .page-image {
@@ -691,8 +699,59 @@
 	}
 
 	&__changes {
+		position: relative;
 		display: flex;
 		flex-direction: column;
+
+		&--collapsed {
+			max-height: 800px;
+			overflow: hidden;
+
+			&::after {
+				content: '';
+				position: absolute;
+				right: 0;
+				bottom: 0;
+				left: 0;
+				height: 140px;
+				pointer-events: none;
+				background: linear-gradient(
+					to bottom,
+					rgb(9 16 12 / 0%),
+					colors.get-dark(background, secondary) 82%
+				);
+			}
+		}
+	}
+
+	&__more {
+		padding: sizes.get(spacing, md) sizes.get(spacing, lg) sizes.get(spacing, lg);
+		border-top: 1px solid colors.get-dark(border, subtle);
+
+		button {
+			min-height: 38px;
+			padding: 0 sizes.get(spacing, md);
+
+			color: colors.get-dark(theme, primary);
+			background: colors.get-dark(background, primary);
+			border: 1px solid colors.get-dark(border, interactive);
+			border-radius: sizes.get(radius, md);
+			cursor: pointer;
+
+			font-size: 0.82rem;
+			font-weight: 800;
+
+			&:hover,
+			&:focus-visible {
+				color: colors.get-dark(text, headings);
+				background: colors.get-dark(overlay, selected-glow);
+			}
+
+			&:focus-visible {
+				outline: 2px solid colors.get-dark(theme, primary);
+				outline-offset: 2px;
+			}
+		}
 	}
 }
 
@@ -786,6 +845,342 @@
 				color: colors.get-dark(theme, primary);
 				border-color: colors.get-dark(border, interactive);
 			}
+		}
+	}
+}
+
+.wiki-search {
+	width: min(100%, 1200px);
+	display: flex;
+	flex-direction: column;
+	gap: sizes.get(spacing, lg);
+
+	&__header {
+		display: flex;
+		align-items: flex-start;
+		justify-content: space-between;
+		gap: sizes.get(spacing, lg);
+		flex-wrap: wrap;
+
+		h2 {
+			color: colors.get-dark(text, headings);
+			font-size: 1.6rem;
+			line-height: 1.2;
+		}
+
+		p {
+			margin-top: sizes.get(spacing, xs);
+			color: colors.get-dark(text, secondary);
+			line-height: 1.55;
+		}
+
+		> p {
+			margin-top: 0;
+			color: colors.get-dark(theme, primary);
+			font-size: 0.82rem;
+			font-weight: 800;
+			line-height: 1;
+			text-transform: uppercase;
+		}
+	}
+
+	&__explanation,
+	&__empty {
+		padding: sizes.get(spacing, lg);
+
+		background: colors.get-dark(background, secondary);
+		border: 1px solid colors.get-dark(border, subtle);
+		border-radius: sizes.get(radius, lg);
+
+		h3 {
+			color: colors.get-dark(text, headings);
+			font-size: 1rem;
+			line-height: 1.2;
+		}
+
+		p {
+			margin-top: sizes.get(spacing, sm);
+			color: colors.get-dark(text, secondary);
+			line-height: 1.55;
+		}
+	}
+
+	&__results {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(min(340px, 100%), 1fr));
+		gap: sizes.get(spacing, md);
+	}
+
+	&__pagination {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: sizes.get(spacing, md);
+		flex-wrap: wrap;
+
+		span {
+			color: colors.get-dark(text, secondary);
+			font-size: 0.9rem;
+			font-weight: 700;
+		}
+
+		button {
+			min-height: 36px;
+			padding: 0 sizes.get(spacing, md);
+
+			color: colors.get-dark(text, primary);
+			background: colors.get-dark(background, secondary);
+			border: 1px solid colors.get-dark(border, base);
+			border-radius: sizes.get(radius, md);
+			cursor: pointer;
+			font-weight: 700;
+
+			&:hover,
+			&:focus-visible {
+				color: colors.get-dark(theme, primary);
+				border-color: colors.get-dark(border, interactive);
+			}
+
+			&:disabled {
+				color: colors.get-dark(text, tertiary);
+				border-color: colors.get-dark(border, subtle);
+				cursor: not-allowed;
+				opacity: 0.6;
+			}
+		}
+	}
+}
+
+.wiki-search-filters {
+	padding: sizes.get(spacing, lg);
+
+	display: flex;
+	flex-direction: column;
+	gap: sizes.get(spacing, md);
+
+	background: colors.get-dark(background, secondary);
+	border: 1px solid colors.get-dark(border, base);
+	border-radius: sizes.get(radius, lg);
+
+	&__search {
+		display: flex;
+		flex-direction: column;
+		gap: sizes.get(spacing, xs);
+
+		span {
+			color: colors.get-dark(text, headings);
+			font-size: 0.74rem;
+			font-weight: 800;
+			line-height: 1;
+			text-transform: uppercase;
+		}
+
+		input {
+			min-height: 44px;
+			padding: 0 sizes.get(spacing, md);
+
+			color: colors.get-dark(text, primary);
+			background: colors.get-dark(background, primary);
+			border: 1px solid colors.get-dark(border, base);
+			border-radius: sizes.get(radius, md);
+			font: inherit;
+
+			&::placeholder {
+				color: colors.get-dark(text, tertiary);
+			}
+
+			&:focus-visible {
+				border-color: colors.get-dark(border, focus);
+				outline: 2px solid colors.get-dark(theme, primary);
+				outline-offset: 2px;
+			}
+		}
+	}
+
+	&__row {
+		display: flex;
+		align-items: flex-end;
+		justify-content: space-between;
+		gap: sizes.get(spacing, lg);
+		flex-wrap: wrap;
+	}
+
+	&__group {
+		display: flex;
+		flex-direction: column;
+		gap: sizes.get(spacing, xs);
+
+		> span {
+			color: colors.get-dark(text, headings);
+			font-size: 0.74rem;
+			font-weight: 800;
+			line-height: 1;
+			text-transform: uppercase;
+		}
+	}
+
+	&__chips {
+		display: flex;
+		gap: sizes.get(spacing, sm);
+		flex-wrap: wrap;
+	}
+
+	&__chip {
+		min-height: 34px;
+		padding: 0 sizes.get(spacing, md);
+
+		display: inline-flex;
+		align-items: center;
+
+		color: colors.get-dark(text, secondary);
+		background: colors.get-dark(background, primary);
+		border: 1px solid colors.get-dark(border, subtle);
+		border-radius: sizes.get(radius, pill);
+		cursor: pointer;
+
+		font-size: 0.82rem;
+		font-weight: 700;
+
+		input {
+			position: absolute;
+			opacity: 0;
+			pointer-events: none;
+		}
+
+		&:hover,
+		&:focus-within,
+		&--active {
+			color: colors.get-dark(theme, primary);
+			border-color: colors.get-dark(border, interactive);
+		}
+
+		&--active {
+			background: colors.get-dark(overlay, selected-glow);
+		}
+	}
+
+	&__summary {
+		display: flex;
+		align-items: center;
+		gap: sizes.get(spacing, md);
+		flex-wrap: wrap;
+
+		span {
+			color: colors.get-dark(text, secondary);
+			font-size: 0.86rem;
+			font-weight: 700;
+		}
+
+		button {
+			min-height: 34px;
+			padding: 0 sizes.get(spacing, md);
+
+			color: colors.get-dark(text, primary);
+			background: transparent;
+			border: 1px solid colors.get-dark(border, base);
+			border-radius: sizes.get(radius, md);
+			cursor: pointer;
+			font-weight: 700;
+
+			&:hover,
+			&:focus-visible {
+				color: colors.get-dark(theme, primary);
+				border-color: colors.get-dark(border, interactive);
+			}
+		}
+	}
+}
+
+.wiki-search-result {
+	min-height: 100%;
+	padding: sizes.get(spacing, lg);
+
+	display: flex;
+	flex-direction: column;
+	gap: sizes.get(spacing, md);
+
+	color: inherit;
+	background: colors.get-dark(background, secondary);
+	border: 1px solid colors.get-dark(border, base);
+	border-radius: sizes.get(radius, lg);
+	text-decoration: none;
+
+	&:hover,
+	&:focus-visible {
+		border-color: colors.get-dark(border, interactive);
+	}
+
+	&:focus-visible {
+		outline: 2px solid colors.get-dark(theme, primary);
+		outline-offset: 2px;
+	}
+
+	&__top,
+	&__meta,
+	&__tags {
+		display: flex;
+		gap: sizes.get(spacing, sm);
+		flex-wrap: wrap;
+	}
+
+	&__top {
+		justify-content: space-between;
+	}
+
+	&__category,
+	&__score,
+	&__tags span {
+		padding: 4px 8px;
+
+		border: 1px solid colors.get-dark(border, subtle);
+		border-radius: sizes.get(radius, pill);
+
+		font-size: 0.7rem;
+		font-weight: 800;
+		line-height: 1;
+		text-transform: uppercase;
+	}
+
+	&__category {
+		color: colors.get-dark(theme, primary);
+		background: colors.get-dark(overlay, selected-glow);
+		border-color: colors.get-dark(border, interactive);
+	}
+
+	&__score,
+	&__tags span {
+		color: colors.get-dark(text, tertiary);
+	}
+
+	&__body {
+		h3 {
+			color: colors.get-dark(text, headings);
+			font-size: 1.1rem;
+			line-height: 1.2;
+		}
+
+		p {
+			margin-top: sizes.get(spacing, xs);
+			color: colors.get-dark(text, secondary);
+			line-height: 1.5;
+		}
+	}
+
+	&__subtitle {
+		color: colors.get-dark(text, eyebrow) !important;
+		font-size: 0.78rem;
+		font-weight: 800;
+		text-transform: uppercase;
+	}
+
+	&__meta {
+		margin-top: auto;
+
+		span {
+			color: colors.get-dark(text, tertiary);
+			font-size: 0.78rem;
+			line-height: 1.35;
+			overflow-wrap: anywhere;
 		}
 	}
 }
