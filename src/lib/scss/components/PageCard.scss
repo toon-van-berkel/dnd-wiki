@@ -68,6 +68,10 @@
 		color: colors.get-dark(text, secondary);
 		line-height: 1.45;
 		overflow-wrap: anywhere;
+		display: -webkit-box;
+		overflow: hidden;
+		-webkit-box-orient: vertical;
+		-webkit-line-clamp: 3;
 	}
 
 	&__open {
@@ -119,6 +123,7 @@
 
 		p {
 			max-width: calc(100% - 90px);
+			min-height: 4.35em;
 		}
 
 		&:hover,
@@ -167,6 +172,7 @@
 
 			font-size: 0.95rem;
 			line-height: 1.5;
+			min-height: 4.5em;
 		}
 
 		.pagecard__open {
@@ -278,6 +284,7 @@
 		p {
 			font-size: 0.9rem;
 			line-height: 1.35;
+			-webkit-line-clamp: 4;
 		}
 
 		ul {

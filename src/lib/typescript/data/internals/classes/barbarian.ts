@@ -1569,6 +1569,7 @@ const barbarianProgression = {
 			key: 'proficiencyBonus',
 			label: 'Proficiency Bonus',
 			shortLabel: 'PB',
+			path: 'internals.rules.abbreviations.pb',
 			format: 'signed'
 		},
 		{

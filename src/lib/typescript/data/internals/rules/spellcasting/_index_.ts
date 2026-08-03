@@ -34,6 +34,11 @@ function createSpellcastingPage(item: SpellcastingReference) {
 		subTitle: 'Spellcasting rule',
 		description: `${item.name.normal} is a spellcasting rule used by spells,
 			class features, and magical effects.`,
+		navigation: item.name.slug === current.spells.name.slug
+			? {
+					hidden: true
+				}
+			: undefined,
 		content: createGenericRuleContent(item, 'spellcasting rule')
 	});
 }

@@ -122,11 +122,21 @@
 	aria-labelledby={`${section.id}-title`}
 >
 	<header class="content-section__header">
-		{#if headingLevel === 'subsection'}
-			<h3 id={`${section.id}-title`}>{section.title}</h3>
-		{:else}
-			<h2 id={`${section.id}-title`}>{section.title}</h2>
-		{/if}
+		<div class="content-section__title-group">
+			{#if headingLevel === 'subsection'}
+				<h3 id={`${section.id}-title`}>{section.title}</h3>
+			{:else}
+				<h2 id={`${section.id}-title`}>{section.title}</h2>
+			{/if}
+
+			{#if section.subtitleContent}
+				<p>
+					<InlineContent content={section.subtitleContent} />
+				</p>
+			{:else if section.subtitle}
+				<p>{section.subtitle}</p>
+			{/if}
+		</div>
 
 		{#if section.optional}
 			<span class="content-section__badge">Optional</span>

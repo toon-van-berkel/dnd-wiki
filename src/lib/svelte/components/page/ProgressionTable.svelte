@@ -27,6 +27,9 @@
 		section?: PageSection;
 	} = $props();
 	let selectedLevel = $state<number | null>(null);
+	let proficiencyBonusColumn = $derived(
+		data.columns.find((column) => column.key === 'proficiencyBonus') ?? null
+	);
 
 	function formatOrdinal(value: number): string {
 		const remainder = value % 100;
@@ -53,7 +56,7 @@
 
 	function formatValue(
 		value: ProgressionValue,
-		column: ProgressionColumn
+		column: ProgressionColumn<LinkPath>
 	): string {
 		if (column.format === 'ordinal' && typeof value === 'number') {
 			return formatOrdinal(value);
@@ -68,7 +71,7 @@
 
 	function getColumnValue(
 		row: ProgressionRow<LinkPath>,
-		column: ProgressionColumn
+		column: ProgressionColumn<LinkPath>
 	): ProgressionValue | null {
 		if (column.key === 'level') {
 			return row.level;
@@ -99,7 +102,7 @@
 		return row.features.map((feature) => feature.label).join(' | ');
 	}
 
-	function getDetailColumns(): readonly ProgressionColumn[] {
+	function getDetailColumns(): readonly ProgressionColumn<LinkPath>[] {
 		return data.columns.filter((column) => column.key !== 'level');
 	}
 
@@ -111,6 +114,20 @@
 		selectedLevel = level;
 	}
 </script>
+
+{#snippet renderColumnLabel(column: ProgressionColumn<LinkPath>, label = column.label)}
+	{@const columnPath = column.path ? resolveLinkPath(column.path) : null}
+
+	{#if columnPath}
+		<Link
+			goto={columnPath}
+			placeholder={label}
+			popup="full"
+		/>
+	{:else}
+		{label}
+	{/if}
+{/snippet}
 
 {#snippet renderFeature(feature: ProgressionFeature<LinkPath>)}
 	{@const featurePath = feature.path ? resolveLinkPath(feature.path) : null}
@@ -174,7 +191,7 @@
 					<tr>
 						{#each data.columns as column}
 							<th scope="col">
-								{column.label}
+								{@render renderColumnLabel(column)}
 							</th>
 						{/each}
 					</tr>
@@ -237,7 +254,13 @@
 
 					<span class="progression-card__bonus">
 						{formatSigned(row.proficiencyBonus)}
-						<span>PB</span>
+						<span>
+							{#if proficiencyBonusColumn}
+								{@render renderColumnLabel(proficiencyBonusColumn, proficiencyBonusColumn.shortLabel ?? proficiencyBonusColumn.label)}
+							{:else}
+								PB
+							{/if}
+						</span>
 					</span>
 
 					<span class="progression-card__chevron" aria-hidden="true"></span>
@@ -246,7 +269,9 @@
 				<dl class="progression-card__details">
 					{#each getDetailColumns() as column}
 						<div>
-							<dt>{column.shortLabel ?? column.label}</dt>
+							<dt>
+								{@render renderColumnLabel(column, column.shortLabel ?? column.label)}
+							</dt>
 
 							<dd>
 								{#if column.key === 'features'}

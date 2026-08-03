@@ -1,6 +1,7 @@
 import * as core from '../../core/_index_';
 
 import { movement } from './movement';
+import { abbreviations } from './abbreviations/_index_';
 import { actions } from './actions/_index_';
 import { abilityScores } from './ability-scores/_index_';
 import { characterCreation } from './character-creation/_index_';
@@ -28,6 +29,7 @@ export const rules = {
 			rules, campaign rulings, and other gameplay information.`
 	},
 
+	abbreviations,
 	movement,
 	actions,
 	abilityScores,

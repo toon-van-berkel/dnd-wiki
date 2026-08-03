@@ -24,7 +24,7 @@
 		margin-inline: auto;
 		min-width: 0;
 		min-height: sizes.get(navbar, height);
-		padding: 10px 16px;
+		padding: 14px 16px;
 		box-sizing: border-box;
 
 		display: grid;
@@ -182,16 +182,17 @@
 		align-items: center;
 		gap: 4px;
 
-		.link {
-			min-height: 40px;
-			padding: 0 10px;
+			.link {
+				min-height: 40px;
+				padding: 0 10px;
 
 			border: 0;
 			border-radius: sizes.get(radius, md);
 
-			background-color: transparent;
-			text-decoration: none;
-			white-space: nowrap;
+				background-color: transparent;
+				text-decoration: none;
+				white-space: nowrap;
+				font-weight: 500;
 
 			transition:
 				background-color sizes.get(transition, fast) ease,
@@ -255,7 +256,7 @@
 				'search search';
 
 			gap: 10px;
-			padding: 10px 12px;
+			padding: 14px 12px;
 		}
 
 		&__brand {

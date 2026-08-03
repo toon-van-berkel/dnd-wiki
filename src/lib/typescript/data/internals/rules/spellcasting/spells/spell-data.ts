@@ -21008,3 +21008,7 @@ export const spellLevels = generated.spellLevels;
 export function getSpellsByLevel(level: SpellLevel): readonly SpellData[] {
 	return spells.filter((spell) => spell.level === level);
 }
+
+export function getSpellBySlug(slug: string): SpellData | undefined {
+	return spells.find((spell) => spell.slug === slug);
+}

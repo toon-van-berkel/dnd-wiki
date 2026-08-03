@@ -1,4 +1,5 @@
 import { movement } from './movement';
+import { abbreviations } from './abbreviations/_index_';
 import { actions } from './actions/_index_';
 import { abilityScores } from './ability-scores/_index_';
 import { characterCreation } from './character-creation/_index_';
@@ -28,6 +29,7 @@ export const rules = {
 
 	baseUrl: '/rules',
 
+	abbreviations,
 	movement,
 	actions,
 	abilityScores,

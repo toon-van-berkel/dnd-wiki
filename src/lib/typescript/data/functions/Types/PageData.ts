@@ -43,6 +43,7 @@ export type PageData = LinkData & {
 	readonly navigation?: {
 		readonly label?: string;
 		readonly parent?: string;
+		readonly hidden?: boolean;
 	};
 
 	readonly tags?: readonly string[];

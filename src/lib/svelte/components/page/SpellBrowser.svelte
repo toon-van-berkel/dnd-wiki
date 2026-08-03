@@ -12,6 +12,11 @@
 		type SpellLevel
 	} from '$lib/typescript/data/internals/rules/spellcasting/spells/spell-data';
 
+	type SpellViewMode = 'cards' | 'list' | 'table';
+
+	const pageSize = 30;
+	const viewModes = ['cards', 'list', 'table'] as const satisfies readonly SpellViewMode[];
+
 	let {
 		initialLevel = 'all',
 		showLevelFilter = true
@@ -30,6 +35,8 @@
 	let noMaterial = $state(false);
 	let ritualOnly = $state(false);
 	let concentrationOnly = $state(false);
+	let viewMode = $state<SpellViewMode>('cards');
+	let currentPage = $state(1);
 
 	$effect(() => {
 		if (!showLevelFilter) {
@@ -88,6 +95,54 @@
 			.includes(query);
 	}
 
+	function getSpellHref(spell: SpellData) {
+		return `/spells/${spell.slug}`;
+	}
+
+	function getSpellPreview(spell: SpellData) {
+		return spell.description[0] ?? 'No spell description is available yet.';
+	}
+
+	function resetFilters() {
+		searchTerm = '';
+		selectedLevel = showLevelFilter
+			? 'all'
+			: initialLevel === 'all'
+				? 'all'
+				: String(initialLevel);
+		selectedClass = 'all';
+		selectedSchool = 'all';
+		verbalOnly = false;
+		somaticOnly = false;
+		materialOnly = false;
+		noMaterial = false;
+		ritualOnly = false;
+		concentrationOnly = false;
+		currentPage = 1;
+	}
+
+	function setPage(page: number) {
+		currentPage = Math.max(1, Math.min(page, pageCount));
+	}
+
+	let filterKey = $derived([
+		searchTerm,
+		selectedLevel,
+		selectedClass,
+		selectedSchool,
+		verbalOnly,
+		somaticOnly,
+		materialOnly,
+		noMaterial,
+		ritualOnly,
+		concentrationOnly
+	].join('|'));
+
+	$effect(() => {
+		filterKey;
+		currentPage = 1;
+	});
+
 	let visibleSpells = $derived(
 		spells.filter((spell) => (
 			hasSelectedLevel(spell) &&
@@ -99,7 +154,73 @@
 			matchesSearch(spell)
 		))
 	);
+	let pageCount = $derived(Math.max(1, Math.ceil(visibleSpells.length / pageSize)));
+	let firstResult = $derived(visibleSpells.length ? ((currentPage - 1) * pageSize) + 1 : 0);
+	let lastResult = $derived(Math.min(currentPage * pageSize, visibleSpells.length));
+	let pagedSpells = $derived(
+		visibleSpells.slice((currentPage - 1) * pageSize, currentPage * pageSize)
+	);
+	let activeFilterCount = $derived([
+		searchTerm.trim().length > 0,
+		showLevelFilter && selectedLevel !== 'all',
+		selectedClass !== 'all',
+		selectedSchool !== 'all',
+		verbalOnly,
+		somaticOnly,
+		materialOnly,
+		noMaterial,
+		ritualOnly,
+		concentrationOnly
+	].filter(Boolean).length);
+
+	$effect(() => {
+		if (currentPage > pageCount) {
+			currentPage = pageCount;
+		}
+	});
 </script>
+
+{#snippet renderPagination()}
+	{#if visibleSpells.length > pageSize}
+		<nav class="spell-browser__pagination" aria-label="Spell pages">
+			<p>Showing {firstResult}-{lastResult} of {visibleSpells.length}</p>
+
+			<div>
+				<button type="button" onclick={() => setPage(currentPage - 1)} disabled={currentPage === 1}>
+					Previous
+				</button>
+				<span>Page {currentPage} of {pageCount}</span>
+				<button type="button" onclick={() => setPage(currentPage + 1)} disabled={currentPage === pageCount}>
+					Next
+				</button>
+			</div>
+		</nav>
+	{/if}
+{/snippet}
+
+{#snippet renderSpellMeta(spell: SpellData)}
+	<dl class="spell-card__meta">
+		<div>
+			<dt>Casting</dt>
+			<dd>{spell.castingTime}</dd>
+		</div>
+
+		<div>
+			<dt>Range</dt>
+			<dd>{spell.range}</dd>
+		</div>
+
+		<div>
+			<dt>Duration</dt>
+			<dd>{spell.duration}</dd>
+		</div>
+
+		<div>
+			<dt>Components</dt>
+			<dd>{spell.components.raw || 'None'}</dd>
+		</div>
+	</dl>
+{/snippet}
 
 <section class="spell-browser" aria-labelledby="spell-browser-title">
 	<header class="spell-browser__header">
@@ -109,7 +230,10 @@
 
 	<div class="spell-browser__toolbar" aria-label="Spell filters">
 		<div class="spell-browser__primary-filters">
-			<label class="spell-browser__filter spell-browser__filter--search">
+			<label
+				class="spell-browser__filter spell-browser__filter--search"
+				class:spell-browser__filter--active={searchTerm.trim().length > 0}
+			>
 				<span>Search</span>
 				<input
 					type="search"
@@ -119,7 +243,10 @@
 			</label>
 
 			{#if showLevelFilter}
-				<label class="spell-browser__filter">
+				<label
+					class="spell-browser__filter"
+					class:spell-browser__filter--active={selectedLevel !== 'all'}
+				>
 					<span>Level</span>
 					<select bind:value={selectedLevel}>
 						<option value="all">All levels</option>
@@ -130,7 +257,10 @@
 				</label>
 			{/if}
 
-			<label class="spell-browser__filter">
+			<label
+				class="spell-browser__filter"
+				class:spell-browser__filter--active={selectedClass !== 'all'}
+			>
 				<span>Class</span>
 				<select bind:value={selectedClass}>
 					<option value="all">All casters</option>
@@ -140,7 +270,10 @@
 				</select>
 			</label>
 
-			<label class="spell-browser__filter">
+			<label
+				class="spell-browser__filter"
+				class:spell-browser__filter--active={selectedSchool !== 'all'}
+			>
 				<span>School</span>
 				<select bind:value={selectedSchool}>
 					<option value="all">All schools</option>
@@ -189,110 +322,105 @@
 					<span>Concentration</span>
 				</label>
 			</fieldset>
+
+			<fieldset class="spell-browser__toggle-group spell-browser__view-toggle">
+				<legend>View</legend>
+
+				{#each viewModes as mode}
+					<label class:spell-browser__toggle--active={viewMode === mode}>
+						<input type="radio" bind:group={viewMode} value={mode} />
+						<span>{mode}</span>
+					</label>
+				{/each}
+			</fieldset>
+
+			{#if activeFilterCount > 0}
+				<div class="spell-browser__filter-summary" role="status">
+					<span>{activeFilterCount} filter{activeFilterCount === 1 ? '' : 's'} active</span>
+					<button type="button" onclick={resetFilters}>Reset</button>
+				</div>
+			{/if}
 		</div>
 	</div>
 
-	<div class="spell-browser__grid">
-		{#each visibleSpells as spell}
-			<article class="spell-card" id={spell.slug}>
-				<header class="spell-card__header">
-					<p>{spell.levelLabel} - {spell.school}</p>
-					<h3>{spell.name}</h3>
-				</header>
+	{@render renderPagination()}
 
-				<dl class="spell-card__meta">
-					<div>
-						<dt>Casting</dt>
-						<dd>{spell.castingTime}</dd>
-					</div>
+	{#if viewMode === 'cards'}
+		<div class="spell-browser__grid">
+			{#each pagedSpells as spell}
+				<a class="spell-card" id={spell.slug} href={getSpellHref(spell)}>
+					<header class="spell-card__header">
+						<p>{spell.levelLabel} - {spell.school}</p>
+						<h3>{spell.name}</h3>
+					</header>
 
-					<div>
-						<dt>Range</dt>
-						<dd>{spell.range}</dd>
-					</div>
+					{@render renderSpellMeta(spell)}
 
-					<div>
-						<dt>Duration</dt>
-						<dd>{spell.duration}</dd>
-					</div>
-
-					<div>
-						<dt>Components</dt>
-						<dd>{spell.components.raw || 'None'}</dd>
-					</div>
-				</dl>
-
-				{#if spell.components.materialText}
-					<p class="spell-card__material">{spell.components.materialText}</p>
-				{/if}
-
-				<ul class="spell-card__tags">
-					{#if spell.ritual}
-						<li>Ritual</li>
-					{/if}
-					{#if spell.concentration}
-						<li>Concentration</li>
-					{/if}
-					{#each spell.classes as spellClass}
-						<li>{spellClass}</li>
-					{/each}
-				</ul>
-
-				{#if spell.description.length}
-					<div class="spell-card__description">
-						<p>{spell.description[0]}</p>
-
-						{#if spell.description.length > 1 || spell.higherLevel.length || spell.tables.length}
-							<details>
-								<summary>Full spell text</summary>
-
-								{#each spell.description.slice(1) as paragraph}
-									<p>{paragraph}</p>
-								{/each}
-
-								{#if spell.higherLevel.length}
-									<h4>At Higher Levels</h4>
-									{#each spell.higherLevel as paragraph}
-										<p>{paragraph}</p>
-									{/each}
-								{/if}
-
-								{#if spell.tables.length}
-									<div class="spell-card__tables">
-										{#each spell.tables as table}
-											<table>
-												{#if table.caption}
-													<caption>{table.caption}</caption>
-												{/if}
-
-												{#if table.headers.length}
-													<thead>
-														<tr>
-															{#each table.headers as header}
-																<th>{header}</th>
-															{/each}
-														</tr>
-													</thead>
-												{/if}
-
-												<tbody>
-													{#each table.rows as row}
-														<tr>
-															{#each row as cell}
-																<td>{cell}</td>
-															{/each}
-														</tr>
-													{/each}
-												</tbody>
-											</table>
-										{/each}
-									</div>
-								{/if}
-							</details>
+					<ul class="spell-card__tags">
+						{#if spell.ritual}
+							<li>Ritual</li>
 						{/if}
+						{#if spell.concentration}
+							<li>Concentration</li>
+						{/if}
+						{#each spell.classes as spellClass}
+							<li>{spellClass}</li>
+						{/each}
+					</ul>
+
+					<div class="spell-card__description">
+						<p>{getSpellPreview(spell)}</p>
 					</div>
-				{/if}
-			</article>
-		{/each}
-	</div>
+				</a>
+			{/each}
+		</div>
+	{:else if viewMode === 'list'}
+		<ul class="spell-browser__list">
+			{#each pagedSpells as spell}
+				<li>
+					<a class="spell-list-item" href={getSpellHref(spell)}>
+						<header>
+							<p>{spell.levelLabel} - {spell.school}</p>
+							<h3>{spell.name}</h3>
+						</header>
+
+						<p>{getSpellPreview(spell)}</p>
+
+						<span>{spell.castingTime} | {spell.range} | {spell.components.raw || 'None'}</span>
+					</a>
+				</li>
+			{/each}
+		</ul>
+	{:else}
+		<div class="spell-browser__table-wrap">
+			<table class="spell-browser__table">
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Level</th>
+						<th>School</th>
+						<th>Casting</th>
+						<th>Range</th>
+						<th>Components</th>
+						<th>Classes</th>
+					</tr>
+				</thead>
+				<tbody>
+					{#each pagedSpells as spell}
+						<tr>
+							<th><a href={getSpellHref(spell)}>{spell.name}</a></th>
+							<td>{spell.levelLabel}</td>
+							<td>{spell.school}</td>
+							<td>{spell.castingTime}</td>
+							<td>{spell.range}</td>
+							<td>{spell.components.raw || 'None'}</td>
+							<td>{spell.classes.join(', ')}</td>
+						</tr>
+					{/each}
+				</tbody>
+			</table>
+		</div>
+	{/if}
+
+	{@render renderPagination()}
 </section>

@@ -1,5 +1,6 @@
 import { classes } from "./classes/_index_";
 import { rules } from "./rules/_index_";
+import { spells } from "./spells/_index_";
 
 import { locations } from "./locations";
 import { monsters } from "./monsters";
@@ -10,6 +11,6 @@ import { project } from "./project";
 import { legal } from "./legal";
 
 export const internals = {
-    website, utility, classes, project, legal, rules, species,
+    website, utility, classes, spells, project, legal, rules, species,
 	monsters, locations
 }

@@ -1,17 +1,17 @@
 <!--
 	Location: src/routes/classes/[class]/[subclass]/+page.svelte
-	Use: Generic subclass page for DOCX content-pack subclasses.
+	Use: Generic subclass page for central subclass data.
 -->
 <script lang="ts">
 	import { page } from '$app/state';
-	import { getContentPackSubclassBySlug } from '$lib/typescript/data/internals/classes/content-pack';
+	import { getSubclassBySlug } from '$lib/typescript/data/internals/classes/_index_';
 
 	import PageContentSection from '$lib/svelte/components/page/PageContentSection.svelte';
 	import PageHeader from '$lib/svelte/components/page/PageHeader.svelte';
 	import TableOfContents from '$lib/svelte/components/page/TableOfContents.svelte';
 
 	let subclassData = $derived(
-		getContentPackSubclassBySlug(
+		getSubclassBySlug(
 			page.params.class ?? '',
 			page.params.subclass ?? ''
 		)

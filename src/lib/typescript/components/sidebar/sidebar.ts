@@ -26,6 +26,7 @@ const sidebarSectionConfig = [
 		roots: [
 			'internals.species.page',
 			'internals.classes.page',
+			'internals.spells.page',
 			'internals.rules.page',
 			'internals.monsters.page',
 			'internals.locations.page'
@@ -113,6 +114,14 @@ function getNavigationLabel(link: LinkData): string | undefined {
 		: undefined;
 }
 
+function isNavigationHidden(link: LinkData): boolean {
+	if (!('navigation' in link) || !isRecord(link.navigation)) {
+		return false;
+	}
+
+	return 'hidden' in link.navigation && link.navigation.hidden === true;
+}
+
 function getDisplayTitle(title: string): string {
 	return title
 		.replace(/^D&D Portal Wiki\s+-\s+/i, '')
@@ -155,6 +164,10 @@ function discoverChildNodes(containerPath: string): readonly SidebarNode[] {
 			const childPath = `${containerPath}.${key}`;
 
 			if (isLinkData(value)) {
+				if (isNavigationHidden(value)) {
+					return [];
+				}
+
 				return [
 					{
 						path: toLinkPath(childPath, value),
@@ -168,6 +181,10 @@ function discoverChildNodes(containerPath: string): readonly SidebarNode[] {
 			}
 
 			if (isLinkData(value.page)) {
+				if (isNavigationHidden(value.page)) {
+					return [];
+				}
+
 				const pagePath = toLinkPath(`${childPath}.page`, value.page);
 
 				return [

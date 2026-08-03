@@ -29,6 +29,8 @@ export type InlineContentBlock = InlineContent | InlineContentParagraphs;
 export type PageSection = {
 	readonly id: string;
 	readonly title: string;
+	readonly subtitle?: string;
+	readonly subtitleContent?: InlineContent;
 };
 
 export type PageTableOfContentsSection = PageSection & {
@@ -137,10 +139,11 @@ export type ProgressionFeature<Path extends string = string> = {
 	readonly optional?: boolean;
 };
 
-export type ProgressionColumn = {
+export type ProgressionColumn<Path extends string = string> = {
 	readonly key: string;
 	readonly label: string;
 	readonly shortLabel?: string;
+	readonly path?: Path;
 	readonly format?: ProgressionColumnFormat;
 };
 
@@ -155,6 +158,6 @@ export type ProgressionData<Path extends string = string> = {
 	readonly title: string;
 	readonly heading?: string;
 	readonly description?: string;
-	readonly columns: readonly ProgressionColumn[];
+	readonly columns: readonly ProgressionColumn<Path>[];
 	readonly rows: readonly ProgressionRow<Path>[];
 };
