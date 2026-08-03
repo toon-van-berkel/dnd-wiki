@@ -1,5 +1,5 @@
 {
-	"name": "dnd-wiki",
+	"name": "wiki",
 	"private": true,
 	"version": "0.0.1",
 	"type": "module",
@@ -8,20 +8,16 @@
 		"build": "vite build",
 		"preview": "vite preview",
 		"prepare": "svelte-kit sync || echo ''",
-		"generate:icons": "node scripts/generate-icon-registry.mjs",
-		"generate:page-assets": "node scripts/generate-page-card-assets.mjs",
-		"generate": "npm run generate:icons && npm run generate:page-assets",
-		"verify:assets": "node scripts/verify-assets.mjs",
+		"audit:prelive": "node scripts/audit-prelive.mjs",
+		"audit:prelive:crawl": "node scripts/audit-prelive.mjs --crawl-built",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
-		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
-		"test": "tsc -p tsconfig.test.json && node scripts/generate-icon-registry.mjs --check && node scripts/generate-page-card-assets.mjs --check && node scripts/verify-assets.mjs && node scripts/test-paths.mjs && node scripts/test-wiki-search.mjs && node scripts/test-shinobi.mjs && node scripts/test-chakraborn.mjs && node scripts/test-vanguard.mjs",
-		"verify:pages": "node scripts/verify-pages-build.mjs"
+		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch"
 	},
 	"devDependencies": {
-		"@sveltejs/adapter-static": "^3.0.10",
+		"@sveltejs/adapter-node": "^5.5.7",
 		"@sveltejs/kit": "^2.63.0",
 		"@sveltejs/vite-plugin-svelte": "^7.1.2",
-		"sass": "^1.101.0",
+		"sass-embedded": "^1.100.0",
 		"svelte": "^5.56.1",
 		"svelte-check": "^4.6.0",
 		"typescript": "^6.0.3",

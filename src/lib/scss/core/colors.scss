@@ -1,0 +1,75 @@
+/*  
+    Location: src\lib\scss\core\colors.scss
+    Use: Stores all application colors.
+*/
+
+@use 'sass:map';
+
+$colors: (
+    dark: (
+        background: (
+            primary: #0b0d0c,
+            secondary: #111512,
+            tiertiary: #1b211c,
+            quaternary: #737d75,
+            hover: #1b211c
+        ),
+
+        text: (
+            headings: #f3f6f3,
+            primary: #d9dfda,
+            secondary: #a5afa7,
+            tertiary: #737d75,
+            eyebrow: #738276,
+
+            links: (
+                base: #f3f6f3,
+                hover: #7bff53,
+            )
+        ),
+
+        theme: (
+            primary: #7bff53,
+            secondary: #a0e88a,
+            tertiary: #728329
+        ),
+
+        border: (
+            subtle: #223027,
+            base: #2d4233,
+            strong: #3b5c43,
+            interactive: #5f8f4f,
+            focus: #7bff53,
+            footer: #2b312d
+        ),
+
+        overlay: (
+            control: rgb(11 13 12 / 78%),
+            image-strong: rgb(0 0 0 / 80%),
+            image-mid: rgb(0 0 0 / 18%),
+            image-soft: rgb(0 0 0 / 4%),
+            image-chip: rgb(0 0 0 / 35%),
+            backdrop: rgb(0 0 0 / 72%),
+            shadow: rgb(0 0 0 / 35%),
+            selected-glow: rgb(123 255 83 / 14%),
+            selected-text: rgb(123 255 83 / 28%)
+        ),
+
+        badge: (
+            optional-border: #5f8f4f,
+            optional-text: #7bff53
+        ),
+
+        scrollbar: (
+            track: #0b0f0c,
+            thumb: #2d4233,
+            thumb-hover: #3b5c43,
+            thumb-active: #5f8f4f,
+            border: #0b0d0c
+        )
+    )
+);
+
+@function get-dark($keys...) {
+    @return map.get($colors, dark, $keys...);
+}

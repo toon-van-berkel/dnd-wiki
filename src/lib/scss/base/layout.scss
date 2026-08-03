@@ -1,0 +1,207 @@
+/*  
+    Location: src\lib\scss\base\layout.scss
+    use: This file is the styling relevant to the main page container +layout.svelte.
+*/
+@use '../core/colors' as colors;
+@use '../core/sizes' as sizes;
+
+.layout {
+    --content-max-width: #{sizes.get(content, max-width)};
+    --content-wide-max-width: #{sizes.get(content, wide-max-width)};
+    --content-footer-max-width: #{sizes.get(content, footer-max-width)};
+    --content-padding-inline: clamp(20px, 4vw, 56px);
+    --navbar-height: #{sizes.get(navbar, height)};
+
+    width: 100%;
+    min-height: 100svh;
+
+    display: flex;
+    flex-direction: column;
+
+    background-color: colors.get-dark(background, primary);
+    color: colors.get-dark(text, primary);
+
+    &__body {
+        min-width: 0;
+
+        display: flex;
+        flex: 1 1 auto;
+    }
+
+    &__content {
+        width: 100%;
+        max-width: var(--content-max-width);
+        margin-inline: auto;
+        min-width: 0;
+        min-height: 50svh;
+        padding: sizes.get(spacing, xxl) var(--content-padding-inline);
+        box-sizing: border-box;
+        flex: 1 1 var(--content-max-width);
+    }
+}
+
+.layout__footer {
+    width: 100%;
+    min-width: 0;
+
+    &__top {
+        width: 100%;
+        max-width: var(--content-footer-max-width);
+        padding: sizes.get(section);
+        box-sizing: border-box;
+
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 30px 10px;
+
+        &-container {
+            display: flex;
+            justify-content: center;
+
+            background-color: colors.get-dark(background, tiertiary);
+            border-top: 1px solid colors.get-dark(border, footer);
+        }
+        &__information {
+            width: min(500px, 100%);
+            min-width: 0;
+            
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+
+            &__head {
+                padding-bottom: 10px;
+                min-width: 0;
+
+                display: flex;
+                align-items: center;
+                flex-wrap: wrap;
+                gap: 20px;
+
+                border-bottom: 1px solid colors.get-dark(border, footer);
+
+                &-img {
+                    padding: 10px;
+                    
+                    height: 70px;
+                }
+                &__text {
+                    min-width: 0;
+
+                    &-title {
+                        text-decoration: none;
+                        overflow-wrap: anywhere;
+                    }
+                    &-subtitle {
+                        color: colors.get-dark(text, tertiary);
+                        overflow-wrap: anywhere;
+                    }
+                }
+            }
+
+            &-description {
+                color: colors.get-dark(text, secondary);
+            }
+            &-subdescription {
+                color: colors.get-dark(text, tertiary);
+            }
+
+            &__list {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 10px;
+
+                & .link {
+                    display: inline-block;
+
+                    padding: 5px 10px;
+
+                    border: 1px solid colors.get-dark(border, footer);
+                    border-radius: sizes.get(radius, sm);
+
+                    font-size: 0.8em;
+                    font-weight: 500;
+                    text-decoration: none;
+                }
+            }
+        }
+        &__section {
+            min-width: min(300px, 100%);
+            padding: 10px;
+            box-sizing: border-box;
+
+            &-title {
+                margin-bottom: 10px;
+
+                font-size: .8em;
+                text-transform: uppercase;
+                color: colors.get-dark(text, tertiary);
+            }
+            &__list {
+                display: flex;
+                flex-direction: column;
+                gap: 15px;
+
+                &-link .link {
+                    font-weight: normal;
+                    text-decoration: none;
+                    color: colors.get-dark(text, secondary);
+                }
+            }
+        }
+    }
+    &__bottom {
+        width: 100%;
+        max-width: var(--content-wide-max-width);
+        padding: sizes.get(section);
+        box-sizing: border-box;
+        
+        display: flex;
+        gap: 20px;
+
+        &-container {
+            display: flex;
+            justify-content: center;
+
+            background-color: colors.get-dark(background, secondary);
+            border-top: 1px solid colors.get-dark(border, footer);
+        }
+
+        &__copyright,
+        &__disclaimer {
+            min-width: 0;
+            flex: 1 1 0;
+        
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+
+            & p {
+                font-size: 0.9em;
+                color: colors.get-dark(text, secondary);
+            }
+            & a {
+                font-weight: 500;
+                color: colors.get-dark(text, secondary);
+                overflow-wrap: anywhere;
+            }
+        }
+    }
+}
+
+@media (max-width: #{sizes.get(breakpoint, sidebar)}) {
+    .layout {
+        &__body {
+            display: block;
+        }
+        
+        &__content {
+            padding: sizes.get(section-mobile);
+        }
+    }
+
+    .layout__footer__bottom {
+        flex-direction: column;
+    }
+}

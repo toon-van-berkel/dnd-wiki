@@ -1,0 +1,142 @@
+@use '../core/colors' as colors;
+@use '../core/sizes' as sizes;
+
+.popup {
+	width: min(sizes.get(popup, full-width), calc(100vw - #{sizes.get(popup, viewport-gutter)}));
+	max-height: calc(100vh - 24px);
+	padding: 20px;
+	box-sizing: border-box;
+
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 1000;
+
+	display: block;
+	overflow-y: auto;
+
+	opacity: 0;
+	visibility: hidden;
+	pointer-events: none;
+
+	background-color: colors.get-dark(background, tiertiary);
+	border: 1px solid colors.get-dark(border, base);
+	border-radius: 10px;
+	box-shadow: 0 8px 20px colors.get-dark(overlay, shadow);
+
+	color: colors.get-dark(text, primary);
+	text-align: left;
+	white-space: normal;
+
+	transition:
+		opacity sizes.get(transition, fast) ease,
+		visibility sizes.get(transition, fast) ease;
+
+	&--visible {
+		opacity: 1;
+		visibility: visible;
+	}
+
+	&--full {
+		&.popup--visible {
+			pointer-events: auto;
+		}
+	}
+
+	&--description {
+		width: min(sizes.get(popup, description-width), calc(100vw - #{sizes.get(popup, viewport-gutter)}));
+		padding: 10px 12px;
+
+		overflow: hidden;
+		pointer-events: none;
+
+		border-radius: 5px;
+
+		.popup-description {
+			margin-bottom: 0;
+		}
+	}
+
+	&__top {
+		margin-bottom: 10px;
+		padding-bottom: 10px;
+
+		display: flex;
+		align-items: center;
+
+		border-bottom: 1px solid colors.get-dark(border, subtle);
+
+		&-img {
+			width: 50px;
+			height: 50px;
+			margin-right: 20px;
+
+			flex-shrink: 0;
+			object-fit: contain;
+
+			&--white {
+				filter: brightness(0) invert(1);
+			}
+		}
+
+		&__header {
+			display: block;
+			min-width: 0;
+
+			&-title {
+				display: block;
+
+				font-size: 1.3em;
+				font-weight: bold;
+				line-height: 1.2;
+			}
+
+			&-subtitle {
+				display: block;
+				margin-top: 4px;
+
+				font-size: 1em;
+				line-height: 1.2;
+
+				color: colors.get-dark(text, tertiary);
+			}
+		}
+	}
+
+	&-description {
+		display: block;
+		margin-bottom: 10px;
+
+		font-size: 0.9em;
+		line-height: 1.4;
+		overflow-wrap: break-word;
+
+		color: colors.get-dark(text, secondary);
+	}
+
+	&__link-container {
+        display: block;
+        min-width: 0;
+        max-width: 100%;
+
+        font-size: 0.9em;
+        line-height: 1.4;
+	}
+
+	&__link {
+        color: colors.get-dark(text, links, base);
+
+        white-space: normal;
+        word-break: break-all;
+
+        &:hover {
+            color: colors.get-dark(text, links, hover);
+        }
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.popup {
+		transition: none;
+	}
+}

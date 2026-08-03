@@ -1,41 +1,28 @@
+<!--
+	Location: src/routes/classes/+page.svelte
+	Use: Class index page backed by the central class content pack.
+-->
 <script lang="ts">
-	import ChildLinkGrid from '$lib/components/ChildLinkGrid/ChildLinkGrid.svelte';
-	import PageSection from '$lib/pages/PageSection/PageSection.svelte';
-	import { getPageChildren } from '$lib/page/registry';
+	import { classList } from '$lib/typescript/data/internals/classes/_index_';
 
-	const classPages = getPageChildren('classes').map(({ title, href, shortDescription, description, tags }) => ({
-		title,
-		href,
-		description: shortDescription ?? description ?? '',
-		tags: tags ?? []
-	}));
+	import PageCard from '$lib/svelte/components/PageCard.svelte';
+	import PageHeader from '$lib/svelte/components/page/PageHeader.svelte';
 </script>
 
-<PageSection
-	variant="featured"
-	title="Choosing a class"
-	description="Choose a class based on the character you want to play, the role you want to fulfil, and the options available in your campaign."
-	collapsible
->
-	<p>
-		Your class determines most of your character's abilities, combat style, progression, and
-		overall role within the party. Some classes specialise in direct combat, while others focus
-		on spellcasting, support, exploration, social interaction, or a mixture of several roles.
-	</p>
+<article class="wiki-article">
+	<PageHeader />
 
-	<p>
-		Use the tags on each class to quickly compare its strengths and playstyle. Open a class page
-		for its full rules, features, subclasses, progression, and campaign-specific adjustments.
-	</p>
+	<section
+		class="wiki-article__section"
+		id="classes"
+		aria-labelledby="classes-title"
+	>
+		<h2 id="classes-title">Classes</h2>
 
-	<p>
-		Class availability can differ between campaigns. Check the availability information shown
-		on each page, and discuss restricted, third-party, or homebrew options with the Dungeon
-		Master before creating your character.
-	</p>
-</PageSection>
-
-<section class="page-links" aria-labelledby="class-pages-heading">
-	<h2 id="class-pages-heading">Class pages</h2>
-	<ChildLinkGrid links={classPages} />
-</section>
+		<div class="wiki-article__image-cards">
+			{#each classList as classItem}
+				<PageCard page={classItem.path} variant="image" />
+			{/each}
+		</div>
+	</section>
+</article>

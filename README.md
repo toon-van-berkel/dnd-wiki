@@ -17,7 +17,10 @@ character options, homebrew content, creatures, locations, and tabletop resource
 [Report a Problem](https://github.com/toon-van-berkel/dnd-wiki/issues/new) ·
 [View Issues](https://github.com/toon-van-berkel/dnd-wiki/issues)
 
-<br>
+```sh
+# recreate this project
+pnpm dlx sv@0.16.4 create --template minimal --types ts --install pnpm ./
+```
 
 ![Svelte](https://img.shields.io/badge/Svelte-5-FF3E00?logo=svelte&logoColor=white)
 ![SvelteKit](https://img.shields.io/badge/SvelteKit-2-FF3E00?logo=svelte&logoColor=white)

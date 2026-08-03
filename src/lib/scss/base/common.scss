@@ -1,0 +1,15 @@
+// teste
+@use 'sass:map';
+@use '../core/typography' as typography;
+
+* {
+    font-family: map.get(
+        typography.$typography,
+        headings,
+        primary
+    );
+}
+
+h1 {
+    color: red;
+}

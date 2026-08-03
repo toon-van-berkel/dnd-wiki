@@ -1,0 +1,295 @@
+/*  
+	Location: src/lib/scss/components/navbar.scss
+	Use: Styles the global website navigation bar.
+*/
+
+@use '../core/colors' as colors;
+@use '../core/sizes' as sizes;
+
+.navbar {
+	width: 100%;
+	min-width: 0;
+	box-sizing: border-box;
+
+	position: sticky;
+	top: 0;
+	z-index: 850;
+
+	background-color: colors.get-dark(background, primary);
+	border-bottom: 1px solid colors.get-dark(border, subtle);
+
+	&__inner {
+		width: 100%;
+		max-width: var(--content-wide-max-width, #{sizes.get(content, wide-max-width)});
+		margin-inline: auto;
+		min-width: 0;
+		min-height: sizes.get(navbar, height);
+		padding: 14px 16px;
+		box-sizing: border-box;
+
+		display: grid;
+		grid-template-columns:
+			auto
+			minmax(220px, 1fr)
+			auto;
+		align-items: center;
+		gap: 16px;
+	}
+
+	&__brand {
+		min-width: 0;
+
+		display: inline-flex;
+		align-items: center;
+
+		border-radius: 5px;
+
+		&:focus-visible {
+			outline: 2px solid colors.get-dark(theme, primary);
+			outline-offset: 4px;
+		}
+	}
+
+	&__brand-img {
+		width: clamp(150px, 16vw, 260px);
+		max-width: 100%;
+		height: 42px;
+
+		display: block;
+		object-fit: contain;
+		object-position: left center;
+	}
+
+	&__search {
+		min-width: 0;
+		height: 42px;
+		box-sizing: border-box;
+
+		display: grid;
+		grid-template-columns:
+			auto
+			minmax(0, 1fr)
+			auto;
+		align-items: center;
+
+		overflow: hidden;
+
+		background-color: colors.get-dark(background, primary);
+		border: 1px solid colors.get-dark(border, base);
+		border-radius: sizes.get(radius, md);
+
+		transition:
+			border-color sizes.get(transition, fast) ease,
+			box-shadow sizes.get(transition, fast) ease;
+
+		&:focus-within {
+			border-color: colors.get-dark(border, interactive);
+			box-shadow: 0 0 0 1px colors.get-dark(border, interactive);
+		}
+	}
+
+	&__search-label {
+		position: absolute;
+
+		width: 1px;
+		height: 1px;
+
+		overflow: hidden;
+		clip: rect(0, 0, 0, 0);
+		clip-path: inset(50%);
+		white-space: nowrap;
+	}
+
+	&__search-icon {
+		width: 18px;
+		height: 18px;
+		margin-left: 12px;
+
+		display: block;
+		flex-shrink: 0;
+
+		background-color: colors.get-dark(text, tertiary);
+
+		mask-image: url('/icons/white/util/search.svg');
+		mask-repeat: no-repeat;
+		mask-position: center;
+		mask-size: contain;
+
+		-webkit-mask-image: url('/icons/white/util/search.svg');
+		-webkit-mask-repeat: no-repeat;
+		-webkit-mask-position: center;
+		-webkit-mask-size: contain;
+	}
+
+	&__search-input {
+		min-width: 0;
+		width: 100%;
+		height: 100%;
+		padding: 0 12px;
+
+		box-sizing: border-box;
+
+		background: transparent;
+		border: 0;
+		color: colors.get-dark(text, primary);
+
+		font: inherit;
+
+		&::placeholder {
+			color: colors.get-dark(text, tertiary);
+		}
+
+		&:focus {
+			outline: none;
+		}
+	}
+
+	&__search-submit {
+		height: 100%;
+		padding: 0 16px;
+
+		background-color: transparent;
+		border: 0;
+		border-left: 1px solid colors.get-dark(border, subtle);
+
+		color: colors.get-dark(text, primary);
+		font: inherit;
+		font-weight: 600;
+
+		cursor: pointer;
+
+		transition:
+			background-color sizes.get(transition, fast) ease,
+			color sizes.get(transition, fast) ease;
+
+		&:hover {
+			background-color: colors.get-dark(background, tiertiary);
+			color: colors.get-dark(text, links, hover);
+		}
+
+		&:focus-visible {
+			background-color: colors.get-dark(background, tiertiary);
+			color: colors.get-dark(text, links, hover);
+			outline: 2px solid colors.get-dark(theme, primary);
+			outline-offset: -2px;
+		}
+	}
+
+	&__actions {
+		min-width: 0;
+
+		display: flex;
+		align-items: center;
+		gap: 4px;
+
+			.link {
+				min-height: 40px;
+				padding: 0 10px;
+
+			border: 0;
+			border-radius: sizes.get(radius, md);
+
+				background-color: transparent;
+				text-decoration: none;
+				white-space: nowrap;
+				font-weight: 500;
+
+			transition:
+				background-color sizes.get(transition, fast) ease,
+				color sizes.get(transition, fast) ease;
+
+			&:hover {
+				background-color: colors.get-dark(background, tiertiary);
+			}
+
+			&:focus-visible {
+				background-color: colors.get-dark(background, tiertiary);
+				outline: 2px solid colors.get-dark(theme, primary);
+				outline-offset: -2px;
+			}
+		}
+	}
+}
+
+@media (max-width: 1000px) {
+	.navbar {
+		&__inner {
+			gap: 10px;
+		}
+
+		&__brand-img {
+			width: 170px;
+		}
+
+		&__actions {
+			gap: 2px;
+
+			.link {
+				width: 40px;
+				min-width: 40px;
+				padding: 0;
+
+				justify-content: center;
+
+				font-size: 0;
+			}
+
+			.link-img {
+				width: 18px;
+				height: 18px;
+				flex: 0 0 18px;
+			}
+		}
+	}
+}
+
+@media (max-width: #{sizes.get(breakpoint, navbar)}) {
+	.navbar {
+		position: static;
+
+		&__inner {
+			grid-template-columns:
+				minmax(0, 1fr)
+				auto;
+			grid-template-areas:
+				'brand actions'
+				'search search';
+
+			gap: 10px;
+			padding: 14px 12px;
+		}
+
+		&__brand {
+			grid-area: brand;
+		}
+
+		&__brand-img {
+			width: min(170px, 100%);
+			height: 36px;
+		}
+
+		&__search {
+			grid-area: search;
+			width: 100%;
+		}
+
+		&__search-submit {
+			padding: 0 12px;
+		}
+
+		&__actions {
+			grid-area: actions;
+			justify-content: flex-end;
+		}
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.navbar {
+		&__search,
+		&__search-submit,
+		&__actions .link {
+			transition: none;
+		}
+	}
+}

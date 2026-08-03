@@ -1,0 +1,294 @@
+/*  
+    Location: src/lib/scss/components/sidebar.scss
+    use:
+*/
+
+@use '../core/colors' as colors;
+@use '../core/sizes' as sizes;
+
+.sidebar-shell {
+	--sidebar-width: #{sizes.get(sidebar, width)};
+	--sidebar-toggle-width: #{sizes.get(sidebar, toggle-width)};
+
+	width: var(--sidebar-width);
+	height: calc(100dvh - var(--navbar-height, #{sizes.get(navbar, height)}) - #{sizes.get(border, thin)});
+	flex: 0 0 var(--sidebar-width);
+
+	position: sticky;
+	top: calc(var(--navbar-height, #{sizes.get(navbar, height)}) + #{sizes.get(border, thin)});
+	z-index: 800;
+
+	overflow: visible;
+	transition:
+		width sizes.get(transition, sidebar) ease,
+		flex-basis sizes.get(transition, sidebar) ease;
+
+	&--collapsed {
+		width: 0;
+		flex-basis: 0;
+
+		.sidebar {
+			padding: 0;
+			overflow: hidden;
+			border-right: 0;
+		}
+
+		.sidebar-shell__toggle {
+			left: 0;
+			border-left: 1px solid colors.get-dark(border, base);
+		}
+	}
+
+	&__toggle {
+		width: var(--sidebar-toggle-width);
+		height: sizes.get(control, lg);
+
+		position: absolute;
+		top: sizes.get(spacing, sm);
+		left: calc(100% - 1px);
+		z-index: 2;
+
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+
+		background-color: colors.get-dark(background, secondary);
+		border: 1px solid colors.get-dark(border, base);
+		border-left: 0;
+		border-radius: 0 sizes.get(radius, sm) sizes.get(radius, sm) 0;
+		color: colors.get-dark(text, tertiary);
+		cursor: pointer;
+
+		&:hover,
+		&:focus-visible {
+			color: colors.get-dark(text, links, hover);
+			background-color: colors.get-dark(background, tiertiary);
+			border-color: colors.get-dark(border, interactive);
+			outline: none;
+		}
+	}
+
+	&__toggle-icon {
+		width: sizes.get(icon, sm);
+		height: sizes.get(icon, sm);
+
+		display: block;
+
+		background-color: currentColor;
+		mask-image: url('/icons/white/util/chevron-left.svg');
+		mask-repeat: no-repeat;
+		mask-position: center;
+		mask-size: contain;
+
+		-webkit-mask-image: url('/icons/white/util/chevron-left.svg');
+		-webkit-mask-repeat: no-repeat;
+		-webkit-mask-position: center;
+		-webkit-mask-size: contain;
+
+		&--collapsed {
+			mask-image: url('/icons/white/util/chevron-right.svg');
+			-webkit-mask-image: url('/icons/white/util/chevron-right.svg');
+		}
+	}
+}
+
+.sidebar {
+	width: 100%;
+	height: 100%;
+	padding: sizes.get(spacing, lg) 10px;
+	box-sizing: border-box;
+
+	overflow-y: auto;
+	overflow-x: hidden;
+	scrollbar-gutter: stable;
+
+	border-right: 1px solid colors.get-dark(border, subtle);
+
+	&__nav {
+		display: flex;
+		flex-direction: column;
+		gap: 18px;
+	}
+
+	&__section + &__section {
+		padding-top: sizes.get(spacing, lg);
+		border-top: 1px solid colors.get-dark(border, subtle);
+	}
+
+	&__section-title {
+		margin: 0 8px 8px;
+
+		font-size: 0.75rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		color: colors.get-dark(text, tertiary);
+	}
+
+	&__list {
+		display: flex;
+		flex-direction: column;
+		gap: 2px;
+
+		&--nested {
+			margin-top: 2px;
+		}
+	}
+
+	&__row {
+		min-height: 34px;
+		padding-left: calc(var(--sidebar-depth) * 18px);
+
+		display: flex;
+		align-items: center;
+		gap: 4px;
+
+		border-radius: sizes.get(radius, sm);
+
+		&--active {
+			background-color: colors.get-dark(background, hover);
+
+			.link {
+				color: colors.get-dark(text, links, hover);
+			}
+		}
+
+		&:hover {
+			background-color: colors.get-dark(background, hover);
+		}
+
+		.link-container {
+			min-width: 0;
+			flex: 1 1 auto;
+		}
+
+		.link {
+			width: 100%;
+			padding: 7px 8px;
+			box-sizing: border-box;
+
+			font-weight: 500;
+			text-decoration: none;
+			color: colors.get-dark(text, secondary);
+		}
+	}
+
+	&__toggle,
+	&__toggle-spacer {
+		width: sizes.get(control, sm);
+		height: sizes.get(control, sm);
+		flex: 0 0 sizes.get(control, sm);
+	}
+
+	&__toggle {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+
+		background: transparent;
+		border: 0;
+		border-radius: sizes.get(radius, sm);
+		color: colors.get-dark(text, tertiary);
+		cursor: pointer;
+
+		&:hover,
+		&:focus-visible {
+			color: colors.get-dark(text, links, hover);
+			background-color: colors.get-dark(background, tiertiary);
+			outline: none;
+		}
+	}
+
+	&__toggle-icon {
+		display: inline-block;
+
+		font-size: 1.25rem;
+		line-height: 1;
+		transform: rotate(0deg);
+		transition: transform sizes.get(transition, fast) ease;
+
+		&--expanded {
+			transform: rotate(90deg);
+		}
+	}
+
+	&__mobile-toggle,
+	&__mobile-close {
+		display: none;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.sidebar-shell {
+		transition: none;
+	}
+
+	.sidebar__toggle-icon {
+		transition: none;
+	}
+}
+
+@media (max-width: #{sizes.get(breakpoint, sidebar)}) {
+	.sidebar-shell {
+		width: 0;
+		height: 0;
+		flex-basis: 0;
+
+		position: static;
+
+		&__toggle {
+			display: none;
+		}
+	}
+
+	.sidebar {
+		width: min(280px, 100%);
+		height: 100svh;
+
+		position: fixed;
+		inset: 0 auto 0 0;
+		z-index: 900;
+
+		clip-path: inset(0 100% 0 0);
+		visibility: hidden;
+		pointer-events: none;
+		transition:
+			clip-path sizes.get(transition, fast) ease,
+			visibility sizes.get(transition, fast) ease;
+
+		&--open {
+			clip-path: inset(0);
+			visibility: visible;
+			pointer-events: auto;
+		}
+
+		&__mobile-toggle,
+		&__mobile-close {
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+
+			min-height: 36px;
+			padding: 0 12px;
+
+			background-color: colors.get-dark(background, secondary);
+			border: 1px solid colors.get-dark(border, base);
+			border-radius: sizes.get(radius, sm);
+			color: colors.get-dark(text, primary);
+		}
+
+		&__mobile-close {
+			width: 100%;
+			margin-top: sizes.get(spacing, lg);
+		}
+	}
+
+	.sidebar__mobile-toggle {
+		margin: 10px;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.sidebar {
+			transition: none;
+		}
+	}
+}
