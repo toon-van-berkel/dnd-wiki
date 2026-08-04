@@ -9,7 +9,7 @@ import { date } from '$lib/typescript/helpers/_index_';
 export const footerData: FooterDataType = {
 	informationSection: {
 		img: {
-			href: '/icons/color/internal/icon-color-dndportalwiki-wide.png',
+			href: '/branding/dnd-portal-logo-wide.svg',
 			alt: `The D&D Portal Wiki logo representing an internal page within the
 				website.`
 		},

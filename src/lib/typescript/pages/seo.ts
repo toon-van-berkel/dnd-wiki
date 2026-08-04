@@ -26,9 +26,13 @@ export type SeoMetadata = {
 	readonly imageAlt: string;
 	readonly imageWidth?: number;
 	readonly imageHeight?: number;
-	readonly iconUrl: string;
-	readonly icon512Url: string;
-	readonly appleTouchIconUrl: string;
+	readonly faviconHref: string;
+	readonly iconSvgHref: string;
+	readonly icon96Href: string;
+	readonly icon192Href: string;
+	readonly icon512Href: string;
+	readonly appleTouchIconHref: string;
+	readonly manifestHref: string;
 	readonly type: 'article' | 'website';
 	readonly twitterCard: 'summary' | 'summary_large_image';
 };
@@ -44,9 +48,13 @@ const siteName = site.siteSocial;
 const siteUrl = site.siteLink;
 const defaultDescription = 'Browse D&D Portal Wiki rules, classes, subclasses, spells, campaign references, and project information.';
 const defaultImage = coreInternals.website.logos.social;
+const favicon = coreInternals.website.logos.favicon;
 const iconImage = coreInternals.website.logos.icon;
+const icon96Image = coreInternals.website.logos.icon96;
+const icon192Image = coreInternals.website.logos.icon192;
 const icon512Image = coreInternals.website.logos.icon512;
 const appleTouchIcon = coreInternals.website.logos.appleTouchIcon;
+const manifest = coreInternals.website.logos.manifest;
 
 function normalizeText(value: string): string {
 	return value.replace(/\s+/g, ' ').trim();
@@ -120,9 +128,13 @@ export function createSeoMetadata({
 		imageAlt: normalizeText(image.alt),
 		imageWidth: image.width,
 		imageHeight: image.height,
-		iconUrl: getAbsoluteSiteUrl(iconImage.href),
-		icon512Url: getAbsoluteSiteUrl(icon512Image.href),
-		appleTouchIconUrl: getAbsoluteSiteUrl(appleTouchIcon.href),
+		faviconHref: favicon.href,
+		iconSvgHref: iconImage.href,
+		icon96Href: icon96Image.href,
+		icon192Href: icon192Image.href,
+		icon512Href: icon512Image.href,
+		appleTouchIconHref: appleTouchIcon.href,
+		manifestHref: manifest.href,
 		type: routeSeo?.type ?? (canonicalPath === '/' ? 'website' : 'article'),
 		twitterCard: imageUrl.endsWith('.svg') ? 'summary' : 'summary_large_image'
 	};

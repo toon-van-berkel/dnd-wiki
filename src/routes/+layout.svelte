@@ -6,7 +6,6 @@
 	import { base as appBase } from '$app/paths';
 	import { page as appPage } from '$app/state';
 	import type { Snippet } from 'svelte';
-	import favicon from '$lib/assets/site/favicon.svg';
 	import '$lib/scss/style.scss';
 
 	import { buildPage } from '$lib/typescript/pages/pageBuilder';
@@ -48,9 +47,13 @@
 </script>
 
 <svelte:head>
-	<link rel='icon' href={favicon} />
-	<link rel="icon" type="image/png" sizes="512x512" href={seo.icon512Url} />
-	<link rel="apple-touch-icon" sizes="180x180" href={seo.appleTouchIconUrl} />
+	<link rel="icon" href={seo.faviconHref} sizes="any" />
+	<link rel="icon" type="image/svg+xml" href={seo.iconSvgHref} />
+	<link rel="icon" type="image/png" sizes="96x96" href={seo.icon96Href} />
+	<link rel="icon" type="image/png" sizes="192x192" href={seo.icon192Href} />
+	<link rel="icon" type="image/png" sizes="512x512" href={seo.icon512Href} />
+	<link rel="apple-touch-icon" sizes="180x180" href={seo.appleTouchIconHref} />
+	<link rel="manifest" href={seo.manifestHref} />
 	<title>{seo.title}</title>
 	<meta
 		name='description'
@@ -58,7 +61,7 @@
 	/>
 	<link rel="canonical" href={seo.canonicalUrl} />
 	<meta name="robots" content="index, follow" />
-	<meta name="theme-color" content="#050a07" />
+	<meta name="theme-color" content="#0b0d0c" />
 	<meta property="og:site_name" content="D&D Portal Wiki" />
 	<meta property="og:type" content={seo.type} />
 	<meta property="og:title" content={seo.title} />
