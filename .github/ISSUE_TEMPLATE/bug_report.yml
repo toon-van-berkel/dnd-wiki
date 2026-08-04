@@ -1,0 +1,36 @@
+name: Bug report
+description: Report broken behavior, rendering problems, or technical issues.
+title: "[Bug]: "
+labels:
+  - bug
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What is broken?
+      description: Describe the issue clearly.
+    validations:
+      required: true
+  - type: input
+    id: page
+    attributes:
+      label: Page or route
+      placeholder: https://dnd-portal.com/classes/barbarian/
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to reproduce
+      description: List what you clicked, searched, filtered, or opened.
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshots or logs
+  - type: input
+    id: browser
+    attributes:
+      label: Browser and device
+      placeholder: Chrome on Windows, Safari on iPhone, etc.

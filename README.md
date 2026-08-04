@@ -1,85 +1,115 @@
 <div align="center">
 
 <img
-	src="./static/dndportal_wiki-74x32.svg"
-	alt="D&D Portal logo"
-	width="150"
+	src="./static/icons/color/internal/icon-color-dndportalwiki-wide.png"
+	alt="D&D Portal Wiki logo"
+	width="180"
 />
 
-# D&D Portal
+# D&D Portal Wiki
 
-### Campaign rules and reference wiki
+Campaign rules, reference pages, class content, spells, and project information for D&D Portal.
 
-An unofficial, fan-created reference website for campaign rules,  
-character options, homebrew content, creatures, locations, and tabletop resources.
-
-[Visit D&D Portal](https://dnd-portal.com) ·
-[Report a Problem](https://github.com/toon-van-berkel/dnd-wiki/issues/new) ·
-[View Issues](https://github.com/toon-van-berkel/dnd-wiki/issues)
-
-```sh
-# recreate this project
-pnpm dlx sv@0.16.4 create --template minimal --types ts --install pnpm ./
-```
+[Visit the Wiki](https://dnd-portal.com/) |
+[Report a Problem](https://github.com/toon-van-berkel/dnd-wiki/issues/new/choose) |
+[View Changelog](https://dnd-portal.com/changelog/)
 
 ![Svelte](https://img.shields.io/badge/Svelte-5-FF3E00?logo=svelte&logoColor=white)
 ![SvelteKit](https://img.shields.io/badge/SvelteKit-2-FF3E00?logo=svelte&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-6-3178C6?logo=typescript&logoColor=white)
-![Sass](https://img.shields.io/badge/Sass-SCSS-CC6699?logo=sass&logoColor=white)
-![GitHub Pages](https://img.shields.io/badge/Deployed-GitHub_Pages-222222?logo=github)
+![SCSS](https://img.shields.io/badge/Styles-SCSS-CC6699?logo=sass&logoColor=white)
+![GitHub Pages](https://img.shields.io/badge/Deploy-GitHub_Pages-222222?logo=github)
 
 </div>
 
----
+## About
 
-## About D&D Portal
+D&D Portal Wiki is an unofficial fan-created reference website for tabletop campaign material. It contains rules references, class and subclass pages, spell pages, species, monsters, locations, project notices, and supporting resource pages.
 
-D&D Portal is a central reference website for campaign-specific Dungeons & Dragons content.
+The site is built as a static SvelteKit application and is published to GitHub Pages at the root custom domain `https://dnd-portal.com/`.
 
-It combines general reference material with table rulings, character options, homebrew systems, campaign availability, creatures, locations, and other information used across different campaigns.
+## Project Structure
 
-The website is designed to make campaign information easier to find, maintain, reuse, and keep consistent.
+```text
+src/
+  lib/
+    svelte/components/      Reusable Svelte components
+    scss/                   Global, layout, and component SCSS
+    typescript/data/        Central content, route, link, image, and metadata data
+    typescript/pages/       Page resolution, SEO, and page-building helpers
+  routes/                   SvelteKit routes and static prerender entries
+static/                     Public images, icons, robots.txt, and other static assets
+scripts/                    Local validation and pre-live audit scripts
+docs/                       Repository documentation
+.github/                    GitHub Actions, issue templates, and PR template
+```
 
-## Features
+More detail is available in [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
 
-- Campaign-specific rules and exceptions
-- Species, classes, subclasses, and character options
-- Homebrew content and custom systems
-- Monsters, locations, and world information
-- Party-specific content availability
-- Searchable and structured reference pages
-- Responsive desktop and mobile interface
-- Centralised project data and reusable components
+## Requirements
 
-## Live Website
+- Node.js compatible with the project runtime configuration
+- pnpm `11.10.0`
 
-The current version of D&D Portal is available at:
+The package manager is declared in `package.json`:
 
-### [dnd-portal.com](https://dnd-portal.com)
+```json
+"packageManager": "pnpm@11.10.0"
+```
 
-The website is currently being rebuilt with a stronger focus on performance, maintainability, efficiency, and security.
-
-## Technology
-
-D&D Portal is built with:
-
-- [Svelte 5](https://svelte.dev/)
-- [SvelteKit](https://svelte.dev/docs/kit)
-- [TypeScript](https://www.typescriptlang.org/)
-- [SCSS](https://sass-lang.com/)
-- [Vite](https://vite.dev/)
-- [GitHub Pages](https://pages.github.com/)
+The repository also contains Volta and pnpm runtime settings. Do not replace pnpm commands with npm commands unless the project configuration is intentionally changed first.
 
 ## Local Development
 
-### Requirements
+```bash
+pnpm install
+pnpm dev
+```
 
-- Node.js
-- npm
+The local dev server normally runs at:
 
-### Installation
+```text
+http://localhost:5173/
+```
+
+## Validation
+
+Run these before opening or merging changes:
 
 ```bash
-git clone https://github.com/toon-van-berkel/dnd-wiki.git
-cd dnd-wiki
-npm install
+pnpm check
+pnpm build
+pnpm audit:prelive:crawl
+```
+
+Use `pnpm audit:prelive` for the data and route checks without crawling the built output.
+
+## Deployment
+
+The live website is deployed through GitHub Pages from the `build/` directory generated by `pnpm build`.
+
+This project intentionally uses:
+
+- `@sveltejs/adapter-static`
+- `prerender = true`
+- `trailingSlash = 'always'`
+- no repository base path, because the site is served from `https://dnd-portal.com/`
+- `actions/upload-pages-artifact` and `actions/deploy-pages` in the GitHub Actions workflow
+
+See [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) before touching deployment settings.
+
+## Contributing
+
+Issues and pull requests are welcome when they improve correctness, maintainability, accessibility, performance, or clarity.
+
+Read [CONTRIBUTING.md](CONTRIBUTING.md) before submitting larger changes.
+
+## Legal and Usage
+
+D&D Portal is an unofficial fan-created project.
+
+The repository currently does not grant a general open-source license for all source code, written content, data, artwork, icons, or other assets. Unless explicitly stated otherwise, no permission to redistribute or reuse repository material is granted.
+
+Third-party names, trademarks, rules material, artwork, icons, and other assets remain subject to the rights and licenses of their respective owners.
+
+See the [D&D Portal Legal Notice](https://dnd-portal.com/legal/) and [Contribution Terms](https://dnd-portal.com/contribution-terms/) for additional information.

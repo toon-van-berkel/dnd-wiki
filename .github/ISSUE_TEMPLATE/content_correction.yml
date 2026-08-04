@@ -1,0 +1,34 @@
+name: Content correction
+description: Report missing, unclear, or incorrect Wiki content.
+title: "[Content]: "
+labels:
+  - content
+body:
+  - type: textarea
+    id: issue
+    attributes:
+      label: What content needs correction?
+      description: Include the exact page and text when possible.
+    validations:
+      required: true
+  - type: input
+    id: page
+    attributes:
+      label: Page or route
+      placeholder: https://dnd-portal.com/rules/actions/action/
+  - type: textarea
+    id: source
+    attributes:
+      label: Source or reasoning
+      description: Add the source, campaign ruling, or explanation that supports the correction.
+  - type: textarea
+    id: suggested
+    attributes:
+      label: Suggested wording
+  - type: checkboxes
+    id: rights
+    attributes:
+      label: Rights and scope
+      options:
+        - label: I am not asking D&D Portal to publish unauthorized copies of protected books, paid content, or third-party material.
+          required: true
