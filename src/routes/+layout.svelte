@@ -31,6 +31,11 @@
 		pathname: appPage.url.pathname,
 		basePath: appBase
 	}));
+	let structuredDataScript = $derived(
+		seo.structuredDataJson
+			? `<script type="application/ld+json">${seo.structuredDataJson}<` + '/script>'
+			: ''
+	);
 	setCurrentPageContext({
 		get pathname() {
 			return appPage.url.pathname;
@@ -80,6 +85,9 @@
 	<meta name="twitter:description" content={seo.description} />
 	<meta name="twitter:image" content={seo.imageUrl} />
 	<meta name="twitter:image:alt" content={seo.imageAlt} />
+	{#if structuredDataScript}
+		{@html structuredDataScript}
+	{/if}
 </svelte:head>
 
 <div class='layout'>

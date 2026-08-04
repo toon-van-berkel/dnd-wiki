@@ -31,8 +31,8 @@
                         alt={data.informationSection.img.alt}
                     >
                     <div class="layout__footer__top__information__head__text">
-                    <h2 class='layout__footer__top__information__head__text-title'>
-                        {data.informationSection.title}</h2>
+                    <p class='layout__footer__top__information__head__text-title'>
+                        {data.informationSection.title}</p>
                     <span class='layout__footer__top__information__head__text-subtitle'>
                         {data.informationSection.subTitle}</span>
                     </div>
@@ -51,7 +51,7 @@
             </article>
             {#each sections as section}
                 <div class='layout__footer__top__section'>
-                    <h2 class='layout__footer__top__section-title'>{section.title}</h2>
+                    <p class='layout__footer__top__section-title'>{section.title}</p>
 
                     <ul class='layout__footer__top__section__list'>                    
                         {#each section.links as link}

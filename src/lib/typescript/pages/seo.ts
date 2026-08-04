@@ -4,7 +4,8 @@
 */
 import { base as site, internals as coreInternals } from '$lib/typescript/data/core/_index_';
 import type { PageData, PagePath } from '$lib/typescript/data/_index_';
-import { getPageLabel } from './currentPage';
+import { getData } from '$lib/typescript/data/_index_';
+import { getBreadcrumbItems, getPageLabel } from './currentPage';
 
 export type SeoMetadataInput = {
 	readonly title?: string;
@@ -33,6 +34,7 @@ export type SeoMetadata = {
 	readonly icon512Href: string;
 	readonly appleTouchIconHref: string;
 	readonly manifestHref: string;
+	readonly structuredDataJson: string | null;
 	readonly type: 'article' | 'website';
 	readonly twitterCard: 'summary' | 'summary_large_image';
 };
@@ -76,6 +78,87 @@ function formatTitle(title: string): string {
 	return `${cleanTitle} - ${siteName}`;
 }
 
+function getTitlePathSegments(canonicalPath: string): readonly string[] {
+	return canonicalPath
+		.split('/')
+		.filter(Boolean);
+}
+
+function getParentPageLabel(path: PagePath | null): string | null {
+	const items = getBreadcrumbItems(path);
+
+	if (items.length < 2) {
+		return null;
+	}
+
+	return items[items.length - 2].label;
+}
+
+function formatContextTitle({
+	title,
+	pageData,
+	path,
+	canonicalPath
+}: {
+	readonly title: string;
+	readonly pageData: PageData | null;
+	readonly path: PagePath | null;
+	readonly canonicalPath: string;
+}): string {
+	if (pageData?.seoTitle) {
+		return normalizeText(pageData.seoTitle);
+	}
+
+	const cleanTitle = getDisplayTitle(normalizeText(title));
+	const segments = getTitlePathSegments(canonicalPath);
+
+	if (!cleanTitle || cleanTitle === siteName) {
+		return siteName;
+	}
+
+	if (segments[0] === 'classes') {
+		if (segments.length === 2) {
+			return `${cleanTitle} Class - ${siteName}`;
+		}
+
+		if (segments.length >= 3) {
+			const parentLabel = getParentPageLabel(path);
+			const classLabel = parentLabel && parentLabel !== 'Classes'
+				? parentLabel
+				: pageData?.subTitle.replace(/\s+subclass$/i, '') ?? '';
+			const context = classLabel ? `${classLabel} Subclass` : 'Subclass';
+
+			return `${cleanTitle} - ${context} - ${siteName}`;
+		}
+	}
+
+	if (segments[0] === 'rules') {
+		if (segments[1] === 'spellcasting') {
+			return `Spellcasting Rules: ${cleanTitle} - ${siteName}`;
+		}
+
+		if (pageData?.subTitle && !cleanTitle.toLowerCase().includes(pageData.subTitle.toLowerCase())) {
+			return `${cleanTitle} ${pageData.subTitle} - ${siteName}`;
+		}
+	}
+
+	if (segments[0] === 'spells') {
+		if (segments.length === 1) {
+			return formatTitle(cleanTitle);
+		}
+
+		if (
+			/^cantrips$|^spellcasting$|^\d(?:st|nd|rd|th)-level$/i.test(segments[1])
+		) {
+			return `Spell List: ${cleanTitle} - ${siteName}`;
+		}
+
+		return `${cleanTitle} Spell - ${siteName}`;
+	}
+
+	return formatTitle(cleanTitle);
+}
+
 function getCanonicalPath(pathname: string, basePath = ''): string {
 	const pathWithoutBase =
 		basePath && pathname !== basePath && pathname.startsWith(`${basePath}/`)
@@ -92,6 +175,66 @@ function getCanonicalPath(pathname: string, basePath = ''): string {
 
 function getAbsoluteSiteUrl(href: string): string {
 	return new URL(href, siteUrl).href;
+}
+
+function getAbsoluteCanonicalUrl(href: string): string {
+	return getAbsoluteSiteUrl(getCanonicalPath(href));
+}
+
+function createWebsiteStructuredData(description: string) {
+	return {
+		'@type': 'WebSite',
+		'@id': getAbsoluteSiteUrl('/#website'),
+		url: getAbsoluteSiteUrl('/'),
+		name: site.siteBase,
+		alternateName: siteName,
+		description
+	};
+}
+
+function createBreadcrumbStructuredData(path: PagePath | null) {
+	const items = getBreadcrumbItems(path);
+
+	if (items.length < 2) {
+		return null;
+	}
+
+	return {
+		'@type': 'BreadcrumbList',
+		'@id': `${getAbsoluteCanonicalUrl(getData(items[items.length - 1].path).href)}#breadcrumb`,
+		itemListElement: items.map((item, index) => ({
+			'@type': 'ListItem',
+			position: index + 1,
+			name: item.label,
+			item: getAbsoluteCanonicalUrl(getData(item.path).href)
+		}))
+	};
+}
+
+function createStructuredDataJson({
+	path,
+	description,
+	canonicalPath
+}: {
+	readonly path: PagePath | null;
+	readonly description: string;
+	readonly canonicalPath: string;
+}): string | null {
+	const graph = [
+		...(canonicalPath === '/' ? [createWebsiteStructuredData(description)] : []),
+		...(canonicalPath !== '/'
+			? [createBreadcrumbStructuredData(path)].filter(Boolean)
+			: [])
+	];
+
+	if (graph.length === 0) {
+		return null;
+	}
+
+	return JSON.stringify({
+		'@context': 'https://schema.org',
+		'@graph': graph
+	});
 }
 
 export function createSeoMetadata({
@@ -119,10 +262,16 @@ export function createSeoMetadata({
 		defaultDescription;
 	const canonicalPath = getCanonicalPath(pathname, basePath);
 	const imageUrl = getAbsoluteSiteUrl(image.href);
+	const normalizedDescription = normalizeText(description);
 
 	return {
-		title: formatTitle(title),
-		description: normalizeText(description),
+		title: formatContextTitle({
+			title,
+			pageData,
+			path,
+			canonicalPath
+		}),
+		description: normalizedDescription,
 		canonicalUrl: getAbsoluteSiteUrl(canonicalPath),
 		imageUrl,
 		imageAlt: normalizeText(image.alt),
@@ -135,6 +284,11 @@ export function createSeoMetadata({
 		icon512Href: icon512Image.href,
 		appleTouchIconHref: appleTouchIcon.href,
 		manifestHref: manifest.href,
+		structuredDataJson: createStructuredDataJson({
+			path,
+			description: normalizedDescription,
+			canonicalPath
+		}),
 		type: routeSeo?.type ?? (canonicalPath === '/' ? 'website' : 'article'),
 		twitterCard: imageUrl.endsWith('.svg') ? 'summary' : 'summary_large_image'
 	};

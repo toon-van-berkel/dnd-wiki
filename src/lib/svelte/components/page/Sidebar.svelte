@@ -177,7 +177,7 @@
 			<nav class="sidebar__nav">
 				{#each sections as section}
 					<section class="sidebar__section">
-						<h2 class="sidebar__section-title">{section.title}</h2>
+						<p class="sidebar__section-title">{section.title}</p>
 
 						<ul class="sidebar__list">
 							{#each section.roots as root (root.path)}

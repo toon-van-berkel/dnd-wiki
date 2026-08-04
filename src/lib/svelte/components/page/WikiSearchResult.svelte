@@ -4,7 +4,7 @@
 -->
 <script lang="ts">
 	import { base } from '$app/paths';
-	import { page } from '$app/state';
+	import { base as site } from '$lib/typescript/data/core/_index_';
 	import type { SearchResult } from '$lib/typescript/pages/search';
 
 	let { result }: { result: SearchResult } = $props();
@@ -24,7 +24,7 @@
 			return href;
 		}
 
-		return new URL(getHref(href), page.url.origin).href;
+		return new URL(getHref(href), site.siteLink).href;
 	}
 </script>
 

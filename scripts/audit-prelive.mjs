@@ -9,7 +9,19 @@ import { createServer } from 'vite';
 const root = process.cwd();
 const srcDir = join(root, 'src');
 const staticDir = join(root, 'static');
+const buildDir = join(root, 'build');
 const sourceExtensions = new Set(['.svelte', '.ts', '.js', '.scss']);
+const generatedTextExtensions = new Set([
+	'.css',
+	'.html',
+	'.js',
+	'.json',
+	'.map',
+	'.svg',
+	'.txt',
+	'.webmanifest',
+	'.xml'
+]);
 const ignoredSourceParts = [
 	`${join('src', 'lib', 'typescript', 'data', 'internals', 'rules', 'spellcasting', 'spells', 'spell-data.ts')}`
 ];
@@ -62,6 +74,29 @@ function collectFiles(dir) {
 
 			return stats.isDirectory() ? collectFiles(path) : [path];
 		});
+}
+
+function toPosixPath(path) {
+	return path.replaceAll('\\', '/');
+}
+
+function getBuildFiles() {
+	if (!existsSync(buildDir)) {
+		return [];
+	}
+
+	return collectFiles(buildDir);
+}
+
+function getBuildTextFiles() {
+	return getBuildFiles()
+		.filter((file) => generatedTextExtensions.has(extname(file)));
+}
+
+function getBuildHtmlFiles() {
+	return getBuildFiles()
+		.filter((file) => extname(file) === '.html')
+		.filter((file) => toPosixPath(file.slice(buildDir.length + 1)) !== '404.html');
 }
 
 function collectLinks(value, path = '') {
@@ -128,6 +163,13 @@ function withTrailingSlash(href) {
 	return `${path}/${suffix}`;
 }
 
+function getOutputFileForRoute(href) {
+	const cleanUrl = normalizeHref(withTrailingSlash(href));
+	const routePath = cleanUrl === '/' ? 'index.html' : join(cleanUrl.slice(1), 'index.html');
+
+	return join(buildDir, routePath);
+}
+
 function isKnownInternalRoute(href) {
 	const clean = normalizeHref(href);
 
@@ -153,6 +195,10 @@ function isKnownInternalRoute(href) {
 
 function fileExistsForAsset(assetHref) {
 	return existsSync(join(staticDir, assetHref.replace(/^\//, '')));
+}
+
+function buildFileExistsForAsset(assetHref) {
+	return existsSync(join(buildDir, assetHref.replace(/^\//, '')));
 }
 
 function getDataValue(data, path) {
@@ -261,6 +307,226 @@ function report(title, findings) {
 	return true;
 }
 
+function decodeHtmlEntities(value) {
+	return value
+		.replace(/&quot;/g, '"')
+		.replace(/&#34;/g, '"')
+		.replace(/&amp;/g, '&')
+		.replace(/&lt;/g, '<')
+		.replace(/&gt;/g, '>');
+}
+
+function getAttributeMap(tag) {
+	const attributes = new Map();
+	const regex = /([A-Za-z_:][-A-Za-z0-9_:.]*)(?:\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s"'=<>`]+)))?/g;
+	let match;
+
+	while ((match = regex.exec(tag))) {
+		const [, name, doubleQuoted, singleQuoted, unquoted] = match;
+
+		if (name === tag.match(/^<\s*([^\s/>]+)/)?.[1]) {
+			continue;
+		}
+
+		attributes.set(name.toLowerCase(), decodeHtmlEntities(doubleQuoted ?? singleQuoted ?? unquoted ?? ''));
+	}
+
+	return attributes;
+}
+
+function getCurrentRouteFromHtmlFile(file) {
+	const relative = toPosixPath(file.slice(buildDir.length + 1));
+
+	if (relative === 'index.html') {
+		return '/';
+	}
+
+	return `/${relative.replace(/\/index\.html$/, '/')}`;
+}
+
+function isSameSiteAbsoluteUrl(value, productionOrigin) {
+	try {
+		const url = new URL(value);
+
+		return url.origin === productionOrigin || url.origin === 'http://sveltekit-prerender';
+	} catch {
+		return false;
+	}
+}
+
+function toInternalBuildPath(value, htmlFile, productionOrigin) {
+	if (!value || value.startsWith('#')) {
+		return null;
+	}
+
+	if (/^(mailto|tel|javascript):/i.test(value)) {
+		return null;
+	}
+
+	const baseUrl = `${productionOrigin}${getCurrentRouteFromHtmlFile(htmlFile)}`;
+
+	try {
+		const url = new URL(value, baseUrl);
+
+		if (url.origin !== productionOrigin && url.origin !== 'http://sveltekit-prerender') {
+			return null;
+		}
+
+		return url.pathname || '/';
+	} catch {
+		return null;
+	}
+}
+
+function getTagAttributes(content, tagName) {
+	const regex = new RegExp(`<${tagName}\\b[^>]*>`, 'gi');
+	const tags = [];
+	let match;
+
+	while ((match = regex.exec(content))) {
+		tags.push(getAttributeMap(match[0]));
+	}
+
+	return tags;
+}
+
+function isAssetPath(pathname) {
+	return /\.(avif|css|gif|ico|jpg|jpeg|js|json|png|svg|txt|webmanifest|webp|xml)$/i.test(pathname);
+}
+
+function collectPrerenderOriginFindings() {
+	return getBuildTextFiles()
+		.flatMap((file) => {
+			const content = readFileSync(file, 'utf8');
+
+			if (!content.includes('sveltekit-prerender')) {
+				return [];
+			}
+
+			return [`${toPosixPath(file.slice(root.length + 1))} contains sveltekit-prerender`];
+		});
+}
+
+function collectGeneratedHtmlSeoFindings(productionOrigin) {
+	const titleCounts = new Map();
+	const titleFiles = new Map();
+	const findings = {
+		badCanonicals: [],
+		missingTitles: [],
+		duplicateTitles: [],
+		missingDescriptions: [],
+		h1Counts: [],
+		missingCanonicals: [],
+		internalLinksMarkedExternal: [],
+		brokenInternalLinks: [],
+		missingSeoAssets: [],
+		invalidJsonLd: []
+	};
+
+	for (const file of getBuildHtmlFiles()) {
+		const relative = toPosixPath(file.slice(root.length + 1));
+		const content = readFileSync(file, 'utf8');
+		const titles = [...content.matchAll(/<title>([\s\S]*?)<\/title>/gi)]
+			.map((match) => decodeHtmlEntities(match[1].replace(/\s+/g, ' ').trim()))
+			.filter(Boolean);
+
+		if (titles.length !== 1) {
+			findings.missingTitles.push(`${relative} has ${titles.length} title tags`);
+		} else {
+			titleCounts.set(titles[0], (titleCounts.get(titles[0]) ?? 0) + 1);
+			titleFiles.set(titles[0], [...(titleFiles.get(titles[0]) ?? []), relative]);
+		}
+
+		const descriptions = getTagAttributes(content, 'meta')
+			.filter((attributes) => attributes.get('name')?.toLowerCase() === 'description')
+			.map((attributes) => attributes.get('content')?.trim() ?? '')
+			.filter(Boolean);
+
+		if (descriptions.length !== 1) {
+			findings.missingDescriptions.push(`${relative} has ${descriptions.length} meta descriptions`);
+		}
+
+		const canonicals = getTagAttributes(content, 'link')
+			.filter((attributes) => attributes.get('rel')?.toLowerCase() === 'canonical')
+			.map((attributes) => attributes.get('href') ?? '')
+			.filter(Boolean);
+
+		if (canonicals.length !== 1) {
+			findings.missingCanonicals.push(`${relative} has ${canonicals.length} canonical links`);
+		} else if (!canonicals[0].startsWith(`${productionOrigin}/`)) {
+			findings.badCanonicals.push(`${relative} canonical is ${canonicals[0]}`);
+		}
+
+		const h1Count = (content.match(/<h1\b/gi) ?? []).length;
+
+		if (h1Count !== 1) {
+			findings.h1Counts.push(`${relative} has ${h1Count} H1 elements`);
+		}
+
+		for (const tag of getTagAttributes(content, 'a')) {
+			const href = tag.get('href') ?? '';
+			const internalPath = toInternalBuildPath(href, file, productionOrigin);
+
+			if (!internalPath) {
+				continue;
+			}
+
+			if (tag.get('target') === '_blank' || /\bnoopener\b|\bnoreferrer\b/i.test(tag.get('rel') ?? '')) {
+				findings.internalLinksMarkedExternal.push(`${relative} links internally to ${href} with external-link attributes`);
+			}
+
+			const outputFile = isAssetPath(internalPath)
+				? join(buildDir, internalPath.replace(/^\//, ''))
+				: getOutputFileForRoute(internalPath);
+
+			if (!existsSync(outputFile)) {
+				findings.brokenInternalLinks.push(`${relative} links to missing ${href}`);
+			}
+		}
+
+		const seoAssetCandidates = [
+			...getTagAttributes(content, 'link')
+				.filter((attributes) => {
+					const rel = attributes.get('rel')?.toLowerCase() ?? '';
+					return rel === 'icon' || rel === 'apple-touch-icon' || rel === 'manifest';
+				})
+				.map((attributes) => attributes.get('href') ?? ''),
+			...getTagAttributes(content, 'meta')
+				.filter((attributes) => {
+					const property = attributes.get('property')?.toLowerCase() ?? '';
+					const name = attributes.get('name')?.toLowerCase() ?? '';
+					return property === 'og:image' || name === 'twitter:image';
+				})
+				.map((attributes) => attributes.get('content') ?? '')
+		];
+
+		for (const asset of seoAssetCandidates) {
+			const internalPath = toInternalBuildPath(asset, file, productionOrigin);
+
+			if (internalPath && !buildFileExistsForAsset(internalPath)) {
+				findings.missingSeoAssets.push(`${relative} references missing SEO asset ${asset}`);
+			}
+		}
+
+		const jsonLdRegex = /<script\b[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi;
+		let jsonLdMatch;
+
+		while ((jsonLdMatch = jsonLdRegex.exec(content))) {
+			try {
+				JSON.parse(decodeHtmlEntities(jsonLdMatch[1].trim()));
+			} catch (error) {
+				findings.invalidJsonLd.push(`${relative} has invalid JSON-LD: ${error.message}`);
+			}
+		}
+	}
+
+	findings.duplicateTitles = [...titleCounts.entries()]
+		.filter(([, count]) => count > 1)
+		.map(([title, count]) => `${title} appears ${count} times: ${titleFiles.get(title).join(', ')}`);
+
+	return findings;
+}
+
 function getCrawlBaseUrl() {
 	const arg = process.argv.find((item) => item.startsWith('--crawl='));
 
@@ -306,8 +572,6 @@ async function crawlUrls(baseUrl, urls) {
 }
 
 async function crawlBuiltOutput(urls) {
-	const buildDir = join(root, 'build');
-
 	if (!existsSync(buildDir)) {
 		return ['Static build output is missing. Run pnpm build first.'];
 	}
@@ -337,9 +601,11 @@ const server = await createServer({
 
 try {
 	const { data } = await server.ssrLoadModule('/src/lib/typescript/data/_index_.ts');
+	const { base } = await server.ssrLoadModule('/src/lib/typescript/data/core/_index_.ts');
 	const { spells } = await server.ssrLoadModule(
 		'/src/lib/typescript/data/internals/rules/spellcasting/spells/spell-data.ts'
 	);
+	const productionOrigin = base.siteLink.replace(/\/$/, '');
 	const links = collectLinks(data);
 	const pages = links.filter(({ value }) => isPageData(value));
 	const hrefCounts = new Map();
@@ -383,6 +649,21 @@ try {
 	const crawlFailures = crawlBuilt
 		? await crawlBuiltOutput(routeUrls)
 		: await crawlUrls(crawlBaseUrl, routeUrls);
+	const prerenderOriginFindings = collectPrerenderOriginFindings();
+	const generatedHtmlSeoFindings = crawlBuilt
+		? collectGeneratedHtmlSeoFindings(productionOrigin)
+		: {
+				badCanonicals: [],
+				missingTitles: [],
+				duplicateTitles: [],
+				missingDescriptions: [],
+				h1Counts: [],
+				missingCanonicals: [],
+				internalLinksMarkedExternal: [],
+				brokenInternalLinks: [],
+				missingSeoAssets: [],
+				invalidJsonLd: []
+			};
 	const placeholderFindings = collectPlaceholderFindings()
 		.map((finding) => `${finding.file}:${finding.line} ${finding.text}`);
 
@@ -404,6 +685,17 @@ try {
 		report('invalid spell route slugs', invalidSpellRoutes),
 		report('duplicate spell route slugs', duplicateSpellRoutes),
 		report('local HTTP route crawl', crawlFailures),
+		report('generated public files without sveltekit-prerender origin', prerenderOriginFindings),
+		report('generated canonical URLs use HTTPS production URLs', generatedHtmlSeoFindings.badCanonicals),
+		report('generated pages have titles', generatedHtmlSeoFindings.missingTitles),
+		report('generated page titles are unique', generatedHtmlSeoFindings.duplicateTitles),
+		report('generated pages have meta descriptions', generatedHtmlSeoFindings.missingDescriptions),
+		report('generated pages have exactly one H1', generatedHtmlSeoFindings.h1Counts),
+		report('generated pages have canonical links', generatedHtmlSeoFindings.missingCanonicals),
+		report('internal links are not marked as external', generatedHtmlSeoFindings.internalLinksMarkedExternal),
+		report('generated internal links resolve', generatedHtmlSeoFindings.brokenInternalLinks),
+		report('referenced SEO assets exist in build output', generatedHtmlSeoFindings.missingSeoAssets),
+		report('generated JSON-LD syntax', generatedHtmlSeoFindings.invalidJsonLd),
 		report('placeholder or unfinished content markers', placeholderFindings)
 	].some(Boolean);
 

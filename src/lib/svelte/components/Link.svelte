@@ -3,9 +3,9 @@
 		getData,
 		type LinkPath
 	} from '$lib/typescript/data/_index_';
+	import { base as site } from '$lib/typescript/data/core/_index_';
 
 	import { base } from '$app/paths';
-	import { page } from '$app/state';
 
 	export type LinkPopupMode = 'full' | 'description' | 'none';
 
@@ -30,12 +30,23 @@
 	let popupElement = $state<HTMLElement>();
 	let popupId = $derived(`link-popup-${goto.replaceAll('.', '-')}`);
 
-	function getValidUrl(href: string): string {
+	function getInternalHref(href: string): string {
 		if (!href.startsWith('/')) {
 			return href;
 		}
 
-		return new URL(`${base}${href}`, page.url.origin).href;
+		const [path, suffix = ''] = href.split(/([?#].*)/, 2);
+		const normalizedPath = path === '/' || path.endsWith('/') ? path : `${path}/`;
+
+		return `${base}${normalizedPath}${suffix}`;
+	}
+
+	function getDisplayUrl(href: string): string {
+		if (!href.startsWith('/')) {
+			return href;
+		}
+
+		return new URL(getInternalHref(href), site.siteLink).href;
 	}
 
 	function supportsHover(): boolean {
@@ -180,7 +191,7 @@
 	<a
 		bind:this={trigger}
 		class="link"
-		href={getValidUrl(link.href)}
+		href={getInternalHref(link.href)}
 		target={link.external ? '_blank' : undefined}
 		rel={link.external ? 'noopener noreferrer' : undefined}
 		aria-current={current ? 'page' : undefined}
@@ -235,11 +246,11 @@
 
 				<a
 					class="popup__link"
-					href={getValidUrl(link.href)}
+					href={getInternalHref(link.href)}
 					target={link.external ? '_blank' : undefined}
 					rel={link.external ? 'noopener noreferrer' : undefined}
 				>
-					{getValidUrl(link.href)}
+					{getDisplayUrl(link.href)}
 				</a>
 			</span>
 		</span>

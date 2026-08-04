@@ -18,6 +18,7 @@ export type ResponsiveImageData = {
 export type PageData = LinkData & {
 	readonly external: false;
 	readonly label?: string;
+	readonly seoTitle?: string;
 
 	readonly descriptions?: {
 		readonly short?: string;

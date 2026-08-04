@@ -10,6 +10,7 @@ export const website = {
 		img: current.logos.wide,
 
 		title: current.name.normal,
+		seoTitle: 'D&D Portal Wiki | Classes, Spells, Rules & Homebrew',
 		subTitle: 'Campaign rules and reference wiki',
 		description: `Browse rules, classes, spells, campaign references,
 			project information, and other D&D Portal Wiki content.`,

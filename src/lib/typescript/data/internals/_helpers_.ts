@@ -23,6 +23,7 @@ interface InternalPageInput {
 	title: string;
 	subTitle: string;
 	label?: string;
+	seoTitle?: string;
 	description?: string;
 	descriptions?: {
 		short?: string;
