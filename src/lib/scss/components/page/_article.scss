@@ -220,6 +220,11 @@
 	grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
 	align-items: stretch;
 	gap: sizes.get(spacing, lg);
+
+	&--full {
+		width: 100%;
+		max-width: none;
+	}
 }
 
 .wiki-article__image-cards {
@@ -227,5 +232,15 @@
 	grid-template-columns: repeat(auto-fill, minmax(min(sizes.get(content, image-card-min-width), 100%), sizes.get(content, image-card-max-width)));
 	align-items: stretch;
 	gap: sizes.get(spacing, lg);
+
+	&--full {
+		width: 100%;
+		grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr));
+
+		.pagecard--image {
+			max-width: none;
+			justify-self: stretch;
+		}
+	}
 }
 

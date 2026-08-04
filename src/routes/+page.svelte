@@ -13,7 +13,7 @@
 	<section class="wiki-article__section" aria-labelledby="browse-wiki-title">
 		<h2 id="browse-wiki-title">Browse Wiki</h2>
 
-		<div class="wiki-article__image-cards">
+		<div class="wiki-article__image-cards wiki-article__image-cards--full">
 			<PageCard page="internals.utility.search" density="compact" />
 			<PageCard page="internals.classes.page" density="compact" />
 			<PageCard page="internals.spells.page" density="compact" />
@@ -28,7 +28,7 @@
 	<section class="wiki-article__section" aria-labelledby="project-title">
 		<h2 id="project-title">Project</h2>
 
-		<div class="wiki-article__cards">
+		<div class="wiki-article__cards wiki-article__cards--full">
 			<PageCard page="internals.project.about" density="compact" />
 			<PageCard page="internals.project.sources" density="compact" />
 			<PageCard page="internals.project.credits" density="compact" />

@@ -4,6 +4,14 @@ export const project = {
 			normal: 'About',
 			slug: 'about'
 		},
+
+		logos: {
+			simple: {
+				href: '/icons/white/util/home.svg',
+				alt: 'A stylized home icon representing project information.'
+			}
+		},
+
 		href: '/about'
 	},
     
@@ -46,6 +54,14 @@ export const project = {
 			normal: 'AI Transparency',
 			slug: 'ai-transparency'
 		},
+
+		logos: {
+			simple: {
+				href: '/icons/white/util/eye.svg',
+				alt: 'A stylized eye icon representing transparency and review.'
+			}
+		},
+
 		href: '/ai'
 	},
 
@@ -54,6 +70,14 @@ export const project = {
 			normal: 'Accessibility',
 			slug: 'accessibility'
 		},
+
+		logos: {
+			simple: {
+				href: '/icons/white/util/eye.svg',
+				alt: 'A stylized eye icon representing accessibility and readable design.'
+			}
+		},
+
 		href: '/accessibility'
 	},
 

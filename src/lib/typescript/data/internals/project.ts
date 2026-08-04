@@ -685,6 +685,7 @@ const changelogReleases = [
 export const project = {
 	about: createInternalPage({
 		href: current.about.href,
+		img: current.about.logos.simple,
 		title: `${website.name.short} - ${current.about.name.normal}`,
 		subTitle: 'About the project',
 		description: `Learn about the purpose, scope, development, and
@@ -1110,6 +1111,7 @@ export const project = {
 
 	aiTransparency: createInternalPage({
 		href: current.aiTransparency.href,
+		img: current.aiTransparency.logos.simple,
 		title: `${website.name.short} - ${current.aiTransparency.name.normal}`,
 		subTitle: 'Artificial intelligence usage',
 		description: `Read how artificial intelligence tools are used,
@@ -1220,6 +1222,7 @@ export const project = {
 
 	accessibility: createInternalPage({
 		href: current.accessibility.href,
+		img: current.accessibility.logos.simple,
 		title: `${website.name.short} - ${current.accessibility.name.normal}`,
 		subTitle: 'Accessible design',
 		description: `Read about accessibility features, design decisions,

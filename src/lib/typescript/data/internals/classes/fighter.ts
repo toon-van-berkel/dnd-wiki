@@ -666,7 +666,7 @@ const subclasses = {
 				]
 			},
 			{
-				"id": "improved-combat-superiority",
+				"id": "improved-combat-superiority-10th-level",
 				"title": "Improved Combat Superiority",
 				"subtitle": "10th level",
 				"blocks": [
@@ -707,7 +707,7 @@ const subclasses = {
 				]
 			},
 			{
-				"id": "improved-combat-superiority",
+				"id": "improved-combat-superiority-18th-level",
 				"title": "Improved Combat Superiority",
 				"subtitle": "18th level",
 				"blocks": [
@@ -733,7 +733,7 @@ const subclasses = {
 				"title": "Know Your Enemy"
 			},
 			{
-				"id": "improved-combat-superiority",
+				"id": "improved-combat-superiority-10th-level",
 				"title": "Improved Combat Superiority"
 			},
 			{
@@ -741,7 +741,7 @@ const subclasses = {
 				"title": "Relentless"
 			},
 			{
-				"id": "improved-combat-superiority",
+				"id": "improved-combat-superiority-18th-level",
 				"title": "Improved Combat Superiority"
 			}
 		]

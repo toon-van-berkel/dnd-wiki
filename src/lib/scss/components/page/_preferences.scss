@@ -1,0 +1,118 @@
+/*
+	Location: src/lib/scss/components/page/_preferences.scss
+	Use: Browser preference page controls.
+*/
+
+@use '../../core/colors' as colors;
+@use '../../core/sizes' as sizes;
+
+.preferences-page {
+	max-width: sizes.get(content, wide-max-width);
+}
+
+.preferences-panel {
+	display: grid;
+	gap: sizes.get(spacing, lg);
+}
+
+.preferences-panel__section {
+	padding: sizes.get(spacing, lg);
+
+	background-color: colors.get-dark(background, secondary);
+	border: 1px solid colors.get-dark(border, subtle);
+	border-radius: sizes.get(radius, lg);
+}
+
+.preferences-panel__section-header {
+	margin-bottom: sizes.get(spacing, md);
+
+	p {
+		margin-bottom: sizes.get(spacing, xs);
+		color: colors.get-dark(text, eyebrow);
+		font-size: 0.72rem;
+		font-weight: 700;
+		line-height: 1;
+		text-transform: uppercase;
+	}
+
+	h2 {
+		color: colors.get-dark(text, headings);
+		font-size: 1.35rem;
+		line-height: 1.2;
+	}
+}
+
+.preferences-options {
+	margin: 0;
+	padding: 0;
+
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr));
+	gap: sizes.get(spacing, md);
+
+	border: 0;
+
+	legend {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		margin: -1px;
+		padding: 0;
+		overflow: hidden;
+		clip: rect(0, 0, 0, 0);
+		border: 0;
+	}
+}
+
+.preference-option {
+	position: relative;
+	min-width: 0;
+	min-height: 116px;
+	padding: sizes.get(spacing, md);
+
+	display: flex;
+	flex-direction: column;
+	gap: sizes.get(spacing, sm);
+
+	color: colors.get-dark(text, secondary);
+	background-color: colors.get-dark(background, base);
+	border: 1px solid colors.get-dark(border, subtle);
+	border-radius: sizes.get(radius, md);
+
+	cursor: pointer;
+
+	input {
+		position: absolute;
+		inset: 0;
+		opacity: 0;
+		cursor: pointer;
+	}
+
+	&:hover,
+	&:focus-within {
+		border-color: colors.get-dark(border, interactive);
+	}
+
+	&:focus-within {
+		outline: 2px solid colors.get-dark(border, focus);
+		outline-offset: 2px;
+	}
+
+	&--active {
+		background-color: colors.get-dark(background, hover);
+		border-color: colors.get-dark(border, interactive);
+		box-shadow: 0 0 0 1px colors.get-dark(border, interactive);
+	}
+}
+
+.preference-option__title {
+	color: colors.get-dark(text, headings);
+	font-weight: 700;
+	line-height: 1.1;
+}
+
+.preference-option__description {
+	color: colors.get-dark(text, secondary);
+	font-size: 0.92rem;
+	line-height: 1.45;
+}

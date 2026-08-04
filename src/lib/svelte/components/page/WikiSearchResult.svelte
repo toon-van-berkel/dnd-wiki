@@ -5,18 +5,13 @@
 <script lang="ts">
 	import { base } from '$app/paths';
 	import { base as site } from '$lib/typescript/data/core/_index_';
+	import { getCanonicalInternalHref } from '$lib/typescript/pages/currentPage';
 	import type { SearchResult } from '$lib/typescript/pages/search';
 
 	let { result }: { result: SearchResult } = $props();
 
 	function getHref(href: string): string {
-		if (!href.startsWith('/')) {
-			return href;
-		}
-
-		const path = href === '/' || href.endsWith('/') ? href : `${href}/`;
-
-		return `${base}${path}`;
+		return getCanonicalInternalHref(href, base);
 	}
 
 	function getDisplayHref(href: string): string {

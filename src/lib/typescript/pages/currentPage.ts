@@ -152,8 +152,25 @@ const hrefToPagePath = new Map(
 	])
 );
 const pagePathSet = new Set<string>(pageEntries.map(([path]) => path));
+const fileExtensionPattern = /\.[A-Za-z0-9]+$/;
 
 export const homePagePath = hrefToPagePath.get(homeHref) ?? null;
+
+export function getCanonicalInternalHref(href: string, basePath = ''): string {
+	if (!href.startsWith('/') || href.startsWith('//')) {
+		return href;
+	}
+
+	if (/[?#]/.test(href) || fileExtensionPattern.test(href)) {
+		return `${basePath}${href}`;
+	}
+
+	const normalized = normalizeInternalHref(href, basePath);
+
+	return normalized === homeHref
+		? `${basePath}${homeHref}`
+		: `${basePath}${normalized}/`;
+}
 
 export function isLinkPath(path: string): path is LinkPath {
 	return isLinkData(getValue(path));

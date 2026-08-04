@@ -6,6 +6,7 @@
 	import { base } from '$app/paths';
 	import { goto } from '$app/navigation';
 	import {
+		getCanonicalInternalHref,
 		getBreadcrumbBackPath,
 		getBreadcrumbItems,
 		homePagePath
@@ -25,7 +26,7 @@
 	);
 
 	function getInternalUrl(href: string): string {
-		return href.startsWith('/') ? `${base}${href}` : href;
+		return getCanonicalInternalHref(href, base);
 	}
 
 	function goBack(): void {

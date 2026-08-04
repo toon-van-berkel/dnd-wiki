@@ -8,7 +8,10 @@
 		type PagePath,
 		type ResponsiveImageData
 	} from '$lib/typescript/data/_index_';
-	import { getPageLabel } from '$lib/typescript/pages/currentPage';
+	import {
+		getCanonicalInternalHref,
+		getPageLabel
+	} from '$lib/typescript/pages/currentPage';
 	import { resolveSessionImageGender } from '$lib/typescript/pages/imageGender';
 
 	type CardVariant = 'icon' | 'image';
@@ -82,7 +85,7 @@
 		class="pagecard pagecard--image"
 		class:pagecard--pending={!imageGender && resolvedImageGender === null}
 		class:pagecard--no-image={!cardImage || !cardImageHref}
-		href={pageData.href}
+		href={getCanonicalInternalHref(pageData.href)}
 		target={pageData.external ? '_blank' : undefined}
 		rel={pageData.external ? 'noopener noreferrer' : undefined}
 	>
@@ -155,7 +158,7 @@
 	<a
 		class="pagecard pagecard--icon"
 		class:pagecard--compact={density === 'compact'}
-		href={pageData.href}
+		href={getCanonicalInternalHref(pageData.href)}
 		target={pageData.external ? '_blank' : undefined}
 		rel={pageData.external ? 'noopener noreferrer' : undefined}
 	>

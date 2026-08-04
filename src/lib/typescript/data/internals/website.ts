@@ -7,7 +7,10 @@ export const website = {
 	homepage: createInternalPage({
 		href: '/',
 
-		img: current.logos.wide,
+		img: {
+			href: '/icons/white/util/home.svg',
+			alt: 'A stylized home icon representing the D&D Portal Wiki homepage.'
+		},
 
 		title: current.name.normal,
 		seoTitle: 'D&D Portal Wiki | Classes, Spells, Rules & Homebrew',

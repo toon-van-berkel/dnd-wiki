@@ -381,7 +381,10 @@ export const community = {
 
 	roadmap: createInternalPage({
 		href: '/roadmap',
-		img: website.logos.simple,
+		img: {
+			href: '/icons/white/entity/map.svg',
+			alt: 'A stylized map icon representing planned public work.'
+		},
 		title: `${website.name.short} - Roadmap`,
 		subTitle: 'Planned public work',
 		label: 'Roadmap',

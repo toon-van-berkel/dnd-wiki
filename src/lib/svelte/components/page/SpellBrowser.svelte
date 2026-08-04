@@ -3,6 +3,7 @@
 	Use: Filterable spell list and level-specific spell browser.
 -->
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import {
 		spellClasses,
 		spellLevels,
@@ -11,8 +12,14 @@
 		type SpellData,
 		type SpellLevel
 	} from '$lib/typescript/data/internals/rules/spellcasting/spells/spell-data';
+	import { getCanonicalInternalHref } from '$lib/typescript/pages/currentPage';
+	import {
+		getSpellViewPreference,
+		setSpellViewPreference,
+		type SpellViewPreference
+	} from '$lib/typescript/pages/preferences';
 
-	type SpellViewMode = 'cards' | 'list' | 'table';
+	type SpellViewMode = SpellViewPreference;
 
 	const pageSize = 30;
 	const viewModes = ['cards', 'list', 'table'] as const satisfies readonly SpellViewMode[];
@@ -37,6 +44,12 @@
 	let concentrationOnly = $state(false);
 	let viewMode = $state<SpellViewMode>('cards');
 	let currentPage = $state(1);
+	let hasMounted = $state(false);
+
+	onMount(() => {
+		viewMode = getSpellViewPreference();
+		hasMounted = true;
+	});
 
 	$effect(() => {
 		if (!showLevelFilter) {
@@ -96,7 +109,7 @@
 	}
 
 	function getSpellHref(spell: SpellData) {
-		return `/spells/${spell.slug}`;
+		return getCanonicalInternalHref(`/spells/${spell.slug}`);
 	}
 
 	function getSpellPreview(spell: SpellData) {
@@ -176,6 +189,12 @@
 	$effect(() => {
 		if (currentPage > pageCount) {
 			currentPage = pageCount;
+		}
+	});
+
+	$effect(() => {
+		if (hasMounted) {
+			setSpellViewPreference(viewMode);
 		}
 	});
 </script>

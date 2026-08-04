@@ -32,7 +32,7 @@ export const utility = {
 
 		title: `${website.name.short} - ${current.preferences.name.normal}`,
 		subTitle: 'Website preferences',
-		description: `Open website preferences for display, reading, and
-			interface settings when they become available.`
+		description: `Choose saved browser preferences for class artwork and
+			spell browser display modes.`
 	})
 } as const;

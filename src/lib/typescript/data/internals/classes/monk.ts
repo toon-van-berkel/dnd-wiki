@@ -817,7 +817,7 @@ const subclasses = {
 				]
 			},
 			{
-				"id": "elemental-disciplines-progression",
+				"id": "elemental-disciplines-progression-6th-level",
 				"title": "Elemental Disciplines progression",
 				"subtitle": "6th level",
 				"blocks": [
@@ -842,7 +842,7 @@ const subclasses = {
 				]
 			},
 			{
-				"id": "elemental-disciplines-progression",
+				"id": "elemental-disciplines-progression-11th-level",
 				"title": "Elemental Disciplines progression",
 				"subtitle": "11th level",
 				"blocks": [
@@ -858,7 +858,7 @@ const subclasses = {
 				]
 			},
 			{
-				"id": "elemental-disciplines-progression",
+				"id": "elemental-disciplines-progression-17th-level",
 				"title": "Elemental Disciplines progression",
 				"subtitle": "17th level",
 				"blocks": [
@@ -880,15 +880,15 @@ const subclasses = {
 				"title": "Disciple of the Elements; Elemental Disciplines"
 			},
 			{
-				"id": "elemental-disciplines-progression",
+				"id": "elemental-disciplines-progression-6th-level",
 				"title": "Elemental Disciplines progression"
 			},
 			{
-				"id": "elemental-disciplines-progression",
+				"id": "elemental-disciplines-progression-11th-level",
 				"title": "Elemental Disciplines progression"
 			},
 			{
-				"id": "elemental-disciplines-progression",
+				"id": "elemental-disciplines-progression-17th-level",
 				"title": "Elemental Disciplines progression"
 			}
 		]

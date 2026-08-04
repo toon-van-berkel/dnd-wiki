@@ -19,7 +19,10 @@ import type {
 const sidebarSectionConfig = [
 	{
 		title: 'Browse Wiki',
-		roots: ['internals.utility.search']
+		roots: [
+			'internals.website.homepage',
+			'internals.utility.search'
+		]
 	},
 	{
 		title: 'Wiki Pages',
@@ -47,6 +50,7 @@ const sidebarSectionConfig = [
 			'internals.project.credits',
 			'internals.project.about',
 			'internals.project.aiTransparency',
+			'internals.project.accessibility',
 			'internals.project.changelog'
 		]
 	}

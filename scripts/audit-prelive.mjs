@@ -419,6 +419,10 @@ function collectGeneratedHtmlSeoFindings(productionOrigin) {
 		missingCanonicals: [],
 		internalLinksMarkedExternal: [],
 		brokenInternalLinks: [],
+		internalLinksMissingTrailingSlash: [],
+		duplicateIds: [],
+		invalidAriaDescribedby: [],
+		interactiveTooltipContent: [],
 		missingSeoAssets: [],
 		invalidJsonLd: []
 	};
@@ -463,6 +467,45 @@ function collectGeneratedHtmlSeoFindings(productionOrigin) {
 			findings.h1Counts.push(`${relative} has ${h1Count} H1 elements`);
 		}
 
+		const idCounts = new Map();
+
+		for (const tag of [...content.matchAll(/<[^/!][^>]*\sid=(?:"([^"]+)"|'([^']+)'|([^\s"'=<>`]+))[^>]*>/gi)]) {
+			const id = decodeHtmlEntities(tag[1] ?? tag[2] ?? tag[3] ?? '');
+
+			if (id) {
+				idCounts.set(id, (idCounts.get(id) ?? 0) + 1);
+			}
+		}
+
+		for (const [id, count] of idCounts.entries()) {
+			if (count > 1) {
+				findings.duplicateIds.push(`${relative} has duplicate id "${id}" ${count} times`);
+			}
+		}
+
+		for (const tag of getTagAttributes(content, 'a')) {
+			const describedBy = tag.get('aria-describedby');
+
+			if (!describedBy) {
+				continue;
+			}
+
+			for (const id of describedBy.split(/\s+/).filter(Boolean)) {
+				if (!idCounts.has(id)) {
+					findings.invalidAriaDescribedby.push(`${relative} aria-describedby references missing id "${id}"`);
+				}
+			}
+		}
+
+		const tooltipRegex = /<(?<tag>[A-Za-z][A-Za-z0-9:-]*)\b(?<attrs>[^>]*)\brole=["']tooltip["'][^>]*>(?<body>[\s\S]*?)<\/\k<tag>>/gi;
+		let tooltipMatch;
+
+		while ((tooltipMatch = tooltipRegex.exec(content))) {
+			if (/<(?:a|button|input|select|textarea)\b/i.test(tooltipMatch.groups?.body ?? '')) {
+				findings.interactiveTooltipContent.push(`${relative} has interactive content inside role="tooltip"`);
+			}
+		}
+
 		for (const tag of getTagAttributes(content, 'a')) {
 			const href = tag.get('href') ?? '';
 			const internalPath = toInternalBuildPath(href, file, productionOrigin);
@@ -481,6 +524,16 @@ function collectGeneratedHtmlSeoFindings(productionOrigin) {
 
 			if (!existsSync(outputFile)) {
 				findings.brokenInternalLinks.push(`${relative} links to missing ${href}`);
+			}
+
+			if (
+				internalPath !== '/' &&
+				!isAssetPath(internalPath) &&
+				!/[?#]/.test(href) &&
+				existsSync(getOutputFileForRoute(internalPath)) &&
+				!new URL(href, `${productionOrigin}${getCurrentRouteFromHtmlFile(file)}`).pathname.endsWith('/')
+			) {
+				findings.internalLinksMissingTrailingSlash.push(`${relative} links to ${href} without trailing slash`);
 			}
 		}
 
@@ -661,6 +714,10 @@ try {
 				missingCanonicals: [],
 				internalLinksMarkedExternal: [],
 				brokenInternalLinks: [],
+				internalLinksMissingTrailingSlash: [],
+				duplicateIds: [],
+				invalidAriaDescribedby: [],
+				interactiveTooltipContent: [],
 				missingSeoAssets: [],
 				invalidJsonLd: []
 			};
@@ -694,6 +751,10 @@ try {
 		report('generated pages have canonical links', generatedHtmlSeoFindings.missingCanonicals),
 		report('internal links are not marked as external', generatedHtmlSeoFindings.internalLinksMarkedExternal),
 		report('generated internal links resolve', generatedHtmlSeoFindings.brokenInternalLinks),
+		report('generated internal page links use trailing slashes', generatedHtmlSeoFindings.internalLinksMissingTrailingSlash),
+		report('generated pages do not contain duplicate IDs', generatedHtmlSeoFindings.duplicateIds),
+		report('aria-describedby references existing IDs', generatedHtmlSeoFindings.invalidAriaDescribedby),
+		report('tooltip popups do not contain interactive content', generatedHtmlSeoFindings.interactiveTooltipContent),
 		report('referenced SEO assets exist in build output', generatedHtmlSeoFindings.missingSeoAssets),
 		report('generated JSON-LD syntax', generatedHtmlSeoFindings.invalidJsonLd),
 		report('placeholder or unfinished content markers', placeholderFindings)

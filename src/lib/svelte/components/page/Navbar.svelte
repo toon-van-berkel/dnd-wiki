@@ -4,6 +4,7 @@
 -->
 <script lang="ts">
 	import { base } from '$app/paths';
+	import * as core from '$lib/typescript/data/core/_index_';
 	import { getData } from '$lib/typescript/data/_index_';
 	import type { NavbarDataType } from '$lib/typescript/components/_index_';
 
@@ -12,6 +13,7 @@
 	let { logoPath, searchPath, actions }: NavbarDataType = $props();
 
 	let logo = $derived(getData(logoPath));
+	let brandLogo = $derived(core.internals.website.logos.wide);
 	let search = $derived(getData(searchPath));
 	let searchAction = $derived(getSearchAction(search.href));
 
@@ -39,8 +41,8 @@
 		>
 			<img
 				class="navbar__brand-img"
-				src={logo.img.href}
-				alt={logo.img.alt}
+				src={brandLogo.href}
+				alt={brandLogo.alt}
 			>
 		</a>
 

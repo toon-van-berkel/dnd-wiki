@@ -6,8 +6,9 @@
 	import { onMount } from 'svelte';
 	import { getCurrentPageContext } from '$lib/svelte/context/currentPage';
 	import {
-		resolveSessionImageGender
-	} from '$lib/typescript/pages/imageGender';
+		resolveSessionImageGender,
+		setImageGenderPreference
+	} from '$lib/typescript/pages/preferences';
 	import type {
 		ImageGender,
 		ResponsiveImageData
@@ -34,6 +35,7 @@
 
 	function selectGender(gender: ImageGender): void {
 		selectedGender = gender;
+		setImageGenderPreference(gender);
 	}
 
 	function openDialog(): void {

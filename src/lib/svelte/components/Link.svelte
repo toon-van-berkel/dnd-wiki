@@ -1,9 +1,14 @@
+<script lang="ts" module>
+	let linkInstanceCount = 0;
+</script>
+
 <script lang="ts">
 	import {
 		getData,
 		type LinkPath
 	} from '$lib/typescript/data/_index_';
 	import { base as site } from '$lib/typescript/data/core/_index_';
+	import { getCanonicalInternalHref } from '$lib/typescript/pages/currentPage';
 
 	import { base } from '$app/paths';
 
@@ -28,17 +33,11 @@
 	let hoverTimer: ReturnType<typeof setTimeout> | undefined;
 	let trigger = $state<HTMLElement>();
 	let popupElement = $state<HTMLElement>();
-	let popupId = $derived(`link-popup-${goto.replaceAll('.', '-')}`);
+	const popupInstanceId = linkInstanceCount++;
+	let popupId = $derived(`link-popup-${goto.replaceAll('.', '-')}-${popupInstanceId}`);
 
 	function getInternalHref(href: string): string {
-		if (!href.startsWith('/')) {
-			return href;
-		}
-
-		const [path, suffix = ''] = href.split(/([?#].*)/, 2);
-		const normalizedPath = path === '/' || path.endsWith('/') ? path : `${path}/`;
-
-		return `${base}${normalizedPath}${suffix}`;
+		return getCanonicalInternalHref(href, base);
 	}
 
 	function getDisplayUrl(href: string): string {
@@ -195,7 +194,8 @@
 		target={link.external ? '_blank' : undefined}
 		rel={link.external ? 'noopener noreferrer' : undefined}
 		aria-current={current ? 'page' : undefined}
-		aria-describedby={popup === 'description' && popupVisible ? popupId : undefined}
+		aria-describedby={popup === 'description' ? popupId : undefined}
+		aria-controls={popup === 'full' ? popupId : undefined}
 		onmouseenter={handleLinkMouseEnter}
 		onmouseleave={handleLinkMouseLeave}
 	>
@@ -214,9 +214,11 @@
 
 	{#if popup === 'full'}
 		<span
+			id={popupId}
 			bind:this={popupElement}
 			class="popup popup--full"
 			class:popup--visible={popupVisible}
+			data-nosnippet
 		>
 			<span class="popup__top">
 				<img
@@ -261,6 +263,7 @@
 			class="popup popup--description"
 			class:popup--visible={popupVisible}
 			role="tooltip"
+			data-nosnippet
 		>
 			<span class="popup-description">
 				{link.description}
