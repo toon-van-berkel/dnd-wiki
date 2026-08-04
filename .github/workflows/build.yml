@@ -1,0 +1,59 @@
+name: Build D&D Portal Wiki
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: build-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Check and build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+          run_install: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Run Svelte and TypeScript checks
+        run: pnpm check
+
+      - name: Build production application
+        run: pnpm build
+
+      - name: Verify adapter-node output
+        run: test -f build/index.js
+
+      - name: Upload production build
+        uses: actions/upload-artifact@v4
+        with:
+          name: dnd-portal-wiki-build
+          path: build/
+          if-no-files-found: error
+          retention-days: 7
