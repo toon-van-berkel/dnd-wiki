@@ -140,9 +140,11 @@ function isKnownInternalRoute(href) {
 		clean === '/search' ||
 		clean === '/classes' ||
 		clean === '/spells' ||
+		clean === '/discord' ||
 		clean === '/rules/spellcasting/cantrips' ||
 		clean === '/rules/spellcasting/spells' ||
 		/^\/classes\/[^/]+(?:\/[^/]+)?$/.test(clean) ||
+		/^\/discord\/[^/]+$/.test(clean) ||
 		/^\/rules\/.+$/.test(clean) ||
 		/^\/spells\/[^/]+$/.test(clean) ||
 		/^\/[a-z0-9-]+$/.test(clean)

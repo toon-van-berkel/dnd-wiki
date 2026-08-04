@@ -22,6 +22,7 @@ export type SearchCategory =
 	| 'species'
 	| 'monsters'
 	| 'locations'
+	| 'community'
 	| 'project'
 	| 'legal';
 
@@ -160,6 +161,10 @@ function getCategory(path: string, page: PageData): Exclude<SearchCategory, 'all
 
 	if (path.startsWith('internals.locations.')) {
 		return 'locations';
+	}
+
+	if (path.startsWith('internals.community.')) {
+		return 'community';
 	}
 
 	if (path.startsWith('internals.legal.')) {
@@ -350,6 +355,7 @@ export const searchCategories = [
 	{ value: 'species', label: 'Species' },
 	{ value: 'monsters', label: 'Monsters' },
 	{ value: 'locations', label: 'Locations' },
+	{ value: 'community', label: 'Community' },
 	{ value: 'project', label: 'Project' },
 	{ value: 'legal', label: 'Legal' }
 ] as const satisfies readonly {

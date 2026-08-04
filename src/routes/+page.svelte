@@ -21,6 +21,7 @@
 			<PageCard page="internals.species.page" density="compact" />
 			<PageCard page="internals.monsters.page" density="compact" />
 			<PageCard page="internals.locations.page" density="compact" />
+			<PageCard page="internals.community.discord.page" density="compact" />
 		</div>
 	</section>
 
@@ -34,6 +35,8 @@
 			<PageCard page="internals.project.aiTransparency" density="compact" />
 			<PageCard page="internals.project.accessibility" density="compact" />
 			<PageCard page="internals.project.changelog" density="compact" />
+			<PageCard page="internals.community.issues" density="compact" />
+			<PageCard page="internals.community.roadmap" density="compact" />
 		</div>
 	</section>
 </article>

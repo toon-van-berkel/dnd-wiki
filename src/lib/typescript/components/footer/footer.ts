@@ -69,10 +69,12 @@ export const footerData: FooterDataType = {
 		title: 'Community',
 
 		links: [
+			'internals.community.discord.page',
+			'internals.community.issues',
+			'internals.community.roadmap',
 			'externals.github.dndPortalWiki',
 			'externals.github.reportProblem',
-			'externals.github.suggestContent',
-			'externals.mail.main'
+			'externals.github.suggestContent'
 		]
 	},
 

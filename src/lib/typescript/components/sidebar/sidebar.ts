@@ -33,7 +33,15 @@ const sidebarSectionConfig = [
 		]
 	},
 	{
-		title: 'Resources',
+		title: 'Community',
+		roots: [
+			'internals.community.discord.page',
+			'internals.community.issues',
+			'internals.community.roadmap'
+		]
+	},
+	{
+		title: 'Project',
 		roots: [
 			'internals.project.sources',
 			'internals.project.credits',

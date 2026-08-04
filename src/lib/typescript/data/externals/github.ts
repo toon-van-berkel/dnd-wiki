@@ -28,6 +28,30 @@ export const github = {
 			and contributions for the D&D Portal Wiki project on GitHub.`
 	},
 
+	issues: {
+		href: `${current.baseUrl}/${current.name.user}/${current.name.repo}/issues`,
+		external: true,
+
+		img: current.logos.simple,
+
+		title: `${current.name.normal} - D&D Portal Wiki Issues`,
+		subTitle: 'Public issue tracker',
+		description: `View public issue reports, content suggestions,
+			bug reports, and planned work for the D&D Portal Wiki repository.`
+	},
+
+	releases: {
+		href: `${current.baseUrl}/${current.name.user}/${current.name.repo}/releases`,
+		external: true,
+
+		img: current.logos.simple,
+
+		title: `${current.name.normal} - D&D Portal Wiki Releases`,
+		subTitle: 'Technical releases',
+		description: `View technical release summaries and versioned
+			repository releases for D&D Portal Wiki.`
+	},
+
 	reportProblem: {
 		href: `${current.baseUrl}/${current.name.user}/${current.name.repo}/issues/new`,
 		external: true,

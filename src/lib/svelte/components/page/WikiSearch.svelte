@@ -25,6 +25,7 @@
 		'species',
 		'monsters',
 		'locations',
+		'community',
 		'project',
 		'legal'
 	]);

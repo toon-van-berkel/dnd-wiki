@@ -86,27 +86,6 @@ function getAbsoluteSiteUrl(href: string): string {
 	return new URL(href, siteUrl).href;
 }
 
-function getPageImage(pageData: PageData | null): SeoImage {
-	const image =
-		pageData?.images?.header?.female ??
-		pageData?.images?.header?.male ??
-		pageData?.images?.card?.female ??
-		pageData?.images?.card?.male;
-
-	if (image?.sources.l) {
-		return {
-			href: image.sources.l,
-			alt: image.alt
-		};
-	}
-
-	if (pageData?.img.href && !pageData.img.href.endsWith('.svg')) {
-		return pageData.img;
-	}
-
-	return defaultImage;
-}
-
 export function createSeoMetadata({
 	path,
 	pageData,
@@ -120,7 +99,7 @@ export function createSeoMetadata({
 	readonly pathname: string;
 	readonly basePath?: string;
 }): SeoMetadata {
-	const image = routeSeo?.image ?? getPageImage(pageData);
+	const image = routeSeo?.image ?? defaultImage;
 	const title =
 		routeSeo?.title ??
 		(path && pageData ? getPageLabel(path) : pageData?.title ?? siteName);

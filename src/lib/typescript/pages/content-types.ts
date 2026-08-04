@@ -99,6 +99,100 @@ export type ChangelogRelease = {
 	readonly changes: readonly ChangelogChange[];
 };
 
+export type CommunityLink = {
+	readonly label: string;
+	readonly href: string;
+	readonly external?: boolean;
+};
+
+export type CommunityMetadata = {
+	readonly label: string;
+	readonly description?: string;
+	readonly icon?: string;
+};
+
+export type CommunityAnnouncement = {
+	readonly id: string;
+	readonly title: string;
+	readonly summary: string;
+	readonly date: string;
+	readonly category: string;
+	readonly links?: readonly CommunityLink[];
+	readonly discordMessageUrl?: string;
+};
+
+export type CommunityWikiUpdate = {
+	readonly id: string;
+	readonly title: string;
+	readonly summary: string;
+	readonly date: string;
+	readonly category: string;
+	readonly relatedPage?: string;
+	readonly changelogUrl?: string;
+	readonly releaseUrl?: string;
+};
+
+export type CommunityPortalLink = {
+	readonly id: string;
+	readonly title: string;
+	readonly description: string;
+	readonly href: string;
+	readonly category: string;
+	readonly icon?: string;
+	readonly featured?: boolean;
+};
+
+export type PublicIssueStatus =
+	| 'reported'
+	| 'under-review'
+	| 'accepted'
+	| 'planned'
+	| 'in-progress'
+	| 'resolved'
+	| 'declined'
+	| 'duplicate';
+
+export type PublicIssueSource = 'discord' | 'github' | 'website' | 'internal';
+
+export type PublicIssue = {
+	readonly id: string;
+	readonly title: string;
+	readonly summary: string;
+	readonly status: PublicIssueStatus;
+	readonly source: PublicIssueSource;
+	readonly category: string;
+	readonly reportedAt: string;
+	readonly updatedAt?: string;
+	readonly resolution?: string;
+	readonly githubUrl?: string;
+	readonly relatedPage?: string;
+	readonly relatedRelease?: string;
+};
+
+export type RoadmapStatus =
+	| 'idea'
+	| 'planned'
+	| 'in-progress'
+	| 'review'
+	| 'completed'
+	| 'paused'
+	| 'cancelled';
+
+export type RoadmapPriority = 'high' | 'medium' | 'low';
+
+export type RoadmapItem = {
+	readonly id: string;
+	readonly title: string;
+	readonly summary: string;
+	readonly status: RoadmapStatus;
+	readonly priority?: RoadmapPriority;
+	readonly area: string;
+	readonly targetVersion?: string;
+	readonly targetDate?: string;
+	readonly githubUrl?: string;
+	readonly relatedPage?: string;
+};
+
 export type PageContentBlock =
 	| {
 			readonly type: 'paragraph';
@@ -130,6 +224,38 @@ export type PageContentBlock =
 	| {
 			readonly type: 'changelog';
 			readonly releases: readonly ChangelogRelease[];
+	  }
+	| {
+			readonly type: 'community-announcements';
+			readonly announcements: readonly CommunityAnnouncement[];
+			readonly categories: Readonly<Record<string, CommunityMetadata>>;
+	  }
+	| {
+			readonly type: 'community-wiki-updates';
+			readonly updates: readonly CommunityWikiUpdate[];
+			readonly categories: Readonly<Record<string, CommunityMetadata>>;
+			readonly changelogPath: string;
+	  }
+	| {
+			readonly type: 'community-portal-links';
+			readonly links: readonly CommunityPortalLink[];
+			readonly categories: Readonly<Record<string, CommunityMetadata>>;
+	  }
+	| {
+			readonly type: 'public-issues';
+			readonly issues: readonly PublicIssue[];
+			readonly statuses: Readonly<Record<PublicIssueStatus, CommunityMetadata>>;
+			readonly sources: Readonly<Record<PublicIssueSource, CommunityMetadata>>;
+			readonly categories: Readonly<Record<string, CommunityMetadata>>;
+			readonly githubIssuesPath: string;
+			readonly discordFeedbackPath: string;
+	  }
+	| {
+			readonly type: 'public-roadmap';
+			readonly items: readonly RoadmapItem[];
+			readonly statuses: Readonly<Record<RoadmapStatus, CommunityMetadata>>;
+			readonly priorities: Readonly<Record<RoadmapPriority, CommunityMetadata>>;
+			readonly areas: Readonly<Record<string, CommunityMetadata>>;
 	  };
 
 export type PageContentSection = PageSection & {

@@ -12,7 +12,12 @@
 	import PageCard from '$lib/svelte/components/PageCard.svelte';
 
 	import Changelog from './Changelog.svelte';
+	import CommunityAnnouncements from './CommunityAnnouncements.svelte';
+	import CommunityPortalLinks from './CommunityPortalLinks.svelte';
+	import CommunityWikiUpdates from './CommunityWikiUpdates.svelte';
 	import InlineContent from './InlineContent.svelte';
+	import PublicIssues from './PublicIssues.svelte';
+	import PublicRoadmap from './PublicRoadmap.svelte';
 	import TraitTable from './TraitTable.svelte';
 
 	let {
@@ -114,6 +119,38 @@
 		</p>
 	{:else if block.type === 'changelog'}
 		<Changelog releases={block.releases} />
+	{:else if block.type === 'community-announcements'}
+		<CommunityAnnouncements
+			announcements={block.announcements}
+			categories={block.categories}
+		/>
+	{:else if block.type === 'community-wiki-updates'}
+		<CommunityWikiUpdates
+			updates={block.updates}
+			categories={block.categories}
+			changelogPath={block.changelogPath}
+		/>
+	{:else if block.type === 'community-portal-links'}
+		<CommunityPortalLinks
+			links={block.links}
+			categories={block.categories}
+		/>
+	{:else if block.type === 'public-issues'}
+		<PublicIssues
+			issues={block.issues}
+			statuses={block.statuses}
+			sources={block.sources}
+			categories={block.categories}
+			githubIssuesPath={block.githubIssuesPath}
+			discordFeedbackPath={block.discordFeedbackPath}
+		/>
+	{:else if block.type === 'public-roadmap'}
+		<PublicRoadmap
+			items={block.items}
+			statuses={block.statuses}
+			priorities={block.priorities}
+			areas={block.areas}
+		/>
 	{/if}
 {/snippet}
 
