@@ -1,7 +1,7 @@
 <div align="center">
 
 <img
-	src="./static/dndportal_wiki-74x32.svg"
+	src="./static/icons/color/internal/icon-color-dndportalwiki-wide.png"
 	alt="D&D Portal logo"
 	width="150"
 />
