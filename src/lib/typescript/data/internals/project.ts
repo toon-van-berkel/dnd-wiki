@@ -112,7 +112,7 @@ const aiImageRegister = [
 
 const changelogReleases = [
 	{
-		version: 'Unreleased',
+		version: '0.9.0',
 		date: '4 August 2026',
 		title: 'Branch-wide Wiki rebuild and content expansion',
 		description:
@@ -319,6 +319,56 @@ const changelogReleases = [
 				title: 'Changelog component',
 				description:
 					'Added a reusable changelog timeline component with release cards, category badges, search, filters, anchors, action links, and responsive styling for version history pages.'
+			},
+			{
+				category: 'added',
+				title: 'Page-level SEO metadata',
+				description:
+					'Added centralized SEO metadata generation for Wiki pages with route-aware titles, descriptions, canonical URLs, robots metadata, Open Graph tags, Twitter preview tags, and page-specific spell metadata for individual spell pages.',
+				action: {
+					label: 'Search Wiki',
+					path: 'internals.utility.search'
+				}
+			},
+			{
+				category: 'added',
+				title: 'Social sharing preview assets',
+				description:
+					'Added dedicated D&D Portal Wiki preview images for social cards, square icon fallback, 512 pixel icon use, and Apple touch icons, then wired those assets into the shared page head metadata.'
+			},
+			{
+				category: 'fixed',
+				title: 'SEO and browser-quality warnings',
+				description:
+					'Fixed browser warnings by replacing direct history state calls with SvelteKit navigation helpers and adding stable id or name attributes to search, changelog, and spell filter form fields.'
+			},
+			{
+				category: 'changed',
+				title: 'Search result URL display',
+				description:
+					'Updated Wiki search results so visible result URLs render as full canonical dnd-portal.com links while still using the central Link component and internal data paths for navigation.',
+				action: {
+					label: 'Search Wiki',
+					path: 'internals.utility.search'
+				}
+			},
+			{
+				category: 'changed',
+				title: 'Page stylesheet organization',
+				description:
+					'Split the large page stylesheet into smaller component-focused SCSS partials for page headers, content blocks, tables, cards, filters, changelog UI, spell browser views, and related page-level layout.'
+			},
+			{
+				category: 'fixed',
+				title: 'Static route prerender coverage',
+				description:
+					'Added explicit static entries for spell detail pages and level-based spellcasting pages so the GitHub Pages build contains generated HTML for those dynamic routes.'
+			},
+			{
+				category: 'fixed',
+				title: 'GitHub Actions pnpm version setup',
+				description:
+					'Fixed the GitHub Pages workflow by removing the hard-coded pnpm action version so the action uses the single packageManager version declared in package.json instead of failing on a pnpm version mismatch.'
 			},
 			{
 				category: 'changed',
