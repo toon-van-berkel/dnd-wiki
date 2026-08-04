@@ -1,4 +1,4 @@
-name: Build D&D Portal Wiki
+name: Build and deploy D&D Portal Wiki
 
 on:
   push:
@@ -13,8 +13,8 @@ permissions:
   contents: read
 
 concurrency:
-  group: build-${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+  group: github-pages
+  cancel-in-progress: false
 
 jobs:
   build:
@@ -44,16 +44,35 @@ jobs:
       - name: Run Svelte and TypeScript checks
         run: pnpm check
 
-      - name: Build production application
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Build static website
         run: pnpm build
 
-      - name: Verify adapter-node output
-        run: test -f build/index.js
+      - name: Verify static output
+        run: test -f build/index.html
 
-      - name: Upload production build
-        uses: actions/upload-artifact@v4
+      - name: Upload GitHub Pages artifact
+        uses: actions/upload-pages-artifact@v4
         with:
-          name: dnd-portal-wiki-build
           path: build/
-          if-no-files-found: error
-          retention-days: 7
+
+  deploy:
+    name: Deploy to GitHub Pages
+    if: github.event_name != 'pull_request'
+    needs: build
+    runs-on: ubuntu-latest
+
+    permissions:
+      pages: write
+      id-token: write
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Deploy GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
