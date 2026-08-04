@@ -15,6 +15,12 @@
 	const classFeatureOverview = barbarian.content.classFeatureSections[0];
 	const coreTraitSections = barbarian.content.classFeatureSections.slice(1, 3);
 	const classFeatureSections = barbarian.content.classFeatureSections.slice(3);
+	const linkedSectionIds = [
+		barbarian.content.sections.progression.id,
+		barbarian.content.sections.coreTraits.id,
+		barbarian.content.sections.startingEquipment.id,
+		...barbarian.content.classFeatureSections.map((section) => section.id)
+	];
 </script>
 
 <div class="page-layout">
@@ -23,6 +29,7 @@
 
 		<ProgressionTable
 			data={barbarian.content.progression}
+			{linkedSectionIds}
 			section={barbarian.content.sections.progression}
 		/>
 

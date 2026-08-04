@@ -1,0 +1,77 @@
+﻿/*
+	Location: src/lib/scss/components/page/_responsive.scss
+	Use: Shared responsive and reduced-motion rules for page components.
+*/
+
+@use '../../core/colors' as colors;
+@use '../../core/sizes' as sizes;
+
+@media (min-width: #{sizes.get(breakpoint, toc)}) {
+	.page-layout {
+		grid-template-columns: minmax(0, sizes.get(content, article-max-width)) sizes.get(content, toc-width);
+		align-items: start;
+	}
+
+	.page-layout__toc {
+		display: block;
+	}
+}
+
+@media (max-width: #{sizes.get(breakpoint, page-header)}) {
+	.page-header {
+		grid-template-columns: 1fr;
+	}
+}
+
+@media (max-width: 620px) {
+	.breadcrumbs {
+		align-items: flex-start;
+	}
+
+	.breadcrumbs__item:not(:first-child):not(:nth-last-child(-n + 2)) {
+		display: none;
+	}
+
+	.breadcrumbs__item:first-child::after {
+		content: '/ ...';
+		color: colors.get-dark(text, tertiary);
+	}
+
+	.trait-table {
+		th,
+		td {
+			display: block;
+			width: 100%;
+			box-sizing: border-box;
+		}
+	}
+
+	.content-section__field {
+		grid-template-columns: 1fr;
+	}
+
+	.content-section--subsection,
+	.starting-equipment--subsection {
+		margin-left: 0;
+		padding-left: sizes.get(spacing, md);
+	}
+
+	.changelog__timeline {
+		padding-left: sizes.get(spacing, lg);
+	}
+
+	.changelog-change {
+		grid-template-columns: 1fr;
+		gap: sizes.get(spacing, sm);
+
+		&__badge {
+			width: fit-content;
+		}
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.page-image__media img {
+		transition: none;
+	}
+}

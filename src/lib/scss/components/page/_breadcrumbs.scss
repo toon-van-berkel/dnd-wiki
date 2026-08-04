@@ -1,0 +1,57 @@
+﻿/*
+	Location: src/lib/scss/components/page/_breadcrumbs.scss
+	Use: Breadcrumb trail and back button styles.
+*/
+
+@use '../../core/colors' as colors;
+@use '../../core/sizes' as sizes;
+
+.breadcrumbs {
+	margin-bottom: sizes.get(spacing, xl);
+
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	flex-wrap: wrap;
+
+	&__back {
+		padding: 7px sizes.get(spacing, md);
+
+		color: colors.get-dark(text, primary);
+		background: colors.get-dark(background, secondary);
+		border: 1px solid colors.get-dark(border, base);
+		border-radius: sizes.get(radius, md);
+		cursor: pointer;
+
+		&:hover,
+		&:focus-visible {
+			color: colors.get-dark(theme, primary);
+			border-color: colors.get-dark(border, interactive);
+		}
+
+		&:focus-visible {
+			outline: 2px solid colors.get-dark(theme, primary);
+			outline-offset: 2px;
+		}
+	}
+
+	&__list {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		flex-wrap: wrap;
+	}
+
+	&__item {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		min-width: 0;
+	}
+
+	&__separator,
+	&__current {
+		color: colors.get-dark(text, tertiary);
+	}
+}
+

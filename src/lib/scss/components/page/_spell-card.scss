@@ -1,0 +1,180 @@
+﻿/*
+	Location: src/lib/scss/components/page/_spell-card.scss
+	Use: Spell card styles.
+*/
+
+@use '../../core/colors' as colors;
+@use '../../core/sizes' as sizes;
+
+.spell-card {
+	min-width: 0;
+	padding: sizes.get(spacing, lg);
+
+	display: flex;
+	flex-direction: column;
+	gap: sizes.get(spacing, md);
+
+	background-color: colors.get-dark(background, secondary);
+	border: 1px solid colors.get-dark(border, base);
+	border-radius: sizes.get(radius, lg);
+	color: inherit;
+	text-decoration: none;
+	transition:
+		background-color sizes.get(transition, fast) ease,
+		border-color sizes.get(transition, fast) ease,
+		transform sizes.get(transition, fast) ease;
+
+	&:hover,
+	&:focus-visible {
+		background-color: colors.get-dark(background, hover);
+		border-color: colors.get-dark(border, interactive);
+		transform: translateY(-1px);
+	}
+
+	&:focus-visible {
+		outline: 2px solid colors.get-dark(border, focus);
+		outline-offset: 3px;
+	}
+
+	&__header {
+		display: flex;
+		flex-direction: column;
+		gap: sizes.get(spacing, xs);
+
+		p {
+			color: colors.get-dark(text, subtle);
+			font-size: 0.75rem;
+			font-weight: 700;
+			line-height: 1.2;
+			text-transform: uppercase;
+		}
+
+		h3 {
+			color: colors.get-dark(text, headings);
+			font-size: 1.2rem;
+			line-height: 1.2;
+		}
+	}
+
+	&__meta {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: sizes.get(spacing, sm);
+
+		div {
+			min-width: 0;
+		}
+
+		dt {
+			margin-bottom: 2px;
+			color: colors.get-dark(text, subtle);
+			font-size: 0.68rem;
+			font-weight: 700;
+			line-height: 1.2;
+			text-transform: uppercase;
+		}
+
+		dd {
+			color: colors.get-dark(text, primary);
+			font-size: 0.9rem;
+			line-height: 1.35;
+		}
+	}
+
+	&__material,
+	&__description {
+		color: colors.get-dark(text, secondary);
+		font-size: 0.92rem;
+		line-height: sizes.get(typography, body-line-height);
+
+		p {
+			min-height: 7.75em;
+			display: -webkit-box;
+			overflow: hidden;
+			-webkit-box-orient: vertical;
+			-webkit-line-clamp: 5;
+		}
+	}
+
+	&__material {
+		padding-left: sizes.get(spacing, md);
+		border-left: 1px solid colors.get-dark(border, subtle);
+	}
+
+	&__tags {
+		display: flex;
+		gap: sizes.get(spacing, xs);
+		flex-wrap: wrap;
+
+		li {
+			padding: 3px 8px;
+			color: colors.get-dark(text, secondary);
+			background-color: colors.get-dark(background, base);
+			border: 1px solid colors.get-dark(border, subtle);
+			border-radius: sizes.get(radius, pill);
+			font-size: 0.72rem;
+			line-height: 1.2;
+			list-style: none;
+		}
+	}
+
+	details {
+		margin-top: sizes.get(spacing, sm);
+	}
+
+	summary {
+		width: fit-content;
+		color: colors.get-dark(text, links, base);
+		cursor: pointer;
+		font-weight: 700;
+	}
+
+	h4 {
+		margin-top: sizes.get(spacing, md);
+		color: colors.get-dark(text, headings);
+		font-size: 0.95rem;
+		line-height: 1.2;
+	}
+
+	&__tables {
+		margin-top: sizes.get(spacing, md);
+		display: grid;
+		gap: sizes.get(spacing, md);
+		overflow-x: auto;
+
+		table {
+			width: 100%;
+			min-width: 320px;
+			border-collapse: collapse;
+			border: 1px solid colors.get-dark(border, subtle);
+		}
+
+		caption {
+			padding: sizes.get(spacing, xs) sizes.get(spacing, sm);
+			color: colors.get-dark(text, headings);
+			font-size: 0.78rem;
+			font-weight: 700;
+			text-align: left;
+			text-transform: uppercase;
+		}
+
+		th,
+		td {
+			padding: sizes.get(spacing, xs) sizes.get(spacing, sm);
+			border-top: 1px solid colors.get-dark(border, subtle);
+			color: colors.get-dark(text, secondary);
+			font-size: 0.82rem;
+			line-height: 1.35;
+			text-align: left;
+			vertical-align: top;
+		}
+
+		th {
+			color: colors.get-dark(text, headings);
+			font-size: 0.72rem;
+			font-weight: 700;
+			text-transform: uppercase;
+		}
+	}
+}
+

@@ -372,7 +372,7 @@ const changelogReleases = [
 				category: 'fixed',
 				title: 'Build and dependency setup',
 				description:
-					'Switched production builds from adapter-auto to adapter-node, added pnpm build-script approval for @parcel/watcher, removed the unused adapter dependency, and raised the Vite chunk warning threshold for the current data size.'
+					'Kept production builds on adapter-static for GitHub Pages, preserved prerendered trailing-slash output for the custom root domain, added pnpm build-script approval for @parcel/watcher, and raised the Vite chunk warning threshold for the current data size.'
 			},
 			{
 				category: 'added',

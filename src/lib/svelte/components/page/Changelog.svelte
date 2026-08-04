@@ -106,6 +106,8 @@
 		<label class="changelog__search">
 			<span>Search the changelog</span>
 			<input
+				id="changelog-search"
+				name="q"
 				type="search"
 				bind:value={searchTerm}
 				placeholder="Search by version, title, date, or description..."

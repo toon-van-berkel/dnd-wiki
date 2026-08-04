@@ -4,7 +4,8 @@
 -->
 <script lang="ts">
 	import { browser } from '$app/environment';
-	import { page } from '$app/state';
+	import { replaceState } from '$app/navigation';
+	import { onMount } from 'svelte';
 	import {
 		searchIndex,
 		searchWiki,
@@ -29,7 +30,11 @@
 	]);
 
 	function getInitialCategory(): SearchCategory {
-		const value = page.url.searchParams.get('type') ?? 'all';
+		if (!browser) {
+			return 'all';
+		}
+
+		const value = new URLSearchParams(window.location.search).get('type') ?? 'all';
 
 		return validCategories.has(value as SearchCategory)
 			? value as SearchCategory
@@ -37,18 +42,20 @@
 	}
 
 	function getInitialPage(): number {
-		const value = Number(page.url.searchParams.get('page') ?? '1');
+		if (!browser) {
+			return 1;
+		}
+
+		const value = Number(new URLSearchParams(window.location.search).get('page') ?? '1');
 
 		return Number.isFinite(value) && value > 0 ? Math.floor(value) : 1;
 	}
 
-	const initialQuery = page.url.searchParams.get('q') ?? '';
-	const initialCategory = getInitialCategory();
-
-	let query = $state(initialQuery);
-	let category = $state<SearchCategory>(initialCategory);
-	let currentPage = $state(getInitialPage());
-	let previousFilterKey = $state(`${initialQuery.trim()}|${initialCategory}`);
+	let query = $state('');
+	let category = $state<SearchCategory>('all');
+	let currentPage = $state(1);
+	let previousFilterKey = $state('|all');
+	let urlStateReady = $state(false);
 
 	let results = $derived(searchWiki(query, category));
 	let pageCount = $derived(Math.max(1, Math.ceil(results.length / pageSize)));
@@ -76,7 +83,7 @@
 	});
 
 	$effect(() => {
-		if (!browser) {
+		if (!browser || !urlStateReady) {
 			return;
 		}
 
@@ -95,11 +102,24 @@
 			params.set('page', String(currentPage));
 		}
 
+		const pathname = window.location.pathname;
 		const nextUrl = params.toString()
-			? `${page.url.pathname}?${params.toString()}`
-			: page.url.pathname;
+			? `${pathname}?${params.toString()}`
+			: pathname;
 
-		window.history.replaceState({}, '', nextUrl);
+		replaceState(nextUrl, {});
+	});
+
+	onMount(() => {
+		const params = new URLSearchParams(window.location.search);
+		const nextQuery = params.get('q') ?? '';
+		const nextCategory = getInitialCategory();
+
+		query = nextQuery;
+		category = nextCategory;
+		currentPage = getInitialPage();
+		previousFilterKey = `${nextQuery.trim()}|${nextCategory}`;
+		urlStateReady = true;
 	});
 
 	function resetFilters(): void {

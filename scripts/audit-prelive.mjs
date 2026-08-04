@@ -4,7 +4,6 @@
 */
 import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
 import { extname, join } from 'node:path';
-import { pathToFileURL } from 'node:url';
 import { createServer } from 'vite';
 
 const root = process.cwd();
@@ -117,6 +116,16 @@ function normalizeHref(href) {
 	}
 
 	return clean;
+}
+
+function withTrailingSlash(href) {
+	const [path, suffix = ''] = href.split(/([?#].*)/, 2);
+
+	if (path === '/' || path.endsWith('/')) {
+		return href;
+	}
+
+	return `${path}/${suffix}`;
 }
 
 function isKnownInternalRoute(href) {
@@ -295,46 +304,24 @@ async function crawlUrls(baseUrl, urls) {
 }
 
 async function crawlBuiltOutput(urls) {
-	const serverEntry = join(root, '.svelte-kit', 'output', 'server', 'index.js');
-	const manifestEntry = join(root, '.svelte-kit', 'output', 'server', 'manifest.js');
+	const buildDir = join(root, 'build');
 
-	if (!existsSync(serverEntry) || !existsSync(manifestEntry)) {
-		return ['SvelteKit build output is missing. Run pnpm build first.'];
+	if (!existsSync(buildDir)) {
+		return ['Static build output is missing. Run pnpm build first.'];
 	}
-
-	const [{ Server }, { manifest }] = await Promise.all([
-		import(pathToFileURL(serverEntry).href),
-		import(pathToFileURL(manifestEntry).href)
-	]);
-	const app = new Server(manifest);
-	await app.init({ env: process.env });
 
 	const failures = [];
 	const uniqueUrls = [...new Set(urls)].sort();
-	const concurrency = 20;
-	let index = 0;
 
-	async function worker() {
-		while (index < uniqueUrls.length) {
-			const url = uniqueUrls[index++];
-			const target = new URL(url, 'http://localhost').href;
+	for (const url of uniqueUrls) {
+		const cleanUrl = normalizeHref(withTrailingSlash(url));
+		const routePath = cleanUrl === '/' ? 'index.html' : join(cleanUrl.slice(1), 'index.html');
+		const outputFile = join(buildDir, routePath);
 
-			try {
-				const response = await app.respond(new Request(target), {
-					platform: {},
-					getClientAddress: () => '127.0.0.1'
-				});
-
-				if (response.status < 200 || response.status >= 400) {
-					failures.push(`${url} returned ${response.status}`);
-				}
-			} catch (error) {
-				failures.push(`${url} failed: ${error.message}`);
-			}
+		if (!existsSync(outputFile)) {
+			failures.push(`${url} missing ${routePath}`);
 		}
 	}
-
-	await Promise.all(Array.from({ length: concurrency }, () => worker()));
 
 	return failures;
 }

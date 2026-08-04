@@ -1,0 +1,321 @@
+﻿/*
+	Location: src/lib/scss/components/page/_spell-browser.scss
+	Use: Spell browser toolbar, filters, pagination, table, and list layout styles.
+*/
+
+@use '../../core/colors' as colors;
+@use '../../core/sizes' as sizes;
+
+.spell-browser {
+	display: flex;
+	flex-direction: column;
+	gap: sizes.get(spacing, lg);
+
+	&__header {
+		display: flex;
+		align-items: baseline;
+		justify-content: space-between;
+		gap: sizes.get(spacing, md);
+		flex-wrap: wrap;
+
+		h2 {
+			color: colors.get-dark(text, headings);
+			font-size: 1.6rem;
+			line-height: 1.2;
+		}
+
+		p {
+			color: colors.get-dark(text, secondary);
+			font-size: 0.86rem;
+			font-weight: 700;
+			text-transform: uppercase;
+		}
+	}
+
+	&__toolbar {
+		padding: sizes.get(spacing, md);
+		display: grid;
+		gap: sizes.get(spacing, md);
+
+		background-color: colors.get-dark(background, secondary);
+		border: 1px solid colors.get-dark(border, subtle);
+		border-radius: sizes.get(radius, lg);
+	}
+
+	&__primary-filters {
+		display: grid;
+		grid-template-columns: minmax(260px, 1.35fr) repeat(3, minmax(150px, 0.75fr));
+		gap: sizes.get(spacing, md);
+		align-items: end;
+
+		@media (max-width: 760px) {
+			grid-template-columns: 1fr;
+		}
+	}
+
+	&__filter {
+		min-width: 0;
+		display: flex;
+		flex-direction: column;
+		gap: sizes.get(spacing, xs);
+
+		color: colors.get-dark(text, subtle);
+		font-size: 0.72rem;
+		font-weight: 700;
+		line-height: 1;
+		text-transform: uppercase;
+
+		input,
+		select {
+			width: 100%;
+			min-height: 42px;
+			padding: 0 sizes.get(spacing, md);
+
+			color: colors.get-dark(text, primary);
+			background-color: colors.get-dark(background, base);
+			border: 1px solid colors.get-dark(border, base);
+			border-radius: sizes.get(radius, md);
+			color-scheme: dark;
+
+			font: inherit;
+			font-size: 0.92rem;
+			text-transform: none;
+
+			&::placeholder {
+				color: colors.get-dark(text, tertiary);
+				opacity: 1;
+			}
+		}
+
+		select option {
+			color: colors.get-dark(text, primary);
+			background-color: colors.get-dark(background, base);
+		}
+
+		&--active {
+			span {
+				color: colors.get-dark(text, links, hover);
+			}
+
+			input,
+			select {
+				border-color: colors.get-dark(border, interactive);
+				box-shadow: 0 0 0 1px colors.get-dark(border, interactive);
+			}
+		}
+	}
+
+	&__secondary-filters {
+		display: flex;
+		gap: 18px 28px;
+		flex-wrap: wrap;
+		align-items: center;
+	}
+
+	&__toggle-group {
+		min-width: 0;
+		margin: 0;
+		padding: 0;
+		display: flex;
+		gap: 7px;
+		flex-wrap: wrap;
+		align-items: center;
+
+		border: 0;
+
+		legend {
+			margin: 0 sizes.get(spacing, xs) 0 0;
+			float: left;
+
+			color: colors.get-dark(text, subtle);
+			font-size: 0.68rem;
+			font-weight: 700;
+			line-height: 32px;
+			text-transform: uppercase;
+		}
+
+		label {
+			position: relative;
+			min-width: 0;
+			display: flex;
+			min-height: 32px;
+			padding: 0 sizes.get(spacing, sm);
+			align-items: center;
+			justify-content: center;
+
+			color: colors.get-dark(text, secondary);
+			background-color: colors.get-dark(background, base);
+			border: 1px solid colors.get-dark(border, subtle);
+			border-radius: sizes.get(radius, pill);
+
+			cursor: pointer;
+			font-size: 0.78rem;
+			font-weight: 700;
+			line-height: 1;
+			text-transform: none;
+		}
+
+		input {
+			position: absolute;
+			inset: 0;
+			opacity: 0;
+			cursor: pointer;
+		}
+	}
+
+	&__toggle--active {
+		span {
+			color: colors.get-dark(text, links, hover);
+		}
+
+		background-color: colors.get-dark(background, hover);
+		border: 1px solid colors.get-dark(border, interactive);
+	}
+
+	&__filter-summary {
+		min-height: 32px;
+		display: flex;
+		align-items: center;
+		gap: sizes.get(spacing, sm);
+		flex-wrap: wrap;
+
+		span {
+			padding: 6px 10px;
+			color: colors.get-dark(text, links, hover);
+			background-color: colors.get-dark(background, hover);
+			border: 1px solid colors.get-dark(border, interactive);
+			border-radius: sizes.get(radius, pill);
+			font-size: 0.78rem;
+			font-weight: 700;
+			line-height: 1;
+		}
+
+		button {
+			min-height: 32px;
+			padding: 0 sizes.get(spacing, md);
+
+			color: colors.get-dark(text, primary);
+			background: colors.get-dark(background, secondary);
+			border: 1px solid colors.get-dark(border, base);
+			border-radius: sizes.get(radius, md);
+			cursor: pointer;
+			font-weight: 700;
+			line-height: 1;
+			text-transform: none;
+			transition:
+				background-color sizes.get(transition, fast) ease,
+				border-color sizes.get(transition, fast) ease,
+				color sizes.get(transition, fast) ease;
+
+			&:hover,
+			&:focus-visible {
+				color: colors.get-dark(text, links, hover);
+				background-color: colors.get-dark(background, hover);
+				border-color: colors.get-dark(border, interactive);
+			}
+
+			&:focus-visible {
+				outline: 2px solid colors.get-dark(border, focus);
+				outline-offset: 2px;
+			}
+		}
+	}
+
+	&__grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(min(360px, 100%), 1fr));
+		gap: sizes.get(spacing, lg);
+		align-items: stretch;
+	}
+
+	&__pagination {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		gap: sizes.get(spacing, md);
+		flex-wrap: wrap;
+
+		color: colors.get-dark(text, secondary);
+		font-size: 0.9rem;
+
+		div {
+			display: flex;
+			align-items: center;
+			gap: sizes.get(spacing, sm);
+			flex-wrap: wrap;
+		}
+
+		button {
+			min-height: 34px;
+			padding: 0 sizes.get(spacing, md);
+
+			color: colors.get-dark(text, primary);
+			background: colors.get-dark(background, secondary);
+			border: 1px solid colors.get-dark(border, base);
+			border-radius: sizes.get(radius, md);
+			cursor: pointer;
+			font-weight: 700;
+
+			&:hover:not(:disabled),
+			&:focus-visible:not(:disabled) {
+				color: colors.get-dark(text, links, hover);
+				border-color: colors.get-dark(border, interactive);
+			}
+
+			&:disabled {
+				cursor: not-allowed;
+				opacity: 0.45;
+			}
+		}
+	}
+
+	&__list {
+		display: flex;
+		flex-direction: column;
+		gap: sizes.get(spacing, md);
+
+		li {
+			list-style: none;
+		}
+	}
+
+	&__table-wrap {
+		overflow-x: auto;
+		border: 1px solid colors.get-dark(border, subtle);
+		border-radius: sizes.get(radius, lg);
+	}
+
+	&__table {
+		width: 100%;
+		min-width: 960px;
+		border-collapse: collapse;
+
+		th,
+		td {
+			padding: sizes.get(spacing, sm) sizes.get(spacing, md);
+			border-top: 1px solid colors.get-dark(border, subtle);
+			color: colors.get-dark(text, secondary);
+			text-align: left;
+			vertical-align: top;
+			line-height: 1.4;
+		}
+
+		thead th {
+			border-top: 0;
+			color: colors.get-dark(text, headings);
+			background: colors.get-dark(background, secondary);
+			font-size: 0.72rem;
+			text-transform: uppercase;
+		}
+
+		tbody th {
+			color: colors.get-dark(text, headings);
+		}
+
+		a {
+			color: colors.get-dark(text, links, base);
+			font-weight: 700;
+		}
+	}
+}
+

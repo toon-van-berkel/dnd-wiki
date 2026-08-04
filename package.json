@@ -3,6 +3,18 @@
 	"private": true,
 	"version": "0.0.1",
 	"type": "module",
+	"packageManager": "pnpm@11.10.0",
+	"volta": {
+		"node": "25.9.0",
+		"pnpm": "11.10.0"
+	},
+	"devEngines": {
+		"runtime": {
+			"name": "node",
+			"version": "25.9.0",
+			"onFail": "download"
+		}
+	},
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build",

@@ -13,7 +13,7 @@
 
 	let logo = $derived(getData(logoPath));
 	let search = $derived(getData(searchPath));
-	let searchAction = $derived(getValidUrl(search.href));
+	let searchAction = $derived(getSearchAction(search.href));
 
 	function getValidUrl(href: string): string {
 		if (!href.startsWith('/')) {
@@ -21,6 +21,12 @@
 		}
 
 		return `${base}${href}`;
+	}
+
+	function getSearchAction(href: string): string {
+		const url = getValidUrl(href);
+
+		return url.endsWith('/') ? url : `${url}/`;
 	}
 </script>
 

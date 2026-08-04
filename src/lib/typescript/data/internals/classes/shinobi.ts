@@ -1380,7 +1380,15 @@ export const shinobi = {
 				id: 'shinobi-weapon-presentation',
 				title: 'Shinobi Weapon Presentation'
 			},
-			...shinobiClass.content.tableOfContents.slice(2)
+			...shinobiClass.content.tableOfContents.slice(2).map((section) =>
+				section.id === 'subclasses'
+					? {
+							...section,
+							id: 'shinobi-references',
+							title: 'Shinobi References'
+						}
+					: section
+			)
 		]
 	},
 	subclasses: {

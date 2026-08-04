@@ -17,12 +17,14 @@
 
 	let {
 		data,
+		linkedSectionIds,
 		section = {
 			id: 'progression',
 			title: data.heading ?? 'Class Progression'
 		}
 	}: {
 		data: ProgressionData<string>;
+		linkedSectionIds?: readonly string[];
 		section?: PageSection;
 	} = $props();
 	let selectedLevel = $state<number | null>(null);
@@ -112,6 +114,14 @@
 	function selectLevel(level: number): void {
 		selectedLevel = level;
 	}
+
+	function canLinkSection(sectionId: string | undefined): boolean {
+		if (!sectionId) {
+			return false;
+		}
+
+		return linkedSectionIds === undefined || linkedSectionIds.includes(sectionId);
+	}
 </script>
 
 {#snippet renderColumnLabel(column: ProgressionColumn<string>, label = column.label)}
@@ -138,7 +148,7 @@
 				placeholder={feature.label}
 				popup="full"
 			/>
-		{:else if feature.sectionId}
+		{:else if canLinkSection(feature.sectionId)}
 			<a class="progression-feature__anchor" href={`#${feature.sectionId}`}>
 				{feature.label}
 			</a>

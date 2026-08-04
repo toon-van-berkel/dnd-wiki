@@ -236,6 +236,8 @@
 			>
 				<span>Search</span>
 				<input
+					id="spell-search"
+					name="spell-search"
 					type="search"
 					bind:value={searchTerm}
 					placeholder="Name, range, component..."
@@ -248,7 +250,7 @@
 					class:spell-browser__filter--active={selectedLevel !== 'all'}
 				>
 					<span>Level</span>
-					<select bind:value={selectedLevel}>
+					<select id="spell-level-filter" name="spell-level" bind:value={selectedLevel}>
 						<option value="all">All levels</option>
 						{#each spellLevels as level}
 							<option value={String(level.level)}>{level.label}</option>
@@ -262,7 +264,7 @@
 				class:spell-browser__filter--active={selectedClass !== 'all'}
 			>
 				<span>Class</span>
-				<select bind:value={selectedClass}>
+				<select id="spell-class-filter" name="spell-class" bind:value={selectedClass}>
 					<option value="all">All casters</option>
 					{#each spellClasses as spellClass}
 						<option value={spellClass}>{spellClass}</option>
@@ -275,7 +277,7 @@
 				class:spell-browser__filter--active={selectedSchool !== 'all'}
 			>
 				<span>School</span>
-				<select bind:value={selectedSchool}>
+				<select id="spell-school-filter" name="spell-school" bind:value={selectedSchool}>
 					<option value="all">All schools</option>
 					{#each spellSchools as school}
 						<option value={school}>{school}</option>
@@ -289,22 +291,22 @@
 				<legend>Components</legend>
 
 				<label class:spell-browser__toggle--active={verbalOnly}>
-					<input type="checkbox" bind:checked={verbalOnly} />
+					<input name="spell-component-verbal" type="checkbox" bind:checked={verbalOnly} />
 					<span>V</span>
 				</label>
 
 				<label class:spell-browser__toggle--active={somaticOnly}>
-					<input type="checkbox" bind:checked={somaticOnly} />
+					<input name="spell-component-somatic" type="checkbox" bind:checked={somaticOnly} />
 					<span>S</span>
 				</label>
 
 				<label class:spell-browser__toggle--active={materialOnly}>
-					<input type="checkbox" bind:checked={materialOnly} />
+					<input name="spell-component-material" type="checkbox" bind:checked={materialOnly} />
 					<span>M</span>
 				</label>
 
 				<label class:spell-browser__toggle--active={noMaterial}>
-					<input type="checkbox" bind:checked={noMaterial} />
+					<input name="spell-component-no-material" type="checkbox" bind:checked={noMaterial} />
 					<span>No M</span>
 				</label>
 			</fieldset>
@@ -313,12 +315,12 @@
 				<legend>Flags</legend>
 
 				<label class:spell-browser__toggle--active={ritualOnly}>
-					<input type="checkbox" bind:checked={ritualOnly} />
+					<input name="spell-flag-ritual" type="checkbox" bind:checked={ritualOnly} />
 					<span>Ritual</span>
 				</label>
 
 				<label class:spell-browser__toggle--active={concentrationOnly}>
-					<input type="checkbox" bind:checked={concentrationOnly} />
+					<input name="spell-flag-concentration" type="checkbox" bind:checked={concentrationOnly} />
 					<span>Concentration</span>
 				</label>
 			</fieldset>
@@ -328,7 +330,7 @@
 
 				{#each viewModes as mode}
 					<label class:spell-browser__toggle--active={viewMode === mode}>
-						<input type="radio" bind:group={viewMode} value={mode} />
+						<input name="spell-view-mode" type="radio" bind:group={viewMode} value={mode} />
 						<span>{mode}</span>
 					</label>
 				{/each}

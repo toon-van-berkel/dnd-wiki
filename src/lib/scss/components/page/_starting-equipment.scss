@@ -1,0 +1,100 @@
+﻿/*
+	Location: src/lib/scss/components/page/_starting-equipment.scss
+	Use: Starting equipment section and option card styles.
+*/
+
+@use '../../core/colors' as colors;
+@use '../../core/sizes' as sizes;
+
+.starting-equipment {
+	margin-top: 28px;
+	container-type: inline-size;
+
+	&--subsection {
+		margin-left: sizes.get(spacing, md);
+		padding-left: sizes.get(spacing, lg);
+		border-left: 1px solid colors.get-dark(border, subtle);
+
+		h3 {
+			margin-bottom: sizes.get(spacing, lg);
+
+			color: colors.get-dark(text, headings);
+			font-size: 1.35rem;
+			line-height: 1.2;
+		}
+	}
+
+	&__intro {
+		max-width: sizes.get(content, text-max-width);
+		margin-bottom: sizes.get(spacing, lg);
+
+		color: colors.get-dark(text, secondary);
+		line-height: sizes.get(typography, body-line-height);
+	}
+
+	&__grid {
+		max-width: sizes.get(content, equipment-grid-max-width);
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
+		gap: sizes.get(spacing, lg);
+	}
+}
+
+.equipment-card {
+	min-width: 0;
+	padding: 18px;
+
+	display: flex;
+	flex-direction: column;
+	gap: 14px;
+
+	background: colors.get-dark(background, secondary);
+	border: 1px solid colors.get-dark(border, base);
+	border-radius: sizes.get(radius, lg);
+
+	header {
+		display: flex;
+		flex-direction: column;
+		gap: sizes.get(spacing, eyebrow-title-gap);
+	}
+
+	&__eyebrow {
+		color: colors.get-dark(text, eyebrow);
+		font-size: 0.72rem;
+		font-weight: 700;
+		line-height: 1;
+		letter-spacing: 0;
+		text-transform: uppercase;
+	}
+
+	h3 {
+		color: colors.get-dark(text, headings);
+		font-size: 1.05rem;
+		line-height: 1.2;
+	}
+
+	&__list {
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+		color: colors.get-dark(text, secondary);
+		line-height: 1.45;
+	}
+
+	&__sentence {
+		color: colors.get-dark(text, secondary);
+		line-height: 1.5;
+
+		.link,
+		.link-container {
+			display: inline;
+		}
+	}
+
+	&__separator {
+		margin: 0 0.35em;
+		color: colors.get-dark(text, tertiary);
+		font-style: italic;
+	}
+}
+

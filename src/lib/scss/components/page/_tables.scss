@@ -1,0 +1,68 @@
+﻿/*
+	Location: src/lib/scss/components/page/_tables.scss
+	Use: Reusable trait table styles.
+*/
+
+@use '../../core/colors' as colors;
+@use '../../core/sizes' as sizes;
+
+.trait-table {
+	width: 100%;
+	max-width: sizes.get(content, trait-table-max-width);
+	border-collapse: collapse;
+	overflow: hidden;
+
+	caption {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		overflow: hidden;
+		clip: rect(0 0 0 0);
+		white-space: nowrap;
+
+		&.trait-table__caption--visible {
+			width: auto;
+			height: auto;
+			margin-bottom: sizes.get(spacing, sm);
+			position: static;
+			overflow: visible;
+			clip: auto;
+			white-space: normal;
+
+			color: colors.get-dark(text, headings);
+			font-size: 1rem;
+			font-weight: 700;
+			text-align: left;
+		}
+	}
+
+	th,
+	td {
+		padding: 15px sizes.get(spacing, lg);
+		vertical-align: top;
+		border: 1px solid colors.get-dark(border, subtle);
+	}
+
+	th {
+		color: colors.get-dark(text, headings);
+		background: colors.get-dark(background, secondary);
+		text-align: left;
+	}
+
+	thead th {
+		font-size: 0.82rem;
+		text-transform: uppercase;
+	}
+
+	tbody th {
+		width: 1%;
+		white-space: nowrap;
+	}
+
+	td {
+		color: colors.get-dark(text, secondary);
+		background: colors.get-dark(background, primary);
+		line-height: 1.55;
+	}
+}
+

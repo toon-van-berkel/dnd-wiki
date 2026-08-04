@@ -2214,7 +2214,7 @@ export const rogue = {
 				"features": [
 					{
 						"label": "Archetype feature",
-						"sectionId": "archetype-feature"
+						"sectionId": "roguish-archetype"
 					}
 				],
 				"values": {
@@ -2266,7 +2266,7 @@ export const rogue = {
 				"features": [
 					{
 						"label": "Archetype feature",
-						"sectionId": "archetype-feature"
+						"sectionId": "roguish-archetype"
 					}
 				],
 				"values": {
@@ -2318,7 +2318,7 @@ export const rogue = {
 				"features": [
 					{
 						"label": "Archetype feature",
-						"sectionId": "archetype-feature"
+						"sectionId": "roguish-archetype"
 					}
 				],
 				"values": {

@@ -4,6 +4,7 @@
 -->
 <script lang="ts">
 	import { base } from '$app/paths';
+	import { page } from '$app/state';
 	import type { SearchResult } from '$lib/typescript/pages/search';
 
 	let { result }: { result: SearchResult } = $props();
@@ -13,7 +14,17 @@
 			return href;
 		}
 
-		return `${base}${href}`;
+		const path = href === '/' || href.endsWith('/') ? href : `${href}/`;
+
+		return `${base}${path}`;
+	}
+
+	function getDisplayHref(href: string): string {
+		if (!href.startsWith('/')) {
+			return href;
+		}
+
+		return new URL(getHref(href), page.url.origin).href;
 	}
 </script>
 
@@ -26,11 +37,11 @@
 	<div class="wiki-search-result__body">
 		<h3>{result.title}</h3>
 		<p class="wiki-search-result__subtitle">{result.subtitle}</p>
-		<p>{result.description}</p>
+		<p class="wiki-search-result__description">{result.description}</p>
 	</div>
 
 	<div class="wiki-search-result__meta">
-		<span>{result.href}</span>
+		<span>{getDisplayHref(result.href)}</span>
 
 		{#if result.matchedFields.length}
 			<span>Matched {result.matchedFields.join(', ')}</span>

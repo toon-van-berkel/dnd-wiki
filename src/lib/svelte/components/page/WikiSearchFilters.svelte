@@ -23,6 +23,8 @@
 	<label class="wiki-search-filters__search">
 		<span>Search</span>
 		<input
+			id="wiki-search-query"
+			name="q"
 			type="search"
 			bind:value={query}
 			placeholder="Search rules, classes, spells, pages, tags..."
@@ -41,6 +43,8 @@
 						class:wiki-search-filters__chip--active={category === item.value}
 					>
 						<input
+							id={`wiki-search-category-${item.value}`}
+							name="type"
 							type="radio"
 							bind:group={category}
 							value={item.value}

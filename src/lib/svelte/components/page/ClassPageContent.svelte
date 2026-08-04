@@ -32,6 +32,17 @@
 	};
 
 	let { content }: { content: ClassPageContentData } = $props();
+
+	let linkedSectionIds = $derived([
+		content.sections.identity.id,
+		content.sections.coreTraits.id,
+		...(content.sections.detailSections ?? []).map((section) => section.id),
+		'starting-equipment',
+		'progression',
+		content.sections.classFeaturesOverview.id,
+		...content.sections.featureSections.map((section) => section.id),
+		content.sections.subclasses.id
+	]);
 </script>
 
 <div class="page-layout">
@@ -55,6 +66,7 @@
 
 		<ProgressionTable
 			data={content.progression}
+			{linkedSectionIds}
 			section={{
 				id: 'progression',
 				title: content.progression.heading ?? 'Class Progression'
