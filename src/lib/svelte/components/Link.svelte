@@ -195,7 +195,6 @@
 		rel={link.external ? 'noopener noreferrer' : undefined}
 		aria-current={current ? 'page' : undefined}
 		aria-describedby={popup === 'description' ? popupId : undefined}
-		aria-controls={popup === 'full' ? popupId : undefined}
 		onmouseenter={handleLinkMouseEnter}
 		onmouseleave={handleLinkMouseLeave}
 	>
@@ -214,7 +213,6 @@
 
 	{#if popup === 'full'}
 		<span
-			id={popupId}
 			bind:this={popupElement}
 			class="popup popup--full"
 			class:popup--visible={popupVisible}
