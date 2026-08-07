@@ -27,6 +27,7 @@
 			readonly classFeaturesOverview: PageContentSectionData;
 			readonly featureSections: readonly PageContentSectionData[];
 			readonly subclasses: PageContentSectionData;
+			readonly referenceSections?: readonly PageContentSectionData[];
 		};
 		readonly tableOfContents: readonly PageTableOfContentsSection[];
 	};
@@ -41,7 +42,8 @@
 		'progression',
 		content.sections.classFeaturesOverview.id,
 		...content.sections.featureSections.map((section) => section.id),
-		content.sections.subclasses.id
+		content.sections.subclasses.id,
+		...(content.sections.referenceSections ?? []).map((section) => section.id)
 	]);
 </script>
 
@@ -80,6 +82,10 @@
 		{/each}
 
 		<PageContentSection section={content.sections.subclasses} />
+
+		{#each content.sections.referenceSections ?? [] as section}
+			<PageContentSection {section} />
+		{/each}
 	</article>
 
 	<aside class="page-layout__toc">
