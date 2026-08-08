@@ -34,6 +34,9 @@ export const footerData: FooterDataType = {
 			'internals.utility.search',
 			'internals.classes.page',
 			'internals.species.page',
+			'internals.spells.page',
+			'internals.equipment.page',
+			'internals.npcs.page',
 			'internals.rules.page',
 			'internals.locations.page',
 			'internals.monsters.page'

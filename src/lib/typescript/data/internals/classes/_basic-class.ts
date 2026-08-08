@@ -27,6 +27,7 @@ type BasicClassConfig = {
 	readonly role: string;
 	readonly source?: string;
 	readonly primaryAbility: InlineContent;
+	readonly multiclassing?: InlineContent;
 	readonly hitDie: string;
 	readonly armor: InlineContent;
 	readonly weapons: InlineContent;
@@ -277,6 +278,14 @@ export function createBasicClass(config: BasicClassConfig) {
 									label: 'Primary ability',
 									value: config.primaryAbility
 								},
+								...(config.multiclassing
+									? [
+											{
+												label: 'Multiclassing',
+												value: config.multiclassing
+											}
+										]
+									: []),
 								...(config.source
 									? [
 											{

@@ -6,6 +6,8 @@ import { species } from './species/_index_';
 import { rules } from './rules/_index_';
 import { locations } from './locations/_index_';
 import { monsters } from './monsters/_index_';
+import { equipment } from './equipment';
+import { npcs } from './npcs';
 import { community } from './community/_index_';
 import { project } from './project';
 import { legal } from './legal';
@@ -18,6 +20,8 @@ export const internals = {
 	spells,
 	species,
 	rules,
+	equipment,
+	npcs,
 	locations,
 	monsters,
 	community,

@@ -30,6 +30,8 @@ const sidebarSectionConfig = [
 			'internals.species.page',
 			'internals.classes.page',
 			'internals.spells.page',
+			'internals.equipment.page',
+			'internals.npcs.page',
 			'internals.rules.page',
 			'internals.monsters.page',
 			'internals.locations.page'

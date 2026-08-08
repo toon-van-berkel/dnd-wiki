@@ -17,6 +17,8 @@
 			<PageCard page="internals.utility.search" density="compact" />
 			<PageCard page="internals.classes.page" density="compact" />
 			<PageCard page="internals.spells.page" density="compact" />
+			<PageCard page="internals.equipment.page" density="compact" />
+			<PageCard page="internals.npcs.page" density="compact" />
 			<PageCard page="internals.rules.page" density="compact" />
 			<PageCard page="internals.species.page" density="compact" />
 			<PageCard page="internals.monsters.page" density="compact" />

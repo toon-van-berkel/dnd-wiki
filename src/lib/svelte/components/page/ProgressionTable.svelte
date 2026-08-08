@@ -122,6 +122,10 @@
 
 		return linkedSectionIds === undefined || linkedSectionIds.includes(sectionId);
 	}
+
+	function getColumnClassName(column: ProgressionColumn<string>): string {
+		return column.key.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
+	}
 </script>
 
 {#snippet renderColumnLabel(column: ProgressionColumn<string>, label = column.label)}
@@ -195,6 +199,14 @@
 		<div class="progression__table-container">
 			<table class="progression__table">
 				<caption>{data.title}</caption>
+				<colgroup>
+					{#each data.columns as column}
+						<col
+							class={`progression__column progression__column--${getColumnClassName(column)}`}
+							style:width={column.width}
+						/>
+					{/each}
+				</colgroup>
 
 				<thead>
 					<tr>

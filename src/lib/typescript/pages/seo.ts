@@ -310,3 +310,56 @@ export function createSpellSeoMetadata(spell: {
 		type: 'article'
 	};
 }
+
+export function createEquipmentSeoMetadata(item: {
+	readonly name: string;
+	readonly type: string;
+	readonly rarity: string;
+	readonly description: readonly unknown[];
+}): SeoMetadataInput {
+	const description = normalizeText(`${item.name} is a ${item.rarity.toLowerCase()} ${item.type.toLowerCase()} reference. ${collectInlineText(item.description)}`);
+
+	return {
+		title: item.name,
+		description,
+		image: defaultImage,
+		type: 'article'
+	};
+}
+
+export function createNpcSeoMetadata(npc: {
+	readonly name: string;
+	readonly challenge: string;
+	readonly description: readonly unknown[];
+}): SeoMetadataInput {
+	const description = normalizeText(`${npc.name} is an NPC reference with challenge rating ${npc.challenge}. ${collectInlineText(npc.description)}`);
+
+	return {
+		title: npc.name,
+		description,
+		image: defaultImage,
+		type: 'article'
+	};
+}
+
+function collectInlineText(value: unknown): string {
+	if (typeof value === 'string' || typeof value === 'number') {
+		return String(value);
+	}
+
+	if (Array.isArray(value)) {
+		return value.map(collectInlineText).join(' ');
+	}
+
+	if (!value || typeof value !== 'object') {
+		return '';
+	}
+
+	const record = value as Readonly<Record<string, unknown>>;
+
+	return [
+		record.text,
+		record.label,
+		record.children
+	].map(collectInlineText).join(' ');
+}

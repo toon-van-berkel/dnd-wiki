@@ -11,6 +11,16 @@ import {
 	spells,
 	type SpellData
 } from '$lib/typescript/data/internals/rules/spellcasting/spells/spell-data';
+import {
+	getPugilistEquipmentHref,
+	getPugilistEquipmentSlug,
+	getPugilistNpcHref,
+	getPugilistNpcSlug,
+	pugilistEquipmentItems,
+	pugilistNpcs,
+	type PugilistEquipmentItem,
+	type PugilistNpc
+} from '$lib/typescript/data/internals/classes/pugilist';
 import { getPageLabel } from './currentPage';
 
 export type SearchCategory =
@@ -19,6 +29,8 @@ export type SearchCategory =
 	| 'subclasses'
 	| 'rules'
 	| 'spells'
+	| 'equipment'
+	| 'npcs'
 	| 'species'
 	| 'monsters'
 	| 'locations'
@@ -151,6 +163,14 @@ function getCategory(path: string, page: PageData): Exclude<SearchCategory, 'all
 		return 'spells';
 	}
 
+	if (path.startsWith('internals.equipment.')) {
+		return 'equipment';
+	}
+
+	if (path.startsWith('internals.npcs.')) {
+		return 'npcs';
+	}
+
 	if (path.startsWith('internals.species.')) {
 		return 'species';
 	}
@@ -269,9 +289,91 @@ function createSpellSearchEntry(spell: SpellData): SearchEntry {
 	};
 }
 
+function getInlineContentText(value: unknown): string {
+	if (typeof value === 'string' || typeof value === 'number') {
+		return String(value);
+	}
+
+	if (Array.isArray(value)) {
+		return value.map(getInlineContentText).join(' ');
+	}
+
+	if (!isRecord(value)) {
+		return '';
+	}
+
+	return [
+		value.text,
+		value.label,
+		value.children
+	].map(getInlineContentText).join(' ');
+}
+
+function createEquipmentSearchEntry(item: PugilistEquipmentItem): SearchEntry {
+	const href = getPugilistEquipmentHref(item);
+	const description = getInlineContentText(item.description);
+	const fields: Record<SearchSourceField, string> = {
+		title: item.name,
+		description,
+		content: description,
+		tags: item.tags.join(' '),
+		url: href,
+		metadata: [
+			item.type,
+			item.rarity,
+			item.attunement ? 'requires attunement' : 'no attunement'
+		].join(' ')
+	};
+
+	return {
+		id: `equipment:${getPugilistEquipmentSlug(item)}`,
+		href,
+		title: item.name,
+		subtitle: `${item.type} - ${item.rarity}`,
+		description,
+		category: 'equipment',
+		tags: item.tags,
+		sourceFields: Object.entries(fields)
+			.filter(([, value]) => value.trim().length > 0)
+			.map(([field]) => field as SearchSourceField),
+		fieldText: fields,
+		searchText: normalize(Object.values(fields).join(' '))
+	};
+}
+
+function createNpcSearchEntry(npc: PugilistNpc): SearchEntry {
+	const href = getPugilistNpcHref(npc);
+	const description = getInlineContentText(npc.description);
+	const fields: Record<SearchSourceField, string> = {
+		title: npc.name,
+		description,
+		content: description,
+		tags: 'npc nonplayer character pugilist',
+		url: href,
+		metadata: `CR ${npc.challenge} challenge rating Pugilist Clean Edition`
+	};
+
+	return {
+		id: `npc:${getPugilistNpcSlug(npc)}`,
+		href,
+		title: npc.name,
+		subtitle: `NPC - CR ${npc.challenge}`,
+		description,
+		category: 'npcs',
+		tags: ['npc', 'nonplayer character', `CR ${npc.challenge}`],
+		sourceFields: Object.entries(fields)
+			.filter(([, value]) => value.trim().length > 0)
+			.map(([field]) => field as SearchSourceField),
+		fieldText: fields,
+		searchText: normalize(Object.values(fields).join(' '))
+	};
+}
+
 export const searchIndex = [
 	...collectPageEntries(data).map(([path, page]) => createPageSearchEntry(path, page)),
-	...spells.map(createSpellSearchEntry)
+	...spells.map(createSpellSearchEntry),
+	...pugilistEquipmentItems.map(createEquipmentSearchEntry),
+	...pugilistNpcs.map(createNpcSearchEntry)
 ] as const;
 
 function scoreField(value: string, tokens: readonly string[], weight: number): number {
@@ -352,6 +454,8 @@ export const searchCategories = [
 	{ value: 'subclasses', label: 'Subclasses' },
 	{ value: 'rules', label: 'Rules' },
 	{ value: 'spells', label: 'Spells' },
+	{ value: 'equipment', label: 'Equipment' },
+	{ value: 'npcs', label: 'NPCs' },
 	{ value: 'species', label: 'Species' },
 	{ value: 'monsters', label: 'Monsters' },
 	{ value: 'locations', label: 'Locations' },

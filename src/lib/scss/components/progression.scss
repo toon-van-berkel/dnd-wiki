@@ -37,6 +37,18 @@
 		border-collapse: collapse;
 		table-layout: fixed;
 
+		.progression__column--level {
+			width: 88px;
+		}
+
+		.progression__column--proficiency-bonus {
+			width: 116px;
+		}
+
+		.progression__column--features {
+			width: 38%;
+		}
+
 		caption {
 			position: absolute;
 			width: 1px;
@@ -59,22 +71,6 @@
 			font-size: 0.82rem;
 			text-align: left;
 			text-transform: uppercase;
-
-			&:nth-child(1) {
-				width: 88px;
-			}
-
-			&:nth-child(2) {
-				width: 132px;
-			}
-
-			&:nth-child(4) {
-				width: 92px;
-			}
-
-			&:nth-child(5) {
-				width: 122px;
-			}
 		}
 
 		tbody {

@@ -220,6 +220,30 @@ function feature(
 	};
 }
 
+export type PugilistEquipmentItem = {
+	readonly name: string;
+	readonly type: string;
+	readonly rarity: string;
+	readonly attunement: boolean;
+	readonly description: InlineContent;
+	readonly tags: readonly string[];
+};
+
+export type PugilistNpc = {
+	readonly name: string;
+	readonly challenge: string;
+	readonly description: InlineContent;
+};
+
+export function createPugilistReferenceSlug(value: string): string {
+	return value
+		.toLowerCase()
+		.replace(/&/g, 'and')
+		.replace(/['’]/g, '')
+		.replace(/[^a-z0-9]+/g, '-')
+		.replace(/^-+|-+$/g, '');
+}
+
 const fisticuffs = 'fisticuffs';
 const ironChin = 'iron-chin';
 const moxie = 'moxie';
@@ -247,16 +271,17 @@ const pugilistProgression: ProgressionData<string> = {
 	description:
 		'Track Pugilist level, proficiency bonus, fisticuffs damage, moxie points, and class features.',
 	columns: [
-		{ key: 'level', label: 'Level', format: 'ordinal' },
+		{ key: 'level', label: 'Level', format: 'ordinal', width: '86px' },
 		{
 			key: 'proficiencyBonus',
 			label: 'Prof.',
 			path: 'internals.rules.abbreviations.pb',
-			format: 'signed'
+			format: 'signed',
+			width: '96px'
 		},
-		{ key: 'fisticuffs', label: 'Fisticuffs' },
-		{ key: 'moxiePoints', label: 'Moxie Points' },
-		{ key: 'features', label: 'Features' }
+		{ key: 'fisticuffs', label: 'Fisticuffs', width: '140px' },
+		{ key: 'moxiePoints', label: 'Moxie Points', width: '118px' },
+		{ key: 'features', label: 'Features', width: '48%' }
 	],
 	rows: [
 		{ level: 1, proficiencyBonus: 2, features: [feature('Fisticuffs', fisticuffs), feature('Iron Chin', ironChin)], values: { fisticuffs: '1d6', moxiePoints: '-' } },
@@ -611,91 +636,81 @@ const sweetScienceSections = [
 	], 'Level 17')
 ] as const;
 
-const references: readonly PageContentSection[] = [
-	section('pugilist-multiclassing', 'Pugilist & Multiclassing', [
-		paragraph('Pugilists follow all the normal rules for multiclassing. The following entries function as additions to the normal multiclassing prerequisites and proficiencies.'),
-		{
-			type: 'table',
-			caption: 'Multiclassing prerequisites',
-			showCaption: true,
-			columns: { label: 'Class', value: 'Ability Score Minimum' },
-			rows: [
-				{
-					label: 'Pugilist',
-					value: linkedInline('Strength 13 and Constitution 13')
-				}
-			]
-		},
-		{
-			type: 'table',
-			caption: 'Multiclassing proficiencies',
-			showCaption: true,
-			columns: { label: 'Class', value: 'Proficiencies Gained' },
-			rows: [
-				{
-					label: 'Pugilist',
-					value: linkedInline('Light armor, improvised weapons')
-				}
-			]
-		}
-	]),
-	section('pugilist-equipment', 'Pugilist Equipment', [
-		paragraph('The Pugilist Clean Edition includes brawling implements and magic items that DMs may allow in campaigns using the class. These entries are recorded here with the class because they are Pugilist-specific source material.'),
-		paragraph('Unarmed. When you make an unarmed attack you can choose to deal the damage of this weapon instead of your normal unarmed attack damage.'),
-		{
-			type: 'table',
-			caption: 'Pugilist weapons',
-			showCaption: true,
-			columns: { label: 'Weapon', value: 'Statistics' },
-			rows: [
-				{ label: 'Brass knuckles', value: linkedInline('1 gp; 1d4 bludgeoning; 1 lb.; Light, unarmed') },
-				{ label: 'Katar', value: linkedInline('3 gp; 1d4 piercing; 3 lb.; Light, unarmed') },
-				{ label: 'Knuckle knives', value: linkedInline('3 gp; 1d4 slashing; 2 lb.; Light, unarmed') }
-			]
-		},
-		{
-			type: 'field-list',
-			items: [
-				{ label: 'Bonebreakers', content: linkedInline('Weapon (brass knuckles), legendary, requires attunement by a pugilist. You gain a +3 bonus to attack and damage rolls made with this magic weapon. When you hit a creature with this weapon, you can use your reaction to attempt to maim them; the target must succeed on a DC 16 Constitution saving throw or suffer the chosen maiming effect. The maimed condition ends only after medical treatment and one month of rest, or by greater restoration or similar magic.') },
-				{ label: 'Bottle of Brew Tasting', content: linkedInline('Wondrous item, rare. When a potion or other liquid is poured into the bottle, the contents and effects appear on the blank label in Common. If broken, it loses this identifying magic and functions as an improvised weapon with a +2 bonus to attack rolls and damage rolls.') },
-				{ label: 'Club of Unconsciousness', content: linkedInline('Weapon (club), rare, requires attunement. You gain a +1 bonus to attack and damage rolls. The club has 5 charges; when you deal damage with it, you can expend charges to roll 5d8 plus 2d8 for each extra charge and knock a creature unconscious if the result equals or exceeds its remaining hit points. It regains 1d3 + 1 charges daily at dawn.') },
-				{ label: 'Coin of Easy Living', content: linkedInline('Wondrous item, uncommon, requires attunement. This gold coin always lands heads up when flipped, and while attuned to it you can summon it to your palm at will.') },
-				{ label: 'Enchanted Inks', content: linkedInline('Potion, common through legendary. The inks can be used to make a single tattoo that lets the tattooed creature cast one chosen spell, with Constitution as the spellcasting ability. After casting the spell through the tattoo, the creature cannot do so again until finishing a long rest.') },
-				{ label: 'Everfull Stein', content: linkedInline('Wondrous item, uncommon. While closed and empty, the stein fills with a named non-magical ale, beer, or mead that the owner has had before.') },
-				{ label: 'Leather Jerkin, +1, +2, or +3', content: linkedInline('Wondrous item, rare to legendary. You have a bonus to AC while unarmored and wearing this garment, determined by the item rarity.') },
-				{ label: 'Loaded Dice', content: linkedInline('Wondrous item, rare, requires attunement. After you make an ability check, attack roll, or saving throw, but before the DM declares success or failure, you can expend 1 charge to reroll the d20. The dice can hold up to 7 charges and regain 1d6 + 1 charges each week. They also grant advantage on ability checks made to determine the winner of dice games.') },
-				{ label: 'Mage Mashers', content: linkedInline('Weapon (brass knuckles), very rare, requires attunement. You gain a +2 bonus to attack and damage rolls. When you hit a creature with the spellcasting or pact magic trait, it takes an extra 1d6 force damage, and concentration saving throws caused by your damage have disadvantage.') },
-				{ label: 'Medallion of Mettle', content: linkedInline('Wondrous item, rare, requires attunement. Whenever you gain temporary hit points, you gain an additional 1d6 temporary hit points.') },
-				{ label: 'Mugfist Knuckles', content: linkedInline('Weapon (brass knuckles), uncommon, requires attunement. You gain a +1 bonus to attack and damage rolls. When you roll a 20 on an attack with the weapon, 1d6 gold pieces fall into the creature space.') },
-				{ label: 'Penitent Pummelers', content: linkedInline('Weapon (brass knuckles, knuckle knives, or katar), rare, requires attunement. You gain a +1 bonus to attack and damage rolls. When you hit a fiend or undead, the creature takes an extra 1d6 radiant damage.') },
-				{ label: 'Poundwise Porter', content: linkedInline('Potion, very rare. For one minute after consuming this thick dark potion, you gain +3 to damage with unarmed attacks.') },
-				{ label: 'Prehensile Whip', content: linkedInline('Weapon (whip), rare, requires attunement. You gain a +1 bonus to attack and damage rolls. When you hit a creature or object, you may use your reaction to make a grapple attack against it using the whip instead of a free hand, treating your reach as 10 feet for that grapple.') },
-				{ label: 'Punchdrunk Punters', content: linkedInline('Weapon (brass knuckles, knuckle knives, or katar), rare, requires attunement. You gain a +1 bonus to attack and damage rolls. Each time you damage a creature, it gains a toxin point for one hour; you can use an action to make a creature you can see take 1d8 poison damage per toxin point it has, then it loses all toxin points.') },
-				{ label: "Ramuh's Katar", content: linkedInline('Weapon (katar), very rare, requires attunement. While attuned and wearing it, you have advantage on initiative rolls and your jumping distances are tripled. You gain a +2 bonus to attack and damage rolls, and a roll of 20 on an attack deals an additional 8 lightning damage.') },
-				{ label: 'Ratbite', content: linkedInline('Weapon (knuckle knives), legendary, requires attunement. You gain a +3 bonus to attack and damage rolls and are immune to disease. A damaged creature must succeed on a DC 11 Constitution saving throw or contract sewer plague, and a roll of 20 deals an additional 8 necrotic damage and imposes disadvantage on saving throws against diseases for one week.') },
-				{ label: 'Salamander Sauce', content: linkedInline('Potion, uncommon. A vial usually has two doses. One dose grants resistance to cold damage for 8 hours; two doses grant immunity to cold damage and vulnerability to fire damage for 8 hours. Extra doses require a DC 14 Constitution saving throw or cause a level of exhaustion.') },
-				{ label: 'Scyboo Snack', content: linkedInline('Potion, uncommon. When baked into a biscuit and consumed by a beast, the beast size increases by one category for 10 minutes. While enlarged, it has advantage on Strength checks and saving throws and its weapon attacks deal 1d4 extra damage.') },
-				{ label: 'Spiked Collar', content: linkedInline('Wondrous item, uncommon to very rare. A beast wearing this collar gains a bonus to unarmed strike attack and damage rolls, determined by rarity.') },
-				{ label: 'Studded Collar', content: linkedInline('Wondrous item, uncommon to very rare. A beast wearing this collar gains a bonus to AC and saving throws, determined by rarity.') },
-				{ label: 'Thunder Knuckles', content: linkedInline('Weapon (brass knuckles), very rare, requires attunement. You gain a +2 bonus to attack and damage rolls. When you roll a 20 on an attack with the weapon, the target takes an additional 8 thunder damage and is knocked prone.') },
-				{ label: 'Whistle of Dog Calling', content: linkedInline('Wondrous item, rare. You can use an action to blow the whistle and cast conjure animals, choosing only two dire wolves or eight wolves. You do not maintain concentration, but the duration is 10 minutes instead of 1 hour. This magic cannot be used again until dawn.') },
-				{ label: "Winter's Bite", content: linkedInline('Weapon (katar), uncommon, requires attunement. The glove can grow an icicle that functions as a katar or launch an icicle like a hand crossbow; both deal cold damage instead of piercing damage. You gain a +1 bonus to attack and damage rolls, and a roll of 20 halves the target speed until the end of its next turn unless it is immune to cold damage.') }
-			]
-		}
-	]),
-	section('pugilist-npcs', 'Pugilist Nonplayer Characters', [
-		paragraph('The document includes several Pugilist-inspired foes for campaign use. Their full stat blocks are preserved here as compact reference text.'),
-		{
-			type: 'field-list',
-			items: [
-				{ label: 'Brawler', content: linkedInline('Medium humanoid, unaligned. Armor Class 14 with leather armor; Hit Points 32 (5d8 + 10); Speed 30 ft.; passive Perception 9; Common; Challenge 1/2. Iron Chin uses Constitution instead of Dexterity for AC while in light or no armor and not using a shield. Actions: Multiattack with two fisticuffs attacks or one fisticuffs attack and Brace Up; Fisticuffs +4 to hit, reach 5 ft., one target, 5 (1d6 + 2) bludgeoning damage; Brace Up grants 7 (1d6 + 4) temporary hit points.') },
-				{ label: 'Boxer', content: linkedInline('Medium humanoid, unaligned. Armor Class 16 with leather armor; Hit Points 85 (10d8 + 40); Speed 30 ft.; Athletics +7, Insight +2, Intimidation +4; passive Perception 10; Common; Challenge 5. Actions: Multiattack with four fisticuffs attacks or two fisticuff attacks and Brace Up; Fisticuffs +8 to hit, reach 5 ft., one target, 10 (1d10 + 5) bludgeoning damage; Brace Up grants 14 (1d10 + 9) temporary hit points. Reaction: Cross Counter reduces melee attack damage by 14 (1d10 + 9), and if reduced to 0 or lower, the boxer may make a fisticuffs attack against the attacker if in range.') },
-				{ label: 'Wrestler', content: linkedInline('Medium humanoid, unaligned. Armor Class 15 with leather armor; Hit Points 67 (9d8 + 27); Speed 30 ft.; Athletics +6; Strength +6 and Constitution +5 saving throws; passive Perception 10; Common; Challenge 3. Actions: Multiattack with three fisticuffs attacks and a wrestling attack, or two fisticuff attacks, Brace Up, and a wrestling attack; Fisticuffs +6 to hit, reach 5 ft., one target, 8 (1d8 + 4) bludgeoning damage; Wrestling +6 to hit, reach 5 ft., one target, target is grappled or knocked prone; Brace Up grants 10 (1d8 + 6) temporary hit points. Reaction: Quick Pin lets the wrestler make two wrestling attacks when a creature provokes an opportunity attack.')
-				}
-			]
-		}
-	])
+export const pugilistEquipmentItems: readonly PugilistEquipmentItem[] = [
+	{ name: 'Brass knuckles', type: 'Weapon', rarity: 'Mundane', attunement: false, tags: ['weapon', 'unarmed'], description: linkedInline('1 gp; 1d4 bludgeoning; 1 lb.; Light, unarmed. When you make an unarmed attack you can choose to deal the damage of this weapon instead of your normal unarmed attack damage.') },
+	{ name: 'Katar', type: 'Weapon', rarity: 'Mundane', attunement: false, tags: ['weapon', 'unarmed'], description: linkedInline('3 gp; 1d4 piercing; 3 lb.; Light, unarmed. When you make an unarmed attack you can choose to deal the damage of this weapon instead of your normal unarmed attack damage.') },
+	{ name: 'Knuckle knives', type: 'Weapon', rarity: 'Mundane', attunement: false, tags: ['weapon', 'unarmed'], description: linkedInline('3 gp; 1d4 slashing; 2 lb.; Light, unarmed. When you make an unarmed attack you can choose to deal the damage of this weapon instead of your normal unarmed attack damage.') },
+	{ name: 'Bonebreakers', type: 'Weapon', rarity: 'Legendary', attunement: true, tags: ['weapon', 'brass knuckles', 'magic'], description: linkedInline('Weapon (brass knuckles), legendary, requires attunement by a pugilist. You gain a +3 bonus to attack and damage rolls made with this magic weapon. When you hit a creature with this weapon, you can use your reaction to attempt to maim them; the target must succeed on a DC 16 Constitution saving throw or suffer the chosen maiming effect. The maimed condition ends only after medical treatment and one month of rest, or by greater restoration or similar magic.') },
+	{ name: 'Bottle of Brew Tasting', type: 'Wondrous item', rarity: 'Rare', attunement: false, tags: ['wondrous item', 'identification'], description: linkedInline('Wondrous item, rare. When a potion or other liquid is poured into the bottle, the contents and effects appear on the blank label in Common. If broken, it loses this identifying magic and functions as an improvised weapon with a +2 bonus to attack rolls and damage rolls.') },
+	{ name: 'Club of Unconsciousness', type: 'Weapon', rarity: 'Rare', attunement: true, tags: ['weapon', 'club', 'charges'], description: linkedInline('Weapon (club), rare, requires attunement. You gain a +1 bonus to attack and damage rolls. The club has 5 charges; when you deal damage with it, you can expend charges to roll 5d8 plus 2d8 for each extra charge and knock a creature unconscious if the result equals or exceeds its remaining hit points. It regains 1d3 + 1 charges daily at dawn.') },
+	{ name: 'Coin of Easy Living', type: 'Wondrous item', rarity: 'Uncommon', attunement: true, tags: ['wondrous item'], description: linkedInline('Wondrous item, uncommon, requires attunement. This gold coin always lands heads up when flipped, and while attuned to it you can summon it to your palm at will.') },
+	{ name: 'Enchanted Inks', type: 'Potion', rarity: 'Varies', attunement: false, tags: ['potion', 'tattoo', 'spellcasting'], description: linkedInline('Potion, common through legendary. The inks can be used to make a single tattoo that lets the tattooed creature cast one chosen spell, with Constitution as the spellcasting ability. After casting the spell through the tattoo, the creature cannot do so again until finishing a long rest.') },
+	{ name: 'Everfull Stein', type: 'Wondrous item', rarity: 'Uncommon', attunement: false, tags: ['wondrous item'], description: linkedInline('Wondrous item, uncommon. While closed and empty, the stein fills with a named non-magical ale, beer, or mead that the owner has had before.') },
+	{ name: 'Leather Jerkin, +1, +2, or +3', type: 'Wondrous item', rarity: 'Varies', attunement: false, tags: ['wondrous item', 'armor class'], description: linkedInline('Wondrous item, rare to legendary. You have a bonus to AC while unarmored and wearing this garment, determined by the item rarity.') },
+	{ name: 'Loaded Dice', type: 'Wondrous item', rarity: 'Rare', attunement: true, tags: ['wondrous item', 'charges', 'd20'], description: linkedInline('Wondrous item, rare, requires attunement. After you make an ability check, attack roll, or saving throw, but before the DM declares success or failure, you can expend 1 charge to reroll the d20. The dice can hold up to 7 charges and regain 1d6 + 1 charges each week. They also grant advantage on ability checks made to determine the winner of dice games.') },
+	{ name: 'Mage Mashers', type: 'Weapon', rarity: 'Very rare', attunement: true, tags: ['weapon', 'brass knuckles', 'spellcasting'], description: linkedInline('Weapon (brass knuckles), very rare, requires attunement. You gain a +2 bonus to attack and damage rolls. When you hit a creature with the spellcasting or pact magic trait, it takes an extra 1d6 force damage, and concentration saving throws caused by your damage have disadvantage.') },
+	{ name: 'Medallion of Mettle', type: 'Wondrous item', rarity: 'Rare', attunement: true, tags: ['wondrous item', 'temporary hit points'], description: linkedInline('Wondrous item, rare, requires attunement. Whenever you gain temporary hit points, you gain an additional 1d6 temporary hit points.') },
+	{ name: 'Mugfist Knuckles', type: 'Weapon', rarity: 'Uncommon', attunement: true, tags: ['weapon', 'brass knuckles'], description: linkedInline('Weapon (brass knuckles), uncommon, requires attunement. You gain a +1 bonus to attack and damage rolls. When you roll a 20 on an attack with the weapon, 1d6 gold pieces fall into the creature space.') },
+	{ name: 'Penitent Pummelers', type: 'Weapon', rarity: 'Rare', attunement: true, tags: ['weapon', 'radiant'], description: linkedInline('Weapon (brass knuckles, knuckle knives, or katar), rare, requires attunement. You gain a +1 bonus to attack and damage rolls. When you hit a fiend or undead, the creature takes an extra 1d6 radiant damage.') },
+	{ name: 'Poundwise Porter', type: 'Potion', rarity: 'Very rare', attunement: false, tags: ['potion', 'unarmed'], description: linkedInline('Potion, very rare. For one minute after consuming this thick dark potion, you gain +3 to damage with unarmed attacks.') },
+	{ name: 'Prehensile Whip', type: 'Weapon', rarity: 'Rare', attunement: true, tags: ['weapon', 'whip', 'grapple'], description: linkedInline('Weapon (whip), rare, requires attunement. You gain a +1 bonus to attack and damage rolls. When you hit a creature or object, you may use your reaction to make a grapple attack against it using the whip instead of a free hand, treating your reach as 10 feet for that grapple.') },
+	{ name: 'Punchdrunk Punters', type: 'Weapon', rarity: 'Rare', attunement: true, tags: ['weapon', 'poison'], description: linkedInline('Weapon (brass knuckles, knuckle knives, or katar), rare, requires attunement. You gain a +1 bonus to attack and damage rolls. Each time you damage a creature, it gains a toxin point for one hour; you can use an action to make a creature you can see take 1d8 poison damage per toxin point it has, then it loses all toxin points.') },
+	{ name: "Ramuh's Katar", type: 'Weapon', rarity: 'Very rare', attunement: true, tags: ['weapon', 'katar', 'lightning'], description: linkedInline('Weapon (katar), very rare, requires attunement. While attuned and wearing it, you have advantage on initiative rolls and your jumping distances are tripled. You gain a +2 bonus to attack and damage rolls, and a roll of 20 on an attack deals an additional 8 lightning damage.') },
+	{ name: 'Ratbite', type: 'Weapon', rarity: 'Legendary', attunement: true, tags: ['weapon', 'knuckle knives', 'disease'], description: linkedInline('Weapon (knuckle knives), legendary, requires attunement. You gain a +3 bonus to attack and damage rolls and are immune to disease. A damaged creature must succeed on a DC 11 Constitution saving throw or contract sewer plague, and a roll of 20 deals an additional 8 necrotic damage and imposes disadvantage on saving throws against diseases for one week.') },
+	{ name: 'Salamander Sauce', type: 'Potion', rarity: 'Uncommon', attunement: false, tags: ['potion', 'cold', 'fire'], description: linkedInline('Potion, uncommon. A vial usually has two doses. One dose grants resistance to cold damage for 8 hours; two doses grant immunity to cold damage and vulnerability to fire damage for 8 hours. Extra doses require a DC 14 Constitution saving throw or cause a level of exhaustion.') },
+	{ name: 'Scyboo Snack', type: 'Potion', rarity: 'Uncommon', attunement: false, tags: ['potion', 'beast'], description: linkedInline('Potion, uncommon. When baked into a biscuit and consumed by a beast, the beast size increases by one category for 10 minutes. While enlarged, it has advantage on Strength checks and saving throws and its weapon attacks deal 1d4 extra damage.') },
+	{ name: 'Spiked Collar', type: 'Wondrous item', rarity: 'Varies', attunement: false, tags: ['wondrous item', 'beast'], description: linkedInline('Wondrous item, uncommon to very rare. A beast wearing this collar gains a bonus to unarmed strike attack and damage rolls, determined by rarity.') },
+	{ name: 'Studded Collar', type: 'Wondrous item', rarity: 'Varies', attunement: false, tags: ['wondrous item', 'beast', 'armor class'], description: linkedInline('Wondrous item, uncommon to very rare. A beast wearing this collar gains a bonus to AC and saving throws, determined by rarity.') },
+	{ name: 'Thunder Knuckles', type: 'Weapon', rarity: 'Very rare', attunement: true, tags: ['weapon', 'brass knuckles', 'thunder'], description: linkedInline('Weapon (brass knuckles), very rare, requires attunement. You gain a +2 bonus to attack and damage rolls. When you roll a 20 on an attack with the weapon, the target takes an additional 8 thunder damage and is knocked prone.') },
+	{ name: 'Whistle of Dog Calling', type: 'Wondrous item', rarity: 'Rare', attunement: false, tags: ['wondrous item', 'beast', 'summoning'], description: linkedInline('Wondrous item, rare. You can use an action to blow the whistle and cast conjure animals, choosing only two dire wolves or eight wolves. You do not maintain concentration, but the duration is 10 minutes instead of 1 hour. This magic cannot be used again until dawn.') },
+	{ name: "Winter's Bite", type: 'Weapon', rarity: 'Uncommon', attunement: true, tags: ['weapon', 'katar', 'cold'], description: linkedInline('Weapon (katar), uncommon, requires attunement. The glove can grow an icicle that functions as a katar or launch an icicle like a hand crossbow; both deal cold damage instead of piercing damage. You gain a +1 bonus to attack and damage rolls, and a roll of 20 halves the target speed until the end of its next turn unless it is immune to cold damage.') }
 ];
+
+export const pugilistNpcs: readonly PugilistNpc[] = [
+	{ name: 'Brawler', challenge: '1/2', description: linkedInline('Medium humanoid, unaligned. Armor Class 14 with leather armor; Hit Points 32 (5d8 + 10); Speed 30 ft.; passive Perception 9; Common; Challenge 1/2. Iron Chin uses Constitution instead of Dexterity for AC while in light or no armor and not using a shield. Actions: Multiattack with two fisticuffs attacks or one fisticuffs attack and Brace Up; Fisticuffs +4 to hit, reach 5 ft., one target, 5 (1d6 + 2) bludgeoning damage; Brace Up grants 7 (1d6 + 4) temporary hit points.') },
+	{ name: 'Boxer', challenge: '5', description: linkedInline('Medium humanoid, unaligned. Armor Class 16 with leather armor; Hit Points 85 (10d8 + 40); Speed 30 ft.; Athletics +7, Insight +2, Intimidation +4; passive Perception 10; Common; Challenge 5. Actions: Multiattack with four fisticuffs attacks or two fisticuff attacks and Brace Up; Fisticuffs +8 to hit, reach 5 ft., one target, 10 (1d10 + 5) bludgeoning damage; Brace Up grants 14 (1d10 + 9) temporary hit points. Reaction: Cross Counter reduces melee attack damage by 14 (1d10 + 9), and if reduced to 0 or lower, the boxer may make a fisticuffs attack against the attacker if in range.') },
+	{ name: 'Wrestler', challenge: '3', description: linkedInline('Medium humanoid, unaligned. Armor Class 15 with leather armor; Hit Points 67 (9d8 + 27); Speed 30 ft.; Athletics +6; Strength +6 and Constitution +5 saving throws; passive Perception 10; Common; Challenge 3. Actions: Multiattack with three fisticuffs attacks and a wrestling attack, or two fisticuff attacks, Brace Up, and a wrestling attack; Fisticuffs +6 to hit, reach 5 ft., one target, 8 (1d8 + 4) bludgeoning damage; Wrestling +6 to hit, reach 5 ft., one target, target is grappled or knocked prone; Brace Up grants 10 (1d8 + 6) temporary hit points. Reaction: Quick Pin lets the wrestler make two wrestling attacks when a creature provokes an opportunity attack.') }
+];
+
+export function getPugilistEquipmentSlug(item: PugilistEquipmentItem): string {
+	return createPugilistReferenceSlug(item.name);
+}
+
+export function getPugilistNpcSlug(item: PugilistNpc): string {
+	return createPugilistReferenceSlug(item.name);
+}
+
+export function getPugilistEquipmentHref(item: PugilistEquipmentItem): string {
+	return `/equipment/${getPugilistEquipmentSlug(item)}`;
+}
+
+export function getPugilistNpcHref(item: PugilistNpc): string {
+	return `/npcs/${getPugilistNpcSlug(item)}`;
+}
+
+export function getPugilistEquipmentBySlug(slug: string): PugilistEquipmentItem | undefined {
+	return pugilistEquipmentItems.find((item) => getPugilistEquipmentSlug(item) === slug);
+}
+
+export function getPugilistNpcBySlug(slug: string): PugilistNpc | undefined {
+	return pugilistNpcs.find((item) => getPugilistNpcSlug(item) === slug);
+}
+
+const pugilistReferenceSection = section('pugilist-references', 'Pugilist References', [
+	paragraph('The Pugilist Clean Edition also includes class-specific equipment and nonplayer characters. Those references live on separate pages so the main class page stays focused on class rules and progression.'),
+	{
+		type: 'card-grid',
+		groups: [
+			{
+				title: 'Reference Pages',
+				cards: [
+					{ page: 'internals.equipment.page', source },
+					{ page: 'internals.npcs.page', source }
+				]
+			}
+		]
+	}
+]);
 
 const pugilistClass = createBasicClass({
 	name: 'Pugilist',
@@ -707,6 +722,7 @@ const pugilistClass = createBasicClass({
 		text(' and '),
 		link('internals.rules.abilityScores.constitution', 'Constitution')
 	],
+	multiclassing: linkedInline('Prerequisite: Strength 13 and Constitution 13. Proficiencies gained: light armor and improvised weapons.'),
 	hitDie: 'd8',
 	armor: [link('internals.rules.equipment.lightArmor', 'Light armor')],
 	weapons: [text('Simple weapons, improvised weapons, whip, hand crossbow')],
@@ -781,6 +797,8 @@ export const pugilist = {
 		...pugilistClass.page,
 		images
 	},
+	equipmentItems: pugilistEquipmentItems,
+	npcItems: pugilistNpcs,
 	content: {
 		...pugilistClass.content,
 		progression: pugilistProgression,
@@ -810,7 +828,7 @@ export const pugilist = {
 					}
 				]
 			},
-			referenceSections: references
+			referenceSections: [pugilistReferenceSection]
 		},
 		tableOfContents: [
 			{ id: 'class-overview', title: 'Class Overview' },
@@ -823,7 +841,7 @@ export const pugilist = {
 				children: classFeatures.map(({ id, title }) => ({ id, title }))
 			},
 			{ id: 'fight-clubs', title: 'Fight Clubs' },
-			...references.map(({ id, title }) => ({ id, title }))
+			{ id: 'pugilist-references', title: 'Pugilist References' }
 		]
 	},
 	subclasses: {

@@ -303,6 +303,7 @@ export type ProgressionColumn<Path extends string = string> = {
 	readonly shortLabel?: string;
 	readonly path?: Path;
 	readonly format?: ProgressionColumnFormat;
+	readonly width?: string;
 };
 
 export type ProgressionRow<Path extends string = string> = {

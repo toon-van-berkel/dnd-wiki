@@ -22,6 +22,8 @@
 		'subclasses',
 		'rules',
 		'spells',
+		'equipment',
+		'npcs',
 		'species',
 		'monsters',
 		'locations',
@@ -139,8 +141,9 @@
 		<div>
 			<h2 id="wiki-search-title">Search the Wiki</h2>
 			<p>
-				Searches {searchIndex.length} indexed pages and spells from central Wiki data,
-				route metadata, tags, structured content, and spell text.
+				Searches {searchIndex.length} indexed pages, spells, equipment references,
+				and NPC references from central Wiki data, route metadata, tags, structured
+				content, and full text.
 			</p>
 		</div>
 
@@ -157,10 +160,10 @@
 	<section class="wiki-search__explanation" aria-labelledby="wiki-search-how-title">
 		<h3 id="wiki-search-how-title">How Search Works</h3>
 		<p>
-			Results come from the central internal data tree and the generated spell dataset.
-			The index only returns real internal pages or spell routes. It searches titles,
-			subtitles, descriptions, long page-header text, tags, URLs, and structured page
-			content where available.
+			Results come from the central internal data tree, the generated spell dataset,
+			and the shared equipment and NPC datasets. The index only returns real internal
+			pages or generated detail routes. It searches titles, subtitles, descriptions,
+			long page-header text, tags, URLs, and structured page content where available.
 		</p>
 		<p>
 			Matches in titles and tags score higher than matches in long body text. This keeps
