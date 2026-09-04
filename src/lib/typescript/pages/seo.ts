@@ -317,7 +317,8 @@ export function createEquipmentSeoMetadata(item: {
 	readonly rarity: string;
 	readonly description: readonly unknown[];
 }): SeoMetadataInput {
-	const description = normalizeText(`${item.name} is a ${item.rarity.toLowerCase()} ${item.type.toLowerCase()} reference. ${collectInlineText(item.description)}`);
+	const verb = item.name.endsWith('s') && item.name !== "Explorer's Pack" ? 'are' : 'is';
+	const description = normalizeText(`${item.name} ${verb} a ${item.rarity.toLowerCase()} ${item.type.toLowerCase()} reference. ${collectInlineText(item.description)}`);
 
 	return {
 		title: item.name,

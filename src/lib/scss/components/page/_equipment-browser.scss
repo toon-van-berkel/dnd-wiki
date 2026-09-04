@@ -224,6 +224,34 @@
 		line-height: 1;
 	}
 
+	&__stats {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+		gap: sizes.get(spacing, xs);
+
+		div {
+			min-width: 0;
+			padding: sizes.get(spacing, xs);
+			border: 1px solid colors.get-dark(border, subtle);
+			border-radius: sizes.get(radius, sm);
+		}
+
+		dt {
+			margin-bottom: 2px;
+			color: colors.get-dark(text, subtle);
+			font-size: 0.68rem;
+			font-weight: 800;
+			line-height: 1;
+			text-transform: uppercase;
+		}
+
+		dd {
+			color: colors.get-dark(text, primary);
+			font-size: 0.82rem;
+			line-height: 1.2;
+		}
+	}
+
 	&__description {
 		color: colors.get-dark(text, secondary);
 		line-height: 1.55;

@@ -10,6 +10,7 @@
 		type SpellLevel
 	} from '$lib/typescript/data/internals/rules/spellcasting/spells/spell-data';
 
+	import NotFound from '$lib/svelte/components/page/NotFound.svelte';
 	import PageCard from '$lib/svelte/components/PageCard.svelte';
 	import PageHeader from '$lib/svelte/components/page/PageHeader.svelte';
 	import SpellBrowser from '$lib/svelte/components/page/SpellBrowser.svelte';
@@ -132,10 +133,5 @@
 		{/if}
 	</article>
 {:else}
-	<article class="wiki-article">
-		<section class="wiki-article__section">
-			<h1>Spell Not Found</h1>
-			<p class="wiki-article__copy">No spell or spell list exists for this page.</p>
-		</section>
-	</article>
+	<NotFound />
 {/if}

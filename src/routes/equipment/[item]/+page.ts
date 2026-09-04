@@ -3,26 +3,22 @@
 	Use: Static prerender entries for equipment detail pages.
 */
 import {
-	getPugilistEquipmentBySlug,
-	getPugilistEquipmentSlug,
-	pugilistEquipmentItems
-} from '$lib/typescript/data/internals/classes/pugilist';
-import { createEquipmentSeoMetadata } from '$lib/typescript/pages/seo';
+	equipmentTypes,
+	getEquipmentTypeBySlug
+} from '$lib/typescript/data/internals/equipment-items';
 
 export function entries() {
-	return pugilistEquipmentItems.map((item) => ({
-		item: getPugilistEquipmentSlug(item)
+	return equipmentTypes.map((type) => ({
+		item: type.slug
 	}));
 }
 
 export function load({ params }) {
-	const item = getPugilistEquipmentBySlug(params.item);
+	const equipmentType = getEquipmentTypeBySlug(params.item);
 
-	if (!item) {
+	if (!equipmentType) {
 		return {};
 	}
 
-	return {
-		seo: createEquipmentSeoMetadata(item)
-	};
+	return {};
 }

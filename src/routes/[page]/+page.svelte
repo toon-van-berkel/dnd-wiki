@@ -8,10 +8,12 @@
 		PageTableOfContentsSection
 	} from '$lib/typescript/data/_index_';
 	import { pugilist } from '$lib/typescript/data/internals/classes/pugilist';
+	import { equipmentItems } from '$lib/typescript/data/internals/equipment-items';
 	import { getCurrentPageContext } from '$lib/svelte/context/currentPage';
 
 	import EquipmentBrowser from '$lib/svelte/components/page/EquipmentBrowser.svelte';
 	import NpcBrowser from '$lib/svelte/components/page/NpcBrowser.svelte';
+	import NotFound from '$lib/svelte/components/page/NotFound.svelte';
 	import PageContentSection from '$lib/svelte/components/page/PageContentSection.svelte';
 	import PageHeader from '$lib/svelte/components/page/PageHeader.svelte';
 	import TableOfContents from '$lib/svelte/components/page/TableOfContents.svelte';
@@ -45,28 +47,32 @@
 	let isNpcsPage = $derived(currentPage.path === 'internals.npcs.page');
 </script>
 
-<div class="page-layout">
-	<article class="wiki-article page-layout__article">
-		<PageHeader />
+{#if currentPage.data}
+	<div class="page-layout">
+		<article class="wiki-article page-layout__article">
+			<PageHeader />
 
-		{#if content}
-			{#each content.sections as section}
-				<PageContentSection {section} />
-			{/each}
+			{#if content}
+				{#each content.sections as section}
+					<PageContentSection {section} />
+				{/each}
+			{/if}
+
+			{#if isEquipmentPage}
+				<EquipmentBrowser items={equipmentItems} />
+			{/if}
+
+			{#if isNpcsPage}
+				<NpcBrowser items={pugilist.npcItems} />
+			{/if}
+		</article>
+
+		{#if content?.tableOfContents.length}
+			<aside class="page-layout__toc">
+				<TableOfContents sections={content.tableOfContents} />
+			</aside>
 		{/if}
-
-		{#if isEquipmentPage}
-			<EquipmentBrowser items={pugilist.equipmentItems} />
-		{/if}
-
-		{#if isNpcsPage}
-			<NpcBrowser items={pugilist.npcItems} />
-		{/if}
-	</article>
-
-	{#if content?.tableOfContents.length}
-		<aside class="page-layout__toc">
-			<TableOfContents sections={content.tableOfContents} />
-		</aside>
-	{/if}
-</div>
+	</div>
+{:else}
+	<NotFound />
+{/if}

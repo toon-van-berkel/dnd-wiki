@@ -1,0 +1,152 @@
+/*
+	Location: src/lib/scss/components/page/_not-found.scss
+	Use: Error and 404 page styling.
+*/
+
+@use '../../core/colors' as colors;
+@use '../../core/sizes' as sizes;
+
+.not-found {
+	min-height: min(680px, 72vh);
+	display: grid;
+	place-items: center;
+	align-content: center;
+	gap: sizes.get(spacing, md);
+	padding: sizes.get(spacing, xxl) sizes.get(spacing, md);
+	text-align: center;
+
+	&__eyebrow {
+		color: colors.get-dark(text, eyebrow);
+		font-size: 0.78rem;
+		font-weight: 800;
+		line-height: 1;
+		text-transform: uppercase;
+	}
+
+    &__code {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        color: colors.get-dark(text, headings);
+        font-size: clamp(5rem, 18vw, 11rem);
+        line-height: 0.9;
+
+        > span:first-child {
+            margin-right: -0.08em;
+			z-index: 4;
+        }
+
+        > span:last-child {
+            margin-left: -0.08em;
+			z-index: 4;
+        }
+    }
+
+    &__zero {
+        width: 0.72em;
+        aspect-ratio: 1;
+        display: grid;
+        place-items: center;
+
+        img {
+            width: 100%;
+            height: 100%;
+			margin-top: 20px;
+            object-fit: contain;
+            filter: grayscale(1);
+			z-index: 1;
+            opacity: 0.36;
+        }
+    }
+
+	&__message {
+		max-width: 520px;
+		color: colors.get-dark(text, secondary);
+		font-size: 1.05rem;
+		line-height: 1.5;
+	}
+
+	&__suggestions {
+		width: min(620px, 100%);
+		margin-top: sizes.get(spacing, md);
+		display: grid;
+		gap: sizes.get(spacing, sm);
+
+		h2 {
+			color: colors.get-dark(text, headings);
+			font-size: 1rem;
+			line-height: 1.2;
+		}
+
+		ul {
+			display: grid;
+			gap: sizes.get(spacing, xs);
+		}
+
+		li {
+			list-style: none;
+		}
+
+		a {
+			display: flex;
+			justify-content: space-between;
+			gap: sizes.get(spacing, md);
+			padding: sizes.get(spacing, sm) sizes.get(spacing, md);
+			color: colors.get-dark(text, primary);
+			background-color: colors.get-dark(background, secondary);
+			border: 1px solid colors.get-dark(border, subtle);
+			border-radius: sizes.get(radius, md);
+			text-align: left;
+			text-decoration: none;
+
+			&:hover,
+			&:focus-visible {
+				color: colors.get-dark(text, links, hover);
+				border-color: colors.get-dark(border, interactive);
+			}
+
+			&:focus-visible {
+				outline: 2px solid colors.get-dark(border, focus);
+				outline-offset: 2px;
+			}
+		}
+
+		small {
+			color: colors.get-dark(text, subtle);
+			font-size: 0.75rem;
+			font-weight: 700;
+			text-transform: uppercase;
+		}
+	}
+
+	&__actions {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: sizes.get(spacing, sm);
+		margin-top: sizes.get(spacing, sm);
+
+		a {
+			padding: 10px 14px;
+			color: colors.get-dark(text, primary);
+			background-color: colors.get-dark(background, secondary);
+			border: 1px solid colors.get-dark(border, base);
+			border-radius: sizes.get(radius, md);
+			font-weight: 800;
+			text-decoration: none;
+
+			&:hover,
+			&:focus-visible {
+				color: colors.get-dark(text, links, hover);
+				background-color: colors.get-dark(background, hover);
+				border-color: colors.get-dark(border, interactive);
+			}
+
+			&:focus-visible {
+				outline: 2px solid colors.get-dark(border, focus);
+				outline-offset: 2px;
+			}
+		}
+	}
+}

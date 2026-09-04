@@ -10,6 +10,7 @@
     --content-wide-max-width: #{sizes.get(content, wide-max-width)};
     --content-footer-max-width: #{sizes.get(content, footer-max-width)};
     --content-padding-inline: clamp(20px, 4vw, 56px);
+    --content-padding-block: #{sizes.get(spacing, xxl)};
     --navbar-height: #{sizes.get(navbar, height)};
 
     width: 100%;
@@ -34,7 +35,7 @@
         margin-inline: auto;
         min-width: 0;
         min-height: 50svh;
-        padding: sizes.get(spacing, xxl) var(--content-padding-inline);
+        padding: var(--content-padding-block) var(--content-padding-inline);
         box-sizing: border-box;
         flex: 1 1 var(--content-max-width);
     }
@@ -198,6 +199,8 @@
         }
         
         &__content {
+            --content-padding-block: #{sizes.get(spacing, xl)};
+
             padding: sizes.get(section-mobile);
         }
     }

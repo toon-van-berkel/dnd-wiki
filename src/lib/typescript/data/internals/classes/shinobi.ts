@@ -624,7 +624,7 @@ const shinobiClass = createBasicClass({
 			choices: [
 				[text('A burglar\'s pack')],
 				[
-					link('internals.rules.equipment.explorersPack', 'An explorer\'s pack')
+					link('internals.equipment.explorersPack', 'An explorer\'s pack')
 				]
 			]
 		},

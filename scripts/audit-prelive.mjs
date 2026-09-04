@@ -187,6 +187,9 @@ function isKnownInternalRoute(href) {
 		clean === '/rules/spellcasting/spells' ||
 		/^\/classes\/[^/]+(?:\/[^/]+)?$/.test(clean) ||
 		/^\/discord\/[^/]+$/.test(clean) ||
+		/^\/equipment\/[^/]+$/.test(clean) ||
+		/^\/equipment\/[^/]+\/[^/]+$/.test(clean) ||
+		/^\/npcs\/[^/]+$/.test(clean) ||
 		/^\/rules\/.+$/.test(clean) ||
 		/^\/spells\/[^/]+$/.test(clean) ||
 		/^\/[a-z0-9-]+$/.test(clean)

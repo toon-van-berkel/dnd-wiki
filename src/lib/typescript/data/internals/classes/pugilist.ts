@@ -134,7 +134,7 @@ const linkedTerms = [
 	['light armor', 'internals.rules.equipment.lightArmor'],
 	['simple weapon', 'internals.rules.equipment.simpleWeapons'],
 	['simple weapons', 'internals.rules.equipment.simpleWeapons'],
-	["explorer's pack", 'internals.rules.equipment.explorersPack']
+	["explorer's pack", 'internals.equipment.explorersPack']
 ] as const;
 
 function escapeRegExp(value: string) {
@@ -770,7 +770,7 @@ const pugilistClass = createBasicClass({
 			instruction: 'Choose one',
 			choices: [
 				[text("A dungeoneer's pack")],
-				[link('internals.rules.equipment.explorersPack', "An explorer's pack")]
+				[link('internals.equipment.explorersPack', "An explorer's pack")]
 			]
 		},
 		{

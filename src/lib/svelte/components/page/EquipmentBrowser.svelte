@@ -3,22 +3,34 @@
 	Use: Filterable equipment browser for the central equipment category.
 -->
 <script lang="ts">
-	import type {
-		PugilistEquipmentItem as EquipmentBrowserItem
-	} from '$lib/typescript/data/internals/classes/pugilist';
-	import { getPugilistEquipmentHref } from '$lib/typescript/data/internals/classes/pugilist';
+	import type { EquipmentItem as EquipmentBrowserItem } from '$lib/typescript/data/internals/equipment-items';
+	import { getEquipmentItemHref } from '$lib/typescript/data/internals/equipment-items';
 	import type { InlineContentNode } from '$lib/typescript/data/_index_';
 	import { getCanonicalInternalHref } from '$lib/typescript/pages/currentPage';
 
-	let { items }: { items: readonly EquipmentBrowserItem[] } = $props();
+	let {
+		items,
+		initialType = 'all',
+		showTypeFilter = true,
+		heading = 'Equipment Browser'
+	}: {
+		items: readonly EquipmentBrowserItem[];
+		initialType?: string;
+		showTypeFilter?: boolean;
+		heading?: string;
+	} = $props();
 
 	let searchTerm = $state('');
-	let selectedType = $state('all');
+	let userSelectedType = $state('all');
 	let selectedRarity = $state('all');
 	let selectedAttunement = $state('all');
 
+	let selectedType = $derived(showTypeFilter ? userSelectedType : initialType);
 	let types = $derived([...new Set(items.map((item) => item.type))].sort());
-	let rarities = $derived([...new Set(items.map((item) => item.rarity))].sort());
+	let typeScopedItems = $derived(
+		items.filter((item) => selectedType === 'all' || item.type === selectedType)
+	);
+	let rarities = $derived([...new Set(typeScopedItems.map((item) => item.rarity))].sort());
 
 	function getNodeText(node: InlineContentNode): string {
 		if (node.type === 'text') {
@@ -29,7 +41,7 @@
 			return node.label ?? '';
 		}
 
-		return node.children.map(getNodeText).join(' ');
+		return node.children.map(getNodeText).join('');
 	}
 
 	function matchesSearch(item: EquipmentBrowserItem): boolean {
@@ -45,7 +57,7 @@
 			item.rarity,
 			item.attunement ? 'requires attunement' : 'no attunement',
 			item.tags.join(' '),
-			item.description.map(getNodeText).join(' ')
+			item.description.map(getNodeText).join('')
 		]
 			.join(' ')
 			.toLowerCase()
@@ -66,24 +78,24 @@
 	);
 	let activeFilterCount = $derived([
 		searchTerm.trim().length > 0,
-		selectedType !== 'all',
+		showTypeFilter && selectedType !== 'all',
 		selectedRarity !== 'all',
 		selectedAttunement !== 'all'
 	].filter(Boolean).length);
 
 	function resetFilters(): void {
 		searchTerm = '';
-		selectedType = 'all';
+		userSelectedType = 'all';
 		selectedRarity = 'all';
 		selectedAttunement = 'all';
 	}
 
 	function getItemHref(item: EquipmentBrowserItem): string {
-		return getCanonicalInternalHref(getPugilistEquipmentHref(item));
+		return getCanonicalInternalHref(getEquipmentItemHref(item));
 	}
 
 	function getDescriptionText(item: EquipmentBrowserItem): string {
-		return item.description.map(getNodeText).join(' ');
+		return item.description.map(getNodeText).join('');
 	}
 </script>
 
@@ -93,7 +105,7 @@
 	aria-labelledby="equipment-browser-title"
 >
 	<header class="equipment-browser__header">
-		<h2 id="equipment-browser-title">Equipment Browser</h2>
+		<h2 id="equipment-browser-title">{heading}</h2>
 		<p>{visibleItems.length} item{visibleItems.length === 1 ? '' : 's'}</p>
 	</header>
 
@@ -112,18 +124,20 @@
 			/>
 		</label>
 
-		<label
-			class="equipment-browser__filter"
-			class:equipment-browser__filter--active={selectedType !== 'all'}
-		>
-			<span>Type</span>
-			<select id="equipment-type" name="equipment-type" bind:value={selectedType}>
-				<option value="all">All types</option>
-				{#each types as type}
-					<option value={type}>{type}</option>
-				{/each}
-			</select>
-		</label>
+		{#if showTypeFilter}
+			<label
+				class="equipment-browser__filter"
+				class:equipment-browser__filter--active={selectedType !== 'all'}
+			>
+				<span>Type</span>
+				<select id="equipment-type" name="equipment-type" bind:value={userSelectedType}>
+					<option value="all">All types</option>
+					{#each types as type}
+						<option value={type}>{type}</option>
+					{/each}
+				</select>
+			</label>
+		{/if}
 
 		<label
 			class="equipment-browser__filter"
@@ -163,9 +177,32 @@
 			{#each visibleItems as item}
 				<a class="equipment-browser-card" href={getItemHref(item)}>
 					<header>
-						<p>{item.type} - {item.rarity}</p>
+						<p>{item.category} - {item.rarity}</p>
 						<h3>{item.name}</h3>
 					</header>
+
+					{#if item.damage || item.cost || item.weight}
+						<dl class="equipment-browser-card__stats">
+							{#if item.damage}
+								<div>
+									<dt>Damage</dt>
+									<dd>{getNodeText({ type: 'emphasis', children: item.damage })}</dd>
+								</div>
+							{/if}
+							{#if item.cost}
+								<div>
+									<dt>Cost</dt>
+									<dd>{item.cost}</dd>
+								</div>
+							{/if}
+							{#if item.weight}
+								<div>
+									<dt>Weight</dt>
+									<dd>{item.weight}</dd>
+								</div>
+							{/if}
+						</dl>
+					{/if}
 
 					<p class="equipment-browser-card__attunement">
 						{item.attunement ? 'Requires attunement' : 'No attunement'}

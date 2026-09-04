@@ -2053,7 +2053,7 @@ export const paladin = {
 					},
 					{
 						"type": "link",
-						"path": "internals.rules.equipment.javelins",
+						"path": "internals.equipment.javelins",
 						"label": "javelins"
 					}
 				],

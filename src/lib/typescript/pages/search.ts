@@ -12,13 +12,14 @@ import {
 	type SpellData
 } from '$lib/typescript/data/internals/rules/spellcasting/spells/spell-data';
 import {
-	getPugilistEquipmentHref,
-	getPugilistEquipmentSlug,
+	equipmentItems,
+	getEquipmentItemHref,
+	type EquipmentItem
+} from '$lib/typescript/data/internals/equipment-items';
+import {
 	getPugilistNpcHref,
 	getPugilistNpcSlug,
-	pugilistEquipmentItems,
 	pugilistNpcs,
-	type PugilistEquipmentItem,
 	type PugilistNpc
 } from '$lib/typescript/data/internals/classes/pugilist';
 import { getPageLabel } from './currentPage';
@@ -309,8 +310,8 @@ function getInlineContentText(value: unknown): string {
 	].map(getInlineContentText).join(' ');
 }
 
-function createEquipmentSearchEntry(item: PugilistEquipmentItem): SearchEntry {
-	const href = getPugilistEquipmentHref(item);
+function createEquipmentSearchEntry(item: EquipmentItem): SearchEntry {
+	const href = getEquipmentItemHref(item);
 	const description = getInlineContentText(item.description);
 	const fields: Record<SearchSourceField, string> = {
 		title: item.name,
@@ -326,10 +327,10 @@ function createEquipmentSearchEntry(item: PugilistEquipmentItem): SearchEntry {
 	};
 
 	return {
-		id: `equipment:${getPugilistEquipmentSlug(item)}`,
+		id: `equipment:${item.slug}`,
 		href,
 		title: item.name,
-		subtitle: `${item.type} - ${item.rarity}`,
+		subtitle: `${item.category} - ${item.rarity}`,
 		description,
 		category: 'equipment',
 		tags: item.tags,
@@ -369,10 +370,16 @@ function createNpcSearchEntry(npc: PugilistNpc): SearchEntry {
 	};
 }
 
+function shouldUseGeneratedPageSearchEntry(path: PagePath): boolean {
+	return !path.startsWith('internals.equipment.') || path === 'internals.equipment.page';
+}
+
 export const searchIndex = [
-	...collectPageEntries(data).map(([path, page]) => createPageSearchEntry(path, page)),
+	...collectPageEntries(data)
+		.filter(([path]) => shouldUseGeneratedPageSearchEntry(path))
+		.map(([path, page]) => createPageSearchEntry(path, page)),
 	...spells.map(createSpellSearchEntry),
-	...pugilistEquipmentItems.map(createEquipmentSearchEntry),
+	...equipmentItems.map(createEquipmentSearchEntry),
 	...pugilistNpcs.map(createNpcSearchEntry)
 ] as const;
 

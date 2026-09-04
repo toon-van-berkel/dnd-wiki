@@ -112,6 +112,109 @@ const aiImageRegister = [
 
 const changelogReleases = [
 	{
+		version: '0.9.1',
+		date: '4 September 2026',
+		title: 'Equipment structure and homepage polish',
+		description:
+			'Follow-up release for the post-0.9.0 feedback pass, focused on equipment organization, item pages, NPC page routing, homepage presentation, not-found handling, and small UI regressions found during review.',
+		changes: [
+			{
+				category: 'content',
+				title: 'Equipment moved into proper top-level sections',
+				description:
+					'Reworked equipment so weapons, armor, adventuring gear, tools, packs, and item detail pages live under the Equipment area instead of being listed as individual rules pages.',
+				action: {
+					label: 'Browse Equipment',
+					path: 'internals.equipment.page'
+				}
+			},
+			{
+				category: 'added',
+				title: 'Adventuring Gear pages',
+				description:
+					'Added central Adventuring Gear item data and generated pages for practical supplies such as backpacks, bedrolls, mess kits, tinderboxes, torches, rations, waterskins, hempen rope, crowbars, grappling hooks, healer\'s kits, oil flasks, lanterns, and explorer\'s packs.',
+				action: {
+					label: 'View Adventuring Gear',
+					path: 'internals.equipment.adventuringGear'
+				}
+			},
+			{
+				category: 'changed',
+				title: 'Nested equipment routes',
+				description:
+					'Changed item routes to use type-based paths such as adventuring gear item pages, while preserving central route generation and trailing-slash output for the static GitHub Pages build.',
+				action: {
+					label: 'Browse Equipment',
+					path: 'internals.equipment.page'
+				}
+			},
+			{
+				category: 'added',
+				title: 'Equipment browser improvements',
+				description:
+					'Expanded equipment browsing with type pages and filtering so equipment can be scanned more like the spell browser while still linking each available item to its own page.'
+			},
+			{
+				category: 'added',
+				title: 'NPC pages',
+				description:
+					'Added NPCs as their own top-level section with list and detail pages instead of hiding NPC references under Monsters.',
+				action: {
+					label: 'Browse NPCs',
+					path: 'internals.npcs.page'
+				}
+			},
+			{
+				category: 'changed',
+				title: 'NPC and equipment detail components',
+				description:
+					'Reworked NPC and equipment detail pages to use structured reusable components for summaries, statistics tables, traits, actions, reactions, and item metadata instead of dense paragraph-style reference blocks.',
+				action: {
+					label: 'Browse NPCs',
+					path: 'internals.npcs.page'
+				}
+			},
+			{
+				category: 'fixed',
+				title: 'Blank not-found pages',
+				description:
+					'Replaced blank missing-route output with a proper not-found page that keeps the visitor in the Wiki and points them back toward search and related navigation.'
+			},
+			{
+				category: 'changed',
+				title: 'Homepage background and card styling',
+				description:
+					'Added the homepage-only fantasy background image, expanded it to the content edges, and restyled homepage cards with glass-like surfaces and individual accent colors tied to each card topic.',
+				action: {
+					label: 'Open Homepage',
+					path: 'internals.website.homepage'
+				}
+			},
+			{
+				category: 'fixed',
+				title: 'Page image view dialog positioning',
+				description:
+					'Fixed the expanded page-image dialog so clicking View on class artwork opens the image centered in the viewport instead of appearing in the top-left corner.'
+			},
+			{
+				category: 'fixed',
+				title: 'Pugilist table and class overview cleanup',
+				description:
+					'Improved the Pugilist progression presentation and aligned multiclassing information with the class overview pattern used by other class pages.',
+				action: {
+					label: 'View Pugilist',
+					path: 'internals.classes.pugilist.page'
+				}
+			},
+			{
+				category: 'fixed',
+				title: 'Pre-live route audit updates',
+				description:
+					'Extended the pre-live crawl audit to understand the new Equipment and NPC route shapes so generated static pages continue to be checked before release.'
+			}
+		]
+	},
+	{
 		version: '0.9.0',
 		date: '4 August 2026',
 		title: 'Branch-wide Wiki rebuild and content expansion',

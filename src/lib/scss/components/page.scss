@@ -5,12 +5,16 @@
 
 @use './page/breadcrumbs';
 @use './page/header';
+@use './page/home';
 @use './page/article';
 @use './page/changelog';
 @use './page/community';
 @use './page/preferences';
 @use './page/search';
+@use './page/not-found';
 @use './page/equipment-browser';
+@use './page/equipment-detail';
+@use './page/npc-detail';
 @use './page/reference-detail';
 @use './page/spell-browser';
 @use './page/spell-list-item';

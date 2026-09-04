@@ -7,6 +7,7 @@
 	import { getClassBySlug } from '$lib/typescript/data/internals/classes/_index_';
 
 	import ClassPageContent from '$lib/svelte/components/page/ClassPageContent.svelte';
+	import NotFound from '$lib/svelte/components/page/NotFound.svelte';
 
 	let classData = $derived(getClassBySlug(page.params.class ?? ''));
 	let content = $derived(classData?.content);
@@ -14,4 +15,6 @@
 
 {#if content}
 	<ClassPageContent {content} />
+{:else}
+	<NotFound />
 {/if}

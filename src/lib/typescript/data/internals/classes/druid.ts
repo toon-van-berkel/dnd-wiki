@@ -2165,7 +2165,7 @@ export const druid = {
 								},
 								{
 									"type": "link",
-									"path": "internals.rules.equipment.javelins",
+									"path": "internals.equipment.javelins",
 									"label": "javelins"
 								},
 								{

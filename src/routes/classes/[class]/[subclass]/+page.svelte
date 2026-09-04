@@ -6,6 +6,7 @@
 	import { page } from '$app/state';
 	import { getSubclassBySlug } from '$lib/typescript/data/internals/classes/_index_';
 
+	import NotFound from '$lib/svelte/components/page/NotFound.svelte';
 	import PageContentSection from '$lib/svelte/components/page/PageContentSection.svelte';
 	import PageHeader from '$lib/svelte/components/page/PageHeader.svelte';
 	import TableOfContents from '$lib/svelte/components/page/TableOfContents.svelte';
@@ -33,4 +34,6 @@
 			<TableOfContents sections={content.tableOfContents} />
 		</aside>
 	</div>
+{:else}
+	<NotFound />
 {/if}

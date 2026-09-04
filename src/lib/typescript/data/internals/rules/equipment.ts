@@ -51,9 +51,5 @@ export const equipment = {
 	lightArmor: createEquipmentPage(current.lightArmor),
 	mediumArmor: createEquipmentPage(current.mediumArmor),
 	heavyArmor: createEquipmentPage(current.heavyArmor),
-	shields: createEquipmentPage(current.shields),
-	greataxe: createEquipmentPage(current.greataxe),
-	handaxes: createEquipmentPage(current.handaxes),
-	explorersPack: createEquipmentPage(current.explorersPack),
-	javelins: createEquipmentPage(current.javelins)
+	shields: createEquipmentPage(current.shields)
 } as const;

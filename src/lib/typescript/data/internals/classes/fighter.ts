@@ -2353,7 +2353,7 @@ export const fighter = {
 					},
 					{
 						"type": "link",
-						"path": "internals.rules.equipment.handaxes",
+								"path": "internals.equipment.handaxes",
 						"label": "handaxes"
 					}
 				]

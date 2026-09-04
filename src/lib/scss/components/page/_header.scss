@@ -205,7 +205,9 @@
 	width: min(sizes.get(dialog, image-max-width), calc(100vw - #{sizes.get(dialog, viewport-gutter)}));
 	max-width: calc(100vw - #{sizes.get(dialog, viewport-gutter)});
 	max-height: calc(100vh - #{sizes.get(dialog, viewport-gutter)});
+	margin: auto;
 	padding: 0;
+	overflow: auto;
 
 	color: colors.get-dark(text, primary);
 	background: colors.get-dark(background, secondary);

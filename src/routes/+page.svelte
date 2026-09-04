@@ -7,7 +7,7 @@
 	import PageHeader from '$lib/svelte/components/page/PageHeader.svelte';
 </script>
 
-<article class="wiki-article">
+<article class="wiki-article wiki-home">
 	<PageHeader />
 
 	<section class="wiki-article__section" aria-labelledby="browse-wiki-title">

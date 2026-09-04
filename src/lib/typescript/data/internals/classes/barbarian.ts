@@ -606,7 +606,7 @@ const coreTraits = {
 				[
 					{
 						type: 'link',
-						path: 'internals.rules.equipment.greataxe',
+						path: 'internals.equipment.greataxe',
 						label: 'A greataxe'
 					}
 				],
@@ -626,7 +626,7 @@ const coreTraits = {
 				[
 					{
 						type: 'link',
-						path: 'internals.rules.equipment.handaxes',
+						path: 'internals.equipment.handaxes',
 						label: 'Two handaxes'
 					}
 				],
@@ -645,14 +645,14 @@ const coreTraits = {
 				[
 					{
 						type: 'link',
-						path: 'internals.rules.equipment.explorersPack',
+						path: 'internals.equipment.explorersPack',
 						label: `An explorer's pack`
 					}
 				],
 				[
 					{
 						type: 'link',
-						path: 'internals.rules.equipment.javelins',
+						path: 'internals.equipment.javelins',
 						label: 'Four javelins'
 					}
 				]

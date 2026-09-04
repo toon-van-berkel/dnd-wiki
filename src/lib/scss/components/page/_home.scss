@@ -1,0 +1,174 @@
+/*
+	Location: src/lib/scss/components/page/_home.scss
+	Use: Homepage-only visual background.
+*/
+
+@use '../../core/colors' as colors;
+@use '../../core/sizes' as sizes;
+
+.wiki-home {
+	position: relative;
+	isolation: isolate;
+	margin-inline: calc(var(--content-padding-inline) * -1);
+	margin-block-start: calc(var(--content-padding-block) * -1);
+	padding: clamp(sizes.get(spacing, lg), 4vw, sizes.get(spacing, xxl));
+	padding-inline: var(--content-padding-inline);
+	overflow: hidden;
+	border-radius: 0;
+
+	&::before {
+		content: '';
+		position: absolute;
+		inset: 0;
+		z-index: -2;
+		background-image: url('/backgrounds/homepage-wallpaper.png');
+		background-position: center top;
+		background-size: cover;
+		background-repeat: no-repeat;
+		opacity: 0.62;
+	}
+
+	&::after {
+		content: '';
+		position: absolute;
+		inset: 0;
+		z-index: -1;
+		background:
+			linear-gradient(
+				180deg,
+				rgb(0 0 0 / 18%),
+				colors.get-dark(background, primary) 88%
+			),
+			rgb(0 0 0 / 42%);
+	}
+
+	.pagecard--icon {
+		--home-card-accent: #7bff53;
+
+		background:
+			linear-gradient(
+				135deg,
+				rgb(255 255 255 / 9%),
+				rgb(255 255 255 / 2%) 42%,
+				rgb(0 0 0 / 18%)
+			),
+			linear-gradient(
+				135deg,
+				color-mix(in srgb, var(--home-card-accent) 22%, transparent),
+				transparent 58%
+			),
+			rgb(9 13 11 / 58%);
+		border-color: color-mix(in srgb, var(--home-card-accent) 38%, colors.get-dark(border, base));
+		box-shadow:
+			inset 0 1px 0 rgb(255 255 255 / 10%),
+			0 16px 38px rgb(0 0 0 / 24%);
+		backdrop-filter: blur(16px) saturate(1.18);
+
+		&:hover,
+		&:focus-visible {
+			background:
+				linear-gradient(
+					135deg,
+					rgb(255 255 255 / 12%),
+					rgb(255 255 255 / 3%) 42%,
+					rgb(0 0 0 / 12%)
+				),
+				linear-gradient(
+					135deg,
+					color-mix(in srgb, var(--home-card-accent) 30%, transparent),
+					transparent 62%
+				),
+				rgb(13 18 15 / 62%);
+			border-color: color-mix(in srgb, var(--home-card-accent) 68%, colors.get-dark(border, interactive));
+		}
+
+		.pagecard__icon {
+			background-color: var(--home-card-accent);
+			opacity: 0.18;
+			mix-blend-mode: normal;
+		}
+
+		&:hover,
+		&:focus-visible {
+			.pagecard__icon {
+				opacity: 0.3;
+			}
+		}
+	}
+
+	.wiki-article__image-cards {
+		.pagecard:nth-child(1) {
+			--home-card-accent: #79d8ff;
+		}
+
+		.pagecard:nth-child(2) {
+			--home-card-accent: #75ff7a;
+		}
+
+		.pagecard:nth-child(3) {
+			--home-card-accent: #b18cff;
+		}
+
+		.pagecard:nth-child(4) {
+			--home-card-accent: #ffcf5a;
+		}
+
+		.pagecard:nth-child(5) {
+			--home-card-accent: #ff8ec7;
+		}
+
+		.pagecard:nth-child(6) {
+			--home-card-accent: #f37f5f;
+		}
+
+		.pagecard:nth-child(7) {
+			--home-card-accent: #9dffcf;
+		}
+
+		.pagecard:nth-child(8) {
+			--home-card-accent: #a4c7ff;
+		}
+
+		.pagecard:nth-child(9) {
+			--home-card-accent: #c5f06a;
+		}
+
+		.pagecard:nth-child(10) {
+			--home-card-accent: #8fdbff;
+		}
+	}
+
+	.wiki-article__cards {
+		.pagecard:nth-child(1) {
+			--home-card-accent: #7bff53;
+		}
+
+		.pagecard:nth-child(2) {
+			--home-card-accent: #84c7ff;
+		}
+
+		.pagecard:nth-child(3) {
+			--home-card-accent: #ffd36b;
+		}
+
+		.pagecard:nth-child(4) {
+			--home-card-accent: #b28cff;
+		}
+
+		.pagecard:nth-child(5) {
+			--home-card-accent: #6ee7d8;
+		}
+
+		.pagecard:nth-child(6) {
+			--home-card-accent: #ff9f6e;
+		}
+
+		.pagecard:nth-child(7) {
+			--home-card-accent: #ff7f9f;
+		}
+
+		.pagecard:nth-child(8) {
+			--home-card-accent: #9be36a;
+		}
+	}
+}

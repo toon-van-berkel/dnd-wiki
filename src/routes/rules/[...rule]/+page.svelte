@@ -13,6 +13,7 @@
 	import { getCurrentPageContext } from '$lib/svelte/context/currentPage';
 	import { getPageLabel } from '$lib/typescript/pages/currentPage';
 
+	import NotFound from '$lib/svelte/components/page/NotFound.svelte';
 	import PageCard from '$lib/svelte/components/PageCard.svelte';
 	import PageContentSection from '$lib/svelte/components/page/PageContentSection.svelte';
 	import PageHeader from '$lib/svelte/components/page/PageHeader.svelte';
@@ -103,32 +104,36 @@
 	let childPagePaths = $derived(getChildPagePaths(currentPage.path));
 </script>
 
-<div class="page-layout">
-	<article class="wiki-article page-layout__article">
-		<PageHeader />
+{#if currentPage.data}
+	<div class="page-layout">
+		<article class="wiki-article page-layout__article">
+			<PageHeader />
 
-		{#if content}
-			{#each content.sections as section}
-				<PageContentSection {section} />
-			{/each}
+			{#if content}
+				{#each content.sections as section}
+					<PageContentSection {section} />
+				{/each}
+			{/if}
+
+			{#if childPagePaths.length}
+				<section class="wiki-article__section" aria-labelledby="rule-references-title">
+					<h2 id="rule-references-title">Rule References</h2>
+
+					<div class="wiki-article__image-cards">
+						{#each childPagePaths as childPath}
+							<PageCard page={childPath} density="compact" />
+						{/each}
+					</div>
+				</section>
+			{/if}
+		</article>
+
+		{#if content?.tableOfContents.length}
+			<aside class="page-layout__toc">
+				<TableOfContents sections={content.tableOfContents} />
+			</aside>
 		{/if}
-
-		{#if childPagePaths.length}
-			<section class="wiki-article__section" aria-labelledby="rule-references-title">
-				<h2 id="rule-references-title">Rule References</h2>
-
-				<div class="wiki-article__image-cards">
-					{#each childPagePaths as childPath}
-						<PageCard page={childPath} density="compact" />
-					{/each}
-				</div>
-			</section>
-		{/if}
-	</article>
-
-	{#if content?.tableOfContents.length}
-		<aside class="page-layout__toc">
-			<TableOfContents sections={content.tableOfContents} />
-		</aside>
-	{/if}
-</div>
+	</div>
+{:else}
+	<NotFound />
+{/if}
