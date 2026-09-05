@@ -113,10 +113,10 @@ const aiImageRegister = [
 const changelogReleases = [
 	{
 		version: '0.9.1',
-		date: '4 September 2026',
-		title: 'Equipment structure and homepage polish',
+		date: '5 September 2026',
+		title: 'Equipment structure, homepage polish, and mobile navigation fixes',
 		description:
-			'Follow-up release for the post-0.9.0 feedback pass, focused on equipment organization, item pages, NPC page routing, homepage presentation, not-found handling, and small UI regressions found during review.',
+			'Follow-up release for the post-0.9.0 feedback pass, focused on equipment organization, item pages, NPC page routing, homepage presentation, not-found handling, mobile navigation behaviour, and small UI regressions found during review.',
 		changes: [
 			{
 				category: 'content',
@@ -184,11 +184,39 @@ const changelogReleases = [
 				category: 'changed',
 				title: 'Homepage background and card styling',
 				description:
-					'Added the homepage-only fantasy background image, expanded it to the content edges, and restyled homepage cards with glass-like surfaces and individual accent colors tied to each card topic.',
+					'Added the homepage-only fantasy background image, expanded it through the normal content max-width on wide screens, and restyled homepage cards with glass-like surfaces and individual accent colors tied to each card topic.',
 				action: {
 					label: 'Open Homepage',
 					path: 'internals.website.homepage'
 				}
+			},
+			{
+				category: 'changed',
+				title: 'Layered homepage background transition',
+				description:
+					'Added a second homepage wallpaper layer below the first image with a responsive dark gradient overlap so the background can continue down the page without a hard visual edge.',
+				action: {
+					label: 'Open Homepage',
+					path: 'internals.website.homepage'
+				}
+			},
+			{
+				category: 'changed',
+				title: 'Responsive mobile navigation drawer',
+				description:
+					'Reworked the small-screen Wiki navigation into an opaque off-canvas drawer with a backdrop, close action, scrollable menu content, larger tap targets, Escape handling, and page-scroll locking while the drawer is open.'
+			},
+			{
+				category: 'fixed',
+				title: 'Mobile navigation trigger visibility',
+				description:
+					'Fixed the mobile Navigation trigger so it is actually displayed on narrow viewports instead of being left hidden by the base sidebar styles.'
+			},
+			{
+				category: 'fixed',
+				title: 'Navbar returns when scrolling up',
+				description:
+					'Changed the navbar scroll behaviour so it can move out of the way while scrolling down and return as soon as the visitor scrolls slightly upward, including on mobile layouts.'
 			},
 			{
 				category: 'fixed',

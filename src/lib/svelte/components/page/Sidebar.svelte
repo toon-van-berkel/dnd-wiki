@@ -22,12 +22,17 @@
 	let hasLoadedCollapsePreference = $state(false);
 	let expandedPaths = $state<ReadonlySet<string>>(new Set());
 	let sidebarHidden = $derived(isDesktop && isCollapsed);
+	let sidebarAriaHidden = $derived(sidebarHidden || (!isDesktop && !mobileOpen));
 	const collapseStorageKey = 'dnd-portal-sidebar-collapsed';
 
 	onMount(() => {
 		const desktopQuery = window.matchMedia('(min-width: 801px)');
 		const updateDesktopState = (event: MediaQueryList | MediaQueryListEvent) => {
 			isDesktop = event.matches;
+
+			if (event.matches) {
+				mobileOpen = false;
+			}
 		};
 
 		updateDesktopState(desktopQuery);
@@ -38,6 +43,19 @@
 
 		return () => {
 			desktopQuery.removeEventListener('change', updateDesktopState);
+		};
+	});
+
+	$effect(() => {
+		if (typeof document === 'undefined') {
+			return;
+		}
+
+		const shouldLockPage = !isDesktop && mobileOpen;
+		document.body.classList.toggle('sidebar-mobile-open', shouldLockPage);
+
+		return () => {
+			document.body.classList.remove('sidebar-mobile-open');
 		};
 	});
 
@@ -95,10 +113,24 @@
 		mobileOpen = false;
 	}
 
+	function handleMobileLinkClick(event: MouseEvent): void {
+		if (!isDesktop && !event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey) {
+			closeMobileSidebar();
+		}
+	}
+
+	function handleKeydown(event: KeyboardEvent): void {
+		if (event.key === 'Escape' && mobileOpen) {
+			closeMobileSidebar();
+		}
+	}
+
 	function toggleSidebarCollapse(): void {
 		isCollapsed = !isCollapsed;
 	}
 </script>
+
+<svelte:window onkeydown={handleKeydown} />
 
 {#snippet renderNode(node: SidebarNode, depth: number)}
 	{@const childrenId = `sidebar-${node.path.replaceAll('.', '-')}`}
@@ -139,6 +171,7 @@
 				popup="description"
 				current={active}
 				showIcon
+				onNavigate={handleMobileLinkClick}
 			/>
 		</div>
 
@@ -162,6 +195,15 @@
 	Navigation
 </button>
 
+<button
+	class="sidebar__backdrop"
+	class:sidebar__backdrop--visible={mobileOpen}
+	type="button"
+	aria-label="Close navigation"
+	tabindex={mobileOpen ? 0 : -1}
+	onclick={closeMobileSidebar}
+></button>
+
 <div
 	class="sidebar-shell"
 	class:sidebar-shell--collapsed={sidebarHidden}
@@ -171,9 +213,21 @@
 		class="sidebar"
 		class:sidebar--open={mobileOpen}
 		aria-label="Wiki navigation"
-		aria-hidden={sidebarHidden}
+		aria-hidden={sidebarAriaHidden}
 	>
 		{#if !sidebarHidden}
+			<div class="sidebar__mobile-header">
+				<p class="sidebar__mobile-title">Navigation</p>
+				<button
+					class="sidebar__mobile-close"
+					type="button"
+					aria-label="Close navigation"
+					onclick={closeMobileSidebar}
+				>
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+
 			<nav class="sidebar__nav">
 				{#each sections as section}
 					<section class="sidebar__section">
@@ -187,14 +241,6 @@
 					</section>
 				{/each}
 			</nav>
-
-			<button
-				class="sidebar__mobile-close"
-				type="button"
-				onclick={closeMobileSidebar}
-			>
-				Close
-			</button>
 		{/if}
 	</aside>
 

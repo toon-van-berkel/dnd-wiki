@@ -13,6 +13,66 @@ import { isResolvedIssue } from './_types_';
 
 const publicIssueItems: readonly PublicIssue[] = [
 	{
+		id: 'mobile-navigation-rendered-as-desktop-sidebar',
+		title: 'Mobile navigation behaved like the desktop sidebar',
+		summary:
+			'On small screens the navigation opened as a desktop-style side panel, making the menu hard to read, scroll, and tap reliably.',
+		status: 'resolved',
+		source: 'discord',
+		category: 'ui',
+		reportedAt: '2026-09-05',
+		updatedAt: '2026-09-05',
+		resolution:
+			'Small-screen navigation now opens as an opaque off-canvas drawer with a backdrop, close action, scrollable content, larger tap targets, Escape handling, and page-scroll locking while open.',
+		relatedPage: 'internals.website.homepage',
+		relatedRelease: '0.9.1'
+	},
+	{
+		id: 'mobile-navigation-trigger-hidden',
+		title: 'Mobile navigation button was not visible',
+		summary:
+			'The mobile Navigation trigger existed in the markup but remained hidden because the mobile breakpoint did not override the base display style.',
+		status: 'resolved',
+		source: 'discord',
+		category: 'ui',
+		reportedAt: '2026-09-05',
+		updatedAt: '2026-09-05',
+		resolution:
+			'The mobile breakpoint now explicitly displays the Navigation trigger as an accessible 44-pixel tap target.',
+		relatedPage: 'internals.website.homepage',
+		relatedRelease: '0.9.1'
+	},
+	{
+		id: 'navbar-did-not-return-on-up-scroll',
+		title: 'Navbar did not return after scrolling slightly upward',
+		summary:
+			'After scrolling down, the navbar could stay out of reach until the visitor returned much closer to the top of the page.',
+		status: 'resolved',
+		source: 'discord',
+		category: 'ui',
+		reportedAt: '2026-09-05',
+		updatedAt: '2026-09-05',
+		resolution:
+			'The navbar now tracks scroll direction, hides while scrolling down past the header area, and returns when the visitor scrolls slightly upward.',
+		relatedPage: 'internals.website.homepage',
+		relatedRelease: '0.9.1'
+	},
+	{
+		id: 'homepage-background-stopped-at-ultrawide-content-width',
+		title: 'Homepage background stopped at the ultrawide content width',
+		summary:
+			'On ultrawide screens the homepage background image stopped at the normal content max-width, leaving black columns on both sides.',
+		status: 'resolved',
+		source: 'discord',
+		category: 'ui',
+		reportedAt: '2026-09-05',
+		updatedAt: '2026-09-05',
+		resolution:
+			'The homepage layout now lets only the background layer span beyond the normal content max-width while keeping text and cards aligned inside the readable content width.',
+		relatedPage: 'internals.website.homepage',
+		relatedRelease: '0.9.1'
+	},
+	{
 		id: 'equipment-listed-under-rules',
 		title: 'Equipment items were listed as rules pages',
 		summary:

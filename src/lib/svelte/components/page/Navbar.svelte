@@ -4,6 +4,7 @@
 -->
 <script lang="ts">
 	import { base } from '$app/paths';
+	import { onMount } from 'svelte';
 	import * as core from '$lib/typescript/data/core/_index_';
 	import { getData } from '$lib/typescript/data/_index_';
 	import type { NavbarDataType } from '$lib/typescript/components/_index_';
@@ -16,6 +17,7 @@
 	let brandLogo = $derived(core.internals.website.logos.wide);
 	let search = $derived(getData(searchPath));
 	let searchAction = $derived(getSearchAction(search.href));
+	let isNavbarHidden = $state(false);
 
 	function getValidUrl(href: string): string {
 		if (!href.startsWith('/')) {
@@ -30,9 +32,33 @@
 
 		return url.endsWith('/') ? url : `${url}/`;
 	}
+
+	onMount(() => {
+		let lastScrollY = window.scrollY;
+
+		function handleScroll(): void {
+			const currentScrollY = window.scrollY;
+			const scrollDelta = currentScrollY - lastScrollY;
+			const pastNavbar = currentScrollY > 90;
+
+			if (scrollDelta > 6 && pastNavbar) {
+				isNavbarHidden = true;
+			} else if (scrollDelta < -4 || currentScrollY <= 0) {
+				isNavbarHidden = false;
+			}
+
+			lastScrollY = currentScrollY;
+		}
+
+		window.addEventListener('scroll', handleScroll, { passive: true });
+
+		return () => {
+			window.removeEventListener('scroll', handleScroll);
+		};
+	});
 </script>
 
-<header class="navbar">
+<header class="navbar" class:navbar--hidden={isNavbarHidden}>
 	<nav class="navbar__inner" aria-label="Primary">
 		<a
 			class="navbar__brand"

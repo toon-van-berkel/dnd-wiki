@@ -38,6 +38,11 @@
         padding: var(--content-padding-block) var(--content-padding-inline);
         box-sizing: border-box;
         flex: 1 1 var(--content-max-width);
+
+        &--home {
+            max-width: none;
+            margin-inline: 0;
+        }
     }
 }
 

@@ -212,9 +212,16 @@
 	}
 
 	&__mobile-toggle,
-	&__mobile-close {
+	&__mobile-close,
+	&__mobile-header,
+	&__backdrop {
 		display: none;
 	}
+}
+
+body.sidebar-mobile-open {
+	overflow: hidden;
+	overscroll-behavior: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -240,54 +247,193 @@
 		}
 	}
 
+	.sidebar__backdrop {
+		position: fixed;
+		inset: 0;
+		z-index: 1100;
+
+		display: block;
+		margin: 0;
+		padding: 0;
+
+		opacity: 0;
+		visibility: hidden;
+		pointer-events: none;
+
+		background: rgb(0 0 0 / 72%);
+		border: 0;
+
+		transition:
+			opacity sizes.get(transition, fast) ease,
+			visibility sizes.get(transition, fast) ease;
+
+		&--visible {
+			opacity: 1;
+			visibility: visible;
+			pointer-events: auto;
+		}
+	}
+
 	.sidebar {
-		width: min(280px, 100%);
-		height: 100svh;
+		width: min(390px, 100vw);
+		height: 100dvh;
+		padding: 0 12px sizes.get(spacing, xl);
+		box-sizing: border-box;
 
 		position: fixed;
 		inset: 0 auto 0 0;
-		z-index: 900;
+		z-index: 1200;
 
-		clip-path: inset(0 100% 0 0);
+		overflow-y: auto;
+		overflow-x: hidden;
+		overscroll-behavior: contain;
+		touch-action: pan-y;
+
+		opacity: 0;
+		transform: translateX(-100%);
 		visibility: hidden;
 		pointer-events: none;
+
+		background-color: colors.get-dark(background, primary);
+		border-right: 1px solid colors.get-dark(border, base);
+		box-shadow: 12px 0 28px rgb(0 0 0 / 36%);
+
 		transition:
-			clip-path sizes.get(transition, fast) ease,
+			opacity sizes.get(transition, fast) ease,
+			transform sizes.get(transition, sidebar) ease,
 			visibility sizes.get(transition, fast) ease;
 
 		&--open {
-			clip-path: inset(0);
+			opacity: 1;
+			transform: translateX(0);
 			visibility: visible;
 			pointer-events: auto;
 		}
 
-		&__mobile-toggle,
+		&__mobile-header {
+			width: 100%;
+			position: sticky;
+			top: 0;
+			z-index: 1;
+			min-height: 56px;
+			margin: 0 -12px;
+			padding: 0 12px;
+
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+
+			background-color: colors.get-dark(background, primary);
+			border-bottom: 1px solid colors.get-dark(border, subtle);
+		}
+
+		&__mobile-title {
+			margin: 0;
+
+			font-size: 0.875rem;
+			font-weight: 700;
+			text-transform: uppercase;
+			color: colors.get-dark(text, tertiary);
+		}
+
 		&__mobile-close {
+			width: 44px;
+			height: 44px;
+
 			display: inline-flex;
 			align-items: center;
 			justify-content: center;
 
-			min-height: 36px;
-			padding: 0 12px;
+			padding: 0;
 
-			background-color: colors.get-dark(background, secondary);
-			border: 1px solid colors.get-dark(border, base);
+			background-color: transparent;
+			border: 1px solid transparent;
 			border-radius: sizes.get(radius, sm);
 			color: colors.get-dark(text, primary);
+			font-size: 1.75rem;
+			line-height: 1;
+			cursor: pointer;
+
+			&:hover,
+			&:focus-visible {
+				background-color: colors.get-dark(background, tiertiary);
+				border-color: colors.get-dark(border, interactive);
+				color: colors.get-dark(text, links, hover);
+				outline: none;
+			}
 		}
 
-		&__mobile-close {
-			width: 100%;
-			margin-top: sizes.get(spacing, lg);
+		&__nav {
+			padding-top: sizes.get(spacing, lg);
+			padding-bottom: sizes.get(spacing, lg);
+			gap: sizes.get(spacing, lg);
 		}
+
+		&__section + &__section {
+			padding-top: sizes.get(spacing, lg);
+		}
+
+		&__section-title {
+			margin-inline: 8px;
+			margin-bottom: sizes.get(spacing, sm);
+		}
+
+		&__row {
+			min-height: 44px;
+			padding-left: min(calc(var(--sidebar-depth) * 18px), 54px);
+			gap: 2px;
+
+			.link {
+				min-height: 44px;
+				padding-block: 10px;
+
+				display: flex;
+				align-items: center;
+
+				line-height: 1.25;
+				overflow-wrap: anywhere;
+			}
+		}
+
+		&__toggle,
+		&__toggle-spacer {
+			width: 44px;
+			height: 44px;
+			flex-basis: 44px;
+		}
+
 	}
 
 	.sidebar__mobile-toggle {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+
+		min-height: 44px;
 		margin: 10px;
+		padding: 0 14px;
+
+		font: inherit;
+		font-weight: 600;
+
+		background-color: colors.get-dark(background, secondary);
+		border: 1px solid colors.get-dark(border, base);
+		border-radius: sizes.get(radius, sm);
+		color: colors.get-dark(text, primary);
+		cursor: pointer;
+
+		&:hover,
+		&:focus-visible {
+			background-color: colors.get-dark(background, tiertiary);
+			border-color: colors.get-dark(border, interactive);
+			color: colors.get-dark(text, links, hover);
+			outline: none;
+		}
 	}
 
 	@media (prefers-reduced-motion: reduce) {
-		.sidebar {
+		.sidebar,
+		.sidebar__backdrop {
 			transition: none;
 		}
 	}

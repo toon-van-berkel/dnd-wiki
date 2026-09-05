@@ -19,13 +19,15 @@
 		showIcon = false,
 		popup = 'full',
 		current = false,
-		goto
+		goto,
+		onNavigate
 	}: {
 		placeholder?: string;
 		showIcon?: boolean;
 		popup?: LinkPopupMode;
 		current?: boolean;
 		goto: LinkPath;
+		onNavigate?: (event: MouseEvent) => void;
 	} = $props();
 
 	let link = $derived(getData(goto));
@@ -195,6 +197,7 @@
 		rel={link.external ? 'noopener noreferrer' : undefined}
 		aria-current={current ? 'page' : undefined}
 		aria-describedby={popup === 'description' ? popupId : undefined}
+		onclick={onNavigate}
 		onmouseenter={handleLinkMouseEnter}
 		onmouseleave={handleLinkMouseLeave}
 	>

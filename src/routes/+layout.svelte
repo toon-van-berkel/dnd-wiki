@@ -100,7 +100,7 @@
 			<Sidebar {...page.sidebar} />
 		{/if}
 
-		<main class='layout__content'>
+		<main class={`layout__content${currentPage.path === 'internals.website.homepage' ? ' layout__content--home' : ''}`}>
 			<Breadcrumbs />
 			{@render children()}
 		</main>

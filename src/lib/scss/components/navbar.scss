@@ -19,6 +19,12 @@
 	background-color: colors.get-dark(background, primary);
 	border-bottom: 1px solid colors.get-dark(border, subtle);
 
+	transition: transform sizes.get(transition, sidebar) ease;
+
+	&--hidden {
+		transform: translateY(-100%);
+	}
+
 	&__inner {
 		width: 100%;
 		max-width: var(--content-wide-max-width, #{sizes.get(content, wide-max-width)});
@@ -246,8 +252,6 @@
 
 @media (max-width: #{sizes.get(breakpoint, navbar)}) {
 	.navbar {
-		position: static;
-
 		&__inner {
 			grid-template-columns:
 				minmax(0, 1fr)
@@ -287,6 +291,8 @@
 
 @media (prefers-reduced-motion: reduce) {
 	.navbar {
+		transition: none;
+
 		&__search,
 		&__search-submit,
 		&__actions .link {

@@ -17,14 +17,35 @@
 	border-radius: 0;
 
 	&::before {
+		--home-wallpaper-height: clamp(620px, 56.3vw, 1500px);
+		--home-wallpaper-overlap: clamp(80px, 7vw, 160px);
+
 		content: '';
 		position: absolute;
 		inset: 0;
 		z-index: -2;
-		background-image: url('/backgrounds/homepage-wallpaper.png');
-		background-position: center top;
-		background-size: cover;
-		background-repeat: no-repeat;
+		background-image:
+			linear-gradient(
+				180deg,
+				transparent 0,
+				transparent calc(var(--home-wallpaper-height) - var(--home-wallpaper-overlap)),
+				colors.get-dark(background, primary) var(--home-wallpaper-height),
+				transparent calc(var(--home-wallpaper-height) + var(--home-wallpaper-overlap))
+			),
+			url('/backgrounds/homepage-wallpaper.png'),
+			url('/backgrounds/homepage-wallpaper-2.png');
+		background-position:
+			center top,
+			center top,
+			center calc(var(--home-wallpaper-height) - var(--home-wallpaper-overlap) / 2);
+		background-size:
+			100% auto,
+			100% auto,
+			100% auto;
+		background-repeat:
+			no-repeat,
+			no-repeat,
+			no-repeat;
 		opacity: 0.62;
 	}
 
@@ -40,6 +61,13 @@
 				colors.get-dark(background, primary) 88%
 			),
 			rgb(0 0 0 / 42%);
+	}
+
+	> .page-header,
+	> .wiki-article__section {
+		width: 100%;
+		max-width: sizes.get(content, max-width);
+		margin-inline: auto;
 	}
 
 	.pagecard--icon {
